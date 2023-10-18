@@ -1,0 +1,100 @@
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseInterceptors,
+  UploadedFile
+} from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { UserService } from './user.service';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { UseGuards } from '@nestjs/common';
+import { RolesGuard } from '../auth/roles.guard';
+import { Roles } from '../auth/roles.decorator';
+import { Role } from '../auth/roles.enum';
+import { ResponseUserDto } from './dto/response-user.dto';
+
+@Controller('user')
+export class UserController {
+  constructor(private readonly userService: UserService) { }
+
+  @Post()
+  @UseInterceptors(FileInterceptor('image'))
+  create(
+    @Body() createUserDto: CreateUserDto,
+    @UploadedFile() image: Express.Multer.File,
+  ) {
+    try {
+      return this.userService.create(createUserDto, image);
+    } catch (error) {
+      throw Error(`Error in create user ${error}`);
+    }
+  }
+
+  @Get()
+  findAll(): Promise<ResponseUserDto[]> {
+    try {
+      return this.userService.findAll();
+    } catch (error) {
+      throw Error(`Error in find all users ${error}`);
+    }
+  }
+
+  @Get('email/:email')
+  async findByEmail(@Param('email') email: string) {
+    try {
+      return await this.userService.findByEmail(email);
+    } catch (error) {
+      throw Error(`Error in find user by email ${error}`);
+    }
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    try {
+      return this.userService.findOne(id);
+    } catch (error) {
+      throw Error(`Error in find user by id ${error}`);
+    }
+  }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    try {
+      return this.userService.update(id, updateUserDto);
+    } catch (error) {
+      throw Error(`Error in update user ${error}`);
+    }
+  }
+
+  @Patch('image/:id')
+  @UseInterceptors(FileInterceptor('image'))
+  updateImage(
+    @Param('id') id: string,
+    @UploadedFile() image: Express.Multer.File,
+  ) {
+    try {
+      return this.userService.updateImage(id, image);
+    } catch (error) {
+      throw Error(`Error in update user image ${error}`);
+    }
+  }
+
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin)
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    try {
+      return this.userService.remove(id);
+    } catch (error) {
+      throw Error(`Error in remove user ${error}`);
+    }
+  } //Rota de remocao de usuario, apenas o admin pode remover um usuario
+}
+
+
