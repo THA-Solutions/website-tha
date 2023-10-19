@@ -39,7 +39,8 @@ export class ArticleService {
 
       const returnArticle = {
         ...article,
-        imageUrl: url
+        imageUrl: url,
+        imageSrc: imageSrc
       };
 
       return returnArticle;
@@ -56,6 +57,7 @@ export class ArticleService {
         articles.map(async (article) => {
           const image = await this.prisma.image.findFirst({
             select: {
+              imageSrc: true,
               url: true
             },
             where: { id_origem: article.id }
@@ -63,7 +65,8 @@ export class ArticleService {
 
           const returnArticle = {
             ...article,
-            imageUrl: image?.url || ''
+            imageUrl: image?.url || '',
+            imageSrc: image?.imageSrc || ''
           };
 
           return returnArticle;
@@ -84,6 +87,7 @@ export class ArticleService {
 
       const image = await this.prisma.image.findFirst({
         select: {
+          imageSrc: true,
           url: true
         },
         where: { id_origem: id }
@@ -91,7 +95,8 @@ export class ArticleService {
 
       const returnArticle = {
         ...article,
-        imageUrl: image?.url
+        imageUrl: image?.url,
+        imageSrc: image?.imageSrc
       } as ResponseArticleDto;
 
       return returnArticle;
