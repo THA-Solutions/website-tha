@@ -66,7 +66,6 @@ model VerificationToken {
 
 model Article {
   id       String   @id @default(cuid())
-  imageSrc String   @db.VarChar(50)
   title    String   @db.VarChar(255)
   subTitle String   @db.VarChar(500)
   content  String   @db.Text
@@ -144,6 +143,6 @@ model Image {
   id         String    @id @default(cuid())
   id_origem  String
   url        String    @unique @db.VarChar(500)
-
+  imageSrc   String?    @db.VarChar(500)
   @@map("image")
 }

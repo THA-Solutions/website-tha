@@ -1,16 +1,30 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UploadedFile,
+  UseInterceptors
+} from '@nestjs/common';
 import { ArticleService } from './article.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('article')
 export class ArticleController {
-  constructor(private readonly articleService: ArticleService) { }
+  constructor(private readonly articleService: ArticleService) {}
 
   @Post()
-  async create(@Body() createArticleDto: CreateArticleDto) {
-
-    return await this.articleService.create(createArticleDto);
+  @UseInterceptors(FileInterceptor('image'))
+  async create(
+    @Body() createArticleDto: CreateArticleDto,
+    @UploadedFile() image: Express.Multer.File
+  ) {
+    return await this.articleService.create(createArticleDto, image);
   }
 
   @Get()
