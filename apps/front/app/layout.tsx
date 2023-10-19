@@ -7,7 +7,7 @@ import {
 } from 'next/font/google';
 import './global.css';
 
-import { contact } from './constants';
+import { contact } from '../constants';
 
 const roboto = Roboto({ subsets: ['latin'], variable: '--font-roboto' });
 const baiJamjuree = BaiJamjuree({

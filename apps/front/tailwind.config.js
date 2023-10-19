@@ -86,5 +86,20 @@ module.exports = {
       }
     }
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+
+    function addTextShadowWhite({ addUtilities }) {
+      const newUtilities = {
+        '.text-shadow-white': {
+          'text-shadow': '-7px -7px 30px rgba(255, 255, 255, 0.5)'
+        },
+        '.text-shadow-black': {
+          'text-shadow': '-7px -7px 30px rgba(0, 0, 0, 0.8)'
+        }
+      };
+
+      addUtilities(newUtilities, ['responsive', 'hover']);
+    }
+  ]
 };

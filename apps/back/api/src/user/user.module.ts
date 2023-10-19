@@ -11,4 +11,4 @@ import { CloudinaryModule } from '../cloudinary/cloudinary.module';
   providers: [UserService, PrismaService, ClientService],
   exports: [UserService],
 })
-export class UserModule {}
+export class UserModule { }

@@ -28,7 +28,6 @@ body {
 * {
   scrollbar-width: thin;
   scrollbar-color: theme('colors.secondary') theme('colors.background');
-  /* Cor da barra e trilha, respectivamente */
 }
 
 .backdrop-blur {

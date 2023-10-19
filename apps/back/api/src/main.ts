@@ -11,7 +11,7 @@ async function bootstrap() {
   const port = process.env.PORT || 3000;
   await app.listen(port);
   Logger.log(
-    `🚀 Rota do Back-end: http://localhost:${port}/${globalPrefix}`
+    `🚀 Rota do Back-end: http://localhost:${port}/${globalPrefix}/`
   );
 }
 
