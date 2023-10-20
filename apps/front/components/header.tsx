@@ -69,7 +69,7 @@ export const Header = () => {
         </div>
         <Popover.Group className="hidden lg:flex lg:gap-x-12">
           <Popover className="relative">
-            <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-primary">
+            <Popover.Button className="flex items-center gap-x-1 text-lg font-semibold leading-6 text-primary">
               Soluções
               <ExpandMoreRounded
                 className="h-5 w-5 flex-none text-secondary"
@@ -137,7 +137,7 @@ export const Header = () => {
             <Link
               key={item.name}
               href={item.path}
-              className="text-sm font-normal leading-6 text-primary"
+              className="text-lg font-semibold leading-6 text-secondary"
             >
               {item.name}
             </Link>
@@ -146,7 +146,7 @@ export const Header = () => {
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <Link
             href="/entrar"
-            className="text-sm font-semibold leading-6 text-secondary"
+            className="text-xl font-semibold leading-6 text-tertiary"
           >
             Entrar <span aria-hidden="true">&rarr;</span>
           </Link>
