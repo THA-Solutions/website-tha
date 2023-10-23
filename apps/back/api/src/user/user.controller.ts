@@ -15,19 +15,21 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UseGuards } from '@nestjs/common';
 import { RolesGuard } from '../auth/roles.guard';
-import { Roles } from '../auth/roles.decorator';
+import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '../auth/roles.enum';
 import { ResponseUserDto } from './dto/response-user.dto';
+import { Public } from '../auth/decorators/public.decorator';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) { }
+  constructor(private readonly userService: UserService) {}
 
   @Post()
   @UseInterceptors(FileInterceptor('image'))
+  @Public()
   create(
     @Body() createUserDto: CreateUserDto,
-    @UploadedFile() image: Express.Multer.File,
+    @UploadedFile() image: Express.Multer.File
   ) {
     try {
       return this.userService.create(createUserDto, image);
@@ -36,6 +38,7 @@ export class UserController {
     }
   }
 
+  @Public()
   @Get()
   findAll(): Promise<ResponseUserDto[]> {
     try {
@@ -46,9 +49,9 @@ export class UserController {
   }
 
   @Get('email/:email')
-  async findByEmail(@Param('email') email: string) {
+  findByEmail(@Param('email') email: string) {
     try {
-      return await this.userService.findByEmail(email);
+      return this.userService.findByEmail(email);
     } catch (error) {
       throw Error(`Error in find user by email ${error}`);
     }
@@ -76,7 +79,7 @@ export class UserController {
   @UseInterceptors(FileInterceptor('image'))
   updateImage(
     @Param('id') id: string,
-    @UploadedFile() image: Express.Multer.File,
+    @UploadedFile() image: Express.Multer.File
   ) {
     try {
       return this.userService.updateImage(id, image);
@@ -96,5 +99,3 @@ export class UserController {
     }
   } //Rota de remocao de usuario, apenas o admin pode remover um usuario
 }
-
-

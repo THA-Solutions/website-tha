@@ -5,7 +5,7 @@ import { Article } from '@tha-solutions';
 
 async function getPostData() {
   try {
-    const res = await fetch('http://localhost:3000/article', { method: 'GET' });
+    const res = await fetch('http://localhost:3000/api/article', { method: 'GET' });
 
     const data = await res.json();
 
@@ -18,8 +18,6 @@ async function getPostData() {
 export default async function Blog() {
   const postsData = getPostData();
   const [posts] = await Promise.all([postsData]);
-
-  console.log('POSTS', posts);
 
   return (
     <>

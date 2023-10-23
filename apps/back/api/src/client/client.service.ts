@@ -4,40 +4,52 @@ import { UpdateClientDto } from './dto/update-client.dto';
 import PrismaService from '../prisma.service';
 import { ConfigService } from '@nestjs/config';
 import * as crypto from 'crypto';
+import { ResponseClientDto } from './dto/response-client.dto';
+import { ImageService } from '../image/image.service';
+import { ResponseImageDto } from '../image/dto/response-image.dto';
 @Injectable()
 export class ClientService {
-    constructor(
+  constructor(
     private readonly prisma: PrismaService,
     private configService: ConfigService,
+    private imageService: ImageService
   ) {}
 
-    crypter(password: string) {
+  crypter(password: string) {
     try {
       const iv = Buffer.from(crypto.randomBytes(16));
 
       const cipher = crypto.createCipheriv(
         'aes-256-cbc',
         this.configService.get<string>('CRYPTO_SECRET')!,
-        iv,
+        iv
       );
 
       let crypted = cipher.update(password, 'utf8', 'hex');
       crypted += cipher.final('hex');
 
       password = `${iv.toString('hex')}:${crypted}`;
-      
+
       return password;
     } catch (error) {
+
       throw Error(`Error in cryptography ${error}`);
+
     }
   }
 
-  async create(createClientDto: CreateClientDto):Promise<CreateClientDto> {
+  async create(
+    createClientDto: CreateClientDto,
+    image?: Express.Multer.File
+  ): Promise<ResponseClientDto> {
     try {
-      
-      const client= await this.prisma.client.findFirst({
-        where: { email: createClientDto.email },
+
+      let { imageSrc, ...data } = createClientDto;
+
+      const client = await this.prisma.client.findFirst({
+        where: { email: data.email }
       });
+
       if (client) {
         throw Error('User already exists');
       }
@@ -45,30 +57,49 @@ export class ClientService {
       createClientDto.password = this.crypter(createClientDto.password);
 
       const createdClient = await this.prisma.client.create({
-        data: createClientDto,
+        data: data
       });
+
+      let clientImage: ResponseImageDto = {} as ResponseImageDto;
+
+      if (image) {
+        clientImage = await this.imageService.create(
+          { id_origem: createdClient.id, imageSrc },
+          image
+        );
+      }
 
       const returnClient = {
         name: createdClient.name,
         email: createdClient.email,
+        imageUrl: clientImage.url || '',
       };
 
-      return returnClient as CreateClientDto;
+      return returnClient;
+
     } catch (error) {
+
       throw Error(`Error in create user ${error}`);
+
     }
   }
 
   async findAll() {
     try {
-      const clients= await this.prisma.client.findMany();
-  
-      const returnClients = clients.map((client) => {
-        return {
-          name: client.name,
-          email: client.email,
-        };
-      });
+      const clients = await this.prisma.client.findMany();
+
+      const returnClients = await Promise.all(
+        clients.map(async (client) => {
+
+          let image = await this.imageService.findByOrigin(client.id);
+
+          return {
+            ...client,
+            imageUrl: image[0]?.url || '',
+          };
+        })
+      );
+
       return returnClients;
     } catch (error) {
       throw Error(`Error in find all users ${error}`);
@@ -78,12 +109,15 @@ export class ClientService {
   async findOne(id: string) {
     try {
       const client = await this.prisma.client.findUnique({
-        where: { id },
+        where: { id }
       });
-  
+
+      const image = await this.imageService.findByOrigin(client!.id);
+
       const returnClient = {
         name: client!.name,
         email: client!.email,
+        imageUrl: image[0]?.url || '',
       };
       return returnClient;
     } catch (error) {
@@ -95,20 +129,22 @@ export class ClientService {
     try {
       const client = this.prisma.client.update({
         where: { id: id },
-        data: updateClientDto,
+        data: updateClientDto
       });
-      return
+      return client;
     } catch (error) {
       throw Error(`Error in update user ${error}`);
     }
   }
 
+
   remove(id: string) {
     try {
-      const client = this.prisma.client.delete({
-        where: { id: id },
+      this.prisma.client.delete({
+        where: { id: id }
       });
-      return;
+      this.imageService.removeAll(id);
+      return 'User deleted';
     } catch (error) {
       throw Error(`Error in delete user ${error}`);
     }

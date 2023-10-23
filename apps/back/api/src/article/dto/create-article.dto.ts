@@ -18,5 +18,6 @@ export class CreateArticleDto {
   category: string;
 
   @IsString()
-  imageSrc?: string;
+  imageSrc: string | null;
+  
 }

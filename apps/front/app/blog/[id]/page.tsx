@@ -9,9 +9,11 @@ import { Article } from '@tha-solutions';
 async function getPostData(id: string) {
   try {
     const res = await fetch(
-      `http://localhost:3000/article/${id}`
+      `http://localhost:3000/api/article/${id}`
     );
-    return res.json();
+
+    const data = await res.json();
+    return data;
   } catch (error) {
     return null;
   }

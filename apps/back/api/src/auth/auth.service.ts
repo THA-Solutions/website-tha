@@ -19,6 +19,7 @@ export class AuthService {
       this.configService.get<string>('CRYPTO_SECRET')!,
       Buffer.from(passParts[0], 'hex'),
     );
+
     let plaintext = decipher.update(passParts[1], 'hex', 'utf8') + decipher.final('utf8');
 
     return plaintext;
@@ -26,13 +27,19 @@ export class AuthService {
 
   async signIn(email: string, pass: string): Promise<ResponseUserDto | null> {
     const user = await this.usersService.findByEmail(email);
-
+    console.log(user)
     if (!user) {
+
       throw new UnauthorizedException();
+
     }
+
     if (pass !== this.decrypter(user.password)) {
+
       throw new UnauthorizedException();
+
     }
+    
     return user as ResponseUserDto;
   }
 }

@@ -20,11 +20,11 @@ export class ArticleController {
 
   @Post()
   @UseInterceptors(FileInterceptor('image'))
-  async create(
+  create(
     @Body() createArticleDto: CreateArticleDto,
-    @UploadedFile() image: Express.Multer.File
+    @UploadedFile() image: Express.Multer.File[]
   ) {
-    return await this.articleService.create(createArticleDto, image);
+    return this.articleService.create(createArticleDto, image);
   }
 
   @Get()
@@ -38,8 +38,13 @@ export class ArticleController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateArticleDto: UpdateArticleDto) {
-    return this.articleService.update(id, updateArticleDto);
+  @UseInterceptors(FileInterceptor('image'))
+   update(
+    @Param('id') id: string,
+    @Body() updateArticleDto: UpdateArticleDto,
+    @UploadedFile() image?: Express.Multer.File
+  ) {
+    return this.articleService.update(id, updateArticleDto, image);
   }
 
   @Delete(':id')

@@ -4,11 +4,12 @@ import { UserController } from './user.controller';
 import PrismaService from '../prisma.service';
 import { ClientService } from '../client/client.service';
 import { CloudinaryModule } from '../cloudinary/cloudinary.module';
+import { ImageService } from '../image/image.service';
 
 @Module({
   controllers: [UserController],
-  imports: [CloudinaryModule],
-  providers: [UserService, PrismaService, ClientService],
+  providers: [UserService, PrismaService, ClientService, ImageService],
   exports: [UserService],
+  imports: [CloudinaryModule]
 })
-export class UserModule { }
+export class UserModule {}
