@@ -75,7 +75,7 @@ export class ImageService {
   }
 
   remove(id: string) {
-    return `This action removes a #${id} image`;
+    return this.prisma.image.delete({ where: { id } });
   }
 
   removeAll(id: string) {
