@@ -16,23 +16,24 @@ export class ArticleService {
 
   async create(
     createArticleDto: CreateArticleDto,
-    image: Express.Multer.File[]
+    imageFile: Express.Multer.File[]
   ): Promise<ResponseArticleDto> {
     try {
-      let { imageSrc, ...data } = createArticleDto;
+      let { image, ...data } = createArticleDto;
       let article = await this.prisma.article.create({
         data: data
       });
 
       let articleImage: ResponseImageDto[] = [{}] as ResponseImageDto[];
-
-      if (image) {
+      let count=0
+      if (imageFile) {
         articleImage = await Promise.all(
-          image.map(async (image) => {
+          imageFile.map(async (element) => {
             const imageUrl = await this.imageService.create(
-              { id_origem: article.id, imageSrc },
-              image
+              { id_origem: article.id, source: image[count].source, alt: image[count].alt },
+              element
             );
+            count++
             return imageUrl;
           })
         );
@@ -120,21 +121,21 @@ export class ArticleService {
   async update(
     id: string,
     updateArticleDto: UpdateArticleDto,
-    image?: Express.Multer.File
+    imageFile?: Express.Multer.File
   ): Promise<Article> {
     try {
-      let { imageSrc, ...data } = updateArticleDto;
+      let { image, ...data } = updateArticleDto;
 
       const article = this.prisma.article.update({
         where: { id },
         data: data
       });
 
-      if (image) {
-        imageSrc = imageSrc ? imageSrc : '';
+      if (imageFile && image) {
+        image[0].source = image[0].source ? image[0].source : '';
         const imageUrl = await this.imageService.create(
-          { id_origem: id, imageSrc },
-          image
+          { id_origem: id, source: image[0].source, alt: image[0].alt },
+          imageFile
         );
       }
 
