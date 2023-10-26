@@ -13,12 +13,14 @@ const ReactQuill = dynamic(() => import('react-quill'), {
   loading: () => <p>Loading editor...</p>,
 });
 
+type ValidArticleKeys = "id" | "title" | "image.url" | "image.alt" | "image.source" | "subTitle" | "author" | "category" | "content" | "pubDate";
+
 interface InputsType {
-  id: keyof Article,
-  label: string,
-  type: string,
-  placeholder: string,
-};
+  id: ValidArticleKeys;
+  label: string;
+  type: string;
+  placeholder: string;
+}
 
 export default function RegisterArticle() {
   const { register, handleSubmit, setValue } = useForm<Article>();
@@ -35,13 +37,19 @@ export default function RegisterArticle() {
       placeholder: 'Digite o titulo do artigo',
     },
     {
-      id: 'imageUrl',
+      id: 'image.url',
       label: 'Imagem',
       type: 'file',
       placeholder: 'Selecione a imagem do artigo',
     },
     {
-      id: 'imageSrc',
+      id: 'image.alt',
+      label: 'Descrição da imagem',
+      type: 'text',
+      placeholder: 'Digite a descrição da imagem',
+    },
+    {
+      id: 'image.source',
       label: 'Fonte da imagem',
       type: 'text',
       placeholder: 'Digite a fonte da imagem',
@@ -77,10 +85,10 @@ export default function RegisterArticle() {
     'link', 'image', 'video'
   ];
 
-  const onSubmit = (data: Article) => {
+  const onSubmit = async (data: Article) => {
     console.log(data);
 
-    const req = axios.post('http:localhost:3000/api/article', data);
+    const req = await axios.post('http://localhost:3000/api/article', data);
   };
 
   return (
@@ -99,9 +107,16 @@ export default function RegisterArticle() {
       {inputs.map((input, index) => (
         <div key={index} className='flex flex-col space-y-2'>
           <label htmlFor={input.id} className='text-2xl text-tertiary font-semibold pl-2'>{input.label}</label>
-          <input type={input.type} id={input.id} {...register(input.id)} placeholder={input.placeholder} className='bg-white rounded-xl text-background' />
+          <input
+            type={input.type}
+            id={input.id}
+            {...register(input.id)}
+            placeholder={input.placeholder}
+            className='bg-white rounded-xl text-background'
+          />
         </div>
       ))}
+
 
       <div className='flex flex-col space-y-2'>
         <label htmlFor="content" className='text-2xl text-tertiary font-semibold pl-2'>Conteúdo</label>

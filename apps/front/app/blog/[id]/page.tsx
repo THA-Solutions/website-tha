@@ -42,10 +42,10 @@ export default async function Post({ params }: { params: { id: string } }) {
 
       <div className='pt-6 space-y-12 lg:grid lg:grid-cols-4 lg:space-x-8 lg:space-y-0'>
         <main className={`space-y-8 ${postsRelated.lengh === 0 ? 'lg:col-span-4' : 'lg:col-span-3'}`}>
-          {postData.imageUrl ? (
+          {postData.image.url ? (
             <Image
-              src={postData.imageUrl}
-              alt={postData.title}
+              src={postData.image.url}
+              alt={postData.image.alt}
               className="w-full h-auto object-cover rounded-lg shadow-2xl max-w-3xl"
               width={1024}
               height={768}
@@ -99,10 +99,10 @@ export default async function Post({ params }: { params: { id: string } }) {
                       key={postRelated.id}
                       className="space-y-4 p-4 border border-gray-600 rounded-lg cursor-pointer transition-all hover:bg-gray-700"
                     >
-                      {postRelated.imageUrl ? (
+                      {postRelated.image.url ? (
                         <Image
-                          src={postRelated.imageUrl}
-                          alt={postRelated.title}
+                          src={postRelated.image.url}
+                          alt={postRelated.image.alt}
                           className="w-full h-64 object-cover rounded-lg shadow-2xl max-w-3xl lg:h-40"
                           width={960}
                           height={820}

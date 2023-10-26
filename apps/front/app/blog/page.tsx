@@ -25,7 +25,7 @@ export default async function Blog() {
 
                 <Image
                   className="mb-4 rounded-lg shadow-lg w-full h-full"
-                  src={post.image.imageSrc}
+                  src={post.image.url}
                   alt="Imagem do artigo"
                   width={1000}
                   height={1000}

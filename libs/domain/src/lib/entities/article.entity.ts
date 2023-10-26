@@ -2,7 +2,8 @@ export interface Article {
   id: string;
   image: {
     url: string;
-    imageSrc: string;
+    alt: string;
+    source: string;
   };
   title: string;
   subTitle: string;
