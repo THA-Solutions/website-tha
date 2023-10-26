@@ -1,15 +1,20 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { ClientService } from './client.service';
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('client')
 export class ClientController {
   constructor(private readonly clientService: ClientService) {}
 
   @Post()
-  create(@Body() createClientDto: CreateClientDto) {
-    return this.clientService.create(createClientDto);
+  @UseInterceptors(FileInterceptor('image'))
+  create(
+    @Body() createClientDto: CreateClientDto,
+    @UploadedFile() image?: Express.Multer.File
+  ) {
+    return this.clientService.create(createClientDto, image);
   }
 
   @Get()

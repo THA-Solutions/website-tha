@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
-import { ArticleService } from './article.service';
-import { ArticleController } from './article.controller';
+import { InverterService } from './inverter.service';
+import { InverterController } from './inverter.controller';
 import PrismaService from '../prisma.service';
 import { ImageService } from '../image/image.service';
 import { CloudinaryModule } from '../cloudinary/cloudinary.module';
 
 @Module({
-  controllers: [ArticleController],
-  providers: [ArticleService, PrismaService, ImageService],
+  controllers: [InverterController],
+  providers: [InverterService, PrismaService, ImageService],
   imports: [CloudinaryModule]
 })
-export class ArticleModule {}
+export class InverterModule {}

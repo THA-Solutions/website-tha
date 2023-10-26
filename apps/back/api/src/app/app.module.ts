@@ -12,6 +12,8 @@ import { ClientModule } from '../client/client.module';
 import { CloudinaryModule } from '../cloudinary/cloudinary.module';
 import { CloudinaryController } from '../cloudinary/cloudinary.controller';
 import PrismaService from '../prisma.service';
+import { AuthGuard } from '../auth/auth.guard';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -21,10 +23,18 @@ import PrismaService from '../prisma.service';
     AuthModule,
     PrismaModule,
     ClientModule,
-    CloudinaryModule,
+    CloudinaryModule
   ],
   controllers: [AppController, CloudinaryController],
-  providers: [AppService, PrismaService, ConfigModule],
-  exports: [PrismaService],
+  providers: [
+    AppService,
+    PrismaService,
+    ConfigModule,
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard
+    }
+  ],
+  exports: [PrismaService]
 })
-export class AppModule { }
+export class AppModule {}

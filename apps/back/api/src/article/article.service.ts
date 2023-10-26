@@ -1,46 +1,46 @@
 import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { Article } from '@prisma/client';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import PrismaService from '../prisma.service';
 import { ResponseArticleDto } from './dto/response-article.dto';
-import { CloudinaryService } from '../cloudinary/cloudinary.service';
+import { ResponseImageDto } from '../image/dto/response-image.dto';
+import { ImageService } from '../image/image.service';
+
 @Injectable()
 export class ArticleService {
   constructor(
     private prisma: PrismaService,
-    private configService: ConfigService,
-    private cloudinary: CloudinaryService
+    private imageService: ImageService
   ) {}
 
   async create(
     createArticleDto: CreateArticleDto,
-    image: Express.Multer.File
+    image: Express.Multer.File[]
   ): Promise<ResponseArticleDto> {
     try {
-      let {imageSrc, ...data} = createArticleDto;
+      let { imageSrc, ...data } = createArticleDto;
       let article = await this.prisma.article.create({
         data: data
       });
 
-      let url = '';
+      let articleImage: ResponseImageDto[] = [{}] as ResponseImageDto[];
 
       if (image) {
-        url = await this.cloudinary.uploadImage(image);
-        await this.prisma.image.create({
-          data: {
-            url: url,
-            imageSrc: imageSrc,
-            id_origem: article.id
-          }
-        });
+        articleImage = await Promise.all(
+          image.map(async (image) => {
+            const imageUrl = await this.imageService.create(
+              { id_origem: article.id, imageSrc },
+              image
+            );
+            return imageUrl;
+          })
+        );
       }
 
       const returnArticle = {
         ...article,
-        imageUrl: url,
-        imageSrc: imageSrc
+        image:articleImage
       };
 
       return returnArticle;
@@ -55,21 +55,14 @@ export class ArticleService {
 
       const returnArticles = await Promise.all(
         articles.map(async (article) => {
-          const image = await this.prisma.image.findFirst({
-            select: {
-              imageSrc: true,
-              url: true
-            },
-            where: { id_origem: article.id }
-          });
+          //Percorre o array de artigos e retorna um array de objetos com os dados do usuário e a url da imagem
+          let image = await this.imageService.findByOrigin(article.id);
 
-          const returnArticle = {
+          return {
             ...article,
-            imageUrl: image?.url || '',
-            imageSrc: image?.imageSrc || ''
+            image
           };
 
-          return returnArticle;
         })
       );
 
@@ -85,19 +78,12 @@ export class ArticleService {
         where: { id }
       });
 
-      const image = await this.prisma.image.findFirst({
-        select: {
-          imageSrc: true,
-          url: true
-        },
-        where: { id_origem: id }
-      });
+      let image = await this.imageService.findByOrigin(article!.id);
 
       const returnArticle = {
-        ...article,
-        imageUrl: image?.url,
-        imageSrc: image?.imageSrc
-      } as ResponseArticleDto;
+        ...article!,
+        image
+      };
 
       return returnArticle;
     } catch (error) {
@@ -105,24 +91,73 @@ export class ArticleService {
     }
   }
 
-  update(id: string, updateArticleDto: UpdateArticleDto): Promise<Article> {
+  async findByCategory(category: string): Promise<ResponseArticleDto[]> {
     try {
-      const article = this.prisma.article.update({
-        where: { id },
-        data: updateArticleDto
+      let articles = await this.prisma.article.findMany({
+        where: { category }
       });
-      return article;
+
+      const returnArticles = await Promise.all(
+        articles.map(async (article) => {
+          //Percorre o array de artigos e retorna um array de objetos com os dados do usuário e a url da imagem
+          const image = await this.imageService.findByOrigin(article.id);
+
+          const returnArticle = {
+            ...article,
+            image
+          };
+
+          return returnArticle;
+        })
+      );
+
+      return returnArticles;
     } catch (error) {
       throw new Error(error);
     }
   }
 
-  remove(id: string): Promise<Article> | null {
+  async update(
+    id: string,
+    updateArticleDto: UpdateArticleDto,
+    image?: Express.Multer.File
+  ): Promise<Article> {
     try {
-      const article = this.prisma.article.delete({
+      let { imageSrc, ...data } = updateArticleDto;
+
+      const article = this.prisma.article.update({
+        where: { id },
+        data: data
+      });
+
+      if (image) {
+        imageSrc = imageSrc ? imageSrc : '';
+        const imageUrl = await this.imageService.create(
+          { id_origem: id, imageSrc },
+          image
+        );
+      }
+
+      const returnArticle = {
+        ...article,
+        image
+      };
+
+      return returnArticle;
+
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  remove(id: string) {
+    try {
+      this.prisma.article.delete({
         where: { id }
       });
-      return null;
+
+      this.imageService.removeAll(id);
+      return;
     } catch (error) {
       throw new Error(error);
     }

@@ -21,11 +21,11 @@ export default async function Blog() {
             className="flex max-w-xl flex-col items-start justify-between"
           >
             <div className="w-full h-64 sm:h-80 md:h-64 lg:h-72">
-              {post.imageUrl ? (
+              {post.image.url ? (
 
                 <Image
                   className="mb-4 rounded-lg shadow-lg w-full h-full"
-                  src={post.imageUrl}
+                  src={post.image.imageSrc}
                   alt="Imagem do artigo"
                   width={1000}
                   height={1000}
