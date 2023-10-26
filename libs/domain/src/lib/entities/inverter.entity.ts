@@ -1,5 +1,9 @@
-export class Inverter {
-  imageSrc: string | null;
+export interface Inverter {
+  image: {
+    url: string;
+    source: string | null;
+    alt: string | null;
+  };
 
   brand: string;
 

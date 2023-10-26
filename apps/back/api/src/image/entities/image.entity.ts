@@ -1,4 +1,5 @@
 export class Image {
     url: string;
-    imageSrc: string | null;
+    source: string | null;
+    alt: string | null;
 }

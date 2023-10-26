@@ -9,12 +9,12 @@ export class ImageController {
   constructor(private readonly imageService: ImageService) {}
 
   @Post()
-  @UseInterceptors(FileInterceptor('image'))
+  @UseInterceptors(FileInterceptor('imageFile'))
   create(
     @Body() createImageDto: CreateImageDto,
-    @UploadedFile() image: Express.Multer.File
+    @UploadedFile() imageFile: Express.Multer.File
   ) {
-    return this.imageService.create(createImageDto, image);
+    return this.imageService.create(createImageDto, imageFile);
   }
 
   @Get()
@@ -28,18 +28,21 @@ export class ImageController {
   }
 
   @Patch(':id')
-  @UseInterceptors(FileInterceptor('image'))
-  update(@Param('id') id: string, @UploadedFile() image: Express.Multer.File) {
-    return this.imageService.update(id, image);
+  @UseInterceptors(FileInterceptor('imageFile'))
+  update(
+    @Param('id') id: string,
+    @UploadedFile() imageFile: Express.Multer.File
+  ) {
+    return this.imageService.update(id, imageFile);
   }
 
   @Patch('origin/:id')
-  @UseInterceptors(FileInterceptor('image'))
+  @UseInterceptors(FileInterceptor('imageFile'))
   updateByOrigin(
     @Body() updateImageDto: UpdateImageDto,
-    @UploadedFile() image: Express.Multer.File
+    @UploadedFile() imageFile: Express.Multer.File
   ) {
-    return this.imageService.updateByOrigin(updateImageDto, image);
+    return this.imageService.updateByOrigin(updateImageDto, imageFile);
   }
 
   @Delete(':id')

@@ -22,4 +22,9 @@ export class ResponseUserDto {
 
   @Exclude()
   password: string;
+
+  image: {
+    source: string | null;
+    alt: string | null;
+  };
 }

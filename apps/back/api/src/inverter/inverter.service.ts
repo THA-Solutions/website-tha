@@ -15,21 +15,21 @@ export class InverterService {
 
   async create(
     createInverterDto: CreateInverterDto,
-    image: Express.Multer.File
+    imageFile: Express.Multer.File
   ) {
     try {
-      const { imageSrc, ...data } = createInverterDto;
+      const { image, ...data } = createInverterDto;
 
       const inverter = await this.prisma.inverter.create({
         data: data
       });
 
-      const inverterImage: ResponseImageDto = {} as ResponseImageDto;
+      let inverterImage: ResponseImageDto = {} as ResponseImageDto;
 
-      if (image) {
-        const inverterImage = this.imageService.create(
-          { id_origem: inverter.id, imageSrc },
-          image
+      if (imageFile) {
+         inverterImage = await this.imageService.create(
+          { id_origem: inverter.id, source: image.source, alt: image.alt },
+          imageFile
         );
       }
 
@@ -83,7 +83,7 @@ export class InverterService {
 
   update(id: string, updateInverterDto: UpdateInverterDto) {
     try {
-      const { imageSrc, ...data } = updateInverterDto;
+      const { image, ...data } = updateInverterDto;
       const inverter = this.prisma.inverter.update({
         where: { id },
         data: data

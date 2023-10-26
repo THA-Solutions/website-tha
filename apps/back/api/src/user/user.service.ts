@@ -65,7 +65,7 @@ export class UserService {
 
           if (image) {
             clientImage = await this.imageService.create(
-              { id_origem: createdUser.id, imageSrc: null },
+              { id_origem: createdUser.id, source: null, alt: null},
               image
             );
           }
@@ -239,7 +239,7 @@ export class UserService {
       }
       
       const imageUpdt = await this.imageService.updateByOrigin(
-        { id_origem: id, imageSrc: null },
+        { id_origem: id, source: null, alt: null},
         image
       );
       return;

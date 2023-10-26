@@ -40,11 +40,11 @@ export class ClientService {
 
   async create(
     createClientDto: CreateClientDto,
-    image?: Express.Multer.File
+    imageFile?: Express.Multer.File
   ): Promise<ResponseClientDto> {
     try {
 
-      let { imageSrc, ...data } = createClientDto;
+      let { image, ...data } = createClientDto;
 
       const client = await this.prisma.client.findFirst({
         where: { email: data.email }
@@ -62,17 +62,18 @@ export class ClientService {
 
       let clientImage: ResponseImageDto = {} as ResponseImageDto;
 
-      if (image) {
+      if (imageFile) {
         clientImage = await this.imageService.create(
-          { id_origem: createdClient.id, imageSrc },
-          image
+          { id_origem: createdClient.id, source: image.source, alt: image.alt },
+          imageFile
         );
       }
 
       const returnClient = {
         name: createdClient.name,
         email: createdClient.email,
-        imageUrl: clientImage.url || '',
+        image:clientImage
+        
       };
 
       return returnClient;

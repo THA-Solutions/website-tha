@@ -9,12 +9,12 @@ export class ClientController {
   constructor(private readonly clientService: ClientService) {}
 
   @Post()
-  @UseInterceptors(FileInterceptor('image'))
+  @UseInterceptors(FileInterceptor('imageFile'))
   create(
     @Body() createClientDto: CreateClientDto,
-    @UploadedFile() image?: Express.Multer.File
+    @UploadedFile() imageFile?: Express.Multer.File
   ) {
-    return this.clientService.create(createClientDto, image);
+    return this.clientService.create(createClientDto, imageFile);
   }
 
   @Get()
