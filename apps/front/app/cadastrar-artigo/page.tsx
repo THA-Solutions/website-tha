@@ -1,69 +1,66 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import dynamic from 'next/dynamic';
 import axios from 'axios';
 import 'react-quill/dist/quill.snow.css';
 
-import { Article } from "@tha-solutions";
+import InputField from '../../components/input-field';
 
 const ReactQuill = dynamic(() => import('react-quill'), {
   ssr: false,
   loading: () => <p>Loading editor...</p>,
 });
 
-type ValidArticleKeys = "id" | "title" | "image.url" | "image.alt" | "image.source" | "subTitle" | "author" | "category" | "content" | "pubDate";
-
-interface InputsType {
-  id: ValidArticleKeys;
-  label: string;
-  type: string;
-  placeholder: string;
-}
-
 export default function RegisterArticle() {
-  const { register, handleSubmit, setValue } = useForm<Article>();
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm();
 
   const [editorValue, setEditorValue] = useState('');
 
   const categories = ["Tecnologia", "Saúde", "Educação", "Arte", "Negócios"];
 
-  const inputs: InputsType[] = [
+  const inputs = [
     {
-      id: 'title',
       label: 'Título',
+      name: 'title',
       type: 'text',
+      required: false,
       placeholder: 'Digite o titulo do artigo',
     },
     {
-      id: 'image.url',
       label: 'Imagem',
+      name: 'image-url',
       type: 'file',
+      required: false,
       placeholder: 'Selecione a imagem do artigo',
     },
     {
-      id: 'image.alt',
       label: 'Descrição da imagem',
+      name: 'image-alt',
       type: 'text',
+      required: false,
       placeholder: 'Digite a descrição da imagem',
     },
     {
-      id: 'image.source',
       label: 'Fonte da imagem',
+      name: 'image-source',
       type: 'text',
+      required: false,
       placeholder: 'Digite a fonte da imagem',
     },
     {
-      id: 'subTitle',
       label: 'Subtitulo',
+      name: 'subTitle',
       type: 'text',
+      required: false,
       placeholder: 'Digite o subtitulo do artigo',
     },
     {
-      id: 'author',
       label: 'Autor',
+      name: 'author',
       type: 'text',
+      required: false,
       placeholder: 'Digite o nome do autor do artigo',
     }
   ]
@@ -85,17 +82,19 @@ export default function RegisterArticle() {
     'link', 'image', 'video'
   ];
 
-  const onSubmit = async (data: Article) => {
+  const onSubmit = async (data: FieldValues) => {
     console.log(data);
 
-    const req = await axios.post('http://localhost:3000/api/article', data);
+    // const req = await axios.post('http://localhost:3000/api/article', data, {
+    //   withCredentials: true,
+    // });
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col space-y-8'>
+    <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col space-y-12 max-w-3xl'>
       <div className='flex flex-col space-y-2'>
         <label htmlFor="category" className='text-2xl text-tertiary font-semibold pl-2'>Categoria</label>
-        <select {...register("category")} id="category" className='bg-white rounded-xl text-background'>
+        <select {...register("category")} id="category" className='border-0 py-2 text-white bg-transparent shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-tertiary'>
           {categories.map((category, index) => (
             <option key={index} value={category}>
               {category}
@@ -104,17 +103,15 @@ export default function RegisterArticle() {
         </select>
       </div>
 
-      {inputs.map((input, index) => (
-        <div key={index} className='flex flex-col space-y-2'>
-          <label htmlFor={input.id} className='text-2xl text-tertiary font-semibold pl-2'>{input.label}</label>
-          <input
-            type={input.type}
-            id={input.id}
-            {...register(input.id)}
-            placeholder={input.placeholder}
-            className='bg-white rounded-xl text-background'
-          />
-        </div>
+      {inputs.map((input) => (
+        <InputField
+          key={input.name}
+          input={input}
+          register={register}
+          errors={errors}
+          colorLabel='tertiary'
+          colorRing="ring-gray-400"
+        />
       ))}
 
 
@@ -130,11 +127,16 @@ export default function RegisterArticle() {
             setEditorValue(content);
             setValue("content", content);
           }}
-          className='bg-white text-background'
+          className='bg-transparent text-white'
         />
       </div>
 
-      <button type="submit" className='px-4 py-2 rounded-xl bg-primary font-semibold text-3xl transition-all hover:bg-primary/70'>Cadastrar</button>
+      <button
+        type="submit"
+        className="bg-tertiary px-3.5 py-2.5 text-center text-xl font-semibold font-alt text-white shadow-sm transition ease-in-out hover:bg-opacity-60 hover:scale-95"
+      >
+        Cadastrar
+      </button>
     </form>
   )
 }

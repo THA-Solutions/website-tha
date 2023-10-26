@@ -38,7 +38,7 @@ export default function SignIn() {
       placeholder: 'exemplo@exemplo.com',
       autoComplete: 'email',
       required: true,
-      icon: <Email className=" text-background" />
+      icon: <Email className=" text-tertiary" />
     },
     {
       label: 'Senha',
@@ -47,22 +47,22 @@ export default function SignIn() {
       placeholder: '********',
       autoComplete: 'current-password',
       required: true,
-      icon: <Key className=" text-background" />
+      icon: <Key className=" text-tertiary" />
     }
   ];
 
   return (
     <section className="bg-hero-background bg-center bg-cover bg-no-repeat h-screen flex flex-col items-center justify-center text-left">
-      <div className="backdrop-blur-md bg-white/20 p-8 w-full h-full flex flex-col justify-between shadow-2xl rounded-xl ring-1 ring-white/30 lg:h-5/6 lg:max-w-2xl">
+      <div className="backdrop-blur-md bg-gray-700/60 p-8 w-full h-full flex flex-col justify-between shadow-2xl ring-1 ring-gray-700 lg:h-5/6 lg:max-w-2xl">
         <Link href="/" className="h-12 w-12 mb-8">
           <Image src={Logo} alt="Logo da empresa" />
         </Link>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-12 flex flex-col gap-3">
-            <h1 className="text-3xl font-bold font-alt text-backgroundAlt">
+            <h1 className="text-3xl font-bold font-alt text-background">
               Bem-vindo de volta!
             </h1>
-            <h2 className="text-xl font-semibold text-tertiary">
+            <h2 className="text-xl font-semibold text-gray-300">
               Faça login para continuar
             </h2>
           </div>
@@ -77,7 +77,7 @@ export default function SignIn() {
                   passwordVisible={passwordVisible}
                   setPasswordVisible={setPasswordVisible}
                   colorLabel="background"
-                  colorRing="ring-lightGray"
+                  colorRing="ring-gray-400"
                 />
               ) : (
                 <InputField
@@ -86,7 +86,7 @@ export default function SignIn() {
                   register={register}
                   errors={errors}
                   colorLabel="background"
-                  colorRing="ring-lightGray"
+                  colorRing="ring-gray-400"
                 />
               )
             )}
@@ -100,19 +100,19 @@ export default function SignIn() {
 
           <button
             type="submit"
-            className="w-full mt-8 rounded-md bg-background px-3.5 py-2.5 text-center text-xl font-semibold font-alt text-white shadow-sm transition ease-in-out delay-100 hover:bg-opacity-60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tertiary"
+            className="w-full mt-8 bg-background px-3.5 py-2.5 text-center text-xl font-semibold font-alt text-white shadow-sm transition-all hover:bg-background/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tertiary"
           >
-            Entrar
+            ENTRAR
           </button>
         </form>
         <div className="mt-8 flex w-full justify-center">
-          <p className="text-md text-lightGray">
-            Não é cliente?{' '}
+          <p className="text-xl text-lightGray">
+            Não tem uma conta?{' '}
             <Link
-              href="/contato"
-              className="text-tertiary underline font-semibold"
+              href="/cadastrar"
+              className="text-tertiary font-bold hover:underline"
             >
-              Entre em contato
+              CADASTRE-SE
             </Link>
           </p>
         </div>

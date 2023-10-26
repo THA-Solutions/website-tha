@@ -16,8 +16,8 @@ export default function RegisterArticleLayout({
     <>
       <Header />
       <main className="pt-32 pb-8">
-        <div className="mx-auto max-w-7xl px-6 space-y-12 lg:px-8">
-          <h1 className='text-center text-3xl text-primary font-bold font-alt'>CADASTRAR ARTIGO</h1>
+        <div className="mx-auto max-w-7xl px-6 space-y-12 flex flex-col items-center lg:px-8">
+          <h1 className='text-center text-3xl text-gray-400 font-bold font-alt md:text-5xl'>CADASTRAR ARTIGO</h1>
           {children}
         </div>
       </main>
