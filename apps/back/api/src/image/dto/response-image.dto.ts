@@ -6,5 +6,8 @@ export class ResponseImageDto {
   url: string;
 
   @IsAlphanumeric()
-  imageSrc: string | null;
+  source: string | null;
+
+  @IsAlphanumeric()
+  alt: string | null;
 }

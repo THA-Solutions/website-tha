@@ -6,6 +6,8 @@ export class CreateImageDto {
     id_origem: string;
 
     @IsAlphanumeric()
-    imageSrc: string | null;
+    source: string | null;
 
+    @IsAlphanumeric()
+    alt: string | null;
 }

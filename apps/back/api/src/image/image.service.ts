@@ -21,7 +21,8 @@ export class ImageService {
     const { id, ...imageCreated } = await this.prisma.image.create({
       data: {
         url: url,
-        imageSrc: createImageDto.imageSrc,
+        source: createImageDto.id_origem,
+        alt: createImageDto.alt,
         id_origem: createImageDto.id_origem
       }
     });
@@ -44,7 +45,8 @@ export class ImageService {
       select: {
         id: true,
         url: true,
-        imageSrc: true
+        source: true,
+        alt: true
       },
       where: { id_origem: id }
     });

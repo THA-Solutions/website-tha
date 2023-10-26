@@ -1,7 +1,6 @@
 import {IsDateString, IsString } from 'class-validator';
 
 export class ResponseArticleDto {
-
   @IsString()
   title: string;
 
@@ -17,11 +16,12 @@ export class ResponseArticleDto {
   @IsString()
   category: string;
 
-  image:{
+  image: {
     url: string;
-    imageSrc: string | null;
+    source: string | null;
+    alt: string | null;
   }[];
 
   @IsDateString()
-  pubDate:Date;
+  pubDate: Date;
 }
