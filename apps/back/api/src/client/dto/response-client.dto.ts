@@ -9,9 +9,9 @@ export class ResponseClientDto {
   @IsNotEmpty()
   email: string;
 
-  @IsUrl()
-  imageUrl: string;
-
-  @IsString()
-  imageSrc?: string;
+  image: {
+    url: string;
+    source: string | null;
+    alt: string | null;
+  };
 }

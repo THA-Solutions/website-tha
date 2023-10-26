@@ -19,12 +19,12 @@ export class ArticleController {
   constructor(private readonly articleService: ArticleService) {}
 
   @Post()
-  @UseInterceptors(FileInterceptor('image'))
+  @UseInterceptors(FileInterceptor('imageFile'))
   create(
     @Body() createArticleDto: CreateArticleDto,
-    @UploadedFile() image: Express.Multer.File[]
+    @UploadedFile() imageFile: Express.Multer.File
   ) {
-    return this.articleService.create(createArticleDto, image);
+    return this.articleService.create(createArticleDto, imageFile);
   }
 
   @Get()
@@ -38,13 +38,13 @@ export class ArticleController {
   }
 
   @Patch(':id')
-  @UseInterceptors(FileInterceptor('image'))
-   update(
+  @UseInterceptors(FileInterceptor('imageFile'))
+  update(
     @Param('id') id: string,
     @Body() updateArticleDto: UpdateArticleDto,
-    @UploadedFile() image?: Express.Multer.File
+    @UploadedFile() imageFile?: Express.Multer.File
   ) {
-    return this.articleService.update(id, updateArticleDto, image);
+    return this.articleService.update(id, updateArticleDto, imageFile);
   }
 
   @Delete(':id')

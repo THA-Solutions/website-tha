@@ -16,34 +16,34 @@ export class ArticleService {
 
   async create(
     createArticleDto: CreateArticleDto,
-    imageFile: Express.Multer.File[]
+    imageFile: Express.Multer.File
   ): Promise<ResponseArticleDto> {
     try {
       let { image, ...data } = createArticleDto;
       let article = await this.prisma.article.create({
         data: data
       });
-
-      let articleImage: ResponseImageDto[] = [{}] as ResponseImageDto[];
-      let count=0
+      let articleImage=[] as ResponseImageDto[]
+      console.log('a')
       if (imageFile) {
-        articleImage = await Promise.all(
-          imageFile.map(async (element) => {
-            const imageUrl = await this.imageService.create(
-              { id_origem: article.id, source: image[count].source, alt: image[count].alt },
-              element
+    
+             const createdImage = await this.imageService.create(
+              {
+                id_origem: article.id,
+                source: image[0].source,
+                alt: image[0].alt
+              },
+              imageFile
             );
-            count++
-            return imageUrl;
-          })
-        );
+              
+            articleImage.push(createdImage)
       }
 
       const returnArticle = {
         ...article,
         image:articleImage
       };
-
+      console.log(returnArticle,"returnArticle")
       return returnArticle;
     } catch (error) {
       throw new Error(error);

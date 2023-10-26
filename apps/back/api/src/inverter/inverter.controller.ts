@@ -19,12 +19,12 @@ export class InverterController {
   constructor(private readonly inverterService: InverterService) {}
 
   @Post()
-  @UseInterceptors(FileInterceptor('image'))
+  @UseInterceptors(FileInterceptor('imageFile'))
   create(
     @Body() createInverterDto: CreateInverterDto,
-    @UploadedFile() image: Express.Multer.File
+    @UploadedFile() imageFile: Express.Multer.File
   ) {
-    return this.inverterService.create(createInverterDto, image);
+    return this.inverterService.create(createInverterDto, imageFile);
   }
 
   @Get()

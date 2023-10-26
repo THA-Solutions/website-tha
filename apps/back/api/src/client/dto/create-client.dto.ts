@@ -15,6 +15,9 @@ export class CreateClientDto {
   @IsNotEmpty()
   password: string;
 
-  @IsString()
-  imageSrc: string | null;
+  image: {
+    url: string| null;
+    source: string | null;
+    alt: string | null;
+  };
 }

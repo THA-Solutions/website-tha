@@ -1,8 +1,11 @@
 import { IsNumber, IsString } from "class-validator";
 
 export class CreateInverterDto {
-  @IsString()
-  imageSrc: string | null;
+  image: {
+    url: string | null;
+    source: string | null;
+    alt: string | null;
+  };
 
   @IsString()
   id_brand: string;
