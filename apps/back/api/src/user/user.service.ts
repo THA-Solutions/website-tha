@@ -9,6 +9,7 @@ import { ResponseUserDto } from './dto/response-user.dto';
 import { ClientService } from '../client/client.service';
 import { ResponseImageDto } from '../image/dto/response-image.dto';
 import { ImageService } from '../image/image.service';
+import { ResponseClientDto } from '../client/dto/response-client.dto';
 
 @Injectable()
 export class UserService {
@@ -16,7 +17,7 @@ export class UserService {
     private readonly prisma: PrismaService,
     private configService: ConfigService,
     private client: ClientService,
-    private imageService: ImageService,
+    private imageService: ImageService
   ) {}
 
   //Criptografa a senha do usuário de acordo com a chave de criptografia definida no arquivo .env e protocolo AES-256-CBC
@@ -41,15 +42,12 @@ export class UserService {
     }
   }
 
-  async create(
-    createUserDto: CreateUserDto,
-    image: Express.Multer.File
-  ): Promise<ResponseUserDto> {
+  async create(createUserDto: CreateUserDto): Promise<ResponseUserDto> {
     try {
       const user = await this.prisma.user.findFirst({
         where: { email: createUserDto.email }
       });
-
+      console.log(user, 'x133x13', createUserDto);
       if (user) {
         throw Error('User already exists');
       } else {
@@ -59,24 +57,11 @@ export class UserService {
           data: createUserDto
         });
 
-        //Se uma imagem for enviada, a mesma é enviada para o Cloudinary e a url é salva no banco de dados
-        let clientImage: ResponseImageDto = {} as ResponseImageDto;
-        if (image) {
-
-          if (image) {
-            clientImage = await this.imageService.create(
-              { id_origem: createdUser.id, source: null, alt: null},
-              image
-            );
-          }
-        }
-
         const returnUser = {
           id: createdUser.id,
           firstName: createdUser.firstName,
           lastName: createdUser.lastName,
-          email: createdUser.email,
-          imageUrl: clientImage.url || ''
+          email: createdUser.email
         };
 
         return returnUser as ResponseUserDto;
@@ -101,14 +86,15 @@ export class UserService {
               id_origem: user.id
             }
           });
-
           return {
             id: user.id,
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
             permissions: user.permissions,
-            imageUrl: image?.url || ''
+            image: {
+              url: image ? image.url : ''
+            }
           };
         })
       );
@@ -127,7 +113,9 @@ export class UserService {
 
       const image = await this.prisma.image.findFirst({
         select: {
-          url: true
+          url: true,
+          source: true,
+          alt: true
         },
         where: {
           id_origem: id
@@ -143,7 +131,11 @@ export class UserService {
           id: client!.id,
           name: client!.name,
           email: client!.email,
-          imageUrl: image!.url || ''
+          image: {
+            url: image ? image.url : '',
+            source: image ? image.source : '',
+            alt: image ? image.alt : ''
+          }
         };
 
         return returnClient;
@@ -154,16 +146,20 @@ export class UserService {
         firstName: user!.firstName,
         lastName: user!.lastName,
         email: user!.email,
-        imageUrl: image || ''
+        image: {
+          url: image ? image.url : '',
+          source: image ? image.source : '',
+          alt: image ? image.alt : ''
+        }
       };
 
-      return returnUser as ResponseUserDto;
+      return returnUser;
     } catch (error) {
       throw Error(`Error in find user by id ${error}`);
     }
   }
 
-  async findByEmail(email: string) {
+  async findByEmail(email: string): Promise<ResponseUserDto | ResponseClientDto> {
     try {
       const user = await this.prisma.user.findFirst({
         where: {
@@ -177,9 +173,13 @@ export class UserService {
           }
         });
 
+        if(!client) throw Error('User not found')
+
         const image = await this.prisma.image.findFirst({
           select: {
-            url: true
+            url: true,
+            source: true,
+            alt: true
           },
           where: {
             id_origem: client!.id
@@ -190,14 +190,20 @@ export class UserService {
           id: client!.id,
           name: client!.name,
           email: client!.email,
-          imageUrl: image!.url || '',
+          image: {
+            url: image ? image.url : '',
+            source: image ? image.source : '',
+            alt: image ? image.alt : ''
+          },
           password: client!.password
         };
-        return returnUser;
+        return returnUser as ResponseClientDto;
       }
       const image = await this.prisma.image.findFirst({
         select: {
-          url: true
+          url: true,
+          source: true,
+          alt: true
         },
         where: {
           id_origem: user!.id
@@ -209,8 +215,13 @@ export class UserService {
         firstName: user!.firstName,
         lastName: user!.lastName,
         email: user!.email,
-        imageUrl: image!.url,
-        password: user!.password
+        image: {
+          url: image ? image.url : '',
+          source: image ? image.source : '',
+          alt: image ? image.alt : ''
+        },
+        password: user!.password,
+        permissions: user!.permissions
       };
       return returnUser as ResponseUserDto;
     } catch (error) {
@@ -237,9 +248,9 @@ export class UserService {
       if (!user) {
         throw Error('User not found');
       }
-      
+
       const imageUpdt = await this.imageService.updateByOrigin(
-        { id_origem: id, source: null, alt: null},
+        { id_origem: id, source: null, alt: null },
         image
       );
       return;

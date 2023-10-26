@@ -14,4 +14,8 @@ export class ResponseClientDto {
     source: string | null;
     alt: string | null;
   };
+
+  @IsAlphanumeric()
+  @IsNotEmpty()
+  password: string;
 }
