@@ -1,6 +1,5 @@
 import { Footer } from '../../components/footer';
 import { Header } from '../../components/header';
-import { PageTitle } from '../../components/page-title';
 
 import { contact } from '../../constants';
 
@@ -17,13 +16,8 @@ export default function BlogLayout({
   return (
     <>
       <Header />
-      <main className="py-24 sm:py-32">
+      <main className="pt-24 pb-8 sm:pt-32">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <PageTitle
-            title="Blog"
-            description="Fique por dentro das novidades da nossa empresa e do mundo
-          fotovoltáico."
-          />
           {children}
         </div>
       </main>

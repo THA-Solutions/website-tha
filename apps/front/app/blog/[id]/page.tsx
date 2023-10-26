@@ -3,35 +3,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { ArrowCircleLeftRounded } from '@mui/icons-material';
-import { Article } from '@tha-solutions';
-
-async function getPostData(id: string) {
-  try {
-    const res = await fetch(
-      `http://localhost:3000/article/${id}`
-    );
-    return res.json();
-  } catch (error) {
-    return null;
-  }
-}
-
-async function getReleatedPosts() {
-  try {
-    const res = await fetch(
-      'http://localhost:3000/article'
-    );
-    return res.json();
-  } catch (error) {
-    return null;
-  }
-}
+import { ArrowBackIosNewRounded } from '@mui/icons-material';
+import { Article, formatter, articles } from '@tha-solutions';
 
 export default async function Post({ params }: { params: { id: string } }) {
-  const postData: Article = await getPostData(params.id);
-  const postsData = getReleatedPosts();
-  const [postsRelated] = await Promise.all([postsData]);
+  const postData: Article = await articles.getPostDataById(params.id);
+  const postsRelated = await articles.getPostData();
+
 
   function nl2br(str: string): string {
     return (str + '').replace(
@@ -41,83 +19,120 @@ export default async function Post({ params }: { params: { id: string } }) {
   }
 
   return (
-    <div className="lg:grid lg:grid-cols-1.5fr lg:gap-6">
-      <main className="mt-12">
+    <>
+      <nav className='flex items-center space-x-8'>
         <Link
-          href={'/blog'}
-          className="flex w-fit transition-all hover:text-backgroundAlt"
+          href='/blog'
+          className="flex items-center bg-gray-500 px-4 py-1 rounded-2xl space-x-2 text-background w-fit transition-all hover:bg-gray-700 cursor-pointer"
         >
-          <ArrowCircleLeftRounded fontSize="large" />
+          <ArrowBackIosNewRounded fontSize="small" />
+          <p className='text-base font-semibold'>VOLTAR</p>
         </Link>
-        <header className="flex flex-col mt-16">
-          <h1 className="text-4xl font-semibold mt-6">{postData.title}</h1>
-          <p className="text-sm mt-4 text-lightGray">
-            Publicado por{' '}
-            <span className="font-semibold">{postData.author}</span> em{' '}
-            {/* <span className="font-semibold">{postData.pubDate}</span> */}
-          </p>
-        </header>
-        <div className="w-full h-72 sm:h-96 md:h-120">
-          <Image
-            src={postData.imageUrl}
-            alt={postData.title}
-            width={1500}
-            height={1500}
-            className="rounded-lg shadow-lg mt-16 w-full h-full"
-          />
-        </div>
-        <div className="mt-8 pb-2 flex flex-col items-center border-b gap-4 border-lightGray">
-          <p className="py-1 px-3 bg-lightGray text-background font-bold rounded-xl w-fit">
-            {postData.category}
-          </p>
-          <p className="text-lightGray text-xl text-center">
+        <p className='uppercase font-semibold font-alt text-tertiary'>{postData.category}</p>
+      </nav>
+
+      <header className="pt-16 flex flex-col space-y-4">
+        <h1 className="text-4xl text-white font-bold lg:text-5xl">{postData.title}</h1>
+        <p className="text-base text-lightGray lg:text-lg">
+          Publicado por{' '}
+          <span className="font-semibold text-indigo-500">{postData.author}</span> em{' '}
+          <span className="font-semibold text-indigo-500">{formatter.formatDate(new Date(postData.pubDate))}</span>
+        </p>
+      </header>
+
+      <div className='pt-6 space-y-12 lg:grid lg:grid-cols-4 lg:space-x-8 lg:space-y-0'>
+        <main className={`space-y-8 ${postsRelated.lengh === 0 ? 'lg:col-span-4' : 'lg:col-span-3'}`}>
+          {postData.imageUrl ? (
+            <Image
+              src={postData.imageUrl}
+              alt={postData.title}
+              className="w-full h-auto object-cover rounded-lg shadow-2xl max-w-3xl"
+              width={1024}
+              height={768}
+            />
+          ) : (
+            <Image
+              src="/image-not-found.jpg"
+              alt={postData.title}
+              className="w-full h-auto object-cover rounded-lg shadow-2xl max-w-3xl"
+              width={1024}
+              height={768}
+            />
+          )}
+
+          <p className="text-lightGray text-2xl lg:text-3xl">
             {postData.subTitle}
           </p>
-        </div>
-        <article
-          className="prose mt-12 mx-auto text-lg lg:text-xl"
-          dangerouslySetInnerHTML={{ __html: nl2br(postData.content) }}
-        />
-      </main>
-      <aside className="border-t-2 border-backgroundAlt2 p-4 mt-16 lg:border-t-0 lg:border-l-2 lg:pl-4">
-        <h2 className="text-2xl font-semibold text-primary">
-          Posts relacionados
-        </h2>
-        <div className="flex flex-col gap-10 mt-16 items-center justify-center md:grid md:grid-cols-2 lg:flex lg:flex-col">
-          {postsRelated
-            .filter((post: Article) => {
-              return (
-                post.category === postData.category &&
-                post.id !== postData.id
-              );
-            })
-            .map((postRelated: Article) => {
-              return (
-                <Link
-                  href={`/blog/${postRelated.id}`}
-                  key={postRelated.id}
-                  className="w-64 lg:w-72 hover:text-primary hover:opacity-80 hover:p-1 transition-all"
-                >
-                  <div className="w-full h-52 lg:h-52">
-                    <Image
-                      className="mb-4 rounded-lg shadow-lg w-full h-full"
-                      src={postRelated.imageUrl}
-                      alt="Imagem do artigo"
-                      width={1000}
-                      height={1000}
-                    />
-                  </div>
-                  <div className="flex flex-col gap-1 p-2">
-                    <h2 className="text-lg ">{postRelated.title}</h2>
-                    <p className="text-sm text-lightGray">
-                      {/* {postRelated.pubDate} */}
-                    </p>
-                  </div>
-                </Link>
-              );
-            })}
-        </div>
-      </aside>
-    </div>
+
+          <article
+            className="prose mt-12 mx-auto text-lg lg:text-xl"
+            dangerouslySetInnerHTML={{ __html: nl2br(postData.content) }}
+          />
+        </main>
+
+        {postsRelated
+          .filter((post: Article) => {
+            return (
+              post.category === postData.category &&
+              post.id !== postData.id
+            );
+          }).length === 0 ? (
+          null
+        ) : (
+          <aside className="border-t border-gray-800 lg:col-span-1 lg:border-none">
+            <h2 className="text-3xl py-8 font-semibold text-gray-500 lg:py-0 lg:pb-4">
+              Posts relacionados
+            </h2>
+
+            <div className="flex flex-col gap-10 md:grid md:grid-cols-2 lg:grid-cols-1">
+              {postsRelated
+                .filter((post: Article) => {
+                  return (
+                    post.category === postData.category &&
+                    post.id !== postData.id
+                  );
+                })
+                .map((postRelated: Article) => {
+                  return (
+                    <Link
+                      href={`/blog/${postRelated.id}`}
+                      key={postRelated.id}
+                      className="space-y-4 p-4 border border-gray-600 rounded-lg cursor-pointer transition-all hover:bg-gray-700"
+                    >
+                      {postRelated.imageUrl ? (
+                        <Image
+                          src={postRelated.imageUrl}
+                          alt={postRelated.title}
+                          className="w-full h-64 object-cover rounded-lg shadow-2xl max-w-3xl lg:h-40"
+                          width={960}
+                          height={820}
+                        />
+                      ) : (
+                        <Image
+                          src="/image-not-found.jpg"
+                          alt={postRelated.title}
+                          className="w-full h-64 object-cover rounded-lg shadow-2xl max-w-3xl lg:h-40"
+                          width={960}
+                          height={820}
+                        />
+                      )}
+
+                      <div className="flex flex-col gap-1">
+                        <h2 className="text-lg uppercase font-bold">{postRelated.title}</h2>
+                        <p className="text-base text-lightGray">
+                          {formatter.formatDate(new Date(postData.pubDate))}
+                        </p>
+                        <p className="text-base font-semibold text-tertiary">
+                          {postRelated.author}
+                        </p>
+                      </div>
+                    </Link>
+                  );
+                })}
+            </div>
+          </aside>
+        )}
+      </div>
+    </>
   );
 }

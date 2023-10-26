@@ -8,8 +8,6 @@ import { useForm, FieldValues } from 'react-hook-form';
 import InputField from '../../components/input-field';
 import PasswordInputField from '../../components/password-input-field';
 
-import Logo from '../../../public/logo-white.png';
-
 import { Email, Key, Person, PersonOutlined } from '@mui/icons-material';
 
 async function onSubmit(data: FieldValues) {
@@ -105,7 +103,7 @@ export default function SignUp() {
     <div className="backdrop-blur-lg bg-white/20 px-8 w-full h-full flex flex-col justify-center shadow-2xl rounded-xl ring-2 ring-white/40 lg:h-5/6 lg:max-w-2xl lg:px-24 lg:py-20">
       <header className="flex flex-col">
         <Link href="/" className="h-12 w-12 mb-8">
-          <Image src={Logo} alt="Logo da empresa" />
+          <Image src="/logo-white.png" alt="Logo da empresa" width={100} height={100} />
         </Link>
         <div className="mb-12 flex flex-col gap-3">
           <h1 className="text-3xl font-bold font-alt text-tertiary lg:text-5xl">

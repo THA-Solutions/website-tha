@@ -2,11 +2,12 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 
 import Articles from '../../components/dashboard-admin/articles';
 import Clients from '../../components/dashboard-admin/clients';
 import Overview from '../../components/dashboard-admin/overview';
+import { Article, articles } from '@tha-solutions';
 
 import Logo from '../../public/logo-white.png';
 import User from '../../public/team/foto-tales.jpg';
@@ -19,6 +20,23 @@ import {
 } from '@mui/icons-material';
 
 export default function DashboardAdmin() {
+  const [posts, setPosts] = useState<Article[]>([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const postData = await articles.getPostData();
+      setPosts(postData);
+    }
+
+    fetchData();
+  }, []);
+
+  const navigation = [
+    { name: 'Overview', component: <Overview /> },
+    { name: 'Clientes', component: <Clients /> },
+    { name: 'Artigos', component: <Articles posts={posts} /> }
+  ];
+
   const [currentComponentName, setCurrentComponentName] =
     useState<string>('Overview');
 
@@ -28,11 +46,6 @@ export default function DashboardAdmin() {
     imageUrl: User
   };
 
-  const navigation = [
-    { name: 'Overview', component: <Overview /> },
-    { name: 'Clientes', component: <Clients /> },
-    { name: 'Artigos', component: <Articles /> }
-  ];
   const userNavigation = [{ name: 'Perfil', href: '#' }];
 
   function classNames(...classes: string[]): string {
@@ -44,11 +57,11 @@ export default function DashboardAdmin() {
       <div className="min-h-full">
         <Disclosure
           as="nav"
-          className="bg-backgroundAlt shadow-xl shadow-backgroundAlt2 border-b border-gray-800"
+          className="bg-backgroundAlt shadow-xl shadow-backgroundAlt2 border-b border-gray-700"
         >
           {({ open }) => (
             <>
-              <div className="mx-auto max-w-7xl  px-4 sm:px-6 lg:px-8">
+              <div className="mx-auto max-w-7xl p-2 sm:px-6 lg:px-8">
                 <div className="flex h-16 items-center justify-between">
                   <div className="flex items-center">
                     <div className="flex-shrink-0">
@@ -233,7 +246,7 @@ export default function DashboardAdmin() {
         </Disclosure>
 
         <main className="flex justify-center items-center">
-          <div className="max-w-7xl w-full p-6 m-8 shadow-2xl rounded-xl backdrop-blur-md bg-white/10 ring-1 ring-white/30 sm:px-6 lg:px-8 ">
+          <div className="max-w-7xl w-full p-6 m-8 shadow-2xl rounded-xl backdrop-blur-md bg-backgroundAlt/50 ring-1 ring-gray-700 sm:px-6 lg:px-8 ">
             {navigation.map(
               (item) => item.name === currentComponentName && item.component
             )}

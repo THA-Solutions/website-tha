@@ -11,7 +11,7 @@ export default function SignUpLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="bg-not-found-background bg-center bg-cover bg-no-repeat h-screen flex flex-col items-center justify-center text-left lg:p-16 lg:h-full">
+    <main className="bg-background bg-center bg-cover bg-no-repeat h-screen flex flex-col items-center justify-center text-left lg:p-16 lg:h-full">
       {children}
     </main>
   );
