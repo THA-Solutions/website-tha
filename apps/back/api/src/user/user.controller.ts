@@ -32,9 +32,13 @@ export class UserController {
     @UploadedFile() image: Express.Multer.File
   ) {
     try {
+
       return this.userService.create(createUserDto, image);
+
     } catch (error) {
+
       throw Error(`Error in create user ${error}`);
+
     }
   }
 
@@ -42,36 +46,52 @@ export class UserController {
   @Get()
   findAll(): Promise<ResponseUserDto[]> {
     try {
+
       return this.userService.findAll();
+
     } catch (error) {
+
       throw Error(`Error in find all users ${error}`);
+
     }
   }
 
   @Get('email/:email')
   findByEmail(@Param('email') email: string) {
     try {
+
       return this.userService.findByEmail(email);
+
     } catch (error) {
+
       throw Error(`Error in find user by email ${error}`);
+
     }
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
     try {
+
       return this.userService.findOne(id);
+
     } catch (error) {
+
       throw Error(`Error in find user by id ${error}`);
+
     }
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     try {
+
       return this.userService.update(id, updateUserDto);
+
     } catch (error) {
+
       throw Error(`Error in update user ${error}`);
+
     }
   }
 
@@ -82,9 +102,13 @@ export class UserController {
     @UploadedFile() image: Express.Multer.File
   ) {
     try {
+
       return this.userService.updateImage(id, image);
+
     } catch (error) {
+
       throw Error(`Error in update user image ${error}`);
+
     }
   }
 
@@ -93,9 +117,13 @@ export class UserController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     try {
+
       return this.userService.remove(id);
+
     } catch (error) {
+
       throw Error(`Error in remove user ${error}`);
+      
     }
   } //Rota de remocao de usuario, apenas o admin pode remover um usuario
 }

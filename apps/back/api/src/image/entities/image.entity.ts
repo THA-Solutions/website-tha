@@ -1,1 +1,4 @@
-export class Image {}
+export class Image {
+    url: string;
+    imageSrc: string | null;
+}

@@ -56,14 +56,13 @@ export class ArticleService {
       const returnArticles = await Promise.all(
         articles.map(async (article) => {
           //Percorre o array de artigos e retorna um array de objetos com os dados do usuário e a url da imagem
-          const image = await this.imageService.findByOrigin(article.id);
+          let image = await this.imageService.findByOrigin(article.id);
 
-          const returnArticle = {
+          return {
             ...article,
             image
           };
 
-          return returnArticle;
         })
       );
 
@@ -79,7 +78,7 @@ export class ArticleService {
         where: { id }
       });
 
-      const image = await this.imageService.findByOrigin(article!.id);
+      let image = await this.imageService.findByOrigin(article!.id);
 
       const returnArticle = {
         ...article!,
