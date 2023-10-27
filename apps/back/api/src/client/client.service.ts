@@ -76,7 +76,7 @@ export class ClientService {
         
       };
 
-      return returnClient;
+      return returnClient as ResponseClientDto;
 
     } catch (error) {
 

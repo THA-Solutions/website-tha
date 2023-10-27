@@ -14,9 +14,6 @@ export class ResponseUserDto {
   @IsEmail()
   email: string;
 
-  @IsAlphanumeric()
-  imageUrl: string;
-
   @IsString()
   permissions: string;
 
@@ -24,6 +21,7 @@ export class ResponseUserDto {
   password: string;
 
   image: {
+    url: string | null;
     source: string | null;
     alt: string | null;
   };
