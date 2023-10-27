@@ -24,7 +24,7 @@ export class ArticleController {
     @Body() createArticleDto: CreateArticleDto,
     @UploadedFile() imageFile: Express.Multer.File
   ) {
-    console.log(createArticleDto)
+
     return this.articleService.create(createArticleDto, imageFile);
   }
 

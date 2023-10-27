@@ -47,7 +47,7 @@ export class UserService {
       const user = await this.prisma.user.findFirst({
         where: { email: createUserDto.email }
       });
-      console.log(user, 'x133x13', createUserDto);
+
       if (user) {
         throw Error('User already exists');
       } else {

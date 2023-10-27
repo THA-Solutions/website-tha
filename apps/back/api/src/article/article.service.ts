@@ -24,7 +24,7 @@ export class ArticleService {
         data: data
       });
       let articleImage=[] as ResponseImageDto[]
-      console.log('a')
+
       if (imageFile) {
     
              const createdImage = await this.imageService.create(
@@ -43,7 +43,6 @@ export class ArticleService {
         ...article,
         image:articleImage
       };
-      console.log(returnArticle,"returnArticle")
       return returnArticle;
     } catch (error) {
       throw new Error(error);
