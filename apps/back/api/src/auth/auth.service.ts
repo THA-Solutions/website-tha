@@ -27,7 +27,7 @@ export class AuthService {
 
   async signIn(email: string, pass: string): Promise<ResponseUserDto | null> {
     const user = await this.usersService.findByEmail(email);
-    console.log(user)
+
     if (!user) {
 
       throw new UnauthorizedException();
