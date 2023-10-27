@@ -104,7 +104,9 @@ export default function RegisterArticle() {
     const { imageFile, ...content } = data;
 
     const formData = new FormData();
+    
     formData.append('imageFile', imageFile[0]);
+
     for(let key in content) {
       formData.append(key, content[key]);
     }

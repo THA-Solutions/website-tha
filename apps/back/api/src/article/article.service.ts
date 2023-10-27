@@ -150,13 +150,13 @@ export class ArticleService {
     }
   }
 
-  remove(id: string) {
+  async remove(id: string) {
     try {
-      this.prisma.article.delete({
+      await this.prisma.article.delete({
         where: { id }
       });
-
-      this.imageService.removeAll(id);
+      
+      await this.imageService.removeAll(id);
       return;
     } catch (error) {
       throw new Error(error);
