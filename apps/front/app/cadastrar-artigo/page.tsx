@@ -85,10 +85,7 @@ export default function RegisterArticle() {
   const onSubmit = async (data: FieldValues) => {
     console.log(data);
     try {
-      await axios.post('http://localhost:3000/api/article', {
-        ...content,
-        imageFile,
-      });
+      await axios.post('http://localhost:3000/api/article', data);
     } catch (error) {
       console.log(error);
     }
