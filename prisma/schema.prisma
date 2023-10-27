@@ -139,8 +139,8 @@ model Image {
   id        String  @id @default(cuid())
   id_origem String
   url       String  @unique @db.VarChar(500)
-  source    String? @db.VarChar(500)
   alt       String? @db.VarChar(500)
+  source    String? @db.VarChar(500)
 
   @@map("image")
 }

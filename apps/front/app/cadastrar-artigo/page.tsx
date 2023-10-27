@@ -30,21 +30,21 @@ export default function RegisterArticle() {
     },
     {
       label: 'Imagem',
-      name: 'image-url',
+      name: 'imageFile',
       type: 'file',
       required: false,
       placeholder: 'Selecione a imagem do artigo',
     },
     {
       label: 'Descrição da imagem',
-      name: 'image-alt',
+      name: 'image.alt',
       type: 'text',
       required: false,
       placeholder: 'Digite a descrição da imagem',
     },
     {
       label: 'Fonte da imagem',
-      name: 'image-source',
+      name: 'image.source',
       type: 'text',
       required: false,
       placeholder: 'Digite a fonte da imagem',
@@ -84,10 +84,14 @@ export default function RegisterArticle() {
 
   const onSubmit = async (data: FieldValues) => {
     console.log(data);
-
-    // const req = await axios.post('http://localhost:3000/api/article', data, {
-    //   withCredentials: true,
-    // });
+    try {
+      await axios.post('http://localhost:3000/api/article', {
+        ...content,
+        imageFile,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
