@@ -1,4 +1,13 @@
-import { IsAlphanumeric, IsDateString, IsEmail, IsNotEmpty, IsString, IsUrl, MaxLength, MinLength } from 'class-validator';
+import {
+  IsAlphanumeric,
+  IsDateString,
+  IsEmail,
+  IsNotEmpty,
+  IsString,
+  IsUrl,
+  MaxLength,
+  MinLength
+} from 'class-validator';
 
 export class ResponseClientDto {
   @IsAlphanumeric()

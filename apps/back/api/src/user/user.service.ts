@@ -159,7 +159,9 @@ export class UserService {
     }
   }
 
-  async findByEmail(email: string): Promise<ResponseUserDto | ResponseClientDto> {
+  async findByEmail(
+    email: string
+  ): Promise<ResponseUserDto | ResponseClientDto> {
     try {
       const user = await this.prisma.user.findFirst({
         where: {
@@ -173,7 +175,7 @@ export class UserService {
           }
         });
 
-        if(!client) throw Error('User not found')
+        if (!client) throw Error('User not found');
 
         const image = await this.prisma.image.findFirst({
           select: {

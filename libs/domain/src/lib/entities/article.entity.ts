@@ -4,7 +4,7 @@ export interface Article {
     url: string;
     source: string | null;
     alt: string | null;
-  };
+  }[];
   title: string;
   subTitle: string;
   content: string;

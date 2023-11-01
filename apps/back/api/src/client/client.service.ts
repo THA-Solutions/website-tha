@@ -32,9 +32,7 @@ export class ClientService {
 
       return password;
     } catch (error) {
-
       throw Error(`Error in cryptography ${error}`);
-
     }
   }
 
@@ -43,7 +41,6 @@ export class ClientService {
     imageFile?: Express.Multer.File
   ): Promise<ResponseClientDto> {
     try {
-
       let { image, ...data } = createClientDto;
 
       const client = await this.prisma.client.findFirst({
@@ -72,16 +69,12 @@ export class ClientService {
       const returnClient = {
         name: createdClient.name,
         email: createdClient.email,
-        image:clientImage
-        
+        image: clientImage
       };
 
       return returnClient as ResponseClientDto;
-
     } catch (error) {
-
       throw Error(`Error in create user ${error}`);
-
     }
   }
 
@@ -91,12 +84,11 @@ export class ClientService {
 
       const returnClients = await Promise.all(
         clients.map(async (client) => {
-
           let image = await this.imageService.findByOrigin(client.id);
 
           return {
             ...client,
-            imageUrl: image[0]?.url || '',
+            imageUrl: image[0]?.url || ''
           };
         })
       );
@@ -118,7 +110,7 @@ export class ClientService {
       const returnClient = {
         name: client!.name,
         email: client!.email,
-        imageUrl: image[0]?.url || '',
+        imageUrl: image[0]?.url || ''
       };
       return returnClient;
     } catch (error) {
@@ -137,7 +129,6 @@ export class ClientService {
       throw Error(`Error in update user ${error}`);
     }
   }
-
 
   remove(id: string) {
     try {

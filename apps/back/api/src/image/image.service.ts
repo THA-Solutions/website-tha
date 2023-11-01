@@ -55,7 +55,7 @@ export class ImageService {
   }
 
   async update(id: string, image: Express.Multer.File) {
-    const url = await this.cloudinary.uploadImage(image);  
+    const url = await this.cloudinary.uploadImage(image);
     const updatedImage = await this.prisma.image.update({
       where: { id },
       data: {

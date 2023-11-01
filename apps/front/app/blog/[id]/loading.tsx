@@ -4,12 +4,10 @@ import Skeleton from '@mui/material/Skeleton';
 export default function PostLoading() {
   return (
     <>
-      <nav className='flex items-center space-x-8'>
-        <div
-          className="flex items-center bg-gray-500 px-4 py-1 rounded-2xl space-x-2 text-background w-fit"
-        >
+      <nav className="flex items-center space-x-8">
+        <div className="flex items-center bg-gray-500 px-4 py-1 rounded-2xl space-x-2 text-background w-fit">
           <ArrowBackIosNewRounded fontSize="small" />
-          <p className='text-base font-semibold'>VOLTAR</p>
+          <p className="text-base font-semibold">VOLTAR</p>
         </div>
         <Skeleton variant="text" width="10%" />
       </nav>
@@ -19,8 +17,8 @@ export default function PostLoading() {
         <Skeleton variant="text" width="40%" height={30} />
       </header>
 
-      <div className='pt-6 space-y-6 lg:grid lg:grid-cols-4 lg:space-x-6 lg:space-y-0'>
-        <main className='space-y-2 lg:col-span-3'>
+      <div className="pt-6 space-y-6 lg:grid lg:grid-cols-4 lg:space-x-6 lg:space-y-0">
+        <main className="space-y-2 lg:col-span-3">
           <Skeleton variant="rounded" width="85%" height={600} />
           <Skeleton variant="text" width="100%" height={70} />
           <Skeleton variant="text" width="100%" height={40} />

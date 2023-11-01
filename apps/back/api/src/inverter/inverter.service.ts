@@ -27,7 +27,7 @@ export class InverterService {
       let inverterImage: ResponseImageDto = {} as ResponseImageDto;
 
       if (imageFile) {
-         inverterImage = await this.imageService.create(
+        inverterImage = await this.imageService.create(
           { id_origem: inverter.id, source: image.source, alt: image.alt },
           imageFile
         );

@@ -5,7 +5,6 @@ export class articles {
     try {
       const res = await axios.get('http://localhost:3000/api/article');
       return res.data;
-
     } catch (error) {
       console.error(error);
       return [];
@@ -14,9 +13,7 @@ export class articles {
 
   static async getPostDataById(id: string) {
     try {
-      const res = await axios.get(
-        `http://localhost:3000/api/article/${id}`
-      );
+      const res = await axios.get(`http://localhost:3000/api/article/${id}`);
       return res.data;
     } catch (error) {
       console.log(error);

@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import axios from 'axios';
 import { useState } from 'react';
 
 import InputSearch from '../input-search';
@@ -19,6 +20,7 @@ type ArticlesProps = {
 
 export const Articles = ({ posts }: ArticlesProps) => {
   const [searchTerm, setSearchTerm] = useState('');
+
   const filteredArticles = posts.filter((post: Article) =>
     post.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -29,9 +31,14 @@ export const Articles = ({ posts }: ArticlesProps) => {
   }
 
   function handleDeletePost(id: string) {
+    console.log(id);
     const confirmDelete = confirm('Tem certeza que deseja deletar este post?');
     if (confirmDelete) {
-      alert(`Post ${id} deletado com sucesso!`);
+      try {
+        axios.delete(`http://localhost:3000/api/article/${id}`);
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 
@@ -64,10 +71,10 @@ export const Articles = ({ posts }: ArticlesProps) => {
             className="flex flex-col items-start justify-center gap-4 backdrop-blur-md border border-gray-700 rounded-xl shadow-lg md:items-center md:grid md:grid-cols-2 lg:grid-cols-4"
           >
             <div className="w-full h-full p-4 max-w-lg max-h-96 lg:w-64">
-              {article.imageUrl ? (
+              {article.image && article.image.length > 0 ? (
                 <Image
-                  src={article.imageUrl}
-                  alt="Imagem do artigo"
+                  src={article.image[0].url}
+                  alt={article.image[0].alt || 'Descrição não fornecida'}
                   width={500}
                   height={500}
                   className="rounded-xl object-cover h-64"
@@ -75,7 +82,7 @@ export const Articles = ({ posts }: ArticlesProps) => {
               ) : (
                 <Image
                   src="/image-not-found.jpg"
-                  alt="Imagem do artigo"
+                  alt="Imagem não encontrada"
                   width={500}
                   height={500}
                   className="rounded-xl object-cover h-64"

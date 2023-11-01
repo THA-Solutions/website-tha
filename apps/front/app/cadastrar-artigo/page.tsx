@@ -105,20 +105,16 @@ export default function RegisterArticle() {
 
     const formData = new FormData();
     formData.append('imageFile', imageFile[0]);
-    for(let key in content) {
+    for (let key in content) {
       formData.append(key, content[key]);
     }
 
     try {
-<<<<<<< HEAD
-      await axios.post('http://localhost:3000/api/article', data);
-=======
       await axios.post('http://localhost:3000/api/article', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       });
->>>>>>> dev
     } catch (error) {
       console.log(error);
     }

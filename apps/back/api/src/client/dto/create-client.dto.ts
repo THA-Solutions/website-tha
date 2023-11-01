@@ -1,4 +1,12 @@
-import { IsAlphanumeric, IsEmail, IsNotEmpty, IsString, IsUrl, MaxLength, MinLength } from "class-validator";
+import {
+  IsAlphanumeric,
+  IsEmail,
+  IsNotEmpty,
+  IsString,
+  IsUrl,
+  MaxLength,
+  MinLength
+} from 'class-validator';
 
 export class CreateClientDto {
   @IsAlphanumeric()
@@ -16,7 +24,7 @@ export class CreateClientDto {
   password: string;
 
   image: {
-    url: string| null;
+    url: string | null;
     source: string | null;
     alt: string | null;
   };

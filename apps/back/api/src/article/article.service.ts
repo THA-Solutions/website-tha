@@ -23,25 +23,24 @@ export class ArticleService {
       let article = await this.prisma.article.create({
         data: data
       });
-      let articleImage=[] as ResponseImageDto[]
+      let articleImage = [] as ResponseImageDto[];
 
       if (imageFile) {
-    
-             const createdImage = await this.imageService.create(
-              {
-                id_origem: article.id,
-                source: image[0].source,
-                alt: image[0].alt
-              },
-              imageFile
-            );
-              
-            articleImage.push(createdImage)
+        const createdImage = await this.imageService.create(
+          {
+            id_origem: article.id,
+            source: image[0].source,
+            alt: image[0].alt
+          },
+          imageFile
+        );
+
+        articleImage.push(createdImage);
       }
 
       const returnArticle = {
         ...article,
-        image:articleImage
+        image: articleImage
       };
       return returnArticle;
     } catch (error) {
@@ -62,7 +61,6 @@ export class ArticleService {
             ...article,
             image
           };
-
         })
       );
 
@@ -144,20 +142,19 @@ export class ArticleService {
       };
 
       return returnArticle;
-
     } catch (error) {
       throw new Error(error);
     }
   }
 
-  remove(id: string) {
+  async remove(id: string) {
     try {
-      this.prisma.article.delete({
+      await this.prisma.article.delete({
         where: { id }
       });
 
       this.imageService.removeAll(id);
-      return;
+      return 'Artigo removido com sucesso';
     } catch (error) {
       throw new Error(error);
     }

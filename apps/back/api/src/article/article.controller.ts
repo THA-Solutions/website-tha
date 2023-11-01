@@ -16,7 +16,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('article')
 export class ArticleController {
-  constructor(private readonly articleService: ArticleService) { }
+  constructor(private readonly articleService: ArticleService) {}
 
   @Post()
   @UseInterceptors(FileInterceptor('imageFile'))
@@ -24,7 +24,6 @@ export class ArticleController {
     @Body() createArticleDto: CreateArticleDto,
     @UploadedFile() imageFile: Express.Multer.File
   ) {
-
     return this.articleService.create(createArticleDto, imageFile);
   }
 

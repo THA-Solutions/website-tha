@@ -10,7 +10,6 @@ export class AuthController {
   @Public()
   @Post('login')
   async login(@Body() signInDto: signInDto) {
-
     const user = await this.authService.signIn(
       signInDto.email,
       signInDto.password
