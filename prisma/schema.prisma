@@ -141,6 +141,7 @@ model Image {
   url       String  @unique @db.VarChar(500)
   alt       String? @db.VarChar(500)
   source    String? @db.VarChar(500)
+  pos       Int     @default(0)
 
   @@map("image")
 }

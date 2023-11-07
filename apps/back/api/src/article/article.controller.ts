@@ -7,24 +7,24 @@ import {
   Param,
   Delete,
   UploadedFile,
-  UseInterceptors
+  UseInterceptors,
+  UploadedFiles
 } from '@nestjs/common';
 import { ArticleService } from './article.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 
 @Controller('article')
 export class ArticleController {
-  constructor(private readonly articleService: ArticleService) { }
+  constructor(private readonly articleService: ArticleService) {}
 
   @Post()
-  @UseInterceptors(FileInterceptor('imageFile'))
+  @UseInterceptors(FilesInterceptor('imageFile'))
   create(
     @Body() createArticleDto: CreateArticleDto,
-    @UploadedFile() imageFile: Express.Multer.File
+    @UploadedFiles() imageFile: Express.Multer.File[]
   ) {
-
     return this.articleService.create(createArticleDto, imageFile);
   }
 

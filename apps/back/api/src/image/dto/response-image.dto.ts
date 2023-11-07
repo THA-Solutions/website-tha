@@ -1,4 +1,4 @@
-import { IsAlphanumeric, IsNotEmpty, IsUUID, IsUrl } from 'class-validator';
+import { IsAlphanumeric, IsNotEmpty, IsNumber, IsUUID, IsUrl } from 'class-validator';
 
 export class ResponseImageDto {
   @IsNotEmpty()
@@ -10,4 +10,7 @@ export class ResponseImageDto {
 
   @IsAlphanumeric()
   alt: string | null;
+
+  @IsNumber()
+  pos: number | null;
 }

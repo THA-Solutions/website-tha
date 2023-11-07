@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateImageDto } from './dto/create-image.dto';
-import { UpdateImageDto } from './dto/update-image.dto';
 import PrismaService from '../prisma.service';
-import { CloudinaryService } from '../cloudinary/cloudinary.service';
+import CloudinaryService from '../cloudinary/cloudinary.service';
 import { ResponseImageDto } from './dto/response-image.dto';
 
 @Injectable()
@@ -16,71 +15,107 @@ export class ImageService {
     createImageDto: CreateImageDto,
     image: Express.Multer.File
   ): Promise<ResponseImageDto> {
-    const url = await this.cloudinary.uploadImage(image);
+    try {
 
-    const { id, ...imageCreated } = await this.prisma.image.create({
-      data: {
-        url: url,
-        source: createImageDto.id_origem,
-        alt: createImageDto.alt,
-        id_origem: createImageDto.id_origem
-      }
-    });
+      const url = await this.cloudinary.uploadImage(image);
 
-    return imageCreated;
+
+      const { id, ...imageCreated } = await this.prisma.image.create({
+        data: {
+          url: url,
+          source: createImageDto.source,
+          alt: createImageDto.alt,
+          id_origem: createImageDto.id_origem,
+          pos: createImageDto.pos
+        }
+      });
+
+      return imageCreated;
+    } catch (error) {
+      throw Error(`Error in create image ${error}`);
+    }
   }
 
   async findAll() {
-    const images = await this.prisma.image.findMany();
+    try {
+      const images = await this.prisma.image.findMany();
 
-    return images;
+      return images;
+    } catch (error) {
+      throw Error(`Error in find all images ${error}`);
+    }
   }
 
   async findOne(id: string) {
-    return await this.prisma.image.findUnique({ where: { id: id } });
+    try {
+      return await this.prisma.image.findUnique({ where: { id: id } });
+    } catch (error) {
+      throw Error(`Error in find one image ${error}`);
+    }
   }
 
   async findByOrigin(id: string) {
-    const images = await this.prisma.image.findMany({
-      select: {
-        id: true,
-        url: true,
-        source: true,
-        alt: true
-      },
-      where: { id_origem: id }
-    });
+    try {
+      const images = await this.prisma.image.findMany({
+        select: {
+          id: true,
+          url: true,
+          source: true,
+          alt: true,
+          pos: true
+        },
+        where: { id_origem: id }
+      });
 
-    return images;
+      return images;
+    } catch (error) {
+      throw Error(`Error in find all images ${error}`);
+    }
   }
 
   async update(id: string, image: Express.Multer.File) {
-    const url = await this.cloudinary.uploadImage(image);  
-    const updatedImage = await this.prisma.image.update({
-      where: { id },
-      data: {
-        url: url
-      }
-    });
-    return updatedImage;
+    try {
+      const url = await this.cloudinary.uploadImage(image);
+      const updatedImage = await this.prisma.image.update({
+        where: { id },
+        data: {
+          url: url
+        }
+      });
+      return updatedImage;
+    } catch (error) {
+      throw Error(`Error in update image ${error}`);
+    }
   }
 
   async updateByOrigin(updateImageDto: any, image: Express.Multer.File) {
-    const createdImage = await this.create(updateImageDto, image);
-    const updatedImage = await this.prisma.image.update({
-      where: { id: updateImageDto.id },
-      data: {
-        url: createdImage.url
-      }
-    });
-    return updatedImage;
+    try {
+      const createdImage = await this.create(updateImageDto, image);
+      const updatedImage = await this.prisma.image.update({
+        where: { id: updateImageDto.id },
+        data: {
+          url: createdImage.url
+        }
+      });
+      return updatedImage;
+    } catch (error) {
+      throw Error(`Error in update image ${error}`);
+    }
   }
 
-  remove(id: string) {
-    return this.prisma.image.delete({ where: { id } });
+  async remove(id: string) {
+    try {
+      return await this.prisma.image.delete({ where: { id } });
+    } catch (error) {
+      throw Error(`Error in remove image ${error}`);
+    }
   }
 
-  removeAll(id: string) {
-    return this.prisma.image.deleteMany({ where: { id_origem: id } });
+  async removeAll(id: string) {
+    try {
+      return await this.prisma.image.deleteMany({ where: { id_origem: id } });
+    } catch (error) {
+      throw Error(`Error in remove all images ${error}`);
+    }
   }
 }

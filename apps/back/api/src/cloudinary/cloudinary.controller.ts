@@ -4,7 +4,7 @@ import {
   UseInterceptors,
   Post,
 } from '@nestjs/common';
-import { CloudinaryService } from './cloudinary.service';
+import CloudinaryService from './cloudinary.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('cloudinary')

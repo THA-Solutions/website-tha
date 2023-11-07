@@ -19,7 +19,7 @@ export class articles {
       );
       return res.data;
     } catch (error) {
-      console.log(error);
+      console.error(error);
       return;
     }
   }

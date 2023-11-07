@@ -16,33 +16,59 @@ export class ArticleService {
 
   async create(
     createArticleDto: CreateArticleDto,
-    imageFile: Express.Multer.File
+    imageFile: Express.Multer.File[]
   ): Promise<ResponseArticleDto> {
     try {
       let { image, ...data } = createArticleDto;
-      let article = await this.prisma.article.create({
-        data: data
-      });
-      let articleImage=[] as ResponseImageDto[]
+      image = JSON.parse(image as any);
 
+      let article = await this.prisma.article.create({
+        data: {
+          ...data
+        }
+      });
+
+      let articleImage = [] as ResponseImageDto[];
+
+      //Percorre o array de imagens e salva no banco e as associa ao artigo
       if (imageFile) {
-    
-             const createdImage = await this.imageService.create(
+        for (let i = 0; i < imageFile.length; i++) {
+
+          if (i == 0) {
+            const imageUrl = await this.imageService.create(
               {
                 id_origem: article.id,
-                source: image[0].source,
-                alt: image[0].alt
+                source: image.source,
+                alt: image.alt,
+                pos: 0
               },
-              imageFile
+              imageFile[0]
             );
-              
-            articleImage.push(createdImage)
+
+            articleImage.push(imageUrl);
+          }else{
+
+            const imageUrl = await this.imageService.create(
+              {
+                id_origem: article.id,
+                source: '',
+                alt: '',
+                pos: i
+              },
+              imageFile[i]
+            );
+
+            articleImage.push(imageUrl);
+          }
+          
+        }
       }
 
       const returnArticle = {
         ...article,
-        image:articleImage
+        image: articleImage
       };
+      console.log(returnArticle);
       return returnArticle;
     } catch (error) {
       throw new Error(error);
@@ -62,7 +88,6 @@ export class ArticleService {
             ...article,
             image
           };
-
         })
       );
 
@@ -131,9 +156,15 @@ export class ArticleService {
       });
 
       if (imageFile && image) {
-        image[0].source = image[0].source ? image[0].source : '';
+        image.source = image.source ? image.source : '';
+        const currentImage = await this.imageService.findByOrigin(id);
         const imageUrl = await this.imageService.create(
-          { id_origem: id, source: image[0].source, alt: image[0].alt },
+          {
+            id_origem: id,
+            source: image.source,
+            alt: image.alt,
+            pos: currentImage.length
+          },
           imageFile
         );
       }
@@ -144,7 +175,6 @@ export class ArticleService {
       };
 
       return returnArticle;
-
     } catch (error) {
       throw new Error(error);
     }
@@ -155,7 +185,7 @@ export class ArticleService {
       await this.prisma.article.delete({
         where: { id }
       });
-      
+
       await this.imageService.removeAll(id);
       return;
     } catch (error) {

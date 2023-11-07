@@ -193,7 +193,8 @@ export class UserService {
           image: {
             url: image ? image.url : '',
             source: image ? image.source : '',
-            alt: image ? image.alt : ''
+            alt: image ? image.alt : '',
+            pos:0
           },
           password: client!.password
         };

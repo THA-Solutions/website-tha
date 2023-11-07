@@ -27,8 +27,8 @@ export class InverterService {
       let inverterImage: ResponseImageDto = {} as ResponseImageDto;
 
       if (imageFile) {
-         inverterImage = await this.imageService.create(
-          { id_origem: inverter.id, source: image.source, alt: image.alt },
+        inverterImage = await this.imageService.create(
+          { id_origem: inverter.id, source: image.source, alt: image.alt ,pos:0},
           imageFile
         );
       }
@@ -81,10 +81,10 @@ export class InverterService {
     } catch (error) {}
   }
 
-  update(id: string, updateInverterDto: UpdateInverterDto) {
+  async update(id: string, updateInverterDto: UpdateInverterDto) {
     try {
       const { image, ...data } = updateInverterDto;
-      const inverter = this.prisma.inverter.update({
+      const inverter = await this.prisma.inverter.update({
         where: { id },
         data: data
       });
@@ -93,11 +93,12 @@ export class InverterService {
     } catch (error) {}
   }
 
-  remove(id: string) {
+  async remove(id: string) {
     try {
-      this.prisma.inverter.delete({
+      await this.prisma.inverter.delete({
         where: { id }
       });
+      await this.imageService.removeAll(id);
       return;
     } catch (error) {}
   }

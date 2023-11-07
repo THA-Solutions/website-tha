@@ -100,25 +100,82 @@ export default function RegisterArticle() {
     'video'
   ];
 
-  const onSubmit = async (data: FieldValues) => {
-    const { imageFile, ...content } = data;
+  const baseToBlob = (base64: string, mimeType: string) => {
+    // Certifique-se de que não há espaços em branco ou quebras de linha na string base64
+    const cleanedBase64 = base64.replace(/\s/g, '');
 
-    const formData = new FormData();
-    
-    formData.append('imageFile', imageFile[0]);
+    // Decodifique a string base64 para um array de bytes
+    const byteString = window.atob(cleanedBase64);
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
 
-    for(let key in content) {
-      formData.append(key, content[key]);
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
     }
 
+    return new Blob([ab], { type: mimeType });
+  };
+
+  const onSubmit = async (data: FieldValues) => {
     try {
+      const { imageFile, ...content } = data;
+      const file: any = [];
+      // Encontre todas as tags de imagem no conteúdo
+      const imgTags = data.content.match(/<img[^>]+src="([^">]+)"/g);
+
+      file.push(imageFile[0]);
+
+      // Se houver imagens no conteúdo adicione-as ao FormData
+      if (imgTags) {
+        let index = 0;
+        imgTags.forEach((imgTag: string) => {
+          const srcMatch = imgTag.match(/src="([^"]+)"/);
+          if (srcMatch && srcMatch[1]) {
+            const base64Data = srcMatch[1].split(';base64,')[1];
+            if (base64Data) {
+              const mimeType = srcMatch[1].split(';')[0].split(':')[1];
+              const blob = baseToBlob(base64Data, mimeType);
+              const image = new File([blob], `image${index}`, {
+                type: mimeType
+              });
+              file.push(image);
+              index++;
+            }
+          }
+        });
+
+        // Substitua as tags de imagem por espaços reservados
+        content.content = content.content.replace(
+          /<img[^>]+src="([^]+)">/g,
+          () => {
+            const placeholder = ` <image${index}> `;
+            index++;
+            return placeholder;
+          }
+        );
+      }
+
+      const formData = new FormData();
+
+      file.map((image: any) => {
+        formData.append(`imageFile`, image);
+      });
+
+      for (let key in content) {
+        if (key === 'image') {
+          formData.append(key, JSON.stringify(content[key]));
+        } else {
+          formData.append(key, content[key]);
+        }
+      }
+
       await axios.post('http://localhost:3000/api/article', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       });
     } catch (error) {
-      console.log(error);
+      throw Error(`Error in create article ${error}`);
     }
   };
 
