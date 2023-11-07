@@ -1,13 +1,12 @@
 import { IsNumber, IsString } from 'class-validator';
 
 export class ResponseInverterDto {
-    
-  image:{
-  url: string;
-  source: string | null;
-  alt: string | null;
-    };
-    
+  image: {
+    url: string;
+    source: string | null;
+    alt: string | null;
+  };
+
   @IsString()
   id_brand: string;
 

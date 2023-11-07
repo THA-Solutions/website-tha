@@ -47,7 +47,10 @@ const features = [
       '- Gentileza, empatia, educação, descrição verbal, oral.'
     ],
     icon: (
-      <SupportAgentOutlined className="h-6 w-6 text-tertiary" aria-hidden="true" />
+      <SupportAgentOutlined
+        className="h-6 w-6 text-tertiary"
+        aria-hidden="true"
+      />
     )
   },
   {

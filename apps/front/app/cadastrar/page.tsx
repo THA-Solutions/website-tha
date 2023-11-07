@@ -7,55 +7,41 @@ import { useForm, FieldValues } from 'react-hook-form';
 
 import InputField from '../../components/input-field';
 import PasswordInputField from '../../components/password-input-field';
+import Logo from '../../public/logo-white.png';
 
 import { Email, Key, Person, PersonOutlined } from '@mui/icons-material';
-
-async function onSubmit(data: FieldValues) {
-  alert(JSON.stringify(data, null, 2));
-}
 
 export default function SignUp() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors }
   } = useForm();
 
-  const password = watch('password');
-
   const [passwordVisible, setPasswordVisible] = useState(false);
+
+  async function onSubmit(data: FieldValues) {
+    alert(JSON.stringify(data, null, 2));
+  }
 
   const formInputs = [
     {
-      group: 'name',
-      items: [
-        {
-          label: 'Primeiro nome',
-          name: 'firstName',
-          type: 'text',
-          placeholder: 'João',
-          autoComplete: 'given-name',
-          required: {
-            value: true,
-            message: 'Campo obrigatório'
-          },
-
-          icon: <Person className=" text-background" />
-        },
-        {
-          label: 'Sobrenome',
-          name: 'lastName',
-          type: 'text',
-          placeholder: 'Silva',
-          autoComplete: 'family-name',
-          required: {
-            value: true,
-            message: 'Campo obrigatório'
-          },
-          icon: <PersonOutlined className=" text-background" />
-        }
-      ]
+      label: 'Nome',
+      name: 'name',
+      type: 'text',
+      placeholder: 'Exemplo',
+      autoComplete: 'name',
+      required: true,
+      icon: <Person className=" text-tertiary" />
+    },
+    {
+      label: 'Sobrenome',
+      name: 'surname',
+      type: 'text',
+      placeholder: 'Exemplo',
+      autoComplete: 'family-name',
+      required: true,
+      icon: <PersonOutlined className=" text-tertiary" />
     },
     {
       label: 'E-mail',
@@ -63,11 +49,8 @@ export default function SignUp() {
       type: 'email',
       placeholder: 'exemplo@exemplo.com',
       autoComplete: 'email',
-      required: {
-        value: true,
-        message: 'Campo obrigatório'
-      },
-      icon: <Email className=" text-background" />
+      required: true,
+      icon: <Email className=" text-tertiary" />
     },
     {
       label: 'Senha',
@@ -75,115 +58,75 @@ export default function SignUp() {
       type: 'password',
       placeholder: '********',
       autoComplete: 'current-password',
-      required: {
-        value: true,
-        message: 'Campo obrigatório'
-      },
-      icon: <Key className=" text-background" />
-    },
-    {
-      label: 'Confirmar senha',
-      name: 'confirmPassword',
-      type: 'password',
-      placeholder: '********',
-      autoComplete: 'new-password',
-      required: {
-        value: true,
-        message: 'Campo obrigatório'
-      },
-      validate: (value: string) =>
-        value === password || 'As senhas não são iguais',
-      icon: <Key className=" text-background" />
+      required: true,
+      icon: <Key className=" text-tertiary" />
     }
   ];
 
   console.log(errors);
 
   return (
-    <div className="backdrop-blur-lg bg-white/20 px-8 w-full h-full flex flex-col justify-center shadow-2xl rounded-xl ring-2 ring-white/40 lg:h-5/6 lg:max-w-2xl lg:px-24 lg:py-20">
-      <header className="flex flex-col">
+    <section className="bg-hero-background bg-center bg-cover bg-no-repeat h-screen flex flex-col items-center justify-center text-left">
+      <div className="backdrop-blur-md bg-gray-800/80 py-8 px-4 w-full h-full flex flex-col justify-between shadow-[0_0_50px_10px] shadow-background ring-1 ring-gray-00 lg:max-w-2xl lg:my-4 lg:px-12">
         <Link href="/" className="h-12 w-12 mb-8">
-          <Image src="/logo-white.png" alt="Logo da empresa" width={100} height={100} />
+          <Image src={Logo} alt="Logo da empresa" />
         </Link>
-        <div className="mb-12 flex flex-col gap-3">
-          <h1 className="text-3xl font-bold font-alt text-tertiary lg:text-5xl">
-            Bem-vindo!
-          </h1>
-          <h2 className="text-xl font-semibold text-darkGray lg:text-2xl">
-            Faça seu cadastro e comece a usar
-          </h2>
-        </div>
-      </header>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex flex-col w-full gap-4">
-          {formInputs.map((inputOrGroup) => {
-            if ('group' in inputOrGroup && inputOrGroup.items) {
-              return (
-                <div
-                  className="flex flex-col w-full gap-4 lg:flex-row lg:gap-8"
-                  key={inputOrGroup.items[0].name}
-                >
-                  {inputOrGroup.items.map((input) => (
-                    <InputField
-                      key={input.name}
-                      input={input}
-                      register={register}
-                      errors={errors}
-                      colorLabel="background"
-                      colorRing="ring-lightGray"
-                    />
-                  ))}
-                </div>
-              );
-            } else {
-              if (inputOrGroup.type === 'password') {
-                return (
-                  <PasswordInputField
-                    key={inputOrGroup.name}
-                    input={inputOrGroup}
-                    register={register}
-                    errors={errors}
-                    passwordVisible={passwordVisible}
-                    setPasswordVisible={setPasswordVisible}
-                    colorLabel="background"
-                    colorRing="ring-lightGray"
-                  />
-                );
-              } else {
-                return (
-                  <InputField
-                    key={inputOrGroup.name}
-                    input={inputOrGroup}
-                    register={register}
-                    errors={errors}
-                    colorLabel="background"
-                    colorRing="ring-lightGray"
-                  />
-                );
-              }
-            }
-          })}
-        </div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="mb-12 flex flex-col gap-3">
+            <h1 className="text-3xl font-bold font-alt text-tertiary">
+              Bem-vindo!
+            </h1>
+            <h2 className="text-xl text-gray-400">
+              Faça seu cadastro e junte-se ao time
+            </h2>
+          </div>
 
-        <button
-          type="submit"
-          className="w-full mt-8 rounded-md bg-background px-3.5 py-2.5 text-center text-xl font-semibold font-alt text-white shadow-sm hover:bg-background/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tertiary"
-        >
-          Cadastrar
-        </button>
-      </form>
+          <div className="flex flex-col w-full gap-4">
+            {formInputs.map((input) =>
+              input.type === 'password' ? (
+                <PasswordInputField
+                  key={input.name}
+                  input={input}
+                  register={register}
+                  errors={errors}
+                  passwordVisible={passwordVisible}
+                  setPasswordVisible={setPasswordVisible}
+                  colorLabel="white"
+                  colorRing="ring-gray-400"
+                />
+              ) : (
+                <InputField
+                  key={input.name}
+                  input={input}
+                  register={register}
+                  errors={errors}
+                  colorLabel="white"
+                  colorRing="ring-gray-400"
+                />
+              )
+            )}
+          </div>
 
-      <footer className="mt-8 flex w-full justify-center">
-        <p className="text-md text-lightGray">
-          Já possui uma conta?{' '}
-          <Link
-            href="/entrar"
-            className="text-tertiary text-lg font-bold hover:underline"
+          <button
+            type="submit"
+            className="w-full mt-8 bg-tertiary px-3.5 py-2.5 text-center text-xl font-bold font-alt text-gray-800/80 shadow-sm transition-all hover:bg-tertiary/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tertiary"
           >
-            ENTRE
-          </Link>
-        </p>
-      </footer>
-    </div>
+            CADASTRAR
+          </button>
+        </form>
+
+        <footer className="mt-6 flex w-full justify-center">
+          <p className="text-base text-gray-300 sm:text-lg lg:text-xl">
+            Já possui uma conta?{' '}
+            <Link
+              href="/entrar"
+              className="text-tertiary font-bold hover:underline"
+            >
+              ENTRE
+            </Link>
+          </p>
+        </footer>
+      </div>
+    </section>
   );
 }

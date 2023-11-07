@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { InverterController } from './inverter.controller';
-import { InverterService} from './inverter.service';
+import { InverterService } from './inverter.service';
 
 describe('InverterController', () => {
   let controller: InverterController;

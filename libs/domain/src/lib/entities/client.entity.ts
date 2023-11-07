@@ -3,8 +3,8 @@ export interface Client {
   email: string;
   password: string;
   imageUrl: string;
-  image:{
-  source: string | null;
-  alt: string | null;
-  }
+  image: {
+    source: string | null;
+    alt: string | null;
+  };
 }

@@ -5,7 +5,7 @@ import { PageTitle } from '../../components/page-title';
 import { Article, articles } from '@tha-solutions';
 
 export default async function Blog() {
-  const posts = await articles.getPostData();
+  const posts: Article[] = await articles.getPostData();
 
   return (
     <>
@@ -21,20 +21,19 @@ export default async function Blog() {
             className="flex max-w-xl flex-col items-start justify-between"
           >
             <div className="w-full h-64 sm:h-80 md:h-64 lg:h-72">
-              {post.image.url ? (
-
+              {post.image && post.image.length > 0 ? (
                 <Image
+                  src={post.image[0].url}
+                  alt={post.image[0].alt || 'Descrição não fornecida'}
                   className="mb-4 rounded-lg shadow-lg w-full h-full"
-                  src={post.image.url}
-                  alt="Imagem do artigo"
                   width={1000}
                   height={1000}
                 />
               ) : (
                 <Image
-                  className="mb-4 rounded-lg shadow-lg w-full h-full"
                   src="/image-not-found.jpg"
                   alt="Imagem do artigo"
+                  className="mb-4 rounded-lg shadow-lg w-full h-full"
                   width={1000}
                   height={1000}
                 />

@@ -34,6 +34,29 @@ body {
   backdrop-filter: blur(5px);
 }
 
-input[type="password"]::-ms-reveal {
+input[type='password']::-ms-reveal {
   display: none;
 }
+
+.quill-content h1 {
+  @apply text-4xl font-bold;
+}
+
+.quill-content h2 {
+  @apply text-3xl font-semibold;
+}
+
+.quill-content p,
+li {
+  @apply text-xl;
+}
+
+.quill-content ul {
+  @apply list-disc list-inside;
+}
+
+.quill-content ol {
+  @apply list-decimal list-inside;
+}
+
+/* E assim por diante para outras tags */

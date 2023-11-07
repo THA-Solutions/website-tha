@@ -186,7 +186,7 @@ export class ArticleService {
         where: { id }
       });
 
-      await this.imageService.removeAll(id);
+      this.imageService.removeAll(id);
       return;
     } catch (error) {
       throw new Error(error);

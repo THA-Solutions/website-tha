@@ -42,7 +42,9 @@ const InputField = ({
           name={input.name}
           id={input.name}
           autoComplete={input.autoComplete}
-          className={`w-full border-0 ${input.icon ? 'pl-14' : 'pl-4'} py-2 text-white bg-transparent shadow-sm ring-1 ring-inset ${colorRing} placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-tertiary`}
+          className={`w-full border-0 ${
+            input.icon ? 'pl-14' : 'pl-4'
+          } py-2 text-white bg-transparent shadow-sm ring-1 ring-inset ${colorRing} placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-tertiary`}
         />
         <div className="absolute top-1/2 transform -translate-y-1/2 left-4">
           {input.icon}
