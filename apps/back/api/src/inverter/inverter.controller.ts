@@ -37,6 +37,11 @@ export class InverterController {
     return this.inverterService.findOne(id);
   }
 
+  @Get('title/:title')
+  findByTitle(@Param('title') title: string) {
+    return this.inverterService.findByTitle(title);
+  }
+
   @Patch(':id')
   update(
     @Param('id') id: string,

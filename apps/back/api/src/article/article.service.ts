@@ -68,7 +68,7 @@ export class ArticleService {
         ...article,
         image: articleImage
       };
-      console.log(returnArticle);
+
       return returnArticle;
     } catch (error) {
       throw new Error(error);

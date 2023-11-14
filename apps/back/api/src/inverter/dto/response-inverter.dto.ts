@@ -7,6 +7,8 @@ export class ResponseInverterDto {
     alt: string | null;
   };
 
+  title: string;
+
   @IsString()
   id_brand: string;
 

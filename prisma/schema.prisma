@@ -86,6 +86,7 @@ model Brand {
 model Inverter {
   id                                    String @id @default(cuid())
   id_brand                              String
+  title                                 String @db.VarChar(100)
   cc_voltage                            String @db.VarChar(100)
   mppt_voltage_range                    String @db.VarChar(100)
   max_input_current                     String @db.VarChar(100)

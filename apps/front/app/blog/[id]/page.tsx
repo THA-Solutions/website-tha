@@ -10,6 +10,9 @@ export default async function Post({ params }: { params: { id: string } }) {
   const postData: Article = await articles.getPostDataById(params.id);
   const postsRelated = await articles.getPostData();
 
+  console.log(postData, 'abc');
+
+
   return (
     <>
       <nav className="flex items-center space-x-8">

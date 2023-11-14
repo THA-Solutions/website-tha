@@ -28,7 +28,12 @@ export class InverterService {
 
       if (imageFile) {
         inverterImage = await this.imageService.create(
-          { id_origem: inverter.id, source: image.source, alt: image.alt ,pos:0},
+          {
+            id_origem: inverter.id,
+            source: image.source,
+            alt: image.alt,
+            pos: 0
+          },
           imageFile
         );
       }
@@ -79,6 +84,33 @@ export class InverterService {
 
       return returnInverter;
     } catch (error) {}
+  }
+
+  async findByTitle(title: string): Promise<ResponseInverterDto[]> {
+    try {
+      const inverters = await this.prisma.inverter.findMany({
+        where: {
+          title: {
+            contains: title
+          }
+        },
+        take: 100
+      });
+
+      const returnInverters = await Promise.all(
+        inverters.map(async (inverter) => {
+          let [image] = await this.imageService.findByOrigin(inverter.id);
+
+          return {
+            ...inverter,
+            image
+          };
+        })
+      );
+      return returnInverters;
+    } catch (error) {
+      throw Error(error);
+    }
   }
 
   async update(id: string, updateInverterDto: UpdateInverterDto) {
