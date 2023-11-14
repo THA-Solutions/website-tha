@@ -2,7 +2,6 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-
 import { ArrowBackIosNewRounded } from '@mui/icons-material';
 import { Article, formatter, articles } from '@tha-solutions';
 
@@ -18,7 +17,6 @@ const replaceImagesInText = (content: string, images: any) => {
 
 export default async function Post({ params }: { params: { id: string } }) {
   const postsRelated = await articles.getPostData();
-
   const postData: Article = await articles.getPostDataById(params.id);
 
   return (

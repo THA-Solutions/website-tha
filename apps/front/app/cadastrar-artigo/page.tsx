@@ -155,8 +155,6 @@ export default function RegisterArticle() {
           }
         );
       }
-      console.log('x131');
-      console.log(content.content);
 
       const formData = new FormData();
       
