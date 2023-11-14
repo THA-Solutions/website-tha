@@ -6,12 +6,20 @@ import Link from 'next/link';
 import { ArrowBackIosNewRounded } from '@mui/icons-material';
 import { Article, formatter, articles } from '@tha-solutions';
 
+const replaceImagesInText = (content: string, images: any) => {
+  return content.replace(/<image(\d+)>/g, (match, pos) => {
+    const image = images.find((img: any) => img.pos === parseInt(pos));
+    if (image) {
+      return `<img src="${image.url}"/>`;
+    }
+    return match;
+  });
+};
+
 export default async function Post({ params }: { params: { id: string } }) {
-  const postData: Article = await articles.getPostDataById(params.id);
   const postsRelated = await articles.getPostData();
 
-  console.log(postData, 'abc');
-
+  const postData: Article = await articles.getPostDataById(params.id);
 
   return (
     <>
@@ -74,7 +82,9 @@ export default async function Post({ params }: { params: { id: string } }) {
 
           <article
             className="quill-content"
-            dangerouslySetInnerHTML={{ __html: postData.content }}
+            dangerouslySetInnerHTML={{
+              __html: replaceImagesInText(postData.content, postData.image)
+            }}
           />
         </main>
 

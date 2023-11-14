@@ -27,12 +27,12 @@ export class ImageController {
     return this.imageService.create(createImageDto, imageFile);
   }
 
-  @Get()
-  findAll() {
-    return this.imageService.findAll();
+  @Get(':id')
+  findAll(@Param('id') id: string) {
+    return this.imageService.findAll(id);
   }
 
-  @Get(':id')
+  @Get('unique/:id')
   findOne(@Param('id') id: string) {
     return this.imageService.findOne(id);
   }

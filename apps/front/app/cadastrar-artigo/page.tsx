@@ -121,7 +121,7 @@ export default function RegisterArticle() {
       const { imageFile, ...content } = data;
       const file: any = [];
       // Encontre todas as tags de imagem no conteúdo
-      const imgTags = data.content.match(/<img[^>]+src="([^">]+)"/g);
+      const imgTags = data.content.match(/<img[^>]+src="([^">]+)">/g);
 
       file.push(imageFile[0]);
 
@@ -143,10 +143,11 @@ export default function RegisterArticle() {
             }
           }
         });
+        index = 0;
 
         // Substitua as tags de imagem por espaços reservados
         content.content = content.content.replace(
-          /<img[^>]+src="([^]+)">/g,
+          /<img[^>]+src="([^">]+)">/g,
           () => {
             const placeholder = ` <image${index}> `;
             index++;
@@ -154,9 +155,11 @@ export default function RegisterArticle() {
           }
         );
       }
+      console.log('x131');
+      console.log(content.content);
 
       const formData = new FormData();
-
+      
       file.map((image: any) => {
         formData.append(`imageFile`, image);
       });

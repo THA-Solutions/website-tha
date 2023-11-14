@@ -16,9 +16,7 @@ export class ImageService {
     image: Express.Multer.File
   ): Promise<ResponseImageDto> {
     try {
-
       const url = await this.cloudinary.uploadImage(image);
-
 
       const { id, ...imageCreated } = await this.prisma.image.create({
         data: {
@@ -36,9 +34,11 @@ export class ImageService {
     }
   }
 
-  async findAll() {
+  async findAll(id: string) {
     try {
-      const images = await this.prisma.image.findMany();
+      const images = await this.prisma.image.findMany({
+        where: { id_origem: id }
+      });
 
       return images;
     } catch (error) {
