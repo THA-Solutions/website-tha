@@ -12,7 +12,6 @@ export const authOptions: AuthOptions = {
       credentials: {},
       async authorize(credentials) {
         try {
-        
           const res = await fetch('http://localhost:3000/api/auth/login', {
             method: 'POST',
             headers: {
@@ -20,8 +19,8 @@ export const authOptions: AuthOptions = {
             },
             body: JSON.stringify(credentials)
           });
-
           const user = await res.json();
+
           if (res.ok && user) {
             return user;
           }
@@ -50,12 +49,12 @@ export const authOptions: AuthOptions = {
       //  token.userRole= user.role;
       //}
       user && (token.user = user);
-      console.log(user,"ax2x",token)
+
       return token;
     },
 
     session: async ({ session, token }) => {
-   
+
       const sessionData = {
         user: {
           email: (token.user as User).email,
@@ -67,10 +66,16 @@ export const authOptions: AuthOptions = {
         expires: session.expires
       };
       session = sessionData;
+
       return session;
     }
   },
 
+  pages: {
+    signIn: '/',
+    signOut: '/',
+    error: '/'
+  }
 };
 
 const handler = NextAuth(authOptions);

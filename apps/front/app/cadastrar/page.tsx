@@ -69,7 +69,7 @@ export default function SignUp() {
     }
   ];
 
-  console.log(errors);
+  console.error(errors);
 
   return (
     <section className="bg-hero-background bg-center bg-cover bg-no-repeat h-screen flex flex-col items-center justify-center text-left">

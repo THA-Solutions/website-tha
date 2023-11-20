@@ -35,8 +35,8 @@ export class UserController {
   }
 
   //@Public()
-  @UseGuards(RolesGuard)
-  @Roles(Role.Admin)
+  //@UseGuards(RolesGuard)
+  //@Roles(Role.Admin)
   @Get()
   findAll(): Promise<ResponseUserDto[]> {
     try {
@@ -86,8 +86,8 @@ export class UserController {
     }
   }
 
-  @UseGuards(RolesGuard)
-  @Roles(Role.Admin)
+  //@UseGuards(RolesGuard)
+  //@Roles(Role.Admin)
   @Delete(':id')
   remove(@Param('id') id: string) {
     try {

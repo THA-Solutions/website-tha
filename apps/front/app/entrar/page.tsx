@@ -25,7 +25,8 @@ export default function SignIn() {
   async function onSubmit(data: FieldValues) {
     let signin = await signIn('credentials', {
       email: data.email,
-      password: data.password
+      password: data.password,
+      redirect: false
     });
     return signin;
   }
