@@ -82,7 +82,7 @@ export default async function Comparacao({
     });
 
   const compareData = compare(inverterData, inverterData2);
-  //console.log(compare(inverterData, inverterData2))
+  
   return (
     <>
       <header>
@@ -100,7 +100,6 @@ export default async function Comparacao({
               );
           })}
         </div>
-        ----------------------------------------------------------------------------------
         <div>
           {Object.keys(compareData.b).map((key, index) => {
             const formattedKey = formatFields[key];

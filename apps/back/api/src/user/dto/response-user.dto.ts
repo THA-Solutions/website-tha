@@ -15,7 +15,7 @@ export class ResponseUserDto {
   email: string;
 
   @IsString()
-  permissions: string;
+  role: string;
 
   @Exclude()
   password: string;

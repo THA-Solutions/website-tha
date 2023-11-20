@@ -37,7 +37,7 @@ export const Articles = ({ posts }: ArticlesProps) => {
       try {
         axios.delete(`http://localhost:3000/api/article/${id}`);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
   }

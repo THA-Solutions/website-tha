@@ -91,7 +91,7 @@ export class UserService {
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
-            permissions: user.permissions,
+            role: user.role,
             image: {
               url: image ? image.url : ''
             }
@@ -224,7 +224,7 @@ export class UserService {
           alt: image ? image.alt : ''
         },
         password: user!.password,
-        permissions: user!.permissions
+        role: user!.role
       };
       return returnUser as ResponseUserDto;
     } catch (error) {
