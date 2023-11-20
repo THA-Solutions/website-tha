@@ -70,15 +70,10 @@ const features = [
     imageSrc: SupplyChain
   }
 ];
-const fetchUser=async()=>{ 
-const allUser= await fetch('http://localhost:3000/api/user')
-const user= await allUser.json()
-console.log('aaaa',user)
-}
+
 export default function Home() {
-  fetchUser()
   return (
-    <main>
+    <>
       <Header />
 
       {/* Hero */}
@@ -221,6 +216,6 @@ export default function Home() {
       </section>
 
       <Footer />
-    </main>
+    </>
   );
 }
