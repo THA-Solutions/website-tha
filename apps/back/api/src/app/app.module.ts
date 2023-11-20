@@ -27,19 +27,7 @@ import { RolesGuard } from '../auth/roles.guard';
     CloudinaryModule
   ],
   controllers: [AppController, CloudinaryController],
-  providers: [
-    AppService,
-    PrismaService,
-    ConfigModule,
-    {
-      provide: APP_GUARD,
-      useClass: AuthGuard
-    },
-    {
-      provide: APP_GUARD,
-      useClass: RolesGuard
-    }
-  ],
+  providers: [AppService, PrismaService, ConfigModule],
   exports: [PrismaService]
 })
 export class AppModule {}

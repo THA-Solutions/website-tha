@@ -196,7 +196,7 @@ export class UserService {
             url: image ? image.url : '',
             source: image ? image.source : '',
             alt: image ? image.alt : '',
-            pos:0
+            pos: 0
           },
           password: client!.password
         };

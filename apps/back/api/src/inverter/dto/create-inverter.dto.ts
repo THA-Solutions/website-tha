@@ -8,7 +8,7 @@ export class CreateInverterDto {
   };
 
   title: string;
-  
+
   @IsString()
   id_brand: string;
 

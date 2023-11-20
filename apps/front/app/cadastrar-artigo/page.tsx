@@ -157,7 +157,7 @@ export default function RegisterArticle() {
       }
 
       const formData = new FormData();
-      
+
       file.map((image: any) => {
         formData.append(`imageFile`, image);
       });

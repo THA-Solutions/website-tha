@@ -31,7 +31,6 @@ export const Articles = ({ posts }: ArticlesProps) => {
   }
 
   function handleDeletePost(id: string) {
-
     const confirmDelete = confirm('Tem certeza que deseja deletar este post?');
     if (confirmDelete) {
       try {

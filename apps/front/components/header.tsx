@@ -2,6 +2,8 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useSession, signOut } from 'next-auth/react';
 import { Fragment, useState } from 'react';
 
 import Logo from '../public/logo-colored.png';
@@ -44,6 +46,8 @@ function classNames(...classes: string[]) {
 
 export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { status } = useSession();
+  const router = useRouter();
 
   return (
     <header className="bg-transparent h-37 absolute z-40 w-full top-0">
@@ -144,12 +148,21 @@ export const Header = () => {
           ))}
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <Link
-            href="/entrar"
-            className="text-xl font-semibold leading-6 text-tertiary"
-          >
-            Entrar <span aria-hidden="true">&rarr;</span>
-          </Link>
+          {status === 'authenticated' ? (
+            <Link
+              href="/perfil"
+              className="text-xl font-semibold leading-6 text-tertiary"
+            >
+              Perfil <span aria-hidden="true">&rarr;</span>
+            </Link>
+          ) : (
+            <Link
+              href="/entrar"
+              className="text-xl font-semibold leading-6 text-tertiary"
+            >
+              Entrar <span aria-hidden="true">&rarr;</span>
+            </Link>
+          )}
         </div>
       </nav>
 
@@ -222,12 +235,33 @@ export const Header = () => {
                 ))}
               </div>
               <div className="py-6">
-                <Link
-                  href="/entrar"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-primary hover:bg-backgroundAlt2"
-                >
-                  Entrar <span aria-hidden="true">&rarr;</span>
-                </Link>
+                {status === 'authenticated' ? (
+                  <div className="flex flex-col space-y-4">
+                    <Link
+                      href="/perfil"
+                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-secondary hover:bg-backgroundAlt2"
+                    >
+                      Perfil <span aria-hidden="true">&rarr;</span>
+                    </Link>
+                    <button
+                      onClick={() => {
+                        signOut({ redirect: false }).then(() => {
+                          router.push('/entrar'); // Redirect to the dashboard page after signing out
+                        });
+                      }}
+                      className="-mx-3 block  text-start rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-tertiary ring-1 ring-tertiary transition-all hover:bg-tertiary hover:text-background"
+                    >
+                      Sair
+                    </button>
+                  </div>
+                ) : (
+                  <Link
+                    href="/entrar"
+                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-secondary hover:bg-backgroundAlt2"
+                  >
+                    Entrar <span aria-hidden="true">&rarr;</span>
+                  </Link>
+                )}
               </div>
             </div>
           </div>

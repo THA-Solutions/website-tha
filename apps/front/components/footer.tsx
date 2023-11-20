@@ -30,7 +30,7 @@ export const Footer = () => {
     },
     {
       name: 'WhatsApp',
-      href: 'https://www.facebook.com/nextjs.org',
+      href: '/',
       icon: (
         <WhatsApp className="h-6 w-6 flex-none text-lightGray hover:text-secondary transition-all" />
       )
@@ -149,7 +149,7 @@ export const Footer = () => {
         </div>
         <div className="flex gap-6">
           {social.map((item) => (
-            <Link href={item.href} key={item.name}>
+            <Link href={item.href} key={item.name} target="_blank">
               {item.icon}
             </Link>
           ))}

@@ -47,10 +47,8 @@ const compare = (a: any, b: any) => {
       b[key] = { valor: b[key], operador: 'igual' };
     }
   }
-  return { a, b }
+  return { a, b };
 };
-
-
 
 export default async function Comparacao({
   params
@@ -82,7 +80,7 @@ export default async function Comparacao({
     });
 
   const compareData = compare(inverterData, inverterData2);
-  
+
   return (
     <>
       <header>

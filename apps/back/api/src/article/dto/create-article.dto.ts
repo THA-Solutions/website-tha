@@ -20,7 +20,6 @@ export class CreateArticleDto {
     url: string | null;
     source: string | null;
     alt: string | null;
-    pos: number | 0;	
+    pos: number | 0;
   };
-
 }
