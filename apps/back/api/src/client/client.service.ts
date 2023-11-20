@@ -135,7 +135,6 @@ export class ClientService {
     }
   }
 
-
   async remove(id: string) {
     try {
       await this.prisma.client.delete({

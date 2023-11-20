@@ -2,6 +2,8 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import { useForm, FieldValues } from 'react-hook-form';
 import axios from 'axios';
@@ -21,12 +23,16 @@ export default function SignUp() {
 
   const [passwordVisible, setPasswordVisible] = useState(false);
 
+  const router = useRouter();
+
   async function onSubmit(data: FieldValues) {
-  
     const createdUser = await axios.post(
       'http://localhost:3000/api/user',
       data
     );
+
+    router.push('/entrar');
+
     return createdUser;
   }
 
@@ -68,8 +74,6 @@ export default function SignUp() {
       icon: <Key className=" text-tertiary" />
     }
   ];
-
-  console.error(errors);
 
   return (
     <section className="bg-hero-background bg-center bg-cover bg-no-repeat h-screen flex flex-col items-center justify-center text-left">

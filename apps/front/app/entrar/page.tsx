@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { useForm, FieldValues } from 'react-hook-form';
 import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 
 import InputField from '../../components/input-field';
@@ -28,6 +29,7 @@ export default function SignIn() {
       password: data.password,
       redirect: false
     });
+
     return signin;
   }
 

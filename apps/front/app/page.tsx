@@ -72,9 +72,8 @@ const features = [
 ];
 
 export default function Home() {
-
   return (
-    <main>
+    <>
       <Header />
 
       {/* Hero */}
@@ -217,6 +216,6 @@ export default function Home() {
       </section>
 
       <Footer />
-    </main>
+    </>
   );
 }

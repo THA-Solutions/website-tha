@@ -33,7 +33,6 @@ export class ArticleService {
       //Percorre o array de imagens e salva no banco e as associa ao artigo
       if (imageFile) {
         for (let i = 0; i < imageFile.length; i++) {
-
           if (i == 0) {
             const imageUrl = await this.imageService.create(
               {
@@ -46,8 +45,7 @@ export class ArticleService {
             );
 
             articleImage.push(imageUrl);
-          }else{
-
+          } else {
             const imageUrl = await this.imageService.create(
               {
                 id_origem: article.id,
@@ -60,7 +58,6 @@ export class ArticleService {
 
             articleImage.push(imageUrl);
           }
-          
         }
       }
 

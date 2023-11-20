@@ -1,9 +1,7 @@
-import NextAuth from 'next-auth';
 import type { AuthOptions } from 'next-auth';
+import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import UserEntity from '../../../../../../libs/domain/src/lib/entities/user.entity';
-
-interface User extends UserEntity {}
+import { User } from '@tha-solutions';
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -25,6 +23,7 @@ export const authOptions: AuthOptions = {
             return user;
           }
         } catch (error) {
+          console.error(`Sign-in authorize error: ${error}`);
           throw new Error(`Sign-in error ${error}`);
         }
       }
@@ -49,12 +48,10 @@ export const authOptions: AuthOptions = {
       //  token.userRole= user.role;
       //}
       user && (token.user = user);
-
       return token;
     },
 
     session: async ({ session, token }) => {
-
       const sessionData = {
         user: {
           email: (token.user as User).email,
@@ -72,9 +69,7 @@ export const authOptions: AuthOptions = {
   },
 
   pages: {
-    signIn: '/',
-    signOut: '/',
-    error: '/'
+    signIn: '/entrar'
   }
 };
 
