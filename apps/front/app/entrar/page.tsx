@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { useForm, FieldValues } from 'react-hook-form';
 import { signIn } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 
 import InputField from '../../components/input-field';
 import PasswordInputField from '../../components/password-input-field';

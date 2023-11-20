@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useForm, FieldValues } from 'react-hook-form';
+import axios from 'axios';
 
 import InputField from '../../components/input-field';
 import PasswordInputField from '../../components/password-input-field';
@@ -21,13 +22,18 @@ export default function SignUp() {
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   async function onSubmit(data: FieldValues) {
-    alert(JSON.stringify(data, null, 2));
+  
+    const createdUser = await axios.post(
+      'http://localhost:3000/api/user',
+      data
+    );
+    return createdUser;
   }
 
   const formInputs = [
     {
       label: 'Nome',
-      name: 'name',
+      name: 'firstName',
       type: 'text',
       placeholder: 'Exemplo',
       autoComplete: 'name',
@@ -36,7 +42,7 @@ export default function SignUp() {
     },
     {
       label: 'Sobrenome',
-      name: 'surname',
+      name: 'lastName',
       type: 'text',
       placeholder: 'Exemplo',
       autoComplete: 'family-name',

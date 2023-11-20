@@ -8,6 +8,7 @@ import {
 import './global.css';
 
 import { contact } from '../constants';
+import { SessionProvider } from 'next-auth/react';
 
 const roboto = Roboto({ subsets: ['latin'], variable: '--font-roboto' });
 const baiJamjuree = BaiJamjuree({
@@ -31,7 +32,7 @@ export default function RootLayout({
       <body
         className={`${roboto.variable} ${baiJamjuree.variable} bg-background font-sans text-gray-100`}
       >
-        {children}
+        <SessionProvider>{children}</SessionProvider>
         <ProgressBar
           height="4px"
           color="#f01966"

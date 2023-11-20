@@ -14,6 +14,7 @@ import { CloudinaryController } from '../cloudinary/cloudinary.controller';
 import PrismaService from '../prisma.service';
 import { AuthGuard } from '../auth/auth.guard';
 import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from '../auth/roles.guard';
 
 @Module({
   imports: [
@@ -33,6 +34,10 @@ import { APP_GUARD } from '@nestjs/core';
     {
       provide: APP_GUARD,
       useClass: AuthGuard
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard
     }
   ],
   exports: [PrismaService]

@@ -34,7 +34,9 @@ export class UserController {
     }
   }
 
-  @Public()
+  //@Public()
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin)
   @Get()
   findAll(): Promise<ResponseUserDto[]> {
     try {
