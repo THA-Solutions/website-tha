@@ -2,7 +2,6 @@ import { getToken } from 'next-auth/jwt';
 import { NextFetchEvent, NextRequest, NextResponse } from 'next/server';
 
 export async function middleware(request: NextRequest, _next: NextFetchEvent) {
-  const a = await getToken({ req: request });
   const { pathname } = request.nextUrl;
   const protectedRoutesAdmin = ['/admin'];
 
