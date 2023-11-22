@@ -14,9 +14,6 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UseGuards } from '@nestjs/common';
-import { RolesGuard } from '../auth/roles.guard';
-import { Roles } from '../auth/decorators/roles.decorator';
-import { Role } from '../auth/roles.enum';
 import { ResponseUserDto } from './dto/response-user.dto';
 import { Public } from '../auth/decorators/public.decorator';
 
@@ -34,9 +31,6 @@ export class UserController {
     }
   }
 
-  //@Public()
-  @UseGuards(RolesGuard)
-  @Roles(Role.Admin)
   @Get()
   findAll(): Promise<ResponseUserDto[]> {
     try {
@@ -87,8 +81,6 @@ export class UserController {
     }
   }
 
-  @UseGuards(RolesGuard)
-  @Roles(Role.Admin)
   @Delete(':id')
   remove(@Param('id') id: string) {
     try {
