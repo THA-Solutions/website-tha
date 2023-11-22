@@ -28,4 +28,7 @@ export class ResponseClientDto {
   @IsAlphanumeric()
   @IsNotEmpty()
   password: string;
+
+  @IsString()
+  role: string;
 }

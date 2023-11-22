@@ -71,7 +71,15 @@ const features = [
   }
 ];
 
+const fetchUser=async()=>{
+  const res = await fetch('http://localhost:3000/api/user');
+  const json = await res.json();
+  return json;
+}
+
 export default function Home() {
+  fetchUser()
+
   return (
     <>
       <Header />

@@ -4,11 +4,13 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { ResponseUserDto } from '../user/dto/response-user.dto';
 
+
 @Injectable()
 export class AuthService {
   constructor(
     private usersService: UserService,
-    private configService: ConfigService
+    private configService: ConfigService,
+
   ) {}
 
   decrypter(password: string) {

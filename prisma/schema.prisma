@@ -124,7 +124,7 @@ model Client {
   password String @db.VarChar(500)
   name     String @db.VarChar(100)
   id       String @id @default(cuid())
-
+  role     String @default("customer") @db.VarChar(10)
   @@map("client")
 }
 

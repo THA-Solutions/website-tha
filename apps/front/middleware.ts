@@ -5,6 +5,7 @@ export async function middleware(request: NextRequest, _next: NextFetchEvent) {
   const a = await getToken({ req: request });
   const { pathname } = request.nextUrl;
   const protectedRoutesAdmin = ['/admin'];
+
   const isProtectedAdminRoute = protectedRoutesAdmin.some((route) =>
     pathname.startsWith(route)
   );
@@ -15,27 +16,25 @@ export async function middleware(request: NextRequest, _next: NextFetchEvent) {
     '/cadastrar-artigo'
   ];
 
-  if (protectedRoutes.some((route) => pathname.startsWith(route))) {
-    const token = await getToken({ req: request });
+  const token : any= await getToken({ req: request });
+  if (protectedRoutes.some((route) => pathname.startsWith(route)) && token) {
 
-    if (token) {
-      const url = new URL('/', request.url);
-      return NextResponse.redirect(url);
-    }
-    return NextResponse.next();
+      return NextResponse.redirect(new URL('/', request.url));
+
   }
   if (isProtectedAdminRoute) {
-    const token : any = await getToken({ req: request });
 
     if (!token) {
       const url = new URL('/entrar', request.url);
       url.searchParams.set('callbackUrl', encodeURI(request.url));
       return NextResponse.redirect(url);
     }
-    if (token.user!.role !== 'admin') {
+
+    if (token.user?.role !== 'admin') {
       const url = new URL('/403', request.url);
       return NextResponse.rewrite(url);
     }
+    
     return NextResponse.next();
   }
 }

@@ -1,6 +1,6 @@
 import 'multer';
 
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -27,7 +27,13 @@ import { RolesGuard } from '../auth/roles.guard';
     CloudinaryModule
   ],
   controllers: [AppController, CloudinaryController],
-  providers: [AppService, PrismaService, ConfigModule],
+  providers: [AppService, PrismaService, ConfigModule,{
+    provide: APP_GUARD,
+    useClass: RolesGuard,
+  },{
+    provide: APP_GUARD,
+    useClass: AuthGuard,
+  }],
   exports: [PrismaService]
 })
 export class AppModule {}

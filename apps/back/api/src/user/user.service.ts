@@ -198,6 +198,7 @@ export class UserService {
             alt: image ? image.alt : '',
             pos: 0
           },
+          role: client!.role,
           password: client!.password
         };
         return returnUser as ResponseClientDto;

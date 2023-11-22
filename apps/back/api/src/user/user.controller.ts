@@ -40,6 +40,7 @@ export class UserController {
   @Get()
   findAll(): Promise<ResponseUserDto[]> {
     try {
+
       return this.userService.findAll();
     } catch (error) {
       throw Error(`Error in find all users ${error}`);
