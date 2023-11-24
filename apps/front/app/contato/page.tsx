@@ -6,6 +6,8 @@ import InputField from '../../components/input-field';
 
 import { contact } from '../../constants';
 
+import axios from 'axios';
+
 import {
   Business,
   MailOutlineRounded,
@@ -24,7 +26,10 @@ export default function Contact() {
   } = useForm();
 
   async function onSubmit(data: FieldValues) {
-    alert(JSON.stringify(data, null, 2));
+    
+    const mail = await axios.post('http://localhost:3000/api/mail/send', data);
+    //alert(JSON.stringify(data, null, 2));
+    return;
   }
 
   const formInputs = [

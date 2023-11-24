@@ -28,4 +28,7 @@ export class CreateClientDto {
     source: string | null;
     alt: string | null;
   };
+
+  @IsString()
+  role: string;
 }

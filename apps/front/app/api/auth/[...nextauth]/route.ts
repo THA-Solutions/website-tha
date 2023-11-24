@@ -17,8 +17,8 @@ export const authOptions: AuthOptions = {
             },
             body: JSON.stringify(credentials)
           });
-
           const user = await res.json();
+
           if (res.ok && user) {
             return user;
           }
@@ -63,6 +63,7 @@ export const authOptions: AuthOptions = {
         expires: session.expires
       };
       session = sessionData;
+
       return session;
     }
   },

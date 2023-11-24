@@ -1,0 +1,24 @@
+import { Injectable } from '@nestjs/common';
+import { MailerService } from '@nestjs-modules/mailer';
+import { inviteMailDto } from './dto/invite-mail.dto';
+@Injectable()
+export class MailService {
+  constructor(private mailer: MailerService) {}
+
+  async sendMail(inviteMailDto: inviteMailDto) {
+    try {
+
+        await this.mailer.sendMail({
+          to: process.env.TARGET_MAIL,
+          from: 'totesting782@gmail.com',
+          subject: '',
+          html: ``
+        });
+
+        return;
+    } catch (error) {
+        throw Error(`Error in send mail ${error}`);
+    }
+  }
+
+}
