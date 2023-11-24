@@ -13,6 +13,7 @@ import {
   DriveFileRenameOutlineRounded,
   DeleteRounded
 } from '@mui/icons-material';
+import ImageNotFound from '../image-not-found';
 
 type ArticlesProps = {
   posts: Article[];
@@ -79,13 +80,7 @@ export const Articles = ({ posts }: ArticlesProps) => {
                   className="rounded-xl object-cover h-64"
                 />
               ) : (
-                <Image
-                  src="/image-not-found.jpg"
-                  alt="Imagem não encontrada"
-                  width={500}
-                  height={500}
-                  className="rounded-xl object-cover h-64"
-                />
+                <ImageNotFound />
               )}
             </div>
             <article className="p-4 flex flex-col gap-3 lg:col-span-2">

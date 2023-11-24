@@ -123,7 +123,7 @@ export const Footer = () => {
           <dt>
             <Link
               className="hover:text-secondary transition-all"
-              href="/termos"
+              href="/termos-uso"
             >
               Termos de Uso
             </Link>
@@ -131,7 +131,7 @@ export const Footer = () => {
           <dt>
             <Link
               className="hover:text-secondary transition-all"
-              href="/privacidade"
+              href="/politica-privacidade"
             >
               Política de Privacidade
             </Link>
