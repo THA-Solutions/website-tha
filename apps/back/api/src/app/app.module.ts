@@ -13,6 +13,7 @@ import { CloudinaryController } from '../cloudinary/cloudinary.controller';
 import PrismaService from '../prisma.service';
 import { AuthGuard } from '../auth/auth.guard';
 import { APP_GUARD } from '@nestjs/core';
+import { MailModule } from '../mail/mail.module';
 
 @Module({
   imports: [
@@ -22,7 +23,8 @@ import { APP_GUARD } from '@nestjs/core';
     AuthModule,
     PrismaModule,
     ClientModule,
-    CloudinaryModule
+    CloudinaryModule,
+    MailModule
   ],
   controllers: [AppController, CloudinaryController],
   providers: [AppService, PrismaService, ConfigModule,{
