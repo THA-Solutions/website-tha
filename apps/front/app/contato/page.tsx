@@ -34,7 +34,8 @@ export default function Contact() {
       type: 'text',
       autoComplete: 'given-name',
       required: true,
-      icon: <Badge className=" text-gray-400" />
+      icon: <Badge className=" text-gray-400" />,
+      pattern: /^[^\d]+$/
     },
     {
       label: 'Último nome',
@@ -42,7 +43,8 @@ export default function Contact() {
       type: 'text',
       autoComplete: 'family-name',
       required: true,
-      icon: <Badge className=" text-gray-400" />
+      icon: <Badge className=" text-gray-400" />,
+      pattern: /^[^\d]+$/
     },
     {
       label: 'Empresa',

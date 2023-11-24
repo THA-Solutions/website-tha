@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import { contact, pages } from '../constants';
 
-import { LinkedIn, Instagram, WhatsApp } from '@mui/icons-material';
+import { LinkedIn, Instagram, WhatsApp, Place } from '@mui/icons-material';
 
 export interface SocialType {
   name: string;
@@ -139,8 +139,9 @@ export const Footer = () => {
         </dl>
       </section>
       <section className="mt-5 flex flex-col gap-5 py-4 px-6 md:flex-row md:justify-between md:items-center">
-        <div className="flex">
-          <p className="text-xs text-lightGray xl:text-sm">{contact.address}</p>
+        <div className="flex items-center text-xs text-lightGray gap-2 xl:text-sm">
+          <Place />
+          <p>{contact.address}</p>
         </div>
         <div className="flex">
           <p className="text-xs text-lightGray xl:text-sm">
