@@ -6,7 +6,6 @@ import { useState } from 'react';
 import { useForm, FieldValues } from 'react-hook-form';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
 
 import InputField from '../../components/input-field';
 import PasswordInputField from '../../components/password-input-field';
@@ -21,6 +20,8 @@ export default function SignIn() {
     formState: { errors }
   } = useForm();
 
+  const router = useRouter();
+
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   async function onSubmit(data: FieldValues) {
@@ -29,6 +30,8 @@ export default function SignIn() {
       password: data.password,
       redirect: false
     });
+
+    router.push('/');
 
     return signin;
   }

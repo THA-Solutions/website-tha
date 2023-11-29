@@ -25,5 +25,4 @@ export class ResponseUserDto {
     source: string | null;
     alt: string | null;
   };
-
 }

@@ -125,6 +125,7 @@ model Client {
   name     String @db.VarChar(100)
   id       String @id @default(cuid())
   role     String @default("customer") @db.VarChar(10)
+
   @@map("client")
 }
 
@@ -146,4 +147,15 @@ model Image {
   pos       Int     @default(0)
 
   @@map("image")
+}
+
+model team {
+  id          String  @id
+  name        String  @db.VarChar(100)
+  role        String  @db.VarChar(100)
+  image       String? @db.VarChar(500)
+  order       Int     @default(0)
+  linkedin    String? @db.VarChar(500)
+  instagram   String? @db.VarChar(500)
+  description String? @db.VarChar(500)
 }
