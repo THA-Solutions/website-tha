@@ -47,7 +47,7 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   password      String?   @db.VarChar(500)
-  role          String    @default("customer") @db.VarChar(10)
+  role          String    @default("user") @db.VarChar(10)
   accounts      Account[]
   sessions      Session[]
 
@@ -129,10 +129,12 @@ model Client {
 }
 
 model Review {
-  id        String  @id
-  id_origin String
-  value     String? @db.VarChar(100)
+  id        String  @id @default(cuid())
+  id_inverter String
+  id_user   String
+  value     Int?
   comment   String? @db.VarChar(500)
+  date  DateTime @default(now()) @db.Timestamp(0)
 
   @@map("review")
 }
@@ -146,4 +148,17 @@ model Image {
   pos       Int     @default(0)
 
   @@map("image")
+}
+
+model Team {
+  id        String  @id @default(cuid())
+  name      String  @db.VarChar(100)
+  role      String  @db.VarChar(100)
+  image     String? @db.VarChar(500)
+  order     Int     @default(0)
+  linkedin  String? @db.VarChar(500)
+  instagram String? @db.VarChar(500)
+  description String? @db.VarChar(500)
+
+  @@map("team")
 }

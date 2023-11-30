@@ -10,7 +10,7 @@ export class MailService {
 
         await this.mailer.sendMail({
           to: process.env.TARGET_MAIL,
-          from: 'totesting782@gmail.com',
+          from: inviteMailDto.email,
           subject: '',
           html: ``
         });
