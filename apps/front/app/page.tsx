@@ -16,12 +16,14 @@ import FGL from '../public/partners/fgl-distribuidora.png';
 import Growatt from '../public/partners/growatt.png';
 import Sungrow from '../public/partners/sungrow.png';
 import { contact } from '../constants';
+import { SET } from './api/cookie/route';
 
 import {
   SupportAgentRounded,
   TrendingUpRounded,
   MailOutlineRounded
 } from '@mui/icons-material';
+import { useLayoutEffect } from 'react';
 
 const metrics = [
   {
@@ -71,15 +73,14 @@ const features = [
   }
 ];
 
-const fetchUser=async()=>{
-  const res = await fetch('http://localhost:3000/api/user');
-  const json = await res.json();
-  return json;
-}
-
 export default function Home() {
-  fetchUser()
 
+useLayoutEffect(() => {
+  const setCookie=async()=>{
+    await SET();
+  }
+  setCookie();
+},[])
   return (
     <>
       <Header />

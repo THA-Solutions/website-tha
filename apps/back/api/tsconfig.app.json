@@ -16,5 +16,5 @@
   "include": [
     "src/**/*.ts",
     "../../../libs/domain/src/lib/entities/inverter.entity.ts"
-  ]
+, "../../../libs/domain/src/lib/shared/team.entity.ts"  ]
 }
