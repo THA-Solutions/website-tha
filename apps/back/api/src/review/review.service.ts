@@ -4,6 +4,7 @@ import { UpdateReviewDto } from './dto/update-review.dto';
 import PrismaService from '../prisma.service';
 import { UserService } from '../user/user.service';
 import { InverterService } from '../inverter/inverter.service';
+import { ResponseReviewDto } from './dto/response-review.dto';
 
 @Injectable()
 export class ReviewService {
@@ -12,8 +13,11 @@ export class ReviewService {
     private inverterService:InverterService) {}
 
   async create(createReviewDto: CreateReviewDto) {
-
-    if (this.userService.findOne(createReviewDto.id_user) == null || this.inverterService.findOne(createReviewDto.id_inverter) == null){
+    const user = await this.userService.findOne(createReviewDto.id_user);
+    if (
+      !user ||
+      !this.inverterService.findOne(createReviewDto.id_inverter)
+    ) {
       throw new Error('User or Inverter not found');
     }
 
@@ -30,7 +34,14 @@ export class ReviewService {
       data: createReviewDto
     });
 
-    return review;
+    const responseReview : ResponseReviewDto={
+      user:(user.firstName+" "+user.lastName),
+      value:review!.value!,
+      comment:review.comment!,
+      date:review.date!,
+    }
+
+    return responseReview;
   }
 
   async findAll(id_inverter: string) {

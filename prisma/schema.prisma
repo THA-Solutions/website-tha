@@ -134,6 +134,7 @@ model Review {
   id_user   String
   value     Int?
   comment   String? @db.VarChar(500)
+  date  DateTime @default(now()) @db.Timestamp(0)
 
   @@map("review")
 }
