@@ -129,9 +129,10 @@ model Client {
 }
 
 model Review {
-  id        String  @id
-  id_origin String
-  value     String? @db.VarChar(100)
+  id        String  @id @default(cuid())
+  id_inverter String
+  id_user   String
+  value     Int?
   comment   String? @db.VarChar(500)
 
   @@map("review")
