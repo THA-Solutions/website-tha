@@ -26,9 +26,7 @@ export default function Contact() {
   } = useForm();
 
   async function onSubmit(data: FieldValues) {
-    
     const mail = await axios.post('http://localhost:3000/api/mail/send', data);
-    //alert(JSON.stringify(data, null, 2));
     return;
   }
 
@@ -39,7 +37,8 @@ export default function Contact() {
       type: 'text',
       autoComplete: 'given-name',
       required: true,
-      icon: <Badge className=" text-gray-400" />
+      icon: <Badge className=" text-gray-400" />,
+      pattern: /^[^\d]+$/
     },
     {
       label: 'Último nome',
@@ -47,7 +46,8 @@ export default function Contact() {
       type: 'text',
       autoComplete: 'family-name',
       required: true,
-      icon: <Badge className=" text-gray-400" />
+      icon: <Badge className=" text-gray-400" />,
+      pattern: /^[^\d]+$/
     },
     {
       label: 'Empresa',

@@ -9,6 +9,14 @@ import { ImageService } from '../image/image.service';
 import CloudinaryService from '../cloudinary/cloudinary.service';
 @Module({
   controllers: [ReviewController],
-  providers: [ReviewService,PrismaService,UserService,InverterService,ClientService,ImageService,CloudinaryService],
+  providers: [
+    ReviewService,
+    PrismaService,
+    UserService,
+    InverterService,
+    ClientService,
+    ImageService,
+    CloudinaryService
+  ]
 })
 export class ReviewModule {}

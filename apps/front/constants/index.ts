@@ -1,3 +1,15 @@
+import { SvgIconComponent } from '@mui/icons-material';
+
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import NewspaperIcon from '@mui/icons-material/Newspaper';
+import Groups2Icon from '@mui/icons-material/Groups2';
+
+export interface PageAdminType {
+  name: string;
+  path: string;
+  icon: SvgIconComponent | null;
+}
+
 export const contact = {
   organization: 'THA Solutions',
   email: 'walisson@thasolutions.com.br',
@@ -26,6 +38,37 @@ export const pages = [
     name: 'Sobre',
     path: '/sobre'
   }
+];
+
+export const pagesAdmin: PageAdminType[] = [
+  {
+    name: 'Home',
+    path: '/admin',
+    icon: null
+  },
+  {
+    name: 'Clientes',
+    path: '/admin/clientes',
+    icon: ManageAccountsIcon
+  },
+  {
+    name: 'Artigos',
+    path: '/admin/artigos',
+    icon: NewspaperIcon
+  },
+  {
+    name: 'Equipe',
+    path: '/admin/equipe',
+    icon: Groups2Icon
+  }
+];
+
+export const categoriesArticles = [
+  'Tecnologia',
+  'Saúde',
+  'Educação',
+  'Arte',
+  'Negócios'
 ];
 
 export function sleep(ms: number) {

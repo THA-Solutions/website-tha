@@ -8,16 +8,15 @@ import { ResponseReviewDto } from './dto/response-review.dto';
 
 @Injectable()
 export class ReviewService {
-  constructor(private prisma: PrismaService,
-    private userService:UserService,
-    private inverterService:InverterService) {}
+  constructor(
+    private prisma: PrismaService,
+    private userService: UserService,
+    private inverterService: InverterService
+  ) {}
 
   async create(createReviewDto: CreateReviewDto) {
     const user = await this.userService.findOne(createReviewDto.id_user);
-    if (
-      !user ||
-      !this.inverterService.findOne(createReviewDto.id_inverter)
-    ) {
+    if (!user || !this.inverterService.findOne(createReviewDto.id_inverter)) {
       throw new Error('User or Inverter not found');
     }
 
@@ -34,12 +33,12 @@ export class ReviewService {
       data: createReviewDto
     });
 
-    const responseReview : ResponseReviewDto={
-      user:(user.firstName+" "+user.lastName),
-      value:review!.value!,
-      comment:review.comment!,
-      date:review.date!,
-    }
+    const responseReview: ResponseReviewDto = {
+      user: user.firstName + ' ' + user.lastName,
+      value: review!.value!,
+      comment: review.comment!,
+      date: review.date!
+    };
 
     return responseReview;
   }
@@ -62,7 +61,7 @@ export class ReviewService {
     return review;
   }
 
-  async update(id:string, updateReviewDto: UpdateReviewDto) {
+  async update(id: string, updateReviewDto: UpdateReviewDto) {
     const review = await this.prisma.review.update({
       where: { id: id },
       data: updateReviewDto
@@ -71,10 +70,8 @@ export class ReviewService {
   }
 
   remove(id: string) {
-    
     return this.prisma.review.delete({
       where: { id: id }
-    });;
+    });
   }
-
 }

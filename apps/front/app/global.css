@@ -55,8 +55,17 @@ li {
   @apply list-disc list-inside;
 }
 
-.quill-content ol {
+.quill-content ol,
+ol {
   @apply list-decimal list-inside;
 }
 
-/* E assim por diante para outras tags */
+ul {
+  @apply list-disc list-inside;
+}
+
+ol > li,
+ul > li {
+  @apply mb-2;
+  @apply ml-8;
+}

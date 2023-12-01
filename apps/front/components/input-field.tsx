@@ -11,8 +11,10 @@ export interface InputFieldProps {
     autoComplete?: string;
     required: boolean;
     icon?: JSX.Element;
+    pattern?: RegExp;
   };
   register: UseFormRegister<FieldValues>;
+  value?: string | null | undefined;
   errors: FieldErrors<FieldValues>;
   colorLabel?: string;
   colorRing?: string;
@@ -21,6 +23,7 @@ export interface InputFieldProps {
 const InputField = ({
   input,
   register,
+  value,
   errors,
   colorLabel,
   colorRing
@@ -36,7 +39,11 @@ const InputField = ({
       </label>
       <div className="mt-2.5 relative">
         <input
-          {...register(input.name, { required: input.required })}
+          {...register(input.name, {
+            required: input.required,
+            pattern: input.pattern || undefined,
+            value: value ?? ''
+          })}
           type={input.type}
           placeholder={input.placeholder}
           name={input.name}
@@ -50,10 +57,17 @@ const InputField = ({
           {input.icon}
         </div>
       </div>
-      {errors[input.name] && (
+      {errors[input.name]?.type === 'required' && (
         <span className="flex items-center gap-2 mt-2 text-sm text-red-500">
           <InfoOutlined />
           Campo obrigatório
+        </span>
+      )}
+
+      {errors[input.name]?.type === 'pattern' && (
+        <span className="flex items-center gap-2 mt-2 text-sm text-red-500">
+          <InfoOutlined />
+          Insira apenas letras
         </span>
       )}
     </div>

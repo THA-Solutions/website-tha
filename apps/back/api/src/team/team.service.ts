@@ -92,7 +92,7 @@ export class TeamService {
 
   update(id: string, updateTeamDto: UpdateTeamDto) {
     try {
-      let {image,...data}=updateTeamDto
+      let { image, ...data } = updateTeamDto;
       const teamMember = this.prisma.team.update({
         where: { id: id },
         data: data

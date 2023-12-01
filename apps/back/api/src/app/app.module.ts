@@ -27,10 +27,15 @@ import { MailModule } from '../mail/mail.module';
     MailModule
   ],
   controllers: [AppController, CloudinaryController],
-  providers: [AppService, PrismaService, ConfigModule,{
-    provide: APP_GUARD,
-    useClass: AuthGuard,
-  }],
+  providers: [
+    AppService,
+    PrismaService,
+    ConfigModule,
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard
+    }
+  ],
   exports: [PrismaService]
 })
 export class AppModule {}

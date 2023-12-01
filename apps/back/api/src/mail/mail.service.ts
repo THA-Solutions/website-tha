@@ -7,18 +7,23 @@ export class MailService {
 
   async sendMail(inviteMailDto: inviteMailDto) {
     try {
+      await this.mailer.sendMail({
+        to: process.env.TARGET_MAIL,
+        from: 'totesting782@gmail.com',
+        subject: '',
+        html: ``
+      });
 
-        await this.mailer.sendMail({
-          to: process.env.TARGET_MAIL,
-          from: inviteMailDto.email,
-          subject: '',
-          html: ``
-        });
+      await this.mailer.sendMail({
+        to: process.env.TARGET_MAIL,
+        from: inviteMailDto.email,
+        subject: '',
+        html: ``
+      });
 
-        return;
+      return;
     } catch (error) {
-        throw Error(`Error in send mail ${error}`);
+      throw Error(`Error in send mail ${error}`);
     }
   }
-
 }

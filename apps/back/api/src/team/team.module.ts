@@ -7,7 +7,7 @@ import { ImageService } from '../image/image.service';
 
 @Module({
   controllers: [TeamController],
-  providers: [TeamService,PrismaService,ImageService],
-  imports: [CloudinaryModule], 
+  providers: [TeamService, PrismaService, ImageService],
+  imports: [CloudinaryModule]
 })
 export class TeamModule {}

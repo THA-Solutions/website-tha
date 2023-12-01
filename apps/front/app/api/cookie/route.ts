@@ -6,7 +6,7 @@ export async function SET(id: string = randomUUID()) {
   const cookieStore = cookies();
   const validatingCookie = await GET('token');
 
-  if(validatingCookie){
+  if (validatingCookie) {
     return validatingCookie;
   }
 

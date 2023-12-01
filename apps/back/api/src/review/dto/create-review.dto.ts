@@ -1,14 +1,19 @@
-import { IsAlphanumeric, IsNotEmpty, IsNumber, IsString } from "class-validator";
+import {
+  IsAlphanumeric,
+  IsNotEmpty,
+  IsNumber,
+  IsString
+} from 'class-validator';
 
 export class CreateReviewDto {
-    @IsString()
-    @IsNotEmpty()
-    id_inverter: string;
-    @IsString()
-    @IsNotEmpty()
-    id_user: string;
-    @IsNumber()
-    value: number | null;
-    @IsAlphanumeric()
-    comment: string | null;
+  @IsString()
+  @IsNotEmpty()
+  id_inverter: string;
+  @IsString()
+  @IsNotEmpty()
+  id_user: string;
+  @IsNumber()
+  value: number | null;
+  @IsAlphanumeric()
+  comment: string | null;
 }

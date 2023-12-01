@@ -141,7 +141,7 @@ export const Header = () => {
             <Link
               key={item.name}
               href={item.path}
-              className="text-lg font-semibold leading-6 text-secondary"
+              className="text-lg font-semibold leading-6 text-primary transition-all hover:text-primary/80 hover:scale-110"
             >
               {item.name}
             </Link>
@@ -151,14 +151,14 @@ export const Header = () => {
           {status === 'authenticated' ? (
             <Link
               href="/perfil"
-              className="text-xl font-semibold leading-6 text-tertiary"
+              className="text-xl font-semibold leading-6 text-tertiary transition-all hover:text-tertiary/80 hover:scale-110"
             >
               Perfil <span aria-hidden="true">&rarr;</span>
             </Link>
           ) : (
             <Link
               href="/entrar"
-              className="text-xl font-semibold leading-6 text-tertiary"
+              className="text-xl font-semibold leading-6 text-tertiary transition-all hover:text-tertiary/80 hover:scale-110"
             >
               Entrar <span aria-hidden="true">&rarr;</span>
             </Link>

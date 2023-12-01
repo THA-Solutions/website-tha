@@ -74,13 +74,12 @@ const features = [
 ];
 
 export default function Home() {
-
-useLayoutEffect(() => {
-  const setCookie=async()=>{
-    await SET();
-  }
-  setCookie();
-},[])
+  useLayoutEffect(() => {
+    const setCookie = async () => {
+      await SET();
+    };
+    setCookie();
+  }, []);
   return (
     <>
       <Header />

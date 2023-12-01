@@ -37,14 +37,12 @@ const formatFields: FormatFields = {
   warranty: 'Garantia'
 };
 
-
 export default async function Fichatecnica({
   params
 }: {
   params: { id: string };
 }) {
   const inverterData = await inverters.getInvertersDataById(params.id);
-
 
   return (
     <>
@@ -64,7 +62,6 @@ export default async function Fichatecnica({
               </div>
             );
           })}
-
         </div>
       </header>
     </>
