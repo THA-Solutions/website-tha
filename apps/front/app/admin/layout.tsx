@@ -14,7 +14,7 @@ export default function AdminLayout({
   return (
     <>
       <NavbarAdmin />
-      <main className="pt-24 pb-8 sm:pt-32">
+      <main className="pt-28 pb-8">
         <div className="mx-auto max-w-5xl px-6 lg:px-8">{children}</div>
       </main>
     </>

@@ -14,6 +14,7 @@ export interface InputFieldProps {
     pattern?: RegExp;
   };
   register: UseFormRegister<FieldValues>;
+  value?: string | null | undefined;
   errors: FieldErrors<FieldValues>;
   colorLabel?: string;
   colorRing?: string;
@@ -22,6 +23,7 @@ export interface InputFieldProps {
 const InputField = ({
   input,
   register,
+  value,
   errors,
   colorLabel,
   colorRing
@@ -39,7 +41,8 @@ const InputField = ({
         <input
           {...register(input.name, {
             required: input.required,
-            pattern: input.pattern || undefined
+            pattern: input.pattern || undefined,
+            value: value ?? ''
           })}
           type={input.type}
           placeholder={input.placeholder}

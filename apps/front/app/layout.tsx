@@ -10,6 +10,8 @@ import './global.css';
 import { contact } from '../constants';
 import { SessionProvider } from 'next-auth/react';
 
+import 'react-toastify/dist/ReactToastify.css';
+
 const roboto = Roboto({ subsets: ['latin'], variable: '--font-roboto' });
 const baiJamjuree = BaiJamjuree({
   subsets: ['latin'],

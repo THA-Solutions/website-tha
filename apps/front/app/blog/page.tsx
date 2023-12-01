@@ -10,7 +10,7 @@ import { Label, Face, SearchOff, Today } from '@mui/icons-material';
 import ImageNotFound from 'apps/front/components/image-not-found';
 
 export default async function Blog() {
-  const posts: Article[] = await articles.getPostData();
+  const posts: Article[] = await articles.getAllArticles();
 
   return (
     <>

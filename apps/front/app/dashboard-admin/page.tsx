@@ -24,7 +24,7 @@ export default function DashboardAdmin() {
 
   useEffect(() => {
     async function fetchData() {
-      const postData = await articles.getPostData();
+      const postData = await articles.getAllArticles();
       setPosts(postData);
     }
 

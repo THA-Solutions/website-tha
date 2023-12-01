@@ -47,8 +47,8 @@ export const pagesAdmin: PageAdminType[] = [
     icon: null
   },
   {
-    name: 'Usuários',
-    path: '/admin/usuarios',
+    name: 'Clientes',
+    path: '/admin/clientes',
     icon: ManageAccountsIcon
   },
   {
@@ -61,6 +61,14 @@ export const pagesAdmin: PageAdminType[] = [
     path: '/admin/equipe',
     icon: Groups2Icon
   }
+];
+
+export const categoriesArticles = [
+  'Tecnologia',
+  'Saúde',
+  'Educação',
+  'Arte',
+  'Negócios'
 ];
 
 export function sleep(ms: number) {

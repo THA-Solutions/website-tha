@@ -14,7 +14,6 @@ import { ArticleService } from './article.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
-import { get } from 'http';
 
 @Controller('article')
 export class ArticleController {

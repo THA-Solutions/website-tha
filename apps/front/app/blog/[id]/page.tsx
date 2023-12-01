@@ -12,8 +12,8 @@ import { Article, formatter, articles } from '@tha-solutions';
 import ImageNotFound from 'apps/front/components/image-not-found';
 
 export default async function Post({ params }: { params: { id: string } }) {
-  const postData: Article = await articles.getPostDataById(params.id);
-  const postsRelated = await articles.getPostData();
+  const postData: Article = await articles.getArticleById(params.id);
+  const postsRelated = await articles.getAllArticles();
 
   const replaceImagesInText = (content: string, images: any) => {
     return content.replace(/<image(\d+)>/g, (match, pos) => {
