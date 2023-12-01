@@ -167,7 +167,9 @@ export class ArticleService {
         image.source = image.source ? image.source : '';
 
         const currentImage = await this.imageService.findByOrigin(id);
+
         await this.imageService.remove(currentImage[0].id);
+        
         const imageUrl = await this.imageService.create(
           {
             id_origem: id,

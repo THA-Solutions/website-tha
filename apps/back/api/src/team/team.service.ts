@@ -25,8 +25,8 @@ export class TeamService {
         teamImage = await this.imageService.create(
           {
             id_origem: teamMember.id,
-            source: image.source,
-            alt: image.alt,
+            source: 'Team',
+            alt: `MemberImage`,
             pos: 0
           },
           imageFile
@@ -37,12 +37,13 @@ export class TeamService {
         id: teamMember.id,
         name: teamMember.name,
         role: teamMember.role,
-        image: {
-          url: teamImage ? teamImage.url : '',
-          source: teamImage ? teamImage.source : '',
-          alt: teamImage ? teamImage.alt : ''
-        }
+        description: teamMember.description,
+        linkedin: teamMember.linkedin,
+        instagram: teamMember.instagram,
+        image: teamImage ? teamImage.url : '',
+  
       };
+
       return returnTeam;
     } catch (error) {
       throw Error(`Error in create team member ${error}`);
@@ -59,7 +60,7 @@ export class TeamService {
 
           return {
             ...member,
-            imageUrl: image[0]?.url || ''
+            image: image[0]?.url || ''
           };
         })
       );
@@ -81,7 +82,7 @@ export class TeamService {
       const returnMember = {
         name: teamMember!.name,
         role: teamMember!.role,
-        imageUrl: image[0]?.url || ''
+        image: image[0]?.url || ''
       };
 
       return returnMember;
@@ -90,13 +91,35 @@ export class TeamService {
     }
   }
 
-  update(id: string, updateTeamDto: UpdateTeamDto) {
+  async update(id: string, updateTeamDto: UpdateTeamDto, imageFile?: Express.Multer.File) {
     try {
       let { image, ...data } = updateTeamDto;
-      const teamMember = this.prisma.team.update({
+      const teamMember = await this.prisma.team.update({
         where: { id: id },
         data: data
       });
+
+      if (imageFile) {
+        if (image) {
+          teamMember.image = await this.imageService.update(
+            teamMember.id,
+            imageFile
+          ).then((image) => {
+            return image.url})
+            };
+        }
+        teamMember.image = await this.imageService.create(
+          {
+            id_origem: teamMember.id,
+            source: 'Team',
+            alt: `MemberImage`,
+            pos: 0
+          },
+          imageFile!
+        ).then((image) => {
+          return image.url})
+      
+
       return teamMember;
     } catch (error) {
       throw Error(`Error in update team member ${error}`);

@@ -1,11 +1,7 @@
 export interface Team {
   name: string;
   role: string;
-  image: {
-    url: string;
-    source: string | null;
-    alt: string | null;
-  };
+  image: string;
   order: number;
   linkedin: string;
   instagram: string;
