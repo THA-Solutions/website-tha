@@ -130,10 +130,12 @@ model Client {
 }
 
 model Review {
-  id        String  @id
-  id_origin String
-  value     String? @db.VarChar(100)
+  id        String  @id @default(cuid())
+  id_inverter String
+  id_user   String
+  value     Int?
   comment   String? @db.VarChar(500)
+  date  DateTime @default(now()) @db.Timestamp(0)
 
   @@map("review")
 }
@@ -149,13 +151,15 @@ model Image {
   @@map("image")
 }
 
-model team {
-  id          String  @id
-  name        String  @db.VarChar(100)
-  role        String  @db.VarChar(100)
-  image       String? @db.VarChar(500)
-  order       Int     @default(0)
-  linkedin    String? @db.VarChar(500)
-  instagram   String? @db.VarChar(500)
+model Team {
+  id        String  @id @default(cuid())
+  name      String  @db.VarChar(100)
+  role      String  @db.VarChar(100)
+  image     String? @db.VarChar(500)
+  order     Int     @default(0)
+  linkedin  String? @db.VarChar(500)
+  instagram String? @db.VarChar(500)
   description String? @db.VarChar(500)
+
+  @@map("team")
 }

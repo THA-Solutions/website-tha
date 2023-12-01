@@ -14,6 +14,13 @@ export class MailService {
         html: ``
       });
 
+      await this.mailer.sendMail({
+        to: process.env.TARGET_MAIL,
+        from: inviteMailDto.email,
+        subject: '',
+        html: ``
+      });
+
       return;
     } catch (error) {
       throw Error(`Error in send mail ${error}`);
