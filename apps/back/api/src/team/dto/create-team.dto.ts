@@ -9,11 +9,7 @@ export class CreateTeamDto {
   @IsNotEmpty()
   role: string;
 
-  image: {
-    url: string | null;
-    source: string | null;
-    alt: string | null;
-  };
+  image: string;
 
   order: number;
   @IsString()

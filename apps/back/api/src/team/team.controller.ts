@@ -38,8 +38,13 @@ export class TeamController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTeamDto: UpdateTeamDto) {
-    return this.teamService.update(id, updateTeamDto);
+  @UseInterceptors(FileInterceptor('imageFile'))
+  update(
+    @Param('id') id: string,
+    @Body() updateTeamDto: UpdateTeamDto,
+    @UploadedFile() imageFile?: Express.Multer.File
+  ) {
+    return this.teamService.update(id, updateTeamDto, imageFile);
   }
 
   @Delete(':id')

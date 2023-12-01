@@ -86,6 +86,7 @@ export default function EditArticle({ params }: { params: { id: string } }) {
         if (key === 'image') {
           formData.append(key, JSON.stringify(content[key]));
         } else {
+
           formData.append(key, content[key]);
         }
       }
