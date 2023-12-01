@@ -56,7 +56,7 @@ const ArticleForm = ({
       type: 'file',
       required: false,
       placeholder: 'Selecione a imagem do artigo',
-      value: editArticleData?.image[0].url
+      value: editArticleData?.image[0]?.url || ''
     },
     {
       label: 'Descrição da imagem',
@@ -64,7 +64,7 @@ const ArticleForm = ({
       type: 'text',
       required: false,
       placeholder: 'Digite a descrição da imagem',
-      value: editArticleData?.image[0].alt
+      value: editArticleData?.image[0]?.alt || ''
     },
     {
       label: 'Fonte da imagem',
@@ -72,7 +72,7 @@ const ArticleForm = ({
       type: 'text',
       required: false,
       placeholder: 'Digite a fonte da imagem',
-      value: editArticleData?.image[0].source
+      value: editArticleData?.image[0]?.source || ''
     },
     {
       label: 'Subtitulo',

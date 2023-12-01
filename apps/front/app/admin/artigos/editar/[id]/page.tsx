@@ -44,7 +44,7 @@ export default function EditArticle({ params }: { params: { id: string } }) {
       const { imageFile, ...content } = data;
       const file: any = [];
       const imgTags = data.content.match(/<img[^>]+src="([^">]+)">/g);
-
+      console.log(content)
       file.push(imageFile[0]);
 
       if (imgTags) {
@@ -86,6 +86,7 @@ export default function EditArticle({ params }: { params: { id: string } }) {
         if (key === 'image') {
           formData.append(key, JSON.stringify(content[key]));
         } else {
+
           formData.append(key, content[key]);
         }
       }
