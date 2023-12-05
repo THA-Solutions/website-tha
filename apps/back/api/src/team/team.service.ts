@@ -19,7 +19,6 @@ export class TeamService {
       const teamMember = await this.prisma.team.create({
         data: data
       });
-      console.log(imageFile)
       let teamImage: ResponseImageDto = {} as ResponseImageDto;
 
       if (imageFile) {
@@ -80,8 +79,7 @@ export class TeamService {
       const image = await this.imageService.findByOrigin(id);
 
       const returnMember = {
-        name: teamMember!.name,
-        role: teamMember!.role,
+        ...teamMember,
         image: image[0]?.url || ''
       };
 

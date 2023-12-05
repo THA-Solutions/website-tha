@@ -24,7 +24,6 @@ export class TeamController {
     @Body() createTeamDto: CreateTeamDto,
     @UploadedFile() imageFile?: Express.Multer.File
   ) {
-
     return this.teamService.create(createTeamDto, imageFile);
   }
 
