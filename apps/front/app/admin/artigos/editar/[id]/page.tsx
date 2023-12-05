@@ -30,10 +30,6 @@ export default function EditArticle({ params }: { params: { id: string } }) {
     fetchArticleData();
   }, [params.id, setValue]);
 
-  useEffect(() => {
-    console.log(articleData);
-  }, [articleData]);
-
   const baseToBlob = (base64: string, mimeType: string) => {
     const cleanedBase64 = base64.replace(/\s/g, '');
     const byteString = window.atob(cleanedBase64);
@@ -124,7 +120,7 @@ export default function EditArticle({ params }: { params: { id: string } }) {
       )}
       <ToastContainer
         position="top-right"
-        autoClose={5000}
+        autoClose={1500}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
