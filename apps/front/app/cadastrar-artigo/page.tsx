@@ -7,7 +7,7 @@ import axios from 'axios';
 import 'react-quill/dist/quill.snow.css';
 
 import InputField from '../../components/input-field';
-
+import txtFormat from 'apps/front/utilities/txt-format';
 const ReactQuill = dynamic(() => import('react-quill'), {
   ssr: false,
   loading: () => <p>Loading editor...</p>
@@ -100,51 +100,21 @@ export default function RegisterArticle() {
     'video'
   ];
 
-  const baseToBlob = (base64: string, mimeType: string) => {
-    // Certifique-se de que não há espaços em branco ou quebras de linha na string base64
-    const cleanedBase64 = base64.replace(/\s/g, '');
-
-    // Decodifique a string base64 para um array de bytes
-    const byteString = window.atob(cleanedBase64);
-    const ab = new ArrayBuffer(byteString.length);
-    const ia = new Uint8Array(ab);
-
-    for (let i = 0; i < byteString.length; i++) {
-      ia[i] = byteString.charCodeAt(i);
-    }
-
-    return new Blob([ab], { type: mimeType });
-  };
-
   const onSubmit = async (data: FieldValues) => {
     try {
       const { imageFile, ...content } = data;
       const file: any = [];
-      // Encontre todas as tags de imagem no conteúdo
-      const imgTags = data.content.match(/<img[^>]+src="([^">]+)">/g);
 
-      file.push(imageFile[0]);
+      const images = txtFormat(data.content);
 
-      // Se houver imagens no conteúdo adicione-as ao FormData
-      if (imgTags) {
-        let index = 0;
-        imgTags.forEach((imgTag: string) => {
-          const srcMatch = imgTag.match(/src="([^"]+)"/);
-          if (srcMatch && srcMatch[1]) {
-            const base64Data = srcMatch[1].split(';base64,')[1];
-            if (base64Data) {
-              const mimeType = srcMatch[1].split(';')[0].split(':')[1];
-              const blob = baseToBlob(base64Data, mimeType);
-              const image = new File([blob], `image${index}`, {
-                type: mimeType
-              });
-              file.push(image);
-              index++;
-            }
-          }
-        });
-        index = 0;
+      if (!imageFile) {
+        file.push(images[0]);
+      } else {
+        file.push(imageFile[0]);
+      }
 
+      let index = 1;
+      images.map((image: any) => {
         // Substitua as tags de imagem por espaços reservados
         content.content = content.content.replace(
           /<img[^>]+src="([^">]+)">/g,
@@ -154,7 +124,9 @@ export default function RegisterArticle() {
             return placeholder;
           }
         );
-      }
+
+        file.push(image);
+      });
 
       const formData = new FormData();
 

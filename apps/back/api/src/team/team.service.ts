@@ -15,11 +15,11 @@ export class TeamService {
   async create(createTeamDto: CreateTeamDto, imageFile?: Express.Multer.File) {
     try {
       let { image, ...data } = createTeamDto;
-      data.order=Number(data.order)
+      data.order = Number(data.order);
       const teamMember = await this.prisma.team.create({
         data: data
       });
-
+      console.log(imageFile)
       let teamImage: ResponseImageDto = {} as ResponseImageDto;
 
       if (imageFile) {

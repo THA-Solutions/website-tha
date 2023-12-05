@@ -16,10 +16,11 @@ export class ArticleService {
 
   async create(
     createArticleDto: CreateArticleDto,
-    imageFile: Express.Multer.File[]
+    imageFile?: Express.Multer.File[]
   ): Promise<ResponseArticleDto> {
     try {
       let { image, ...data } = createArticleDto;
+
       image = JSON.parse(image as any);
 
       let article = await this.prisma.article.create({

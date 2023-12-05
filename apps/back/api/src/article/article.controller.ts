@@ -23,7 +23,7 @@ export class ArticleController {
   @UseInterceptors(FilesInterceptor('imageFile'))
   create(
     @Body() createArticleDto: CreateArticleDto,
-    @UploadedFiles() imageFile: Express.Multer.File[]
+    @UploadedFiles() imageFile?: Express.Multer.File[]
   ) {
     return this.articleService.create(createArticleDto, imageFile);
   }

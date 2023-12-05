@@ -63,7 +63,7 @@ export default function AddEmployeer() {
       const { imageFile, ...content } = data;
       const formData = new FormData();
 
-      formData.append('imageFile', imageFile);
+      formData.append('imageFile', imageFile[0]);
       formData.append('name', content.name);
       formData.append('description', content.description);
       formData.append('role', content.role);
