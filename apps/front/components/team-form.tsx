@@ -28,7 +28,7 @@ const TeamForm = ({
       type: 'file',
       required: isRequired ? true : false,
       placeholder: 'Selecione a imagem do colaborador',
-      value: editTeamData?.image[0] || ''
+      value: editTeamData?.image
     },
     {
       label: 'Nome',

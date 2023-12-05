@@ -23,24 +23,28 @@ export default function EditTeam({ params }: { params: { id: string } }) {
         console.error('Error fetching employee data:', error);
       }
     };
-
     fetchTeamData();
   }, [params.id, setValue]);
-
+  
   const onSubmit = async (data: FieldValues) => {
     try {
+
+
       const { imageFile, ...content } = data;
+
       const formData = new FormData();
 
-      if (imageFile[0]) {
+      if (imageFile[0] && typeof imageFile[0] === 'object') {
         formData.append('imageFile', imageFile[0]);
       }
+
 
       formData.append('name', content.name);
       formData.append('description', content.description);
       formData.append('role', content.role);
       formData.append('linkedin', content.linkedin);
       formData.append('instagram', content.instagram);
+
 
       await toast.promise(team.updateEmployee(params.id, formData), {
         pending: 'Atualizando colaborador...',

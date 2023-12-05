@@ -29,4 +29,16 @@ export default class CloudinaryService {
       return upload;
     });
   }
+
+  async removeImage(publicId: string){
+    return new Promise((resolve, reject) => {
+      v2.uploader.destroy(publicId, (error: UploadApiErrorResponse, result: UploadApiResponse) => {
+        if (result) {
+          resolve(result);
+        } else {
+          reject(error);
+        }
+      });
+    });
+  }
 }
