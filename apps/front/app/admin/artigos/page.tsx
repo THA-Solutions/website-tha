@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
 
 import Link from 'next/link';
 import Image from 'next/image';
@@ -15,7 +16,6 @@ import {
 import { Article, articles, formatter } from '@tha-solutions';
 import HeaderAdmin from 'apps/front/components/header-admin';
 import ImageNotFound from 'apps/front/components/image-not-found';
-import { ToastContainer, toast } from 'react-toastify';
 
 export default function AdminArticles() {
   const [articlesData, setArticlesData] = useState<Article[]>([]);
@@ -81,7 +81,7 @@ export default function AdminArticles() {
                   <Image
                     src={article.image[0].url}
                     alt={article.image[0].alt || 'Descrição não fornecida'}
-                    className="w-full h-72 object-cover sm:h-64"
+                    className="w-full h-72 object-cover sm:h-64 lg:h-56"
                     width={1000}
                     height={1000}
                   />
