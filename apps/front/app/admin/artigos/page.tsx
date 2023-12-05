@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
 
 import Link from 'next/link';
 import Image from 'next/image';
@@ -15,8 +16,6 @@ import {
 import { Article, articles, formatter } from '@tha-solutions';
 import HeaderAdmin from 'apps/front/components/header-admin';
 import ImageNotFound from 'apps/front/components/image-not-found';
-import { ToastContainer, toast } from 'react-toastify';
-import { sleep } from '../../../constants';
 
 export default function AdminArticles() {
   const [articlesData, setArticlesData] = useState<Article[]>([]);

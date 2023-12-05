@@ -2,6 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
+
+import Link from 'next/link';
+import Image from 'next/image';
+
 import {
   AddReaction,
   Delete,
@@ -10,12 +14,9 @@ import {
   LinkedIn,
   SearchOff
 } from '@mui/icons-material';
-
 import { Team, team } from '@tha-solutions';
 import HeaderAdmin from 'apps/front/components/header-admin';
-import Image from 'next/image';
 import ImageNotFound from 'apps/front/components/image-not-found';
-import Link from 'next/link';
 
 export default function AdminTeam() {
   const [employees, setEmployees] = useState<Team[]>([]);

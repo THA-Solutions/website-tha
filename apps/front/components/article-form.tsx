@@ -13,6 +13,7 @@ interface ArticleFormProps {
   onSubmit: (data: FieldValues) => Promise<void>;
   buttonText: string;
   editArticleData?: Article;
+  isRequired: boolean;
 }
 
 const ReactQuill = dynamic(() => import('react-quill'), {
@@ -23,7 +24,8 @@ const ReactQuill = dynamic(() => import('react-quill'), {
 const ArticleForm = ({
   onSubmit,
   buttonText,
-  editArticleData
+  editArticleData,
+  isRequired
 }: ArticleFormProps) => {
   const {
     register,
@@ -46,7 +48,7 @@ const ArticleForm = ({
       label: 'Título',
       name: 'title',
       type: 'text',
-      required: false,
+      required: isRequired ? true : false,
       placeholder: 'Digite o titulo do artigo',
       value: editArticleData?.title
     },
@@ -54,7 +56,7 @@ const ArticleForm = ({
       label: 'Imagem Principal',
       name: 'imageFile',
       type: 'file',
-      required: false,
+      required: isRequired ? true : false,
       placeholder: 'Selecione a imagem do artigo',
       value: editArticleData?.image[0]?.url || ''
     },
@@ -62,7 +64,7 @@ const ArticleForm = ({
       label: 'Descrição da imagem',
       name: 'image.alt',
       type: 'text',
-      required: false,
+      required: isRequired ? true : false,
       placeholder: 'Digite a descrição da imagem',
       value: editArticleData?.image[0]?.alt || ''
     },
@@ -70,7 +72,7 @@ const ArticleForm = ({
       label: 'Fonte da imagem',
       name: 'image.source',
       type: 'text',
-      required: false,
+      required: isRequired ? true : false,
       placeholder: 'Digite a fonte da imagem',
       value: editArticleData?.image[0]?.source || ''
     },
@@ -78,7 +80,7 @@ const ArticleForm = ({
       label: 'Subtitulo',
       name: 'subTitle',
       type: 'text',
-      required: false,
+      required: isRequired ? true : false,
       placeholder: 'Digite o subtitulo do artigo',
       value: editArticleData?.subTitle
     },
@@ -86,7 +88,7 @@ const ArticleForm = ({
       label: 'Autor',
       name: 'author',
       type: 'text',
-      required: false,
+      required: isRequired ? true : false,
       placeholder: 'Digite o nome do autor do artigo',
       value: editArticleData?.author
     }
