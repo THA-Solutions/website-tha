@@ -5,6 +5,8 @@ import { FieldValues, useForm } from 'react-hook-form';
 import InputField from '../../../../components/input-field';
 import { ToastContainer, toast } from 'react-toastify';
 import { team } from '@tha-solutions';
+import { useRouter } from 'next/navigation';
+import TeamForm from 'apps/front/components/team-form';
 
 export default function AddEmployeer() {
   const {
@@ -12,51 +14,7 @@ export default function AddEmployeer() {
     handleSubmit,
     formState: { errors }
   } = useForm();
-
-  const inputs = [
-    {
-      label: 'Imagem',
-      name: 'imageFile',
-      type: 'file',
-      required: true,
-      placeholder: 'Selecione a imagem do colaborador'
-    },
-    {
-      label: 'Nome',
-      name: 'name',
-      type: 'text',
-      required: true,
-      placeholder: 'Digite o nome do colaborador'
-    },
-    {
-      label: 'Descrição',
-      name: 'description',
-      type: 'text',
-      required: true,
-      placeholder: 'Digite uma breve descrição do colaborador'
-    },
-    {
-      label: 'Cargo',
-      name: 'role',
-      type: 'text',
-      required: true,
-      placeholder: 'Digite o cargo do colaborador'
-    },
-    {
-      label: 'Linkedin',
-      name: 'linkedin',
-      type: 'text',
-      required: false,
-      placeholder: 'Insira o link do Linkedin do colaborador'
-    },
-    {
-      label: 'Instagram',
-      name: 'instagram',
-      type: 'text',
-      required: false,
-      placeholder: 'Insira o link do Instagram do colaborador'
-    }
-  ];
+  const router = useRouter();
 
   const onSubmit = async (data: FieldValues) => {
     try {
@@ -75,6 +33,10 @@ export default function AddEmployeer() {
         success: 'Colaborador criado com sucesso!',
         error: 'Erro ao criar o colaborador'
       });
+
+      setTimeout(() => {
+        router.push('/admin/equipe');
+      }, 1500);
     } catch (error) {
       throw Error(`Error in create employeer ${error}`);
     }
@@ -82,30 +44,10 @@ export default function AddEmployeer() {
 
   return (
     <>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col space-y-12 w-full"
-      >
-        {inputs.map((input) => (
-          <InputField
-            key={input.name}
-            input={input}
-            register={register}
-            errors={errors}
-            colorLabel="tertiary"
-            colorRing="ring-gray-400"
-          />
-        ))}
-        <button
-          type="submit"
-          className="bg-tertiary px-3.5 py-2.5 text-center text-xl font-semibold font-alt text-white shadow-sm transition ease-in-out hover:bg-opacity-60 hover:scale-95"
-        >
-          ADICIONAR
-        </button>
-      </form>
+      <TeamForm onSubmit={onSubmit} buttonText="ADICIONAR" isRequired={true} />
       <ToastContainer
         position="top-right"
-        autoClose={5000}
+        autoClose={1500}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
