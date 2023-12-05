@@ -30,19 +30,6 @@ export default function EditArticle({ params }: { params: { id: string } }) {
     fetchArticleData();
   }, [params.id, setValue]);
 
-  const baseToBlob = (base64: string, mimeType: string) => {
-    const cleanedBase64 = base64.replace(/\s/g, '');
-    const byteString = window.atob(cleanedBase64);
-    const ab = new ArrayBuffer(byteString.length);
-    const ia = new Uint8Array(ab);
-
-    for (let i = 0; i < byteString.length; i++) {
-      ia[i] = byteString.charCodeAt(i);
-    }
-
-    return new Blob([ab], { type: mimeType });
-  };
-
   const onSubmit = async (data: FieldValues) => {
     try {
       const { imageFile, ...content } = data;

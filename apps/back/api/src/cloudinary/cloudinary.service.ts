@@ -34,7 +34,6 @@ export default class CloudinaryService {
     return new Promise((resolve, reject) => {
       v2.uploader.destroy(publicId, (error: UploadApiErrorResponse, result: UploadApiResponse) => {
         if (result) {
-          console.log(result);
           resolve(result);
         } else {
           reject(error);

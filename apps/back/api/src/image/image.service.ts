@@ -56,13 +56,15 @@ export class ImageService {
 
   async findByOrigin(id: string) {
     try {
+
       const images = await this.prisma.image.findMany({
         select: {
           id: true,
           url: true,
           source: true,
           alt: true,
-          pos: true
+          pos: true,
+          id_origem: true
         },
         where: { id_origem: id }
       });
@@ -119,17 +121,19 @@ export class ImageService {
 
   async removeAll(id: string) {
     try {
-      //Remove todas as imagens do cloudinary
-      this.findByOrigin(id).then(images => {
-        images.forEach(async image => {
+      //Busca todas as imagens do requisitante
+      const oldImages = await this.findByOrigin(id);
+      if(oldImages.length >0){
+        for (const image of oldImages) {
           //Extrai o id publico da imagem
-          let id = image.url.match(/\images\/[^/.]+(?=\.jpg)/)![0]
-          await this.cloudinary.removeImage(id);
-        });
-      }
-      );
 
-      const deletedImages = await this.prisma.image.deleteMany({
+          let id = image.url.match(/\images\/[^/.]+(?=\.)/)![0];
+
+          await this.cloudinary.removeImage(id);
+        }
+
+      }
+      await this.prisma.image.deleteMany({
         where: { id_origem: id }
       });
 
