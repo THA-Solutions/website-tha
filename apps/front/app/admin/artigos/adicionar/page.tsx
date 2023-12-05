@@ -93,7 +93,11 @@ export default function AddArticle() {
 
   return (
     <>
-      <ArticleForm onSubmit={onSubmit} buttonText="ADICIONAR" />
+      <ArticleForm
+        onSubmit={onSubmit}
+        buttonText="ADICIONAR"
+        isRequired={true}
+      />
       <ToastContainer
         position="top-right"
         autoClose={5000}

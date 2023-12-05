@@ -132,17 +132,16 @@ export class TeamService {
     }
   }
 
-  remove(id: string) {
+  async remove(id: string) {
     try {
-      this.prisma.team.delete({
-        where: { id: id }
+      await this.prisma.team.delete({
+        where: { id }
       });
-      this.prisma.image.deleteMany({
-        where: { id_origem: id }
-      });
+
+      this.imageService.removeAll(id);
+      return;
     } catch (error) {
-      throw Error(`Error in remove team member ${error}`);
+      throw new Error(error);
     }
-    return `This action removes a #${id} team`;
   }
 }

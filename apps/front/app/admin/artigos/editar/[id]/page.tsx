@@ -119,6 +119,7 @@ export default function EditArticle({ params }: { params: { id: string } }) {
           onSubmit={onSubmit}
           buttonText="ATUALIZAR"
           editArticleData={articleData}
+          isRequired={false}
         />
       )}
       <ToastContainer
