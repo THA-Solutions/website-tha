@@ -6,18 +6,22 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
+import { replaceImages } from 'apps/front/utilities/replace-img';
 
 export default function EditArticle({ params }: { params: { id: string } }) {
   const [articleData, setArticleData] = useState<Article | null>(null);
   const router = useRouter();
-
   const { setValue } = useForm();
 
   useEffect(() => {
     const fetchArticleData = async () => {
       try {
         const fetchedArticleData = await articles.getArticleById(params.id);
-        setArticleData(fetchedArticleData);
+        const formatedContent = replaceImages(
+          fetchedArticleData.content,
+          fetchedArticleData.image
+        );
+        setArticleData({ ...fetchedArticleData, content: formatedContent });
       } catch (error) {
         console.error('Error fetching article data:', error);
       }
@@ -25,6 +29,10 @@ export default function EditArticle({ params }: { params: { id: string } }) {
 
     fetchArticleData();
   }, [params.id, setValue]);
+
+  useEffect(() => {
+    console.log(articleData);
+  }, [articleData]);
 
   const baseToBlob = (base64: string, mimeType: string) => {
     const cleanedBase64 = base64.replace(/\s/g, '');
@@ -86,7 +94,6 @@ export default function EditArticle({ params }: { params: { id: string } }) {
         if (key === 'image') {
           formData.append(key, JSON.stringify(content[key]));
         } else {
-
           formData.append(key, content[key]);
         }
       }

@@ -15,7 +15,7 @@ export class TeamService {
   async create(createTeamDto: CreateTeamDto, imageFile?: Express.Multer.File) {
     try {
       let { image, ...data } = createTeamDto;
-      data.order=Number(data.order)
+      data.order = Number(data.order);
       const teamMember = await this.prisma.team.create({
         data: data
       });
@@ -41,8 +41,7 @@ export class TeamService {
         description: teamMember.description,
         linkedin: teamMember.linkedin,
         instagram: teamMember.instagram,
-        image: teamImage ? teamImage.url : '',
-  
+        image: teamImage ? teamImage.url : ''
       };
 
       return returnTeam;
@@ -92,7 +91,11 @@ export class TeamService {
     }
   }
 
-  async update(id: string, updateTeamDto: UpdateTeamDto, imageFile?: Express.Multer.File) {
+  async update(
+    id: string,
+    updateTeamDto: UpdateTeamDto,
+    imageFile?: Express.Multer.File
+  ) {
     try {
       let { image, ...data } = updateTeamDto;
       const teamMember = await this.prisma.team.update({
@@ -102,14 +105,15 @@ export class TeamService {
 
       if (imageFile) {
         if (image) {
-          teamMember.image = await this.imageService.update(
-            teamMember.id,
-            imageFile
-          ).then((image) => {
-            return image.url})
-            };
+          teamMember.image = await this.imageService
+            .update(teamMember.id, imageFile)
+            .then((image) => {
+              return image.url;
+            });
         }
-        teamMember.image = await this.imageService.create(
+      }
+      teamMember.image = await this.imageService
+        .create(
           {
             id_origem: teamMember.id,
             source: 'Team',
@@ -117,9 +121,10 @@ export class TeamService {
             pos: 0
           },
           imageFile!
-        ).then((image) => {
-          return image.url})
-      
+        )
+        .then((image) => {
+          return image.url;
+        });
 
       return teamMember;
     } catch (error) {

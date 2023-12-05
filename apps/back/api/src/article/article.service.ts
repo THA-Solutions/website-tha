@@ -16,10 +16,11 @@ export class ArticleService {
 
   async create(
     createArticleDto: CreateArticleDto,
-    imageFile: Express.Multer.File[]
+    imageFile?: Express.Multer.File[]
   ): Promise<ResponseArticleDto> {
     try {
       let { image, ...data } = createArticleDto;
+
       image = JSON.parse(image as any);
 
       let article = await this.prisma.article.create({
@@ -145,17 +146,17 @@ export class ArticleService {
     imageFile?: Express.Multer.File
   ): Promise<Article> {
     try {
-      let {image, ...data } = updateArticleDto;
+      let { image, ...data } = updateArticleDto;
       image = JSON.parse(image as any);
 
-      const updateData : UpdateArticleDto={
-            id: id,
-            title: data.title,
-            subTitle: data.subTitle,
-            content: data.content,
-            author: data.author,
-            category: data.category
-      }
+      const updateData: UpdateArticleDto = {
+        id: id,
+        title: data.title,
+        subTitle: data.subTitle,
+        content: data.content,
+        author: data.author,
+        category: data.category
+      };
 
       const article = this.prisma.article.update({
         where: { id },
@@ -163,13 +164,12 @@ export class ArticleService {
       });
 
       if (imageFile && image) {
-
         image.source = image.source ? image.source : '';
 
         const currentImage = await this.imageService.findByOrigin(id);
 
         await this.imageService.remove(currentImage[0].id);
-        
+
         const imageUrl = await this.imageService.create(
           {
             id_origem: id,
