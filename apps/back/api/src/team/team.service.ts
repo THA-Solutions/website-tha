@@ -19,7 +19,7 @@ export class TeamService {
       const teamMember = await this.prisma.team.create({
         data: data
       });
-      console.log(imageFile)
+      console.log(imageFile);
       let teamImage: ResponseImageDto = {} as ResponseImageDto;
 
       if (imageFile) {
