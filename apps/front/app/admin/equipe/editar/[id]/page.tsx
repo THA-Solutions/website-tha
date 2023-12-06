@@ -32,15 +32,11 @@ export default function EditTeam({ params }: { params: { id: string } }) {
       const { imageFile, ...content } = data;
       const formData = new FormData();
 
-      if (imageFile[0]) {
-        formData.append('imageFile', imageFile[0]);
-      }
+      formData.append('imageFile', imageFile);
 
-      formData.append('name', content.name);
-      formData.append('description', content.description);
-      formData.append('role', content.role);
-      formData.append('linkedin', content.linkedin);
-      formData.append('instagram', content.instagram);
+      for (let key in content) {
+        formData.append(key, content[key]);
+      }
 
       await toast.promise(team.updateEmployee(params.id, formData), {
         pending: 'Atualizando colaborador...',

@@ -20,14 +20,17 @@ import ImageNotFound from 'apps/front/components/image-not-found';
 
 export default function AdminTeam() {
   const [employees, setEmployees] = useState<Team[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const loadTeam = async () => {
     try {
       const data = await team.getAllEmployees();
       setEmployees(data);
+      setLoading(false); // Alteração aqui
     } catch (error) {
       console.error('Error loading team', error);
       toast.error('Erro ao carregar os colaboradores');
+      setLoading(false); // Também alterado aqui
     }
   };
 
@@ -65,7 +68,12 @@ export default function AdminTeam() {
         link="/admin/equipe/adicionar"
       />
 
-      {employees.length === 0 ? (
+      {loading ? (
+        <div className="h-96 flex flex-col items-center justify-center text-gray-700">
+          <SearchOff className="text-6xl" />
+          <p className="text-4xl text-center">Carregando...</p>
+        </div>
+      ) : employees.length === 0 ? (
         <div className="h-96 flex flex-col items-center justify-center text-gray-700">
           <SearchOff className="text-6xl" />
           <p className="text-4xl text-center">Nenhum colaborador encontrado</p>
@@ -105,6 +113,7 @@ export default function AdminTeam() {
                   <LinkedIn className="text-tertiary" />:
                   <Link
                     href={employee.linkedin}
+                    target="_blank"
                     className="text-gray-400 underline"
                   >
                     {employee.linkedin}
@@ -114,6 +123,7 @@ export default function AdminTeam() {
                   <Instagram className="text-tertiary" />:
                   <Link
                     href={employee.instagram}
+                    target="_blank"
                     className="text-gray-400 underline"
                   >
                     {employee.instagram}

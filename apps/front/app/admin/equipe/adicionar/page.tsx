@@ -1,19 +1,14 @@
 'use client';
 
-import { FieldValues, useForm } from 'react-hook-form';
-
-import InputField from '../../../../components/input-field';
-import { ToastContainer, toast } from 'react-toastify';
-import { team } from '@tha-solutions';
 import { useRouter } from 'next/navigation';
+
+import { FieldValues } from 'react-hook-form';
+import { ToastContainer, toast } from 'react-toastify';
+
+import { team } from '@tha-solutions';
 import TeamForm from 'apps/front/components/team-form';
 
 export default function AddEmployeer() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm();
   const router = useRouter();
 
   const onSubmit = async (data: FieldValues) => {
@@ -22,11 +17,10 @@ export default function AddEmployeer() {
       const formData = new FormData();
 
       formData.append('imageFile', imageFile[0]);
-      formData.append('name', content.name);
-      formData.append('description', content.description);
-      formData.append('role', content.role);
-      formData.append('linkedin', content.linkedin);
-      formData.append('instagram', content.instagram);
+
+      for (let key in content) {
+        formData.append(key, content[key]);
+      }
 
       await toast.promise(team.createEmployee(formData), {
         pending: 'Criando colaborador...',
