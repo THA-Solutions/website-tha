@@ -28,7 +28,7 @@ const matcher = (txt: string, regex: RegExp) => {
 export const imageScanner = (txt: string) => {
   let index = 1;
   const file: any = [];
-  let imgTags = matcher(txt, /<img[^>]+src="([^">]+)">/g);
+  let imgTags = matcher(txt, /<img[^>]+src="data:image[^">]+">/g);
 
   if (imgTags) {
     imgTags.forEach((imgTag) => {

@@ -158,6 +158,20 @@ export class ArticleService {
         category: data.category
       };
 
+      const oldData = await this.prisma.article.findFirst({
+        where: { id }
+      });
+
+      if(oldData !== updateData) {
+        this.imageService.removeAll(id);
+        this.prisma.inverter.update({
+          where: { id },
+          data: updateData
+        })
+
+        
+      }
+
       const article = this.prisma.article.update({
         where: { id },
         data: updateData
