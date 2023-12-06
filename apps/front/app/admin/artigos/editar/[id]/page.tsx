@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 import { replaceImages } from 'apps/front/utilities/replace-img';
+import txtFormat from 'apps/front/utilities/txt-format';
 
 export default function EditArticle({ params }: { params: { id: string } }) {
   const [articleData, setArticleData] = useState<Article | null>(null);
@@ -33,13 +34,25 @@ export default function EditArticle({ params }: { params: { id: string } }) {
   const onSubmit = async (data: FieldValues) => {
     try {
       const { imageFile, ...content } = data;
-      console.log('content', content);
-      console.log('articleData', articleData);
-      console.log('igual', content.content === articleData!.content);
-      console.log(
-        'url',
-        articleData!.image[0].url.match(/\images\/[^/.]+(?=\.jpg)/)
-      );
+      const file: any = [];
+      console.log('content', txtFormat(content.content));
+
+      const newImages = txtFormat(content.content);
+
+      let index = 1;
+
+      content.content.match(/<img[^>]+src="([^">]+)">/g).map((image: any) => {
+        content.content = content.content.replace(
+          /<img[^>]+src="[^">]+">/g,
+          () => {
+            const placeholder = ` <image${index}> `;
+            index++;
+            return placeholder;
+          }
+        );
+      });
+
+      console.log('content', content.content);
       //await toast.promise(articles.updateArticle(params.id, formData), {
       //  pending: 'Atualizando o artigo...',
       //  success: 'Artigo atualizado com sucesso!',
