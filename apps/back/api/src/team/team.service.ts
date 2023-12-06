@@ -102,27 +102,19 @@ export class TeamService {
       });
 
       if (imageFile) {
-        if (image) {
-          teamMember.image = await this.imageService
-            .update(teamMember.id, imageFile)
-            .then((image) => {
-              return image.url;
-            });
-        }
+        this.imageService.removeAll(id);
+        teamMember.image = await this.imageService
+          .create(
+            {
+              id_origem: teamMember.id,
+              source: 'Team',
+              alt: `MemberImage`,
+              pos: 0
+            },
+            imageFile
+          )
+          .then((image) => image.url);
       }
-      teamMember.image = await this.imageService
-        .create(
-          {
-            id_origem: teamMember.id,
-            source: 'Team',
-            alt: `MemberImage`,
-            pos: 0
-          },
-          imageFile!
-        )
-        .then((image) => {
-          return image.url;
-        });
 
       return teamMember;
     } catch (error) {

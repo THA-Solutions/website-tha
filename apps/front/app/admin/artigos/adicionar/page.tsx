@@ -9,50 +9,27 @@ import 'react-quill/dist/quill.snow.css';
 
 import ArticleForm from 'apps/front/components/article-form';
 import { articles } from '@tha-solutions';
+import txtFormat from 'apps/front/utilities/txt-format';
 
 export default function AddArticle() {
   const router = useRouter();
-
-  const baseToBlob = (base64: string, mimeType: string) => {
-    const cleanedBase64 = base64.replace(/\s/g, '');
-    const byteString = window.atob(cleanedBase64);
-    const ab = new ArrayBuffer(byteString.length);
-    const ia = new Uint8Array(ab);
-
-    for (let i = 0; i < byteString.length; i++) {
-      ia[i] = byteString.charCodeAt(i);
-    }
-
-    return new Blob([ab], { type: mimeType });
-  };
 
   const onSubmit = async (data: FieldValues) => {
     try {
       const { imageFile, ...content } = data;
       const file: any = [];
-      const imgTags = data.content.match(/<img[^>]+src="([^">]+)">/g);
 
-      file.push(imageFile[0]);
+      const images = txtFormat(data.content);
 
-      if (imgTags) {
-        let index = 0;
-        imgTags.forEach((imgTag: string) => {
-          const srcMatch = imgTag.match(/src="([^"]+)"/);
-          if (srcMatch && srcMatch[1]) {
-            const base64Data = srcMatch[1].split(';base64,')[1];
-            if (base64Data) {
-              const mimeType = srcMatch[1].split(';')[0].split(':')[1];
-              const blob = baseToBlob(base64Data, mimeType);
-              const image = new File([blob], `image${index}`, {
-                type: mimeType
-              });
-              file.push(image);
-              index++;
-            }
-          }
-        });
-        index = 0;
+      if (!imageFile) {
+        file.push(images[0]);
+      } else {
+        file.push(imageFile[0]);
+      }
 
+      let index = 1;
+      images.map((image: any) => {
+        // Substitua as tags de imagem por espaços reservados
         content.content = content.content.replace(
           /<img[^>]+src="([^">]+)">/g,
           () => {
@@ -61,7 +38,9 @@ export default function AddArticle() {
             return placeholder;
           }
         );
-      }
+
+        file.push(image);
+      });
 
       const formData = new FormData();
 

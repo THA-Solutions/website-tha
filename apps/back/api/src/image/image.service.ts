@@ -62,7 +62,8 @@ export class ImageService {
           url: true,
           source: true,
           alt: true,
-          pos: true
+          pos: true,
+          id_origem: true
         },
         where: { id_origem: id }
       });
@@ -105,6 +106,12 @@ export class ImageService {
 
   async remove(id: string) {
     try {
+      //Remove a imagem do cloudinary
+      this.findOne(id).then(async (image) => {
+        //Extrai o id publico da imagem
+        let id = image!.url.match(/\images\/[^/.]+(?=\.jpg)/)![0];
+        await this.cloudinary.removeImage(id);
+      });
       return await this.prisma.image.delete({ where: { id } });
     } catch (error) {
       throw Error(`Error in remove image ${error}`);
@@ -113,7 +120,22 @@ export class ImageService {
 
   async removeAll(id: string) {
     try {
-      return await this.prisma.image.deleteMany({ where: { id_origem: id } });
+      //Busca todas as imagens do requisitante
+      const oldImages = await this.findByOrigin(id);
+      if (oldImages.length > 0) {
+        for (const image of oldImages) {
+          //Extrai o id publico da imagem
+
+          let id = image.url.match(/\images\/[^/.]+(?=\.)/)![0];
+
+          await this.cloudinary.removeImage(id);
+        }
+      }
+      await this.prisma.image.deleteMany({
+        where: { id_origem: id }
+      });
+
+      return;
     } catch (error) {
       throw Error(`Error in remove all images ${error}`);
     }

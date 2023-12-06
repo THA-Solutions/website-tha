@@ -23,7 +23,6 @@ export default function EditTeam({ params }: { params: { id: string } }) {
         console.error('Error fetching employee data:', error);
       }
     };
-
     fetchTeamData();
   }, [params.id, setValue]);
 
@@ -32,8 +31,9 @@ export default function EditTeam({ params }: { params: { id: string } }) {
       const { imageFile, ...content } = data;
       const formData = new FormData();
 
-      formData.append('imageFile', imageFile);
-
+      if (imageFile[0] && typeof imageFile[0] === 'object') {
+        formData.append('imageFile', imageFile[0]);
+      }
       for (let key in content) {
         formData.append(key, content[key]);
       }
