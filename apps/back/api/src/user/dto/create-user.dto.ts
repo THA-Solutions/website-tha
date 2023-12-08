@@ -20,6 +20,9 @@ export class CreateUserDto {
   email: string;
 
   @IsString()
+  role?: string;
+
+  @IsString()
   @MinLength(6)
   @MaxLength(50)
   @IsNotEmpty()

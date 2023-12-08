@@ -26,7 +26,6 @@ const matcher = (txt: string, regex: RegExp) => {
 };
 
 export const imageScanner = (txt: string) => {
-  let index = 1;
   const file: any = [];
   let imgTags = matcher(txt, /<img[^>]+src="data:image[^">]+">/g);
 
@@ -40,15 +39,17 @@ export const imageScanner = (txt: string) => {
         if (base64) {
           const type = imgSrc[1].split(';')[0].split(':')[1];
           const blob = baseToBlob(base64, type);
-          const imageFile = new File([blob], `image${index}`, { type });
+          const imageFile = new File(
+            [blob],
+            `image${Math.floor(Math.random() * 11)}`,
+            { type }
+          );
           file.push(imageFile);
-          index++;
         }
       }
     });
-    index = 0;
   }
-
+  console.log(file);
   return file;
 };
 

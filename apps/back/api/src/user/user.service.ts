@@ -6,17 +6,16 @@ import { User } from '@prisma/client';
 import * as crypto from 'crypto';
 import { ConfigService } from '@nestjs/config';
 import { ResponseUserDto } from './dto/response-user.dto';
-import { ClientService } from '../client/client.service';
 import { ResponseImageDto } from '../image/dto/response-image.dto';
 import { ImageService } from '../image/image.service';
-import { ResponseClientDto } from '../client/dto/response-client.dto';
+
 
 @Injectable()
 export class UserService {
   constructor(
     private readonly prisma: PrismaService,
     private configService: ConfigService,
-    private client: ClientService,
+
     private imageService: ImageService
   ) {}
 
@@ -105,6 +104,37 @@ export class UserService {
     }
   }
 
+  async findByRole(role: string): Promise<ResponseUserDto[]> {
+    const users = await this.prisma.user.findMany({
+      where: { role }
+    });
+
+    const returnUser = await Promise.all(
+      //Percorre o array de usuários e retorna um array de objetos com os dados do usuário e a url da imagem
+      users.map(async (user) => {
+        let image = await this.prisma.image.findFirst({
+          select: {
+            url: true
+          },
+          where: {
+            id_origem: user.id
+          }
+        });
+        return {
+          id: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+          role: user.role,
+          image: {
+            url: image ? image.url : ''
+          }
+        };
+      })
+    );
+
+    return returnUser as ResponseUserDto[];
+  }
   async findOne(id: string): Promise<any> {
     try {
       let user = await this.prisma.user.findUnique({
@@ -161,48 +191,14 @@ export class UserService {
 
   async findByEmail(
     email: string
-  ): Promise<ResponseUserDto | ResponseClientDto> {
+  ): Promise<ResponseUserDto> {
     try {
       const user = await this.prisma.user.findFirst({
         where: {
           email: email
         }
       });
-      if (!user) {
-        const client = await this.prisma.client.findFirst({
-          where: {
-            email: email
-          }
-        });
 
-        if (!client) throw Error('User not found');
-
-        const image = await this.prisma.image.findFirst({
-          select: {
-            url: true,
-            source: true,
-            alt: true
-          },
-          where: {
-            id_origem: client!.id
-          }
-        });
-
-        const returnUser = {
-          id: client!.id,
-          name: client!.name,
-          email: client!.email,
-          image: {
-            url: image ? image.url : '',
-            source: image ? image.source : '',
-            alt: image ? image.alt : '',
-            pos: 0
-          },
-          role: client!.role,
-          password: client!.password
-        };
-        return returnUser as ResponseClientDto;
-      }
       const image = await this.prisma.image.findFirst({
         select: {
           url: true,

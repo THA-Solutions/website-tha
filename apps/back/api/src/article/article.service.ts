@@ -143,13 +143,11 @@ export class ArticleService {
   async update(
     id: string,
     updateArticleDto: UpdateArticleDto,
-    imageFile?: Express.Multer.File
-  ): Promise<Article> {
+  ) /*: Promise<Article> */ {
     try {
-      let { image, ...data } = updateArticleDto;
-      image = JSON.parse(image as any);
+      let { image,imageFile, ...data } = updateArticleDto;
 
-      const updateData: UpdateArticleDto = {
+      const updateData = {
         id: id,
         title: data.title,
         subTitle: data.subTitle,
@@ -158,49 +156,39 @@ export class ArticleService {
         category: data.category
       };
 
-      const oldData = await this.prisma.article.findFirst({
-        where: { id }
-      });
+      await this.imageService.removeAll(id);
+      for (let i = 0; i < imageFile.length; i++) {
+        if(i==0){
+        await this.prisma.image.create({
+          data: {
+            id_origem: id,
+            source: updateArticleDto.image?.source,
+            alt: updateArticleDto.image?.alt,
+            url: updateArticleDto.imageFile[i],
+            pos: i
+          }
+        });
+        }
+        else{
+          await this.prisma.image.create({
+            data: {
+              id_origem: id,
+              source: '',
+              alt: '',
+              url: updateArticleDto.imageFile[i],
+              pos: i
+            }
+          });
+        }
 
-      if(oldData !== updateData) {
-        this.imageService.removeAll(id);
-        this.prisma.inverter.update({
+      }
+
+      const updatedArticle = await this.prisma.article.update({
           where: { id },
           data: updateData
         })
 
-        
-      }
-
-      const article = this.prisma.article.update({
-        where: { id },
-        data: updateData
-      });
-
-      if (imageFile && image) {
-        image.source = image.source ? image.source : '';
-
-        const currentImage = await this.imageService.findByOrigin(id);
-
-        await this.imageService.remove(currentImage[0].id);
-
-        const imageUrl = await this.imageService.create(
-          {
-            id_origem: id,
-            source: image!.source,
-            alt: image!.alt,
-            pos: currentImage.length
-          },
-          imageFile
-        );
-      }
-
-      const returnArticle = {
-        ...article,
-        image
-      };
-
-      return returnArticle;
+      return updatedArticle;
     } catch (error) {
       throw new Error(error);
     }
