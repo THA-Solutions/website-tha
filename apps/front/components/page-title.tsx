@@ -17,3 +17,5 @@ export const PageTitle = ({ title, description }: PageTitleProps) => {
     </div>
   );
 };
+
+export default PageTitle;

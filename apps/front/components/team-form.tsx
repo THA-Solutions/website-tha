@@ -1,5 +1,6 @@
-import { Team } from '@tha-solutions';
 import { FieldValues, useForm } from 'react-hook-form';
+
+import { Team } from '@tha-solutions';
 import InputField from './input-field';
 
 interface TeamFormProps {

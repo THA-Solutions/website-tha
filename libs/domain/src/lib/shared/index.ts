@@ -3,3 +3,4 @@ export * from './articles';
 export * from './images';
 export * from './inverters';
 export * from './team';
+export * from './clients';

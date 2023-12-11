@@ -6,12 +6,7 @@ export async function middleware(request: NextRequest, _next: NextFetchEvent) {
 
   const protectedRoutesAdmin = ['/admin'];
 
-  const protectedRoutes = [
-    '/entrar',
-    '/dashboard',
-    '/cadastrar',
-    '/cadastrar-artigo'
-  ];
+  const protectedRoutes = ['/dashboard', '/cadastrar'];
 
   const isProtectedAdminRoute = protectedRoutesAdmin.some((route) =>
     pathname.startsWith(route)
@@ -19,9 +14,13 @@ export async function middleware(request: NextRequest, _next: NextFetchEvent) {
 
   const token: any = await getToken({ req: request });
 
-  if (protectedRoutes.some((route) => pathname.startsWith(route)) && token) {
-    return NextResponse.redirect(new URL('/', request.url));
+  // Adicionando uma verificação para rotas protegidas que exigem login
+  if (!token && protectedRoutes.some((route) => pathname.startsWith(route))) {
+    const url = new URL('/entrar', request.url);
+    url.searchParams.set('callbackUrl', encodeURI(request.url));
+    return NextResponse.redirect(url);
   }
+
   if (isProtectedAdminRoute) {
     if (!token) {
       const url = new URL('/entrar', request.url);
@@ -36,4 +35,6 @@ export async function middleware(request: NextRequest, _next: NextFetchEvent) {
 
     return NextResponse.next();
   }
+
+  return NextResponse.next();
 }

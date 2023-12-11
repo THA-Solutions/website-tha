@@ -1,9 +1,10 @@
 'use client';
 
-import Image from 'next/image';
-import Link from 'next/link';
 import { useState } from 'react';
 import { useForm, FieldValues } from 'react-hook-form';
+
+import Image from 'next/image';
+import Link from 'next/link';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
@@ -11,7 +12,8 @@ import InputField from '../../components/input-field';
 import PasswordInputField from '../../components/password-input-field';
 import Logo from '../../public/logo-white.png';
 
-import { Email, Key } from '@mui/icons-material';
+import Email from '@mui/icons-material/Email';
+import Key from '@mui/icons-material/Key';
 
 export default function SignIn() {
   const {
