@@ -9,37 +9,6 @@ datasource db {
   relationMode      = "prisma"
 }
 
-model Account {
-  id                String  @id @default(cuid())
-  userId            String
-  providerAccountId String
-  access_token      String? @db.Text
-  expires_at        Int?
-  id_token          String? @db.Text
-  provider          String
-  refresh_token     String? @db.Text
-  scope             String?
-  session_state     String?
-  token_type        String?
-  type              String
-  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
-  @@index([userId])
-  @@map("account")
-}
-
-model Session {
-  id           String   @id @default(cuid())
-  userId       String
-  expires      DateTime
-  sessionToken String   @unique
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId])
-  @@map("session")
-}
-
 model User {
   id            String    @id @default(cuid())
   firstName     String?   @db.VarChar(25)
@@ -48,19 +17,8 @@ model User {
   emailVerified DateTime?
   password      String?   @db.VarChar(500)
   role          String    @default("user") @db.VarChar(10)
-  accounts      Account[]
-  sessions      Session[]
 
   @@map("user")
-}
-
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
-
-  @@unique([identifier, token])
-  @@map("verification_tokens")
 }
 
 model Article {
@@ -117,16 +75,6 @@ model Inverter {
 
   @@index([id_brand], map: "inverter_FK")
   @@map("inverter")
-}
-
-model Client {
-  email    String @db.VarChar(190)
-  password String @db.VarChar(500)
-  name     String @db.VarChar(100)
-  id       String @id @default(cuid())
-  role     String @default("customer") @db.VarChar(10)
-
-  @@map("client")
 }
 
 model Review {

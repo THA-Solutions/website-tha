@@ -58,6 +58,15 @@ export class UserController {
     }
   }
 
+  @Get('role/:role')
+  findByRole(@Param('role') role: string) {
+    try {
+      return this.userService.findByRole(role);
+    } catch (error) {
+      throw Error(`Error in find user by role ${error}`);
+    }
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     try {

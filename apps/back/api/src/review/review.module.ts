@@ -4,7 +4,6 @@ import { ReviewController } from './review.controller';
 import PrismaService from '../prisma.service';
 import { UserService } from '../user/user.service';
 import { InverterService } from '../inverter/inverter.service';
-import { ClientService } from '../client/client.service';
 import { ImageService } from '../image/image.service';
 import CloudinaryService from '../cloudinary/cloudinary.service';
 @Module({
@@ -14,7 +13,6 @@ import CloudinaryService from '../cloudinary/cloudinary.service';
     PrismaService,
     UserService,
     InverterService,
-    ClientService,
     ImageService,
     CloudinaryService
   ]

@@ -39,13 +39,9 @@ export class ArticleController {
   }
 
   @Patch(':id')
-  @UseInterceptors(FileInterceptor('imageFile'))
-  update(
-    @Param('id') id: string,
-    @Body() updateArticleDto: UpdateArticleDto,
-    @UploadedFile() imageFile?: Express.Multer.File
-  ) {
-    return this.articleService.update(id, updateArticleDto, imageFile);
+  @UseInterceptors(FilesInterceptor('imageFile'))
+  update(@Param('id') id: string, @Body() updateArticleDto: UpdateArticleDto) {
+    return this.articleService.update(id, updateArticleDto);
   }
 
   @Delete(':id')

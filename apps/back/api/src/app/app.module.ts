@@ -7,7 +7,6 @@ import { ArticleModule } from '../article/article.module';
 import { UserModule } from '../user/user.module';
 import { AuthModule } from '../auth/auth.module';
 import { PrismaModule } from '../prisma.module';
-import { ClientModule } from '../client/client.module';
 import { CloudinaryModule } from '../cloudinary/cloudinary.module';
 import { CloudinaryController } from '../cloudinary/cloudinary.controller';
 import PrismaService from '../prisma.service';
@@ -22,7 +21,6 @@ import { MailModule } from '../mail/mail.module';
     ConfigModule.forRoot({ isGlobal: true }),
     AuthModule,
     PrismaModule,
-    ClientModule,
     CloudinaryModule,
     MailModule
   ],

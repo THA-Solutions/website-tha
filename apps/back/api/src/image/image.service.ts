@@ -17,14 +17,13 @@ export class ImageService {
   ): Promise<ResponseImageDto> {
     try {
       const url = await this.cloudinary.uploadImage(image);
-
       const { id, ...imageCreated } = await this.prisma.image.create({
         data: {
           url: url,
           source: createImageDto.source,
           alt: createImageDto.alt,
           id_origem: createImageDto.id_origem,
-          pos: createImageDto.pos
+          pos: Number(createImageDto.pos)
         }
       });
 
@@ -109,7 +108,7 @@ export class ImageService {
       //Remove a imagem do cloudinary
       this.findOne(id).then(async (image) => {
         //Extrai o id publico da imagem
-        let id = image!.url.match(/\images\/[^/.]+(?=\.jpg)/)![0];
+        let id = image!.url.match(/\images\/[^/.]+(?=\.)/)![0];
         await this.cloudinary.removeImage(id);
       });
       return await this.prisma.image.delete({ where: { id } });
