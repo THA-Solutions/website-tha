@@ -152,25 +152,6 @@ export class UserService {
         }
       });
 
-      if (!user) {
-        const client = await this.prisma.client.findUnique({
-          where: { id }
-        });
-
-        const returnClient = {
-          id: client!.id,
-          name: client!.name,
-          email: client!.email,
-          image: {
-            url: image ? image.url : '',
-            source: image ? image.source : '',
-            alt: image ? image.alt : ''
-          }
-        };
-
-        return returnClient;
-      }
-
       const returnUser = {
         id: user!.id,
         firstName: user!.firstName,
