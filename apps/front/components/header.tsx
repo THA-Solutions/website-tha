@@ -2,23 +2,24 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useSession, signOut } from 'next-auth/react';
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 
 import Logo from '../public/logo-colored.png';
 import { contact, pages } from '../constants';
 
 import { Dialog, Disclosure, Popover, Transition } from '@headlessui/react';
-import {
-  ExpandMoreRounded,
-  LeaderboardRounded,
-  SyncAltRounded,
-  ApartmentRounded,
-  SupportAgentRounded,
-  MenuRounded,
-  CloseRounded
-} from '@mui/icons-material';
+
+import ExpandMoreRounded from '@mui/icons-material/ExpandMoreRounded';
+import LeaderboardRounded from '@mui/icons-material/LeaderboardRounded';
+import SyncAltRounded from '@mui/icons-material/SyncAltRounded';
+import ApartmentRounded from '@mui/icons-material/ApartmentRounded';
+import SupportAgentRounded from '@mui/icons-material/SupportAgentRounded';
+import MenuRounded from '@mui/icons-material/MenuRounded';
+import CloseRounded from '@mui/icons-material/CloseRounded';
+import ArrowRightAlt from '@mui/icons-material/ArrowRightAlt';
+import { Logout } from '@mui/icons-material';
 
 const solutions = [
   {
@@ -46,8 +47,16 @@ function classNames(...classes: string[]) {
 
 export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [currentRoute, setCurrentRoute] = useState('');
+
   const { status } = useSession();
   const router = useRouter();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setCurrentRoute(pathname);
+    setMobileMenuOpen(false);
+  }, [pathname]);
 
   return (
     <header className="bg-transparent h-37 absolute z-40 w-full top-0">
@@ -141,7 +150,11 @@ export const Header = () => {
             <Link
               key={item.name}
               href={item.path}
-              className="text-lg font-semibold leading-6 text-primary transition-all hover:text-primary/80 hover:scale-110"
+              className={`flex items-center justify-center text-lg leading-6 font-semibold transition-all ${
+                currentRoute === item.path
+                  ? 'text-gray-400 text-xl uppercase font-bold cursor-default'
+                  : 'text-primary hover:text-gray-300 hover:underline'
+              }`}
             >
               {item.name}
             </Link>
@@ -151,16 +164,16 @@ export const Header = () => {
           {status === 'authenticated' ? (
             <Link
               href="/perfil"
-              className="text-xl font-semibold leading-6 text-tertiary transition-all hover:text-tertiary/80 hover:scale-110"
+              className="flex items-center text-xl font-semibold leading-6 text-tertiary transition-all hover:text-tertiary/80 hover:scale-110"
             >
-              Perfil <span aria-hidden="true">&rarr;</span>
+              Perfil <ArrowRightAlt />
             </Link>
           ) : (
             <Link
               href="/entrar"
-              className="text-xl font-semibold leading-6 text-tertiary transition-all hover:text-tertiary/80 hover:scale-110"
+              className="flex items-center text-xl font-semibold leading-6 text-tertiary transition-all hover:text-tertiary/80 hover:scale-110"
             >
-              Entrar <span aria-hidden="true">&rarr;</span>
+              Entrar <ArrowRightAlt />
             </Link>
           )}
         </div>
@@ -194,7 +207,7 @@ export const Header = () => {
             </button>
           </div>
           <div className="mt-6 flow-root">
-            <div className="-my-6 divide-y divide-background">
+            <div className="-my-6 divide-y divide-gray-700">
               <div className="space-y-2 py-6">
                 <Disclosure as="div" className="-mx-3">
                   {({ open }: any) => (
@@ -228,38 +241,42 @@ export const Header = () => {
                   <Link
                     key={item.name}
                     href={item.path}
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-primary hover:bg-backgroundAlt2"
+                    className={`-mx-3 block rounded-md px-3 py-2 text-base font-semibold transition-all ${
+                      currentRoute === item.path
+                        ? 'text-gray-500 text-lg uppercase font-bold cursor-default'
+                        : 'text-primary hover:text-gray-300 hover:bg-backgroundAlt2'
+                    }`}
                   >
                     {item.name}
                   </Link>
                 ))}
               </div>
-              <div className="py-6">
+              <div className="py-6 block">
                 {status === 'authenticated' ? (
                   <div className="flex flex-col space-y-4">
                     <Link
                       href="/perfil"
-                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-secondary hover:bg-backgroundAlt2"
+                      className="-mx-3 flex items-center rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-secondary hover:bg-backgroundAlt2"
                     >
-                      Perfil <span aria-hidden="true">&rarr;</span>
+                      Perfil <ArrowRightAlt />
                     </Link>
                     <button
                       onClick={() => {
                         signOut({ redirect: false }).then(() => {
-                          router.push('/entrar'); // Redirect to the dashboard page after signing out
+                          router.push('/entrar');
                         });
                       }}
-                      className="-mx-3 block  text-start rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-tertiary ring-1 ring-tertiary transition-all hover:bg-tertiary hover:text-background"
+                      className="absolute mx-6 inset-x-0 bottom-4 flex items-center justify-between py-1 border-b border-tertiary text-base font-semibold leading-7 text-tertiary transition-all hover:text-gray-300 hover:border-gray-300"
                     >
-                      Sair
+                      SAIR <Logout />
                     </button>
                   </div>
                 ) : (
                   <Link
                     href="/entrar"
-                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-secondary hover:bg-backgroundAlt2"
+                    className="-mx-3 flex items-center rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-secondary hover:bg-backgroundAlt2"
                   >
-                    Entrar <span aria-hidden="true">&rarr;</span>
+                    Entrar <ArrowRightAlt />
                   </Link>
                 )}
               </div>
@@ -270,3 +287,5 @@ export const Header = () => {
     </header>
   );
 };
+
+export default Header;

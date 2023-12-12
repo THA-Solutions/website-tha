@@ -103,17 +103,18 @@ export class TeamService {
 
       if (imageFile) {
         this.imageService.removeAll(id);
-        teamMember.image = await this.imageService.create(
-          {
-            id_origem: teamMember.id,
-            source: 'Team',
-            alt: `MemberImage`,
-            pos: 0
-          },
-          imageFile
-        ).then((image) => image.url);
+        teamMember.image = await this.imageService
+          .create(
+            {
+              id_origem: teamMember.id,
+              source: 'Team',
+              alt: `MemberImage`,
+              pos: 0
+            },
+            imageFile
+          )
+          .then((image) => image.url);
       }
-
 
       return teamMember;
     } catch (error) {

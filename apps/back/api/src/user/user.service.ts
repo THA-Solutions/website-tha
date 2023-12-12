@@ -9,13 +9,11 @@ import { ResponseUserDto } from './dto/response-user.dto';
 import { ResponseImageDto } from '../image/dto/response-image.dto';
 import { ImageService } from '../image/image.service';
 
-
 @Injectable()
 export class UserService {
   constructor(
     private readonly prisma: PrismaService,
     private configService: ConfigService,
-
     private imageService: ImageService
   ) {}
 
@@ -170,9 +168,7 @@ export class UserService {
     }
   }
 
-  async findByEmail(
-    email: string
-  ): Promise<ResponseUserDto> {
+  async findByEmail(email: string): Promise<ResponseUserDto> {
     try {
       const user = await this.prisma.user.findFirst({
         where: {
