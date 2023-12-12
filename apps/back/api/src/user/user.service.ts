@@ -8,12 +8,14 @@ import { ConfigService } from '@nestjs/config';
 import { ResponseUserDto } from './dto/response-user.dto';
 import { ResponseImageDto } from '../image/dto/response-image.dto';
 import { ImageService } from '../image/image.service';
+import { BrandService } from '../brand/brand.service';
 
 @Injectable()
 export class UserService {
   constructor(
     private readonly prisma: PrismaService,
     private configService: ConfigService,
+    private companyService: BrandService,
     private imageService: ImageService
   ) {}
 
@@ -48,8 +50,18 @@ export class UserService {
       if (user) {
         throw Error('User already exists');
       } else {
+        if (createUserDto.role === 'customer' && createUserDto?.company) {
+          const company = await this.companyService.findByTitle(
+            createUserDto.company!
+          );
+          if (!company) {
+            throw Error('Company not found');
+          }
+          createUserDto.company = company.id;
+        }
         createUserDto.password = this.crypter(createUserDto.password);
-
+      
+      
         const createdUser = await this.prisma.user.create({
           data: createUserDto
         });

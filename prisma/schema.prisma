@@ -17,6 +17,7 @@ model User {
   emailVerified DateTime?
   password      String?   @db.VarChar(500)
   role          String    @default("user") @db.VarChar(10)
+  company       String?
 
   @@map("user")
 }
@@ -35,11 +36,12 @@ model Article {
 
 model Brand {
   id          String     @id @default(cuid())
-  trade_name  String     @db.VarChar(100)
+  trade_name  String?    @db.VarChar(100)
   legal_name  String     @db.VarChar(100)
   description String?    @db.VarChar(500)
-  phone       String?    @db.VarChar(100)
   email       String?    @db.VarChar(100)
+  cnpj        String     @db.VarChar(18)
+  phone       String?    @db.VarChar(13)
   inverters   Inverter[]
 
   @@map("brand")
@@ -98,7 +100,7 @@ model Image {
   url       String  @unique @db.VarChar(500)
   alt       String? @db.VarChar(500)
   source    String? @db.VarChar(500)
-  pos       Int     @default(0)
+  pos       Int?    @default(0)
 
   @@map("image")
 }
