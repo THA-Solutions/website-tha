@@ -1,29 +1,32 @@
 import axios from 'axios';
-import { Client } from '../entities';
+import { User } from '../entities';
 
 export class ClientService {
-  static async createClient(client: FormData): Promise<Client> {
-    //client.role = 'customer';
-    const res = await axios.post('http://localhost:3000/api/user', client);
+  static async createClient(client: FormData): Promise<User> {
+    const res = await axios.post('http://localhost:3000/api/user', {
+      ...client,
+      role: 'customer'
+    });
+
     return res.data;
   }
 
-  static async getAllClients(): Promise<Client[]> {
-    const res = await axios.get('http://localhost:3000/api/user/role/client');
+  static async getAllClients(): Promise<User[]> {
+    const res = await axios.get('http://localhost:3000/api/user/role/customer');
     return res.data;
   }
 
-  static async getClientById(id: string): Promise<Client> {
+  static async getClientById(id: string): Promise<User> {
     const res = await axios.get(`http://localhost:3000/api/user/${id}`);
     return res.data;
   }
 
-  static async updateClient(id: string, client: Client): Promise<Client> {
+  static async updateClient(id: string, client: User): Promise<User> {
     const res = await axios.put(`http://localhost:3000/api/user/${id}`, client);
     return res.data;
   }
 
-  static async deleteClient(id: string): Promise<Client> {
+  static async deleteClient(id: string): Promise<User> {
     const res = await axios.delete(`http://localhost:3000/api/user/${id}`);
     return res.data;
   }

@@ -6,6 +6,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import { ClientService } from '@tha-solutions';
 import ClientTable from 'apps/front/components/client-table';
 
+import SearchOff from '@mui/icons-material/SearchOff';
+
 export default function Page() {
   const clients = use(ClientService.getAllClients());
 
@@ -22,7 +24,15 @@ export default function Page() {
   return (
     <>
       <h1>Esta retornando a password, corrigir!!</h1>
-      <ClientTable clients={clients} onDelete={deleteClient} />
+
+      {clients.length === 0 ? (
+        <div className="h-96 flex flex-col items-center justify-center text-gray-700">
+          <SearchOff className="text-6xl" />
+          <p className="text-4xl text-center">Nenhum cliente cadastrado</p>
+        </div>
+      ) : (
+        <ClientTable clients={clients} onDelete={deleteClient} />
+      )}
       <ToastContainer
         position="top-right"
         autoClose={3000}

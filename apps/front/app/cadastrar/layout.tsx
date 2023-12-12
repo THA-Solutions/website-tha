@@ -5,10 +5,6 @@ export const metadata = {
   description: `Página de cadastro de usuário`
 };
 
-export default function SignUpLayout({
-  children
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return <main className="h-screen">{children}</main>;
 }

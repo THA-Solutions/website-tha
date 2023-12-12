@@ -14,7 +14,6 @@ export class UserService {
   constructor(
     private readonly prisma: PrismaService,
     private configService: ConfigService,
-
     private imageService: ImageService
   ) {}
 
