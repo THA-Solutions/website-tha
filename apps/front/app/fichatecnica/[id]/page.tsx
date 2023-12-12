@@ -1,7 +1,4 @@
-import { inverters } from '@tha-solutions';
-import { cookies } from 'next/headers';
-
-import { randomUUID } from 'crypto';
+import { InverterService } from '@tha-solutions';
 
 type FormatFields = {
   [key: string]: string;
@@ -42,7 +39,7 @@ export default async function Fichatecnica({
 }: {
   params: { id: string };
 }) {
-  const inverterData = await inverters.getInvertersDataById(params.id);
+  const inverterData = await InverterService.getInvertersDataById(params.id);
 
   return (
     <>

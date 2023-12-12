@@ -1,9 +1,13 @@
 import axios from 'axios';
+
+import ApiConfig from './api-config';
 import { Article } from '../entities';
 
 export class ArticleSerivce {
+  private static readonly apiPath = `${ApiConfig.getApiUrl()}/article`;
+
   static async createArticle(article: FormData): Promise<Article> {
-    const res = await axios.post('http://localhost:3000/api/article', article, {
+    const res = await axios.post(this.apiPath, article, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -12,12 +16,12 @@ export class ArticleSerivce {
   }
 
   static async getAllArticles(): Promise<Article[]> {
-    const res = await axios.get('http://localhost:3000/api/article');
+    const res = await axios.get(this.apiPath);
     return res.data;
   }
 
   static async getArticleById(id: string): Promise<Article> {
-    const res = await axios.get(`http://localhost:3000/api/article/${id}`);
+    const res = await axios.get(`${this.apiPath}/${id}`);
     return res.data;
   }
 
@@ -25,20 +29,16 @@ export class ArticleSerivce {
     id: string,
     updatedArticle: FormData
   ): Promise<Article> {
-    const res = await axios.patch(
-      `http://localhost:3000/api/article/${id}`,
-      updatedArticle,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+    const res = await axios.patch(`${this.apiPath}/${id}`, updatedArticle, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
       }
-    );
+    });
     return res.data;
   }
 
   static async deleteArticle(id: string): Promise<Article> {
-    const res = await axios.delete(`http://localhost:3000/api/article/${id}`);
+    const res = await axios.delete(`${this.apiPath}/${id}`);
     return res.data;
   }
 }

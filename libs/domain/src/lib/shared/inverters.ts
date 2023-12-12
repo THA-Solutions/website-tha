@@ -1,22 +1,16 @@
 import axios from 'axios';
 
-export class inverters {
+import ApiConfig from './api-config';
+
+export class InverterService {
+  private static readonly apiPath = `${ApiConfig.getApiUrl()}/inverter`;
+
   static async getInvertersData() {
-    try {
-      const res = await axios.get('http://localhost:3000/api/inverter');
-      return res.data;
-    } catch (error) {
-      console.error(error);
-      return [];
-    }
+    const res = await axios.get(this.apiPath);
+    return res.data;
   }
   static async getInvertersDataById(id: string) {
-    try {
-      const res = await axios.get(`http://localhost:3000/api/inverter/${id}`);
-      return res.data;
-    } catch (error) {
-      console.error(error);
-      return;
-    }
+    const res = await axios.get(`${this.apiPath}/${id}`);
+    return res.data;
   }
 }

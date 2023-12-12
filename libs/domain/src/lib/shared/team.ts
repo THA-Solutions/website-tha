@@ -1,9 +1,13 @@
 import axios from 'axios';
+
+import ApiConfig from './api-config';
 import { Team } from '../entities';
 
 export class TeamService {
+  private static readonly apiPath = `${ApiConfig.getApiUrl()}/team`;
+
   static async createEmployee(employee: FormData): Promise<Team> {
-    const res = await axios.post('http://localhost:3000/api/team', employee, {
+    const res = await axios.post(this.apiPath, employee, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -12,12 +16,12 @@ export class TeamService {
   }
 
   static async getAllEmployees(): Promise<Team[]> {
-    const res = await axios.get('http://localhost:3000/api/team');
+    const res = await axios.get(this.apiPath);
     return res.data;
   }
 
   static async getEmployeeById(id: string): Promise<Team> {
-    const res = await axios.get(`http://localhost:3000/api/team/${id}`);
+    const res = await axios.get(`${this.apiPath}/${id}`);
     return res.data;
   }
 
@@ -25,20 +29,16 @@ export class TeamService {
     id: string,
     updatedEmployee: FormData
   ): Promise<Team> {
-    const res = await axios.patch(
-      `http://localhost:3000/api/team/${id}`,
-      updatedEmployee,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+    const res = await axios.patch(`${this.apiPath}/${id}`, updatedEmployee, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
       }
-    );
+    });
     return res.data;
   }
 
   static async deleteEmployee(id: string): Promise<Team> {
-    const res = await axios.delete(`http://localhost:3000/api/team/${id}`);
+    const res = await axios.delete(`${this.apiPath}/${id}`);
     return res.data;
   }
 }

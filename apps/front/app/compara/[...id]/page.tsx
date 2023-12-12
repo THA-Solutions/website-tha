@@ -1,4 +1,4 @@
-import { inverters } from '@tha-solutions';
+import { InverterService } from '@tha-solutions';
 
 type FormatFields = {
   [key: string]: string;
@@ -55,29 +55,29 @@ export default async function Comparacao({
 }: {
   params: { id: string[] };
 }) {
-  const inverterData = await inverters
-    .getInvertersDataById(params.id[0])
-    .then((data) => {
-      const filteredData: any = {};
-      for (const key in data) {
-        if (formatFields[key]) {
-          filteredData[key] = data[key];
-        }
+  const inverterData = await InverterService.getInvertersDataById(
+    params.id[0]
+  ).then((data) => {
+    const filteredData: any = {};
+    for (const key in data) {
+      if (formatFields[key]) {
+        filteredData[key] = data[key];
       }
-      return filteredData;
-    });
+    }
+    return filteredData;
+  });
 
-  const inverterData2 = await inverters
-    .getInvertersDataById(params.id[1])
-    .then((data) => {
-      const filteredData: any = {};
-      for (const key in data) {
-        if (formatFields[key]) {
-          filteredData[key] = data[key];
-        }
+  const inverterData2 = await InverterService.getInvertersDataById(
+    params.id[1]
+  ).then((data) => {
+    const filteredData: any = {};
+    for (const key in data) {
+      if (formatFields[key]) {
+        filteredData[key] = data[key];
       }
-      return filteredData;
-    });
+    }
+    return filteredData;
+  });
 
   const compareData = compare(inverterData, inverterData2);
 
