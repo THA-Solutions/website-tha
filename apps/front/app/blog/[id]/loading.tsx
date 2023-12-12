@@ -1,7 +1,7 @@
 import { ArrowBackIosNewRounded } from '@mui/icons-material';
 import Skeleton from '@mui/material/Skeleton';
 
-export default function PostLoading() {
+export default function Loading() {
   return (
     <>
       <nav className="flex items-center space-x-8">

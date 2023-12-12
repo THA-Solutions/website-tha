@@ -40,10 +40,7 @@ export class ArticleController {
 
   @Patch(':id')
   @UseInterceptors(FilesInterceptor('imageFile'))
-  update(
-    @Param('id') id: string,
-    @Body() updateArticleDto: UpdateArticleDto,
-  ) {
+  update(@Param('id') id: string, @Body() updateArticleDto: UpdateArticleDto) {
     return this.articleService.update(id, updateArticleDto);
   }
 

@@ -6,11 +6,7 @@ export const metadata = {
   description: 'Página de controle administrativo'
 };
 
-export default function AdminLayout({
-  children
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <NavbarAdmin />

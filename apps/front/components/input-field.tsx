@@ -1,6 +1,6 @@
 import { UseFormRegister, FieldValues, FieldErrors } from 'react-hook-form';
 
-import { InfoOutlined } from '@mui/icons-material';
+import InfoOutlined from '@mui/icons-material/InfoOutlined';
 
 export interface InputFieldProps {
   input: {

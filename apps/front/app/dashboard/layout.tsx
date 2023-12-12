@@ -1,3 +1,4 @@
+import NavbarAdmin from 'apps/front/components/navbar-admin';
 import { contact } from '../../constants';
 
 export const metadata = {
@@ -5,10 +6,13 @@ export const metadata = {
   description: 'Dashboard'
 };
 
-export default function DashboardLayout({
-  children
-}: {
-  children: React.ReactNode;
-}) {
-  return <main>{children}</main>;
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    <>
+      <NavbarAdmin />
+      <main className="pt-28 pb-8">
+        <div className="mx-auto max-w-5xl px-6 lg:px-8">{children}</div>
+      </main>
+    </>
+  );
 }

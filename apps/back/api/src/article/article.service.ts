@@ -142,10 +142,10 @@ export class ArticleService {
 
   async update(
     id: string,
-    updateArticleDto: UpdateArticleDto,
+    updateArticleDto: UpdateArticleDto
   ) /*: Promise<Article> */ {
     try {
-      let { image,imageFile, ...data } = updateArticleDto;
+      let { image, imageFile, ...data } = updateArticleDto;
       image = JSON.parse(image as any);
 
       const updateData = {
@@ -162,18 +162,17 @@ export class ArticleService {
       return
       await this.imageService.deleteOffSet(imageFile);
       for (let i = 0; i < imageFile.length; i++) {
-        if(i==0){
-        await this.prisma.image.create({
-          data: {
-            id_origem: id,
-            source: updateArticleDto.image?.source,
-            alt: updateArticleDto.image?.alt,
-            url: updateArticleDto.imageFile[i],
-            pos: i
-          }
-        });
-        }
-        else{
+        if (i == 0) {
+          await this.prisma.image.create({
+            data: {
+              id_origem: id,
+              source: updateArticleDto.image?.source,
+              alt: updateArticleDto.image?.alt,
+              url: updateArticleDto.imageFile[i],
+              pos: i
+            }
+          });
+        } else {
           await this.prisma.image.create({
             data: {
               id_origem: id,
@@ -184,13 +183,12 @@ export class ArticleService {
             }
           });
         }
-
       }
 
       const updatedArticle = await this.prisma.article.update({
-          where: { id },
-          data: updateData
-        })
+        where: { id },
+        data: updateData
+      });
 
       return updatedArticle;
     } catch (error) {

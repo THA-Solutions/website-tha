@@ -8,9 +8,8 @@ export async function middleware(request: NextRequest, _next: NextFetchEvent) {
 
   const protectedRoutes = [
     '/entrar',
-    '/dashboard',
     '/cadastrar',
-    '/cadastrar-artigo'
+    '/dashboard' //?
   ];
 
   const isProtectedAdminRoute = protectedRoutesAdmin.some((route) =>
@@ -22,6 +21,7 @@ export async function middleware(request: NextRequest, _next: NextFetchEvent) {
   if (protectedRoutes.some((route) => pathname.startsWith(route)) && token) {
     return NextResponse.redirect(new URL('/', request.url));
   }
+
   if (isProtectedAdminRoute) {
     if (!token) {
       const url = new URL('/entrar', request.url);

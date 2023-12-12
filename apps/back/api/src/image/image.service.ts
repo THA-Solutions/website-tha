@@ -55,7 +55,6 @@ export class ImageService {
 
   async findByOrigin(id: string) {
     try {
-
       const images = await this.prisma.image.findMany({
         select: {
           id: true,
@@ -107,11 +106,11 @@ export class ImageService {
   async delete(id: string) {
     try {
       //Remove a imagem do cloudinary
-      this.findOne(id).then(async image => {
+      this.findOne(id).then(async (image) => {
         //Extrai o id publico da imagem
-        let id = image!.url.match(/\images\/[^/.]+(?=\.)/)![0]
+        let id = image!.url.match(/\images\/[^/.]+(?=\.)/)![0];
         await this.cloudinary.removeImage(id);
-      })
+      });
       return await this.prisma.image.delete({ where: { id } });
     } catch (error) {
       throw Error(`Error in remove image ${error}`);
@@ -144,7 +143,7 @@ export class ImageService {
     try {
       //Busca todas as imagens do requisitante
       const oldImages = await this.findByOrigin(id);
-      if(oldImages.length >0){
+      if (oldImages.length > 0) {
         for (const image of oldImages) {
           //Extrai o id publico da imagem
 
@@ -152,13 +151,12 @@ export class ImageService {
 
           await this.cloudinary.removeImage(id);
         }
-
       }
       await this.prisma.image.deleteMany({
         where: { id_origem: id }
       });
 
-      return 
+      return;
     } catch (error) {
       throw Error(`Error in remove all images ${error}`);
     }

@@ -5,7 +5,7 @@ import { useSession } from 'next-auth/react';
 
 import { pagesAdmin, PageAdminType } from '../../constants';
 
-export default function AdminPage() {
+export default function Page() {
   const { data: session } = useSession();
 
   return (

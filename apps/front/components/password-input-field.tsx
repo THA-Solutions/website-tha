@@ -1,6 +1,8 @@
 import { InputFieldProps } from './input-field';
 
-import { VisibilityOff, Visibility, InfoOutlined } from '@mui/icons-material';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import Visibility from '@mui/icons-material/Visibility';
+import InfoOutlined from '@mui/icons-material/InfoOutlined';
 
 interface PasswordInputFieldProps extends InputFieldProps {
   passwordVisible: boolean;
@@ -33,7 +35,9 @@ const PasswordInputField = ({
           name="password"
           id="password"
           autoComplete={input.autoComplete}
-          className={`w-full border-0 pl-14 py-2 text-white bg-transparent shadow-sm ring-1 ring-inset ${colorRing} placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-tertiary`}
+          className={`w-full border-0 ${
+            input.icon ? 'pl-14' : 'pl-4'
+          } py-2 text-white bg-transparent shadow-sm ring-1 ring-inset ${colorRing} placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-tertiary`}
         />
         <div className="absolute top-1/2 transform -translate-y-1/2 left-4">
           {input.icon}
