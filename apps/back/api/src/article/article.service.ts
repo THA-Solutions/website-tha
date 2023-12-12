@@ -146,6 +146,7 @@ export class ArticleService {
   ) /*: Promise<Article> */ {
     try {
       let { image,imageFile, ...data } = updateArticleDto;
+      image = JSON.parse(image as any);
 
       const updateData = {
         id: id,
@@ -156,7 +157,10 @@ export class ArticleService {
         category: data.category
       };
 
-      await this.imageService.removeAll(id);
+      console.log(imageFile)
+      console.log(updateArticleDto);
+      return
+      await this.imageService.deleteOffSet(imageFile);
       for (let i = 0; i < imageFile.length; i++) {
         if(i==0){
         await this.prisma.image.create({
@@ -200,7 +204,7 @@ export class ArticleService {
         where: { id }
       });
 
-      this.imageService.removeAll(id);
+      this.imageService.deleteAll(id);
       return;
     } catch (error) {
       throw new Error(error);

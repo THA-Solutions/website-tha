@@ -16,6 +16,7 @@ export class ImageService {
     image: Express.Multer.File
   ): Promise<ResponseImageDto> {
     try {
+
       const url = await this.cloudinary.uploadImage(image);
       const { id, ...imageCreated } = await this.prisma.image.create({
         data: {
@@ -26,7 +27,6 @@ export class ImageService {
           pos: Number(createImageDto.pos)
         }
       });
-
       return imageCreated;
     } catch (error) {
       throw Error(`Error in create image ${error}`);
@@ -104,7 +104,7 @@ export class ImageService {
     }
   }
 
-  async remove(id: string) {
+  async delete(id: string) {
     try {
       //Remove a imagem do cloudinary
       this.findOne(id).then(async image => {
@@ -118,7 +118,29 @@ export class ImageService {
     }
   }
 
-  async removeAll(id: string) {
+  async deleteOffSet(images:any[]){
+    try{
+      const ids = await this.prisma.image.findMany({
+        select:{
+          id:true
+        },
+        where:{
+          url:{
+            notIn:images
+          }
+        }
+      })
+
+      for (const id of ids){
+        await this.delete(id.id)
+      }
+      
+    }catch(error){
+      throw Error(`Error in remove image ${error}`);
+    }
+  }
+
+  async deleteAll(id: string) {
     try {
       //Busca todas as imagens do requisitante
       const oldImages = await this.findByOrigin(id);

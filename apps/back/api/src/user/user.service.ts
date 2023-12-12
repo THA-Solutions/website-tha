@@ -244,7 +244,7 @@ export class UserService {
       const user = this.prisma.user.delete({
         where: { id }
       });
-
+      
       return user;
     } catch (error) {
       throw Error(`Error in delete user ${error}`);

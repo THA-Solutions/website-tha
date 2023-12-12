@@ -25,6 +25,7 @@ export default class CloudinaryService {
           }
         }
       );
+
       toStream(file.buffer).pipe(upload);
       return upload;
     });

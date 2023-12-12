@@ -34,9 +34,12 @@ model Article {
 }
 
 model Brand {
-  id        String     @id @default(cuid())
-  name      String     @db.VarChar(100)
-  inverters Inverter[]
+  id          String     @id @default(cuid())
+  trade_name  String     @db.VarChar(100)
+  legal_name  String     @db.VarChar(100)
+  description String?    @db.VarChar(500)
+  email       String?    @db.VarChar(100)
+  inverters   Inverter[]
 
   @@map("brand")
 }

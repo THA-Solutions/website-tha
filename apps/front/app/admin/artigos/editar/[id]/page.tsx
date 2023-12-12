@@ -69,7 +69,6 @@ export default function EditArticle({ params }: { params: { id: string } }) {
           )
           .then((res) => (imagesArr[0] = res.url));
       }else{
-
         imagesArr[0] = articleData?.image[0].url;
       }
 
@@ -83,6 +82,9 @@ export default function EditArticle({ params }: { params: { id: string } }) {
             return placeholder;
           }
         );
+        
+          console.log(intextImage);
+
         //Verifica se a imagem é base64
         if (intextImage[i].match(/<img[^>]+src="data:image[^">]+">/g)) {
           //Se for base base64, converte para arquivo e cria a imagem
@@ -92,23 +94,28 @@ export default function EditArticle({ params }: { params: { id: string } }) {
           const tempFormData = await createTempFormData(i, tempFile);
 
           imagesArr.push(
+            //Se for uma nova imagem base64 cria a imagem e retorna sua url
             await images.createImage(tempFormData).then((res) => res.url)
           );
         } else {
           //Se não for base64, pega o src da imagem e adiciona ao array de arquivos
-
           imagesArr.push(intextImage[i].match(/src="([^"]+)"/)[1]);
         }
       }
 
       imagesArr.map((item) => {
-
         formData.append(`imageFile`, item);
       });
 
       for (const key in content) {
-        formData.append(key, content[key]);
+                if (key === 'image') {
+                  formData.append(key, JSON.stringify(content[key]));
+                } else {
+                  formData.append(key, content[key]);
+                }
       }
+
+      console.log(imagesArr);
 
       await toast.promise(articles.updateArticle(params.id, formData), {
         pending: 'Atualizando o artigo...',
