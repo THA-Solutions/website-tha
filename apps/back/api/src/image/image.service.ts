@@ -16,13 +16,30 @@ export class ImageService {
     image: Express.Multer.File
   ): Promise<ResponseImageDto> {
     try {
-
       const url = await this.cloudinary.uploadImage(image);
       const { id, ...imageCreated } = await this.prisma.image.create({
         data: {
           url: url,
           source: createImageDto.source,
           alt: createImageDto.alt,
+          id_origem: createImageDto.id_origem,
+          pos: Number(createImageDto.pos)
+        }
+      });
+      return imageCreated;
+    } catch (error) {
+      throw Error(`Error in create image ${error}`);
+    }
+  }
+
+  async createByUrl(createImageDto: CreateImageDto): Promise<ResponseImageDto> {
+    try {
+      //Cria uma nova imagem em banco baseando-se no URL original
+      const { id, ...imageCreated } = await this.prisma.image.create({
+        data: {
+          url: createImageDto.url!,
+          source: createImageDto.source || '',
+          alt: createImageDto.alt || '',
           id_origem: createImageDto.id_origem,
           pos: Number(createImageDto.pos)
         }
@@ -73,6 +90,18 @@ export class ImageService {
     }
   }
 
+  async findByAtribute(param: string, value: any) {
+    try {
+      const images = await this.prisma.image.findMany({
+        where: { [param]: value }
+      });
+
+      return images;
+    } catch (error) {
+      throw Error(`Error in find all images ${error}`);
+    }
+  }
+
   async update(id: string, image: Express.Multer.File) {
     try {
       const url = await this.cloudinary.uploadImage(image);
@@ -80,6 +109,22 @@ export class ImageService {
         where: { id },
         data: {
           url: url
+        }
+      });
+      return updatedImage;
+    } catch (error) {
+      throw Error(`Error in update image ${error}`);
+    }
+  }
+
+  async updateAtributes(id: string, updateImageDto: any) {
+    try {
+      const updatedImage = await this.prisma.image.update({
+        where: { id },
+        data: {
+          source: updateImageDto.source,
+          alt: updateImageDto.alt,
+          pos: updateImageDto.pos
         }
       });
       return updatedImage;
@@ -117,24 +162,23 @@ export class ImageService {
     }
   }
 
-  async deleteOffSet(images:any[]){
-    try{
+  async deleteOffSet(images: any[]) {
+    try {
       const ids = await this.prisma.image.findMany({
-        select:{
-          id:true
+        select: {
+          id: true
         },
-        where:{
-          url:{
-            notIn:images
+        where: {
+          url: {
+            notIn: images
           }
         }
-      })
+      });
 
-      for (const id of ids){
-        await this.delete(id.id)
+      for (const id of ids) {
+        await this.delete(id.id);
       }
-      
-    }catch(error){
+    } catch (error) {
       throw Error(`Error in remove image ${error}`);
     }
   }

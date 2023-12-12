@@ -14,6 +14,9 @@ import { images } from '@tha-solutions';
 
 export default function EditArticle({ params }: { params: { id: string } }) {
   const article: Article = use(ArticleSerivce.getArticleById(params.id));
+
+  article.content = replaceImages(article.content, article.image);
+
   const router = useRouter();
 
   const createTempFormData = async (
@@ -64,8 +67,6 @@ export default function EditArticle({ params }: { params: { id: string } }) {
             return placeholder;
           }
         );
-        
-          console.log(intextImage);
 
         //Verifica se a imagem é base64
         if (intextImage[i].match(/<img[^>]+src="data:image[^">]+">/g)) {
@@ -90,11 +91,11 @@ export default function EditArticle({ params }: { params: { id: string } }) {
       });
 
       for (const key in content) {
-                if (key === 'image') {
-                  formData.append(key, JSON.stringify(content[key]));
-                } else {
-                  formData.append(key, content[key]);
-                }
+        if (key === 'image') {
+          formData.append(key, JSON.stringify(content[key]));
+        } else {
+          formData.append(key, content[key]);
+        }
       }
 
       await toast.promise(ArticleSerivce.updateArticle(params.id, formData), {

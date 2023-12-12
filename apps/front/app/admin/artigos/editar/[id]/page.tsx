@@ -39,7 +39,6 @@ export default function EditArticle({ params }: { params: { id: string } }) {
     alt: string = '',
     source: string = ''
   ): Promise<FormData> => {
-
     const tempImageFormData = new FormData();
 
     tempImageFormData.append('imageFile', tempFile[0]);
@@ -51,7 +50,6 @@ export default function EditArticle({ params }: { params: { id: string } }) {
     return tempImageFormData;
   };
 
-
   const onSubmit = async (data: FieldValues) => {
     try {
       const { imageFile, ...content } = data;
@@ -59,8 +57,8 @@ export default function EditArticle({ params }: { params: { id: string } }) {
       const formData = new FormData();
       const intextImage = content.content.match(/<img[^>]+src="([^">]+)">/g);
 
-      if(imageFile && typeof imageFile === 'object'){
-        imagesArr[0]=await images
+      if (imageFile && typeof imageFile === 'object') {
+        imagesArr[0] = await images
           .createImage(
             await createTempFormData(
               0,
@@ -70,12 +68,11 @@ export default function EditArticle({ params }: { params: { id: string } }) {
             )
           )
           .then((res) => (imagesArr[0] = res.url));
-      }else{
+      } else {
         imagesArr[0] = articleData?.image[0].url;
       }
 
-      for(let i = 0,y=1; i < intextImage.length; i++) {
-
+      for (let i = 0, y = 1; i < intextImage.length; i++) {
         content.content = content.content.replace(
           /<img[^>]+src="[^">]+">/g,
           () => {
@@ -84,15 +81,13 @@ export default function EditArticle({ params }: { params: { id: string } }) {
             return placeholder;
           }
         );
-        
-          console.log(intextImage);
 
         //Verifica se a imagem é base64
         if (intextImage[i].match(/<img[^>]+src="data:image[^">]+">/g)) {
           //Se for base base64, converte para arquivo e cria a imagem
 
-          const tempFile= txtFormat(intextImage[i])
-   
+          const tempFile = txtFormat(intextImage[i]);
+
           const tempFormData = await createTempFormData(i, tempFile);
 
           imagesArr.push(
@@ -110,21 +105,19 @@ export default function EditArticle({ params }: { params: { id: string } }) {
       });
 
       for (const key in content) {
-                if (key === 'image') {
-                  formData.append(key, JSON.stringify(content[key]));
-                } else {
-                  formData.append(key, content[key]);
-                }
+        if (key === 'image') {
+          formData.append(key, JSON.stringify(content[key]));
+        } else {
+          formData.append(key, content[key]);
+        }
       }
-
-      console.log(imagesArr);
 
       await toast.promise(ArticleSerivce.updateArticle(params.id, formData), {
         pending: 'Atualizando o artigo...',
         success: 'Artigo atualizado com sucesso!',
         error: 'Erro ao atualizar o artigo'
       });
-      
+
       setTimeout(() => {
         router.push('/admin/artigos');
       }, 1500);

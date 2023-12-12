@@ -157,34 +157,54 @@ export class ArticleService {
         category: data.category
       };
 
-      console.log(imageFile)
-      console.log(updateArticleDto);
-      return
       await this.imageService.deleteOffSet(imageFile);
       for (let i = 0; i < imageFile.length; i++) {
         if (i == 0) {
-          await this.prisma.image.create({
-            data: {
-              id_origem: id,
-              source: updateArticleDto.image?.source,
-              alt: updateArticleDto.image?.alt,
-              url: updateArticleDto.imageFile[i],
-              pos: i
-            }
-          });
+          this.imageService
+            .findByAtribute('url', updateArticleDto.imageFile[i])
+            .then(async (image) => {
+              if (image.length > 0) {
+                await this.imageService.updateAtributes(image[0].id, {
+                  id_origem: id,
+                  source: updateArticleDto.image?.source,
+                  alt: updateArticleDto.image?.alt,
+                  url: updateArticleDto.imageFile[i],
+                  pos: i
+                });
+              } else {
+                await this.imageService.createByUrl({
+                  id_origem: id,
+                  url: updateArticleDto.imageFile[i],
+                  source: updateArticleDto.image!.source,
+                  alt: updateArticleDto.image!.alt,
+                  pos: i
+                });
+              }
+            });
         } else {
-          await this.prisma.image.create({
-            data: {
-              id_origem: id,
-              source: '',
-              alt: '',
-              url: updateArticleDto.imageFile[i],
-              pos: i
-            }
-          });
+          this.imageService
+            .findByAtribute('url', updateArticleDto.imageFile[i])
+            .then(async (image) => {
+              if (image.length > 0) {
+                await this.imageService.updateAtributes(image[0].id, {
+                  id_origem: id,
+                  source: '',
+                  alt: '',
+                  url: updateArticleDto.imageFile[i],
+                  pos: i
+                });
+              } else {
+                await this.imageService.createByUrl({
+                  id_origem: id,
+                  url: updateArticleDto.imageFile[i],
+                  source: updateArticleDto.image!.source,
+                  alt: updateArticleDto.image!.alt,
+                  pos: i
+                });
+              }
+            });
         }
       }
-
       const updatedArticle = await this.prisma.article.update({
         where: { id },
         data: updateData
