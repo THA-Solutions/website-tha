@@ -17,6 +17,7 @@ export class ImageService {
   ): Promise<ResponseImageDto> {
     try {
       const url = await this.cloudinary.uploadImage(image);
+
       const { id, ...imageCreated } = await this.prisma.image.create({
         data: {
           url: url,
@@ -33,13 +34,31 @@ export class ImageService {
     }
   }
 
-  async findAll(id: string) {
+  async createByUrl(createImageDto: CreateImageDto): Promise<ResponseImageDto> {
     try {
-      const images = await this.prisma.image.findMany({
-        where: { id_origem: id }
+      //Cria uma nova imagem em banco baseando-se no URL original
+      const { id, ...imageCreated } = await this.prisma.image.create({
+        data: {
+          url: createImageDto.url!,
+          source: createImageDto.source || '',
+          alt: createImageDto.alt || '',
+          id_origem: createImageDto.id_origem,
+          pos: Number(createImageDto.pos)
+        }
       });
 
-      return images;
+      return imageCreated;
+    } catch (error) {
+      throw Error(`Error in create image ${error}`);
+    }
+  }
+
+  async findAll(id: string) {
+    try {
+      //Busca todas as imagens do requisitante
+      return await this.prisma.image.findMany({
+        where: { id_origem: id }
+      });
     } catch (error) {
       throw Error(`Error in find all images ${error}`);
     }
@@ -55,7 +74,7 @@ export class ImageService {
 
   async findByOrigin(id: string) {
     try {
-      const images = await this.prisma.image.findMany({
+      return await this.prisma.image.findMany({
         select: {
           id: true,
           url: true,
@@ -66,8 +85,16 @@ export class ImageService {
         },
         where: { id_origem: id }
       });
+    } catch (error) {
+      throw Error(`Error in find all images ${error}`);
+    }
+  }
 
-      return images;
+  async findByAtribute(param: string, value: any) {
+    try {
+      return await this.prisma.image.findMany({
+        where: { [param]: value }
+      });
     } catch (error) {
       throw Error(`Error in find all images ${error}`);
     }
@@ -76,13 +103,30 @@ export class ImageService {
   async update(id: string, image: Express.Multer.File) {
     try {
       const url = await this.cloudinary.uploadImage(image);
+
       const updatedImage = await this.prisma.image.update({
         where: { id },
         data: {
           url: url
         }
       });
+
       return updatedImage;
+    } catch (error) {
+      throw Error(`Error in update image ${error}`);
+    }
+  }
+
+  async updateAtributes(id: string, updateImageDto: any) {
+    try {
+      return await this.prisma.image.update({
+        where: { id },
+        data: {
+          source: updateImageDto.source,
+          alt: updateImageDto.alt,
+          pos: updateImageDto.pos
+        }
+      });
     } catch (error) {
       throw Error(`Error in update image ${error}`);
     }
@@ -91,19 +135,21 @@ export class ImageService {
   async updateByOrigin(updateImageDto: any, image: Express.Multer.File) {
     try {
       const createdImage = await this.create(updateImageDto, image);
+
       const updatedImage = await this.prisma.image.update({
         where: { id: updateImageDto.id },
         data: {
           url: createdImage.url
         }
       });
+
       return updatedImage;
     } catch (error) {
       throw Error(`Error in update image ${error}`);
     }
   }
 
-  async remove(id: string) {
+  async delete(id: string) {
     try {
       //Remove a imagem do cloudinary
       this.findOne(id).then(async (image) => {
@@ -117,19 +163,41 @@ export class ImageService {
     }
   }
 
-  async removeAll(id: string) {
+  async deleteOffSet(images: any[]) {
+    try {
+      const ids = await this.prisma.image.findMany({
+        select: {
+          id: true
+        },
+        where: {
+          url: {
+            notIn: images
+          }
+        }
+      });
+
+      for (const id of ids) {
+        await this.delete(id.id);
+      }
+    } catch (error) {
+      throw Error(`Error in remove image ${error}`);
+    }
+  }
+
+  async deleteAll(id: string) {
     try {
       //Busca todas as imagens do requisitante
       const oldImages = await this.findByOrigin(id);
+
       if (oldImages.length > 0) {
         for (const image of oldImages) {
           //Extrai o id publico da imagem
-
           let id = image.url.match(/\images\/[^/.]+(?=\.)/)![0];
 
           await this.cloudinary.removeImage(id);
         }
       }
+
       await this.prisma.image.deleteMany({
         where: { id_origem: id }
       });

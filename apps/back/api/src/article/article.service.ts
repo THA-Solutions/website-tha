@@ -146,6 +146,7 @@ export class ArticleService {
   ) /*: Promise<Article> */ {
     try {
       let { image, imageFile, ...data } = updateArticleDto;
+      image = JSON.parse(image as any);
 
       const updateData = {
         id: id,
@@ -156,31 +157,54 @@ export class ArticleService {
         category: data.category
       };
 
-      await this.imageService.removeAll(id);
+      await this.imageService.deleteOffSet(imageFile);
       for (let i = 0; i < imageFile.length; i++) {
         if (i == 0) {
-          await this.prisma.image.create({
-            data: {
-              id_origem: id,
-              source: updateArticleDto.image?.source,
-              alt: updateArticleDto.image?.alt,
-              url: updateArticleDto.imageFile[i],
-              pos: i
-            }
-          });
+          this.imageService
+            .findByAtribute('url', updateArticleDto.imageFile[i])
+            .then(async (image) => {
+              if (image.length > 0) {
+                await this.imageService.updateAtributes(image[0].id, {
+                  id_origem: id,
+                  source: updateArticleDto.image?.source,
+                  alt: updateArticleDto.image?.alt,
+                  url: updateArticleDto.imageFile[i],
+                  pos: i
+                });
+              } else {
+                await this.imageService.createByUrl({
+                  id_origem: id,
+                  url: updateArticleDto.imageFile[i],
+                  source: updateArticleDto.image!.source,
+                  alt: updateArticleDto.image!.alt,
+                  pos: i
+                });
+              }
+            });
         } else {
-          await this.prisma.image.create({
-            data: {
-              id_origem: id,
-              source: '',
-              alt: '',
-              url: updateArticleDto.imageFile[i],
-              pos: i
-            }
-          });
+          this.imageService
+            .findByAtribute('url', updateArticleDto.imageFile[i])
+            .then(async (image) => {
+              if (image.length > 0) {
+                await this.imageService.updateAtributes(image[0].id, {
+                  id_origem: id,
+                  source: '',
+                  alt: '',
+                  url: updateArticleDto.imageFile[i],
+                  pos: i
+                });
+              } else {
+                await this.imageService.createByUrl({
+                  id_origem: id,
+                  url: updateArticleDto.imageFile[i],
+                  source: updateArticleDto.image!.source,
+                  alt: updateArticleDto.image!.alt,
+                  pos: i
+                });
+              }
+            });
         }
       }
-
       const updatedArticle = await this.prisma.article.update({
         where: { id },
         data: updateData
@@ -198,7 +222,7 @@ export class ArticleService {
         where: { id }
       });
 
-      this.imageService.removeAll(id);
+      this.imageService.deleteAll(id);
       return;
     } catch (error) {
       throw new Error(error);

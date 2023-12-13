@@ -130,7 +130,7 @@ export class InverterService {
       await this.prisma.inverter.delete({
         where: { id }
       });
-      await this.imageService.removeAll(id);
+      await this.imageService.deleteAll(id);
       return;
     } catch (error) {}
   }
