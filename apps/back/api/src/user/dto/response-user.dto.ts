@@ -20,9 +20,9 @@ export class ResponseUserDto {
   @Exclude()
   password: string;
 
-  image: {
-    url: string | null;
-    source: string | null;
-    alt: string | null;
-  };
+  @IsString()
+  image: string;
+
+  @IsString()
+  company: string;
 }

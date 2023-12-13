@@ -102,7 +102,7 @@ export class TeamService {
       });
 
       if (imageFile) {
-        this.imageService.removeAll(id);
+        this.imageService.deleteAll(id);
         teamMember.image = await this.imageService
           .create(
             {
@@ -128,7 +128,7 @@ export class TeamService {
         where: { id }
       });
 
-      this.imageService.removeAll(id);
+      this.imageService.deleteAll(id);
       return;
     } catch (error) {
       throw new Error(error);

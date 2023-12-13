@@ -1,23 +1,37 @@
 'use client';
 
-import { use } from 'react';
-import { FieldValues } from 'react-hook-form';
-
-import { useRouter } from 'next/navigation';
-
-import { ToastContainer, toast } from 'react-toastify';
 import { Article, ArticleSerivce } from '@tha-solutions';
-import { replaceImages } from 'apps/front/utilities/replace-img';
 import ArticleForm from 'apps/front/components/article-form';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { FieldValues, useForm } from 'react-hook-form';
+import { ToastContainer, toast } from 'react-toastify';
+import { replaceImages } from 'apps/front/utilities/replace-img';
 import txtFormat from 'apps/front/utilities/txt-format';
 import { images } from '@tha-solutions';
-
 export default function EditArticle({ params }: { params: { id: string } }) {
-  const article: Article = use(ArticleSerivce.getArticleById(params.id));
-
-  article.content = replaceImages(article.content, article.image);
-
+  const [articleData, setArticleData] = useState<Article | null>(null);
   const router = useRouter();
+  const { setValue } = useForm();
+
+  useEffect(() => {
+    const fetchArticleData = async () => {
+      try {
+        const fetchedArticleData = await ArticleSerivce.getArticleById(
+          params.id
+        );
+        const formatedContent = replaceImages(
+          fetchedArticleData.content,
+          fetchedArticleData.image
+        );
+        setArticleData({ ...fetchedArticleData, content: formatedContent });
+      } catch (error) {
+        console.error('Error fetching article data:', error);
+      }
+    };
+
+    fetchArticleData();
+  }, [params.id, setValue]);
 
   const createTempFormData = async (
     pos: number,
@@ -28,7 +42,7 @@ export default function EditArticle({ params }: { params: { id: string } }) {
     const tempImageFormData = new FormData();
 
     tempImageFormData.append('imageFile', tempFile[0]);
-    tempImageFormData.append('id_origem', article!.id);
+    tempImageFormData.append('id_origem', articleData!.id);
     tempImageFormData.append('alt', alt);
     tempImageFormData.append('source', source);
     tempImageFormData.append('pos', pos.toString());
@@ -55,7 +69,7 @@ export default function EditArticle({ params }: { params: { id: string } }) {
           )
           .then((res) => (imagesArr[0] = res.url));
       } else {
-        imagesArr[0] = article?.image[0].url;
+        imagesArr[0] = articleData?.image[0].url;
       }
 
       for (let i = 0, y = 1; i < intextImage.length; i++) {
@@ -114,11 +128,11 @@ export default function EditArticle({ params }: { params: { id: string } }) {
 
   return (
     <>
-      {article && (
+      {articleData && (
         <ArticleForm
           onSubmit={onSubmit}
           buttonText="ATUALIZAR"
-          editArticleData={article}
+          editArticleData={articleData}
           isRequired={false}
         />
       )}

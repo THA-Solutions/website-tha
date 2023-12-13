@@ -49,7 +49,6 @@ export const imageScanner = (txt: string) => {
       }
     });
   }
-  console.log(file);
   return file;
 };
 

@@ -5,9 +5,10 @@ import { ImageModule } from './image/image.module';
 import { InverterModule } from './inverter/inverter.module';
 import { TeamModule } from './team/team.module';
 import { ReviewModule } from './review/review.module';
+import { BrandModule } from './brand/brand.module';
 @Module({
   providers: [PrismaService, ConfigModule],
   exports: [PrismaService],
-  imports: [ImageModule, InverterModule, TeamModule, ReviewModule]
+  imports: [ImageModule, InverterModule, TeamModule, ReviewModule, BrandModule]
 })
 export class PrismaModule {}
