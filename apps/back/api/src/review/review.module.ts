@@ -15,7 +15,8 @@ import { BrandService } from '../brand/brand.service';
     UserService,
     InverterService,
     ImageService,
-    CloudinaryService,BrandService
+    CloudinaryService,
+    BrandService
   ]
 })
 export class ReviewModule {}

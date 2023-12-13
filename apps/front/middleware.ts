@@ -20,24 +20,26 @@ export async function middleware(request: NextRequest, _next: NextFetchEvent) {
   if (tokenLinkedRoutes.some((route) => pathname.startsWith(route)) && !token) {
     return NextResponse.rewrite(homeUrl);
   }
-//-------------------------------------
+  //-------------------------------------
   if (
     protectedRoutesUser.some((route) => pathname.startsWith(route)) &&
     token
   ) {
     return NextResponse.rewrite(homeUrl);
   }
-//-------------------------------------
-  if (protectedRoutesAdmin.some((route) =>
-    pathname.startsWith(route)
-  ) && token.user?.role !== 'admin') {
+  //-------------------------------------
+  if (
+    protectedRoutesAdmin.some((route) => pathname.startsWith(route)) &&
+    token.user?.role !== 'admin'
+  ) {
     const url = new URL('/403', request.url);
     return NextResponse.rewrite(url);
   }
-//-------------------------------------
-  if (protectedRoutesClient.some((route) =>
-    pathname.startsWith(route)
-  ) && token.user?.role !== 'customer') {
+  //-------------------------------------
+  if (
+    protectedRoutesClient.some((route) => pathname.startsWith(route)) &&
+    token.user?.role !== 'customer'
+  ) {
     const url = new URL('/403', request.url);
     return NextResponse.rewrite(url);
   }

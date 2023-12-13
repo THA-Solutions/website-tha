@@ -17,7 +17,7 @@ export class ImageService {
   ): Promise<ResponseImageDto> {
     try {
       const url = await this.cloudinary.uploadImage(image);
-      
+
       const { id, ...imageCreated } = await this.prisma.image.create({
         data: {
           url: url,
@@ -29,11 +29,8 @@ export class ImageService {
       });
 
       return imageCreated;
-
     } catch (error) {
-
       throw Error(`Error in create image ${error}`);
-
     }
   }
 
@@ -51,11 +48,8 @@ export class ImageService {
       });
 
       return imageCreated;
-
     } catch (error) {
-
       throw Error(`Error in create image ${error}`);
-
     }
   }
 
@@ -65,29 +59,21 @@ export class ImageService {
       return await this.prisma.image.findMany({
         where: { id_origem: id }
       });
-;
     } catch (error) {
-
       throw Error(`Error in find all images ${error}`);
-
     }
   }
 
   async findOne(id: string) {
-    try {    
-
+    try {
       return await this.prisma.image.findUnique({ where: { id: id } });
-
     } catch (error) {
-
       throw Error(`Error in find one image ${error}`);
-
     }
   }
 
   async findByOrigin(id: string) {
     try {
-
       return await this.prisma.image.findMany({
         select: {
           id: true,
@@ -99,25 +85,18 @@ export class ImageService {
         },
         where: { id_origem: id }
       });
-
     } catch (error) {
-
       throw Error(`Error in find all images ${error}`);
-
     }
   }
 
   async findByAtribute(param: string, value: any) {
     try {
-
       return await this.prisma.image.findMany({
         where: { [param]: value }
       });
-
     } catch (error) {
-
       throw Error(`Error in find all images ${error}`);
-
     }
   }
 
@@ -133,17 +112,13 @@ export class ImageService {
       });
 
       return updatedImage;
-
     } catch (error) {
-
       throw Error(`Error in update image ${error}`);
-
     }
   }
 
   async updateAtributes(id: string, updateImageDto: any) {
     try {
-
       return await this.prisma.image.update({
         where: { id },
         data: {
@@ -152,11 +127,8 @@ export class ImageService {
           pos: updateImageDto.pos
         }
       });
-      
     } catch (error) {
-
       throw Error(`Error in update image ${error}`);
-      
     }
   }
 
@@ -173,9 +145,7 @@ export class ImageService {
 
       return updatedImage;
     } catch (error) {
-
       throw Error(`Error in update image ${error}`);
-
     }
   }
 
@@ -188,17 +158,13 @@ export class ImageService {
         await this.cloudinary.removeImage(id);
       });
       return await this.prisma.image.delete({ where: { id } });
-
     } catch (error) {
-
       throw Error(`Error in remove image ${error}`);
-
     }
   }
 
   async deleteOffSet(images: any[]) {
     try {
-
       const ids = await this.prisma.image.findMany({
         select: {
           id: true
@@ -213,11 +179,8 @@ export class ImageService {
       for (const id of ids) {
         await this.delete(id.id);
       }
-
     } catch (error) {
-
       throw Error(`Error in remove image ${error}`);
-
     }
   }
 
@@ -241,9 +204,7 @@ export class ImageService {
 
       return;
     } catch (error) {
-
       throw Error(`Error in remove all images ${error}`);
-
     }
   }
 }

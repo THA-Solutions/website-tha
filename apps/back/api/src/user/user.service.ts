@@ -60,8 +60,7 @@ export class UserService {
           createUserDto.company = company.id;
         }
         createUserDto.password = this.crypter(createUserDto.password);
-      
-      
+
         const createdUser = await this.prisma.user.create({
           data: createUserDto
         });
@@ -70,7 +69,9 @@ export class UserService {
           id: createdUser.id,
           firstName: createdUser.firstName,
           lastName: createdUser.lastName,
-          email: createdUser.email
+          email: createdUser.email,
+          role: createdUser.role,
+          company: createUserDto.company ? createUserDto.company : ''
         };
 
         return returnUser as ResponseUserDto;
@@ -101,9 +102,7 @@ export class UserService {
             lastName: user.lastName,
             email: user.email,
             role: user.role,
-            image: {
-              url: image ? image.url : ''
-            }
+            image: image ? image.url : ''
           };
         })
       );
@@ -136,9 +135,7 @@ export class UserService {
           lastName: user.lastName,
           email: user.email,
           role: user.role,
-          image: {
-            url: image ? image.url : ''
-          }
+          image: image ? image.url : ''
         };
       })
     );
@@ -167,11 +164,7 @@ export class UserService {
         firstName: user!.firstName,
         lastName: user!.lastName,
         email: user!.email,
-        image: {
-          url: image ? image.url : '',
-          source: image ? image.source : '',
-          alt: image ? image.alt : ''
-        }
+        image: image ? image.url : ''
       };
 
       return returnUser;
@@ -182,45 +175,44 @@ export class UserService {
 
   async findByEmail(email: string): Promise<ResponseUserDto> {
     try {
-      const user = await this.prisma.user.findFirst({
-        where: {
-          email: email
-        }
-      });
+      //Busca o usuário pelo email e sua respectiva imagem e retorna um objeto com os dados do usuário e a url da imagem
+      const user = await this.prisma.user
+        .findFirst({
+          where: {
+            email: email
+          }
+        })
+        .then(async (user) => {
+          if (!user) {
+            throw Error('User not found');
+          }
 
-      const image = await this.prisma.image.findFirst({
-        select: {
-          url: true,
-          source: true,
-          alt: true
-        },
-        where: {
-          id_origem: user!.id
-        }
-      });
+          const image = await this.prisma.image.findFirst({
+            where: {
+              id_origem: user.id
+            }
+          });
 
-      const returnUser = {
-        id: user!.id,
-        firstName: user!.firstName,
-        lastName: user!.lastName,
-        email: user!.email,
-        image: {
-          url: image ? image.url : '',
-          source: image ? image.source : '',
-          alt: image ? image.alt : ''
-        },
-        password: user!.password,
-        role: user!.role
-      };
-      return returnUser as ResponseUserDto;
+          return {
+            id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            image: image ? image.url : '',
+            password: user.password,
+            role: user.role
+          };
+        });
+
+      return user as ResponseUserDto;
     } catch (error) {
       throw Error(`Error in find user by email ${error}`);
     }
   }
 
-  update(id: string, updateUserDto: UpdateUserDto) {
+  async update(id: string, updateUserDto: UpdateUserDto) {
     try {
-      const user = this.prisma.user.update({
+      await this.prisma.user.update({
         where: { id },
         data: updateUserDto
       });

@@ -10,9 +10,12 @@ export class BrandService {
   constructor(
     private readonly prisma: PrismaService,
     private imageService: ImageService
-    ){};
+  ) {}
 
-  async create(createBrandDto: CreateBrandDto, imageFile?: Express.Multer.File) {
+  async create(
+    createBrandDto: CreateBrandDto,
+    imageFile?: Express.Multer.File
+  ) {
     try {
       createBrandDto;
 
@@ -27,7 +30,7 @@ export class BrandService {
       if (imageFile) {
         brandImage = await this.imageService.create(
           {
-            id_origem: brand.id,
+            id_origem: brand.id
           },
           imageFile
         );
@@ -59,24 +62,30 @@ export class BrandService {
   }
 
   async findOne(id: string) {
-    return await this.prisma.brand.findUnique({where: {id: id}});
+    return await this.prisma.brand.findUnique({ where: { id: id } });
   }
 
   async findByTitle(title: string) {
     try {
-      return await this.prisma.brand.findFirst({ where: { trade_name: title } });
+      return await this.prisma.brand.findFirst({
+        where: { trade_name: title }
+      });
     } catch (error) {
-      throw Error(`Error in find brand by title ${error}`);  
+      throw Error(`Error in find brand by title ${error}`);
     }
   }
 
-  async update(id: string, updateBrandDto: UpdateBrandDto, imageFile?: Express.Multer.File) {
+  async update(
+    id: string,
+    updateBrandDto: UpdateBrandDto,
+    imageFile?: Express.Multer.File
+  ) {
     try {
       if (imageFile) {
         this.imageService.deleteAll(id);
         const brandImage = await this.imageService.create(
           {
-            id_origem: id,
+            id_origem: id
           },
           imageFile
         );
@@ -91,15 +100,15 @@ export class BrandService {
       });
       return updatedBrand;
     } catch (error) {
-      throw Error(`Error in update brand ${error}`);  
+      throw Error(`Error in update brand ${error}`);
     }
   }
 
   async remove(id: string) {
     try {
-      return await this.prisma.brand.delete({where: {id: id}});
+      return await this.prisma.brand.delete({ where: { id: id } });
     } catch (error) {
-      throw Error(`Error in delete brand ${error}`);  
+      throw Error(`Error in delete brand ${error}`);
     }
   }
 }
