@@ -3,6 +3,8 @@ import { CreateImageDto } from './dto/create-image.dto';
 import PrismaService from '../prisma.service';
 import CloudinaryService from '../cloudinary/cloudinary.service';
 import { ResponseImageDto } from './dto/response-image.dto';
+import { UpdateCompanyDto } from '../company/dto/update-company.dto';
+import { UpdateImageDto } from './dto/update-image.dto';
 
 @Injectable()
 export class ImageService {
@@ -100,33 +102,25 @@ export class ImageService {
     }
   }
 
-  async update(id: string, image: Express.Multer.File) {
+  async update(
+    id: string,
+    updateImageDto : UpdateImageDto,
+    image?: Express.Multer.File
+  ) {
     try {
-      const url = await this.cloudinary.uploadImage(image);
+      if (image) {
+        const url = await this.cloudinary.uploadImage(image);
+        updateImageDto.url = url;
+      }
 
       const updatedImage = await this.prisma.image.update({
         where: { id },
         data: {
-          url: url
+          ...updateImageDto
         }
       });
 
       return updatedImage;
-    } catch (error) {
-      throw Error(`Error in update image ${error}`);
-    }
-  }
-
-  async updateAtributes(id: string, updateImageDto: any) {
-    try {
-      return await this.prisma.image.update({
-        where: { id },
-        data: {
-          source: updateImageDto.source,
-          alt: updateImageDto.alt,
-          pos: updateImageDto.pos
-        }
-      });
     } catch (error) {
       throw Error(`Error in update image ${error}`);
     }

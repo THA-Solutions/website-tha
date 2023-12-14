@@ -5,7 +5,7 @@ export interface Inverter {
     alt: string | null;
   };
 
-  brand: string;
+  company: string;
 
   cc_voltage: string;
 

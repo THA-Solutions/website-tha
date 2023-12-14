@@ -34,22 +34,22 @@ model Article {
   @@map("article")
 }
 
-model Brand {
+model Company {
   id          String     @id @default(cuid())
   trade_name  String?    @db.VarChar(100)
   legal_name  String     @db.VarChar(100)
   description String?    @db.VarChar(500)
-  email       String?    @db.VarChar(100)
+  address       String?    @db.VarChar(200)
   cnpj        String     @db.VarChar(18)
   phone       String?    @db.VarChar(13)
   inverters   Inverter[]
 
-  @@map("brand")
+  @@map("company")
 }
 
 model Inverter {
   id                                    String  @id @default(cuid())
-  id_brand                              String
+  id_company                            String
   title                                 String  @db.VarChar(100)
   cc_voltage                            String  @db.VarChar(100)
   mppt_voltage_range                    String  @db.VarChar(100)
@@ -77,9 +77,9 @@ model Inverter {
   protection_degree                     String  @db.VarChar(100)
   warranty                              String  @db.VarChar(100)
   network_monitoring                    String? @db.VarChar(100)
-  brand                                 Brand   @relation(fields: [id_brand], references: [id], onDelete: Cascade)
+  company                                 Company   @relation(fields: [id_company], references: [id], onDelete: Cascade)
 
-  @@index([id_brand], map: "inverter_FK")
+  @@index([id_company], map: "inverter_FK")
   @@map("inverter")
 }
 
