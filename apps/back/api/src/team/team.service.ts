@@ -134,12 +134,13 @@ export class TeamService {
 
   async remove(id: string) {
     try {
-      
-      await this.prisma.team.delete({
-        where: { id }
-      }).then(async (teamMember) => {
-        this.imageService.deleteAll(id);
-      });
+      await this.prisma.team
+        .delete({
+          where: { id }
+        })
+        .then(async (teamMember) => {
+          this.imageService.deleteAll(id);
+        });
 
       return;
     } catch (error) {

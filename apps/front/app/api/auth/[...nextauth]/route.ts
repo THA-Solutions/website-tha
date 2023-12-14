@@ -23,7 +23,6 @@ export const authOptions: AuthOptions = {
             return user;
           }
         } catch (error) {
-          console.error(`Sign-in authorize error: ${error}`);
           throw new Error(`Sign-in error ${error}`);
         }
       }

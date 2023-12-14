@@ -17,26 +17,28 @@ export class CompanyService {
     imageFile?: Express.Multer.File
   ) {
     try {
-      const company = await this.prisma.company.create({
-        data: {
-          ...createCompanyDto
-        }
-      }).then(async(company) => {
-        let companyImage = {} as ResponseImageDto;
-        if (imageFile) {
-          companyImage = await this.imageService.create(
-            {
-              id_origem: company.id
-            },
-            imageFile
-          );
-        }
+      const company = await this.prisma.company
+        .create({
+          data: {
+            ...createCompanyDto
+          }
+        })
+        .then(async (company) => {
+          let companyImage = {} as ResponseImageDto;
+          if (imageFile) {
+            companyImage = await this.imageService.create(
+              {
+                id_origem: company.id
+              },
+              imageFile
+            );
+          }
 
-        return {
-          ...company,
-          image: companyImage ? companyImage.url : ''
-        }
-      });
+          return {
+            ...company,
+            image: companyImage ? companyImage.url : ''
+          };
+        });
 
       return company;
     } catch (error) {
