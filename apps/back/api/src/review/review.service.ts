@@ -25,30 +25,30 @@ export class ReviewService {
           ) {
             throw new Error('User or Inverter not found');
           }
-  
+
           const validateReview = await this.findOne(
             createReviewDto.id_user,
             createReviewDto.id_inverter
           );
-  
+
           if (validateReview) {
             return validateReview;
           }
-  
+
           return user;
         });
-  
+
       const review = await this.prisma.review.create({
         data: createReviewDto
       });
-  
+
       const responseReview: ResponseReviewDto = {
         user: user.firstName + ' ' + user.lastName,
         value: review!.value!,
         comment: review.comment!,
         date: review.date!
       };
-  
+
       return responseReview;
     } catch (error) {
       throw Error(`Error in create review ${error}`);
@@ -61,7 +61,7 @@ export class ReviewService {
         where: { id_inverter: id_inverter }
       });
     } catch (error) {
-      throw Error(`Error in find all review ${error}`);  
+      throw Error(`Error in find all review ${error}`);
     }
   }
 
@@ -74,7 +74,7 @@ export class ReviewService {
         }
       });
     } catch (error) {
-      throw Error(`Error in find review ${error}`);  
+      throw Error(`Error in find review ${error}`);
     }
   }
 
@@ -85,7 +85,7 @@ export class ReviewService {
         data: updateReviewDto
       });
     } catch (error) {
-      throw Error(`Error in update review ${error}`);  
+      throw Error(`Error in update review ${error}`);
     }
   }
 
@@ -95,7 +95,7 @@ export class ReviewService {
         where: { id: id }
       });
     } catch (error) {
-      throw Error(`Error in remove review ${error}`);  
+      throw Error(`Error in remove review ${error}`);
     }
   }
 }

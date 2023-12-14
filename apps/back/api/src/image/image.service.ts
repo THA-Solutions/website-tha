@@ -104,7 +104,7 @@ export class ImageService {
 
   async update(
     id: string,
-    updateImageDto : UpdateImageDto,
+    updateImageDto: UpdateImageDto,
     image?: Express.Multer.File
   ) {
     try {

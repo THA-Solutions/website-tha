@@ -9,6 +9,12 @@ import { CompanyModule } from './company/company.module';
 @Module({
   providers: [PrismaService, ConfigModule],
   exports: [PrismaService],
-  imports: [ImageModule, InverterModule, TeamModule, ReviewModule, CompanyModule]
+  imports: [
+    ImageModule,
+    InverterModule,
+    TeamModule,
+    ReviewModule,
+    CompanyModule
+  ]
 })
 export class PrismaModule {}
