@@ -13,7 +13,7 @@ export async function middleware(request: NextRequest, _next: NextFetchEvent) {
   //Rotas em que o usuario precisa estar logado para acessar
   const tokenLinkedRoutes = ['/dashboard', '/perfil', 'admin'];
   //Rotas em que o usuario precisa estar logado como cliente para acessar
-  const protectedRoutesClient = ['/dashboard', '/perfil'];
+  const protectedRoutesClient = ['/dashboard'];
 
   const token: any = await getToken({ req: request });
 
