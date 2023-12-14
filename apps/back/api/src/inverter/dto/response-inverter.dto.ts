@@ -10,7 +10,7 @@ export class ResponseInverterDto {
   title: string;
 
   @IsString()
-  id_brand: string;
+  id_company: string;
 
   @IsString()
   cc_voltage: string;

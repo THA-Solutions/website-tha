@@ -16,34 +16,32 @@ export class TeamService {
     try {
       let { image, ...data } = createTeamDto;
       data.order = Number(data.order);
-      const teamMember = await this.prisma.team.create({
-        data: data
-      });
-      let teamImage: ResponseImageDto = {} as ResponseImageDto;
+      const teamMember = await this.prisma.team
+        .create({
+          data: data
+        })
+        .then(async (teamMember) => {
+          let teamImage: ResponseImageDto = {} as ResponseImageDto;
 
-      if (imageFile) {
-        teamImage = await this.imageService.create(
-          {
-            id_origem: teamMember.id,
-            source: 'Team',
-            alt: `MemberImage`,
-            pos: 0
-          },
-          imageFile
-        );
-      }
+          if (imageFile) {
+            teamImage = await this.imageService.create(
+              {
+                id_origem: teamMember.id,
+                source: 'Team',
+                alt: `MemberImage`,
+                pos: 0
+              },
+              imageFile
+            );
+          }
 
-      const returnTeam = {
-        id: teamMember.id,
-        name: teamMember.name,
-        role: teamMember.role,
-        description: teamMember.description,
-        linkedin: teamMember.linkedin,
-        instagram: teamMember.instagram,
-        image: teamImage ? teamImage.url : ''
-      };
+          return {
+            ...teamMember,
+            image: teamImage ? teamImage.url : null
+          };
+        });
 
-      return returnTeam;
+      return teamMember;
     } catch (error) {
       throw Error(`Error in create team member ${error}`);
     }
@@ -59,7 +57,7 @@ export class TeamService {
 
           return {
             ...member,
-            image: image[0]?.url || ''
+            image: image[0]?.url || null
           };
         })
       );
@@ -72,18 +70,24 @@ export class TeamService {
 
   async findOne(id: string) {
     try {
-      const teamMember = await this.prisma.team.findUnique({
-        where: { id }
-      });
+      const teamMember = await this.prisma.team
+        .findUnique({
+          where: { id }
+        })
+        .then(async (teamMember) => {
+          if (!teamMember) {
+            throw Error('Team member not found');
+          }
 
-      const image = await this.imageService.findByOrigin(id);
+          const image = await this.imageService.findByOrigin(id);
 
-      const returnMember = {
-        ...teamMember,
-        image: image[0]?.url || ''
-      };
+          return {
+            ...teamMember,
+            image: image[0]?.url || null
+          };
+        });
 
-      return returnMember;
+      return teamMember;
     } catch (error) {
       throw Error(`Error in find team member ${error}`);
     }
@@ -96,25 +100,31 @@ export class TeamService {
   ) {
     try {
       let { image, ...data } = updateTeamDto;
-      const teamMember = await this.prisma.team.update({
-        where: { id: id },
-        data: data
-      });
+      const teamMember = await this.prisma.team
+        .update({
+          where: { id: id },
+          data: data
+        })
+        .then(async (teamMember) => {
+          if (!teamMember) {
+            throw Error('Team member not found');
+          }
 
-      if (imageFile) {
-        this.imageService.deleteAll(id);
-        teamMember.image = await this.imageService
-          .create(
-            {
-              id_origem: teamMember.id,
-              source: 'Team',
-              alt: `MemberImage`,
-              pos: 0
-            },
-            imageFile
-          )
-          .then((image) => image.url);
-      }
+          if (imageFile) {
+            this.imageService.deleteAll(id);
+            teamMember.image = await this.imageService
+              .create(
+                {
+                  id_origem: teamMember.id,
+                  source: 'Team',
+                  alt: `MemberImage`,
+                  pos: 0
+                },
+                imageFile
+              )
+              .then((image) => image.url);
+          }
+        });
 
       return teamMember;
     } catch (error) {
@@ -124,11 +134,13 @@ export class TeamService {
 
   async remove(id: string) {
     try {
+      
       await this.prisma.team.delete({
         where: { id }
+      }).then(async (teamMember) => {
+        this.imageService.deleteAll(id);
       });
 
-      this.imageService.deleteAll(id);
       return;
     } catch (error) {
       throw new Error(error);

@@ -41,9 +41,10 @@ export class ImageController {
   @UseInterceptors(FileInterceptor('imageFile'))
   update(
     @Param('id') id: string,
-    @UploadedFile() imageFile: Express.Multer.File
+    @Body() updateImageDto: UpdateImageDto,
+    @UploadedFile() imageFile?: Express.Multer.File
   ) {
-    return this.imageService.update(id, imageFile);
+    return this.imageService.update(id, updateImageDto, imageFile);
   }
 
   @Patch('origin/:id')

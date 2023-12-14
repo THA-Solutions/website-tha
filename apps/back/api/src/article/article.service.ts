@@ -164,7 +164,7 @@ export class ArticleService {
             .findByAtribute('url', updateArticleDto.imageFile[i])
             .then(async (image) => {
               if (image.length > 0) {
-                await this.imageService.updateAtributes(image[0].id, {
+                await this.imageService.update(image[0].id, {
                   id_origem: id,
                   source: updateArticleDto.image?.source,
                   alt: updateArticleDto.image?.alt,
@@ -186,10 +186,8 @@ export class ArticleService {
             .findByAtribute('url', updateArticleDto.imageFile[i])
             .then(async (image) => {
               if (image.length > 0) {
-                await this.imageService.updateAtributes(image[0].id, {
+                await this.imageService.update(image[0].id, {
                   id_origem: id,
-                  source: '',
-                  alt: '',
                   url: updateArticleDto.imageFile[i],
                   pos: i
                 });
@@ -197,8 +195,6 @@ export class ArticleService {
                 await this.imageService.createByUrl({
                   id_origem: id,
                   url: updateArticleDto.imageFile[i],
-                  source: updateArticleDto.image!.source,
-                  alt: updateArticleDto.image!.alt,
                   pos: i
                 });
               }

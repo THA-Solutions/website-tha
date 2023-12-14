@@ -2,17 +2,18 @@ import {
   IsAlphanumeric,
   IsEmail,
   IsNotEmpty,
-  IsPhoneNumber
+  IsPhoneNumber,
+  IsString
 } from 'class-validator';
 
-export class CreateBrandDto {
+export class CreateCompanyDto {
   @IsNotEmpty()
   legal_name: string;
   trade_name: string;
   @IsNotEmpty()
   cnpj: string;
-  @IsEmail()
-  email: string;
+  @IsString()
+  address: string;
   @IsPhoneNumber('BR')
   phone: string;
   @IsAlphanumeric()
