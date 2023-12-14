@@ -2,20 +2,18 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import PrismaService from '../prisma.service';
-import { User } from '@prisma/client';
 import * as crypto from 'crypto';
 import { ConfigService } from '@nestjs/config';
 import { ResponseUserDto } from './dto/response-user.dto';
-import { ResponseImageDto } from '../image/dto/response-image.dto';
 import { ImageService } from '../image/image.service';
-import { BrandService } from '../brand/brand.service';
+import { CompanyService } from '../company/company.service';
 
 @Injectable()
 export class UserService {
   constructor(
     private readonly prisma: PrismaService,
     private configService: ConfigService,
-    private companyService: BrandService,
+    private companyService: CompanyService,
     private imageService: ImageService
   ) {}
 
@@ -43,39 +41,51 @@ export class UserService {
 
   async create(createUserDto: CreateUserDto): Promise<ResponseUserDto> {
     try {
-      const user = await this.prisma.user.findFirst({
-        where: { email: createUserDto.email }
-      });
-
-      if (user) {
-        throw Error('User already exists');
-      } else {
-        if (createUserDto.role === 'customer' && createUserDto?.company) {
-          const company = await this.companyService.findByTitle(
-            createUserDto.company!
-          );
-          if (!company) {
-            throw Error('Company not found');
+      const user = await this.prisma.user
+        .findFirst({
+          where: { email: createUserDto.email }
+        })
+        .then(async (user) => {
+          if (user) {
+            throw Error('User already exists');
           }
-          createUserDto.company = company.id;
-        }
-        createUserDto.password = this.crypter(createUserDto.password);
 
-        const createdUser = await this.prisma.user.create({
-          data: createUserDto
+          if (createUserDto.role === 'customer' && createUserDto?.company) {
+            const company = await this.companyService
+              .findByTitle(createUserDto.company!)
+              .then((company) => {
+                if (!company) {
+                  throw Error('Company not found');
+                }
+                createUserDto.company = company.id;
+                return company;
+              });
+          }
+
+          createUserDto.password = this.crypter(createUserDto.password);
+
+          const createdUser = await this.prisma.user
+            .create({
+              data: createUserDto
+            })
+            .then(async (user) => {
+              if (!user) {
+                throw Error('User not found');
+              }
+
+              return {
+                id: user.id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                role: user.role,
+                company: createUserDto.company ? createUserDto.company : null
+              };
+            });
+          return createdUser as ResponseUserDto;
         });
 
-        const returnUser = {
-          id: createdUser.id,
-          firstName: createdUser.firstName,
-          lastName: createdUser.lastName,
-          email: createdUser.email,
-          role: createdUser.role,
-          company: createUserDto.company ? createUserDto.company : ''
-        };
-
-        return returnUser as ResponseUserDto;
-      }
+      return user as ResponseUserDto;
     } catch (error) {
       throw Error(`Error in create user ${error}`);
     }
@@ -102,7 +112,7 @@ export class UserService {
             lastName: user.lastName,
             email: user.email,
             role: user.role,
-            image: image ? image.url : ''
+            image: image ? image.url : null
           };
         })
       );
@@ -135,7 +145,7 @@ export class UserService {
           lastName: user.lastName,
           email: user.email,
           role: user.role,
-          image: image ? image.url : ''
+          image: image ? image.url : null
         };
       })
     );
@@ -144,30 +154,36 @@ export class UserService {
   }
   async findOne(id: string): Promise<any> {
     try {
-      let user = await this.prisma.user.findUnique({
-        where: { id }
-      });
+      let user = await this.prisma.user
+        .findUnique({
+          where: { id }
+        })
+        .then(async (user) => {
+          if (!user) {
+            throw Error('User not found');
+          }
 
-      const image = await this.prisma.image.findFirst({
-        select: {
-          url: true,
-          source: true,
-          alt: true
-        },
-        where: {
-          id_origem: id
-        }
-      });
+          const image = await this.prisma.image.findFirst({
+            select: {
+              url: true,
+              source: true,
+              alt: true
+            },
+            where: {
+              id_origem: id
+            }
+          });
 
-      const returnUser = {
-        id: user!.id,
-        firstName: user!.firstName,
-        lastName: user!.lastName,
-        email: user!.email,
-        image: image ? image.url : ''
-      };
+          return {
+            id: user!.id,
+            firstName: user!.firstName,
+            lastName: user!.lastName,
+            email: user!.email,
+            image: image ? image.url : null
+          };
+        });
 
-      return returnUser;
+      return user;
     } catch (error) {
       throw Error(`Error in find user by id ${error}`);
     }
@@ -198,7 +214,7 @@ export class UserService {
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
-            image: image ? image.url : '',
+            image: image ? image.url : null,
             password: user.password,
             role: user.role
           };
@@ -223,29 +239,47 @@ export class UserService {
 
   async updateImage(id: string, image: Express.Multer.File) {
     try {
-      const user = await this.prisma.user.findUnique({
-        where: { id }
-      });
-      if (!user) {
-        throw Error('User not found');
-      }
+      await this.prisma.user
+        .findUnique({
+          where: { id }
+        })
+        .then(async (user) => {
+          if (!user) {
+            throw Error('User not found');
+          }
+          const imageUpdt = await this.imageService.updateByOrigin(
+            { id_origem: id, source: image.filename, alt: image.originalname },
+            image
+          );
 
-      const imageUpdt = await this.imageService.updateByOrigin(
-        { id_origem: id, source: null, alt: null },
-        image
-      );
+          return {
+            id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            image: imageUpdt.url
+          };
+        });
       return;
     } catch (error) {
       throw Error(`Error in update user image ${error}`);
     }
   }
-  remove(id: string): Promise<User> | null {
+  async remove(id: string) {
     try {
-      const user = this.prisma.user.delete({
-        where: { id }
-      });
+      return this.prisma.user
+        .delete({
+          where: { id }
+        })
+        .then(async (user) => {
+          if (!user) {
+            throw Error('User not found');
+          }
 
-      return user;
+          await this.imageService.deleteAll(id);
+
+          return;
+        });
     } catch (error) {
       throw Error(`Error in delete user ${error}`);
     }

@@ -15,63 +15,87 @@ export class ReviewService {
   ) {}
 
   async create(createReviewDto: CreateReviewDto) {
-    const user = await this.userService.findOne(createReviewDto.id_user);
-    if (!user || !this.inverterService.findOne(createReviewDto.id_inverter)) {
-      throw new Error('User or Inverter not found');
+    try {
+      const user = await this.userService
+        .findOne(createReviewDto.id_user)
+        .then(async (user) => {
+          if (
+            !user ||
+            (await this.inverterService.findOne(createReviewDto.id_inverter))
+          ) {
+            throw new Error('User or Inverter not found');
+          }
+  
+          const validateReview = await this.findOne(
+            createReviewDto.id_user,
+            createReviewDto.id_inverter
+          );
+  
+          if (validateReview) {
+            return validateReview;
+          }
+  
+          return user;
+        });
+  
+      const review = await this.prisma.review.create({
+        data: createReviewDto
+      });
+  
+      const responseReview: ResponseReviewDto = {
+        user: user.firstName + ' ' + user.lastName,
+        value: review!.value!,
+        comment: review.comment!,
+        date: review.date!
+      };
+  
+      return responseReview;
+    } catch (error) {
+      throw Error(`Error in create review ${error}`);
     }
-
-    const validateReview = await this.findOne(
-      createReviewDto.id_user,
-      createReviewDto.id_inverter
-    );
-
-    if (validateReview) {
-      return validateReview;
-    }
-
-    const review = await this.prisma.review.create({
-      data: createReviewDto
-    });
-
-    const responseReview: ResponseReviewDto = {
-      user: user.firstName + ' ' + user.lastName,
-      value: review!.value!,
-      comment: review.comment!,
-      date: review.date!
-    };
-
-    return responseReview;
   }
 
   async findAll(id_inverter: string) {
-    const reviews = await this.prisma.review.findMany({
-      where: { id_inverter: id_inverter }
-    });
-    return reviews;
+    try {
+      return await this.prisma.review.findMany({
+        where: { id_inverter: id_inverter }
+      });
+    } catch (error) {
+      throw Error(`Error in find all review ${error}`);  
+    }
   }
 
   async findOne(id_user: string, id_inverter: string) {
-    const review = await this.prisma.review.findMany({
-      where: {
-        id_user: id_user,
-        id_inverter: id_inverter
-      }
-    });
-
-    return review;
+    try {
+      return await this.prisma.review.findMany({
+        where: {
+          id_user: id_user,
+          id_inverter: id_inverter
+        }
+      });
+    } catch (error) {
+      throw Error(`Error in find review ${error}`);  
+    }
   }
 
   async update(id: string, updateReviewDto: UpdateReviewDto) {
-    const review = await this.prisma.review.update({
-      where: { id: id },
-      data: updateReviewDto
-    });
-    return review;
+    try {
+      return await this.prisma.review.update({
+        where: { id: id },
+        data: updateReviewDto
+      });
+    } catch (error) {
+      throw Error(`Error in update review ${error}`);  
+    }
   }
 
   remove(id: string) {
-    return this.prisma.review.delete({
-      where: { id: id }
-    });
+    try {
+      return this.prisma.review.delete({
+        where: { id: id }
+      });
+    } catch (error) {
+      throw Error(`Error in remove review ${error}`);  
+    }
   }
 }
