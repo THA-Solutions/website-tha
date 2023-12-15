@@ -20,30 +20,30 @@ export class InverterService {
     try {
       const { image, ...data } = createInverterDto;
 
-      const inverter = await this.prisma.inverter.create({
-        data: data
-      }).then(async (inverter) => {
+      const inverter = await this.prisma.inverter
+        .create({
+          data: data
+        })
+        .then(async (inverter) => {
+          let inverterImage: ResponseImageDto = {} as ResponseImageDto;
 
-        let inverterImage: ResponseImageDto = {} as ResponseImageDto;
+          if (imageFile) {
+            inverterImage = await this.imageService.create(
+              {
+                id_origem: inverter.id,
+                source: image.source,
+                alt: image.alt,
+                pos: 0
+              },
+              imageFile
+            );
+          }
 
-        if (imageFile) {
-          inverterImage = await this.imageService.create(
-            {
-              id_origem: inverter.id,
-              source: image.source,
-              alt: image.alt,
-              pos: 0
-            },
-            imageFile
-          );
-        }
-        
-        return {
-          ...inverter,
-          image: inverterImage
-        }
-
-      })
+          return {
+            ...inverter,
+            image: inverterImage
+          };
+        });
 
       return inverter;
     } catch (error) {}
@@ -71,24 +71,24 @@ export class InverterService {
 
   async findOne(id: string) {
     try {
-      let inverter = await this.prisma.inverter.findUnique({
-        where: {
-          id: id
-        }
-      }).then(async (inverter) => {
+      let inverter = await this.prisma.inverter
+        .findUnique({
+          where: {
+            id: id
+          }
+        })
+        .then(async (inverter) => {
+          if (!inverter) {
+            throw Error('Inverter not found');
+          }
 
-        if (!inverter) {
-          throw Error('Inverter not found');
-        }
+          let [image] = await this.imageService.findByOrigin(inverter.id);
 
-        let [image] = await this.imageService.findByOrigin(inverter.id);
-
-        return {
-          ...inverter,
-          image : image ? image : null
-        }
-
-      })
+          return {
+            ...inverter,
+            image: image ? image : null
+          };
+        });
 
       return inverter;
     } catch (error) {}

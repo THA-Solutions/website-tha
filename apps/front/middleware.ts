@@ -2,8 +2,7 @@ import { getToken } from 'next-auth/jwt';
 import { NextFetchEvent, NextRequest, NextResponse } from 'next/server';
 
 export async function middleware(request: NextRequest, _next: NextFetchEvent) {
-
-  console.log('entrou no middleware')
+  //console.log('entrou no middleware')
   const { pathname } = request.nextUrl;
 
   const homeUrl = new URL('/', request.url);
@@ -25,21 +24,25 @@ export async function middleware(request: NextRequest, _next: NextFetchEvent) {
   const token: any = await getToken({ req: request });
 
   if (!token) {
-    console.log(
-      'entrou no if sem token',
-      request.url
-    );
-    console.log('pathname', pathname)
+    // console.log(
+    //   'entrou no if sem token',
+    //   request.url
+    // );
+    //console.log('pathname', pathname)
     tokenLinkedRoutes.some((route) => pathname.startsWith(route))
       ? NextResponse.rewrite(homeUrl)
       : null;
   } else {
-    console.log('entrou no else com token')
-    protectedRoutesUser.some((route) => pathname.startsWith(route)) ? NextResponse.redirect(homeUrl) : null
-    protectedRoutesAdmin.some((route) => pathname.startsWith(route)) && token.user?.role !== 'admin' ? NextResponse.redirect(homeUrl) : null
+    //console.log('entrou no else com token')
+    protectedRoutesUser.some((route) => pathname.startsWith(route))
+      ? NextResponse.redirect(homeUrl)
+      : null;
+    protectedRoutesAdmin.some((route) => pathname.startsWith(route)) &&
+    token.user?.role !== 'admin'
+      ? NextResponse.redirect(homeUrl)
+      : null;
     //protectedRoutesClient.some((route) => pathname.startsWith(route)) && token.user?.role !== 'customer' ? NextResponse.redirect(homeUrl) : null
   }
-
 
   //if (tokenLinkedRoutes.some((route) => pathname.startsWith(route)) && !token) {
   //  console.log('1')
@@ -73,6 +76,4 @@ export async function middleware(request: NextRequest, _next: NextFetchEvent) {
   //  const url = new URL('/403', request.url);
   //  return NextResponse.redirect(url);
   //}
-
-
 }

@@ -25,8 +25,11 @@ export class CustomerService {
     return res.data;
   }
 
-  static async updateCustomer(id: string, customer: User): Promise<User> {
-    const res = await axios.put(`${this.apiPath}/${id}`, customer);
+  static async updateCustomer(
+    id: string,
+    updatedCustomer: FormData
+  ): Promise<User> {
+    const res = await axios.patch(`${this.apiPath}/${id}`, updatedCustomer);
     return res.data;
   }
 
