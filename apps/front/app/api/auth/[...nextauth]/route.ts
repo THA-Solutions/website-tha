@@ -1,6 +1,7 @@
-import type { AuthOptions } from 'next-auth';
 import NextAuth from 'next-auth';
+import type { AuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
+
 import { User } from '@tha-solutions';
 
 export const authOptions: AuthOptions = {
@@ -53,9 +54,10 @@ export const authOptions: AuthOptions = {
     session: async ({ session, token }) => {
       const sessionData = {
         user: {
-          email: (token.user as User).email,
+          id: (token.user as User).id,
           firstName: (token.user as User).firstName,
           lastName: (token.user as User).lastName,
+          email: (token.user as User).email,
           image: (token.user as User).imageUrl as string,
           role: (token.user as User).role
         },

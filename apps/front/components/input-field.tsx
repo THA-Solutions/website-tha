@@ -7,9 +7,9 @@ export interface InputFieldProps {
     label: string;
     name: string;
     type: string;
+    required: boolean;
     placeholder?: string;
     autoComplete?: string;
-    required: boolean;
     icon?: JSX.Element;
     pattern?: RegExp;
   };

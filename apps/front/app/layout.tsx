@@ -9,9 +9,11 @@ import './global.css';
 
 import { contact } from '../constants';
 import { SessionProvider } from 'next-auth/react';
+import ApiConfig from 'libs/domain/src/lib/shared/api-config';
 
 import 'react-toastify/dist/ReactToastify.css';
 
+ApiConfig.setApiUrl(process.env.API_URL || 'http://localhost:3000/api');
 const roboto = Roboto({ subsets: ['latin'], variable: '--font-roboto' });
 const baiJamjuree = BaiJamjuree({
   subsets: ['latin'],
