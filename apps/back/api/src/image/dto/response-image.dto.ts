@@ -19,4 +19,10 @@ export class ResponseImageDto {
 
   @IsNumber()
   pos: number | null;
+
+  @IsUUID()
+  id_origem: string;
+
+  @IsNotEmpty()
+  id?: string;
 }

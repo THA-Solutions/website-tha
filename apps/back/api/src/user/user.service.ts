@@ -152,6 +152,7 @@ export class UserService {
 
     return returnUser as ResponseUserDto[];
   }
+
   async findOne(id: string): Promise<any> {
     try {
       let user = await this.prisma.user
@@ -226,6 +227,8 @@ export class UserService {
     }
   }
 
+
+
   async update(
     id: string,
     updateUserDto: UpdateUserDto,
@@ -236,7 +239,7 @@ export class UserService {
       if (image) {
         let imageInDB = await this.imageService.findByOrigin(id);
         if (imageInDB.length > 0) {
-          console.log(imageInDB, '-----');
+
           await this.imageService.update(
             imageInDB[0].id,
             { id_origem: id },
@@ -254,6 +257,8 @@ export class UserService {
       throw Error(`Error in update user ${error}`);
     }
   }
+
+
 
   async remove(id: string) {
     try {
