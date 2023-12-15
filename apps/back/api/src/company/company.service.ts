@@ -36,7 +36,7 @@ export class CompanyService {
 
           return {
             ...company,
-            image: companyImage ? companyImage.url : ''
+            image: companyImage ? companyImage.url : null
           };
         });
 
@@ -48,21 +48,49 @@ export class CompanyService {
 
   async findAll() {
     try {
-      return await this.prisma.company.findMany({});
+      const companies = await this.prisma.company.findMany({});
+
+      const companiesWithImage = await Promise.all(
+        companies.map(async (company) => {
+          const image = await this.imageService.findOne(company.id);
+
+          return {
+            ...company,
+            image: image ? image.url : null
+          };
+        })
+      );
+      return companiesWithImage;
     } catch (error) {
       throw Error(`Error in find all company ${error}`);
     }
   }
 
   async findOne(id: string) {
-    return await this.prisma.company.findUnique({ where: { id: id } });
+    return await this.prisma.company
+      .findFirst({ where: { id: id } })
+      .then(async (company) => {
+        const image = await this.imageService.findByOrigin(company!.id);
+        return {
+          ...company,
+          image: image ? image[0].url : null
+        };
+      });
   }
 
   async findByTitle(title: string) {
     try {
-      return await this.prisma.company.findFirst({
-        where: { trade_name: title }
-      });
+      return await this.prisma.company
+        .findFirst({
+          where: { trade_name: title }
+        })
+        .then(async (company) => {
+          const image = await this.imageService.findByOrigin(company!.id);
+          return {
+            ...company,
+            image: image ? image[0].url : null
+          };
+        });
     } catch (error) {
       throw Error(`Error in find company by title ${error}`);
     }

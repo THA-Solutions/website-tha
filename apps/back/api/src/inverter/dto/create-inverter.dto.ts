@@ -1,12 +1,7 @@
 import { IsNumber, IsString } from 'class-validator';
 
 export class CreateInverterDto {
-  image: {
-    url: string | null;
-    source: string | null;
-    alt: string | null;
-  };
-
+  @IsString()
   title: string;
 
   @IsString()
@@ -86,4 +81,10 @@ export class CreateInverterDto {
 
   @IsString()
   warranty: string;
+
+  image: {
+    url: string | null;
+    source: string | null;
+    alt: string | null;
+  };
 }

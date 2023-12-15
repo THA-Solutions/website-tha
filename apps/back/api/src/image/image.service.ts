@@ -42,8 +42,8 @@ export class ImageService {
       const { id, ...imageCreated } = await this.prisma.image.create({
         data: {
           url: createImageDto.url!,
-          source: createImageDto.source || '',
-          alt: createImageDto.alt || '',
+          source: createImageDto.source || null,
+          alt: createImageDto.alt || null,
           id_origem: createImageDto.id_origem,
           pos: Number(createImageDto.pos)
         }
@@ -68,7 +68,7 @@ export class ImageService {
 
   async findOne(id: string) {
     try {
-      return await this.prisma.image.findUnique({ where: { id: id } });
+      return await this.prisma.image.findFirst({ where: { id: id } });
     } catch (error) {
       throw Error(`Error in find one image ${error}`);
     }
@@ -109,8 +109,19 @@ export class ImageService {
   ) {
     try {
       if (image) {
-        const url = await this.cloudinary.uploadImage(image);
-        updateImageDto.url = url;
+        //Remove a imagem do cloudinary
+        await this.delete(id);
+        //Faz o upload da nova imagem
+        await this.cloudinary.uploadImage(image).then(async (url) => {
+          //Cria uma nova imagem em banco baseando-se no URL original
+          await this.createByUrl({
+            id_origem: updateImageDto.id_origem!,
+            pos: updateImageDto.pos || 0,
+            url: url
+          });
+
+          updateImageDto.url = url;
+        });
       }
 
       const updatedImage = await this.prisma.image.update({
@@ -180,7 +191,7 @@ export class ImageService {
 
   async deleteAll(id: string) {
     try {
-      //Busca todas as imagens do requisitante
+      //Busca todas as imagens do requisitante de acordo com o id de origem (Relacionamento entre imagem e tabela)
       const oldImages = await this.findByOrigin(id);
 
       if (oldImages.length > 0) {

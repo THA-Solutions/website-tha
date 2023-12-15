@@ -100,6 +100,7 @@ export class TeamService {
   ) {
     try {
       let { image, ...data } = updateTeamDto;
+      data.order = Number(data.order);
       const teamMember = await this.prisma.team
         .update({
           where: { id: id },
@@ -124,6 +125,7 @@ export class TeamService {
               )
               .then((image) => image.url);
           }
+          return teamMember;
         });
 
       return teamMember;

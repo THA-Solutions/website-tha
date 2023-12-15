@@ -148,62 +148,55 @@ export class ArticleService {
       let { image, imageFile, ...data } = updateArticleDto;
       image = JSON.parse(image as any);
 
-      const updateData = {
-        id: id,
-        title: data.title,
-        subTitle: data.subTitle,
-        content: data.content,
-        author: data.author,
-        category: data.category
-      };
-
-      await this.imageService.deleteOffSet(imageFile);
-      for (let i = 0; i < imageFile.length; i++) {
-        if (i == 0) {
-          this.imageService
-            .findByAtribute('url', updateArticleDto.imageFile[i])
-            .then(async (image) => {
-              if (image.length > 0) {
-                await this.imageService.update(image[0].id, {
-                  id_origem: id,
-                  source: updateArticleDto.image?.source,
-                  alt: updateArticleDto.image?.alt,
-                  url: updateArticleDto.imageFile[i],
-                  pos: i
-                });
-              } else {
-                await this.imageService.createByUrl({
-                  id_origem: id,
-                  url: updateArticleDto.imageFile[i],
-                  source: updateArticleDto.image!.source,
-                  alt: updateArticleDto.image!.alt,
-                  pos: i
-                });
-              }
-            });
-        } else {
-          this.imageService
-            .findByAtribute('url', updateArticleDto.imageFile[i])
-            .then(async (image) => {
-              if (image.length > 0) {
-                await this.imageService.update(image[0].id, {
-                  id_origem: id,
-                  url: updateArticleDto.imageFile[i],
-                  pos: i
-                });
-              } else {
-                await this.imageService.createByUrl({
-                  id_origem: id,
-                  url: updateArticleDto.imageFile[i],
-                  pos: i
-                });
-              }
-            });
+      if (imageFile) {
+        await this.imageService.deleteOffSet(imageFile);
+        for (let i = 0; i < imageFile.length; i++) {
+          if (i == 0) {
+            this.imageService
+              .findByAtribute('url', updateArticleDto.imageFile[i])
+              .then(async (image) => {
+                if (image.length > 0) {
+                  await this.imageService.update(image[0].id, {
+                    id_origem: id,
+                    source: updateArticleDto.image?.source,
+                    alt: updateArticleDto.image?.alt,
+                    url: updateArticleDto.imageFile[i],
+                    pos: i
+                  });
+                } else {
+                  await this.imageService.createByUrl({
+                    id_origem: id,
+                    url: updateArticleDto.imageFile[i],
+                    source: updateArticleDto.image!.source,
+                    alt: updateArticleDto.image!.alt,
+                    pos: i
+                  });
+                }
+              });
+          } else {
+            this.imageService
+              .findByAtribute('url', updateArticleDto.imageFile[i])
+              .then(async (image) => {
+                if (image.length > 0) {
+                  await this.imageService.update(image[0].id, {
+                    id_origem: id,
+                    url: updateArticleDto.imageFile[i],
+                    pos: i
+                  });
+                } else {
+                  await this.imageService.createByUrl({
+                    id_origem: id,
+                    url: updateArticleDto.imageFile[i],
+                    pos: i
+                  });
+                }
+              });
+          }
         }
       }
       const updatedArticle = await this.prisma.article.update({
         where: { id },
-        data: updateData
+        data: data
       });
 
       return updatedArticle;
