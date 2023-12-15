@@ -39,7 +39,7 @@ export class ImageService {
   async createByUrl(createImageDto: CreateImageDto): Promise<ResponseImageDto> {
     try {
       //Cria uma nova imagem em banco baseando-se no URL original
-      const { id, ...imageCreated } = await this.prisma.image.create({
+      const imageCreated = await this.prisma.image.create({
         data: {
           url: createImageDto.url!,
           source: createImageDto.source || null,
@@ -108,6 +108,7 @@ export class ImageService {
     image?: Express.Multer.File
   ) {
     try {
+
       if (image) {
         //Remove a imagem do cloudinary
         await this.delete(id);
@@ -118,8 +119,10 @@ export class ImageService {
             id_origem: updateImageDto.id_origem!,
             pos: updateImageDto.pos || 0,
             url: url
-          });
-
+          }).then((image) => {
+            //Atualiza o id da imagem
+            id = image.id!;
+          })
           updateImageDto.url = url;
         });
       }
