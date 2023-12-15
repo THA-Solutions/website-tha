@@ -26,7 +26,7 @@ export default function EditArticle({ params }: { params: { id: string } }) {
         );
         setArticleData({ ...fetchedArticleData, content: formatedContent });
       } catch (error) {
-        console.error('Error fetching article data:', error);
+        throw Error(`Error fetching article data: ${error}`);
       }
     };
 

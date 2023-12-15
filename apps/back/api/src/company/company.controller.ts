@@ -32,7 +32,7 @@ export class CompanyController {
     return this.companyService.findAll();
   }
 
-  @Get('title')
+  @Get('/title/:title')
   findByTitle(@Body() title: string) {
     return this.companyService.findByTitle(title);
   }

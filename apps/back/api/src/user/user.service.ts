@@ -226,45 +226,35 @@ export class UserService {
     }
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto) {
+  async update(
+    id: string,
+    updateUserDto: UpdateUserDto,
+    image?: Express.Multer.File
+  ) {
     try {
-      await this.prisma.user.update({
+      const { imageFile, ...data } = updateUserDto;
+      if (image) {
+        let imageInDB = await this.imageService.findByOrigin(id);
+        if (imageInDB.length > 0) {
+          console.log(imageInDB, '-----');
+          await this.imageService.update(
+            imageInDB[0].id,
+            { id_origem: id },
+            image
+          );
+        } else {
+          await this.imageService.create({ id_origem: id }, image);
+        }
+      }
+      return await this.prisma.user.update({
         where: { id },
-        data: updateUserDto
+        data: data
       });
     } catch (error) {
       throw Error(`Error in update user ${error}`);
     }
   }
 
-  async updateImage(id: string, image: Express.Multer.File) {
-    try {
-      await this.prisma.user
-        .findUnique({
-          where: { id }
-        })
-        .then(async (user) => {
-          if (!user) {
-            throw Error('User not found');
-          }
-          const imageUpdt = await this.imageService.updateByOrigin(
-            { id_origem: id, source: image.filename, alt: image.originalname },
-            image
-          );
-
-          return {
-            id: user.id,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            email: user.email,
-            image: imageUpdt.url
-          };
-        });
-      return;
-    } catch (error) {
-      throw Error(`Error in update user image ${error}`);
-    }
-  }
   async remove(id: string) {
     try {
       return this.prisma.user
