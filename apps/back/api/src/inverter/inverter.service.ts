@@ -20,6 +20,8 @@ export class InverterService {
     try {
       const { image, ...data } = createInverterDto;
 
+      data.num_mppt = Number(data.num_mppt);
+
       const inverter = await this.prisma.inverter
         .create({
           data: data
@@ -46,7 +48,9 @@ export class InverterService {
         });
 
       return inverter;
-    } catch (error) {}
+    } catch (error) {
+      throw new Error(`Error in create inverter ${error}`);
+    }
   }
 
   async findAll(): Promise<ResponseInverterDto[]> {

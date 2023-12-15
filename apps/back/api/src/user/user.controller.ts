@@ -68,24 +68,16 @@ export class UserController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    try {
-      return this.userService.update(id, updateUserDto);
-    } catch (error) {
-      throw Error(`Error in update user ${error}`);
-    }
-  }
-
-  @Patch('image/:id')
   @UseInterceptors(FileInterceptor('imageFile'))
-  updateImage(
+  update(
     @Param('id') id: string,
-    @UploadedFile() imageFile: Express.Multer.File
+    @Body() updateUserDto: UpdateUserDto,
+    @UploadedFile() imageFile?: Express.Multer.File
   ) {
     try {
-      return this.userService.updateImage(id, imageFile);
+      return this.userService.update(id, updateUserDto, imageFile);
     } catch (error) {
-      throw Error(`Error in update user image ${error}`);
+      throw Error(`Error in update user ${error}`);
     }
   }
 

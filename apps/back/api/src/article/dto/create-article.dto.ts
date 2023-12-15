@@ -17,7 +17,7 @@ export class CreateArticleDto {
   category: string;
 
   image: {
-    url: string | null;
+    url?: string | null;
     source: string | null;
     alt: string | null;
     pos: number | 0;

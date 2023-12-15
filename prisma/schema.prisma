@@ -109,7 +109,6 @@ model Team {
   id          String  @id @default(cuid())
   name        String  @db.VarChar(100)
   role        String  @db.VarChar(100)
-  image       String? @db.VarChar(500)
   order       Int?    @default(0)
   linkedin    String? @db.VarChar(500)
   instagram   String? @db.VarChar(500)
