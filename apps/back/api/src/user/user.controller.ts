@@ -7,7 +7,8 @@ import {
   Param,
   Delete,
   UseInterceptors,
-  UploadedFile
+  UploadedFile,
+  Req
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UserService } from './user.service';
@@ -78,6 +79,24 @@ export class UserController {
       return this.userService.update(id, updateUserDto, imageFile);
     } catch (error) {
       throw Error(`Error in update user ${error}`);
+    }
+  }
+al
+  @Post('recovery-password')
+  recoveryPassword(@Body() body: {email:string},@Req() req: Request) {
+    try {
+      return this.userService.forgotPassword(body.email, req);
+    } catch (error) {
+      throw Error(`Error in recovery password ${error}`);
+    }
+  }
+
+  @Post('reset-password')
+  resetPassword(@Body() body: {token:string, password:string}) {
+    try {
+      return this.userService.resetPassword(body.token, body.password);
+    } catch (error) {
+      throw Error(`Error in reset password ${error}`);
     }
   }
 

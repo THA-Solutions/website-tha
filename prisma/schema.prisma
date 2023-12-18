@@ -19,6 +19,8 @@ model User {
   role          String    @default("user") @db.VarChar(10)
   company       String?
 
+  token Account_Token[]
+
   @@map("user")
 }
 
@@ -39,7 +41,7 @@ model Company {
   trade_name  String?    @db.VarChar(100)
   legal_name  String     @db.VarChar(100)
   description String?    @db.VarChar(500)
-  address       String?    @db.VarChar(200)
+  address     String?    @db.VarChar(200)
   cnpj        String     @db.VarChar(18)
   phone       String?    @db.VarChar(13)
   inverters   Inverter[]
@@ -49,7 +51,6 @@ model Company {
 
 model Inverter {
   id                                    String  @id @default(cuid())
-  id_company                            String
   title                                 String  @db.VarChar(100)
   cc_voltage                            String  @db.VarChar(100)
   mppt_voltage_range                    String  @db.VarChar(100)
@@ -77,7 +78,8 @@ model Inverter {
   protection_degree                     String  @db.VarChar(100)
   warranty                              String  @db.VarChar(100)
   network_monitoring                    String? @db.VarChar(100)
-  company                                 Company   @relation(fields: [id_company], references: [id], onDelete: Cascade)
+  id_company                            String
+  company                               Company @relation(fields: [id_company], references: [id], onDelete: Cascade)
 
   @@index([id_company], map: "inverter_FK")
   @@map("inverter")
@@ -109,10 +111,20 @@ model Team {
   id          String  @id @default(cuid())
   name        String  @db.VarChar(100)
   role        String  @db.VarChar(100)
+  image       String? @db.VarChar(500)
   order       Int?    @default(0)
   linkedin    String? @db.VarChar(500)
   instagram   String? @db.VarChar(500)
   description String? @db.VarChar(500)
 
   @@map("team")
+}
+
+model Account_Token {
+  token   String   @db.VarChar(100)
+  expires DateTime @db.Timestamp(0)
+  id_user String   @id @db.VarChar(100)
+
+  User    User?    @relation(fields: [id_user], references: [id])
+  @@map("account_token")
 }
