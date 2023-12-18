@@ -9,7 +9,13 @@ import { MailService } from '../mail/mail.service';
 
 @Module({
   controllers: [UserController],
-  providers: [UserService, PrismaService, ImageService, CompanyService, MailService],
+  providers: [
+    UserService,
+    PrismaService,
+    ImageService,
+    CompanyService,
+    MailService
+  ],
   exports: [UserService],
   imports: [CloudinaryModule]
 })

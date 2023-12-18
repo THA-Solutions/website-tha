@@ -81,9 +81,9 @@ export class UserController {
       throw Error(`Error in update user ${error}`);
     }
   }
-al
+
   @Post('recovery-password')
-  recoveryPassword(@Body() body: {email:string},@Req() req: Request) {
+  recoveryPassword(@Body() body: { email: string }, @Req() req: Request) {
     try {
       return this.userService.forgotPassword(body.email, req);
     } catch (error) {
@@ -92,7 +92,7 @@ al
   }
 
   @Post('reset-password')
-  resetPassword(@Body() body: {token:string, password:string}) {
+  resetPassword(@Body() body: { token: string; password: string }) {
     try {
       return this.userService.resetPassword(body.token, body.password);
     } catch (error) {

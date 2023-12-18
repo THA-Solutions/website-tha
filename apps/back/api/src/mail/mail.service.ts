@@ -27,7 +27,7 @@ export class MailService {
         from: `THA Solution support<${process.env.MAIL_USER}>`,
         to: recoveryMailDto.email,
         subject: 'Recuperação de senha',
-        text: 'Recuperação de senha'
+        text: 'Recuperação de senha' + recoveryMailDto.message
       };
 
       await this.mailer.sendMail(options);

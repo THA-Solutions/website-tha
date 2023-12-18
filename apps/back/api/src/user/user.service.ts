@@ -266,37 +266,17 @@ export class UserService {
 
     const resetUrl = `${request.protocol}://${request.get(
       'host'
-    )}/api/v1/auth/resetpassword/${resetToken.resetPasswordToken}`;
+    )}/api/v1/auth/resetpassword/${resetToken.resetToken}`;
 
     const message = `You are receiving this email because you has requested the reset of a password. Please make a PUT request to: \n\n ${resetUrl} \n\n If you did not request this, please ignore this email and your password will remain unchanged. \n This token will expire in 10 minutes.`;
-    
+
     this.mailService.passwordRecoveryMail({
       email,
       subject: 'Password change request received',
-      message
+      message: message
     });
 
     return;
-  }
-
-  async createResetToken(user: ResponseUserDto) {
-    const resetToken = crypto.randomBytes(32).toString('hex');
-
-    const resetPasswordToken = crypto
-      .createHash('sha256')
-      .update(resetToken)
-      .digest('hex');
-
-    const resetPasswordExpire = new Date(Date.now() + 10 * 60 * 1000);
-    await this.prisma.account_Token.create({
-      data: {
-        token: resetPasswordToken,
-        expires: resetPasswordExpire,
-        User: { connect: { id: user.id } }
-      }
-    });
-
-    return { resetToken, resetPasswordToken, resetPasswordExpire };
   }
 
   async resetPassword(resetToken: string, password: string) {
@@ -306,7 +286,7 @@ export class UserService {
       .digest('hex');
 
     const accountToken = await this.prisma.account_Token.findFirst({
-      where: { token: resetPasswordToken, expires: { gte: new Date() } }
+      where: { token: resetPasswordToken }
     });
 
     if (!accountToken) {
@@ -333,6 +313,27 @@ export class UserService {
     });
 
     return;
+  }
+
+  async createResetToken(user: ResponseUserDto) {
+    const resetToken = crypto.randomBytes(32).toString('hex');
+
+    const resetPasswordToken = crypto
+      .createHash('sha256')
+      .update(resetToken)
+      .digest('hex');
+
+    const resetPasswordExpire = new Date(Date.now() + 10 * 60000); //10 minutos
+    console.log(resetPasswordExpire, new Date(resetPasswordExpire));
+    await this.prisma.account_Token.create({
+      data: {
+        token: resetPasswordToken,
+        expires: resetPasswordExpire,
+        User: { connect: { id: user.id } }
+      }
+    });
+
+    return { resetToken, resetPasswordToken, resetPasswordExpire };
   }
 
   async remove(id: string) {

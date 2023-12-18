@@ -10,16 +10,15 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  firstName     String?   @db.VarChar(25)
-  lastName      String?   @db.VarChar(25)
-  email         String?   @unique
+  id            String          @id @default(cuid())
+  firstName     String?         @db.VarChar(25)
+  lastName      String?         @db.VarChar(25)
+  email         String?         @unique
   emailVerified DateTime?
-  password      String?   @db.VarChar(500)
-  role          String    @default("user") @db.VarChar(10)
+  password      String?         @db.VarChar(500)
+  role          String          @default("user") @db.VarChar(10)
   company       String?
-
-  token Account_Token[]
+  token         Account_Token[]
 
   @@map("user")
 }
@@ -121,10 +120,10 @@ model Team {
 }
 
 model Account_Token {
-  token   String   @db.VarChar(100)
-  expires DateTime @db.Timestamp(0)
-  id_user String   @id @db.VarChar(100)
+  token   String @db.VarChar(100)
+  id_user String @id @db.VarChar(100)
+  expires DateTime @default(now()) @db.Timestamp(0)
+  User    User?  @relation(fields: [id_user], references: [id])
 
-  User    User?    @relation(fields: [id_user], references: [id])
   @@map("account_token")
 }
