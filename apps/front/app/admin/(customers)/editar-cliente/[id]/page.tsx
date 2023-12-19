@@ -21,6 +21,7 @@ export default function Page({ params }: { params: { id: string } }) {
       if (imageFile[0] && typeof imageFile[0] === 'object') {
         formData.append('imageFile', imageFile[0]);
       }
+
       for (let key in content) {
         formData.append(key, content[key]);
       }

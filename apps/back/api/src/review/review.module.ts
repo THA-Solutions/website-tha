@@ -7,6 +7,7 @@ import { InverterService } from '../inverter/inverter.service';
 import { ImageService } from '../image/image.service';
 import CloudinaryService from '../cloudinary/cloudinary.service';
 import { CompanyService } from '../company/company.service';
+import { MailService } from '../mail/mail.service';
 @Module({
   controllers: [ReviewController],
   providers: [
@@ -16,7 +17,8 @@ import { CompanyService } from '../company/company.service';
     InverterService,
     ImageService,
     CloudinaryService,
-    CompanyService
+    CompanyService,
+    MailService
   ]
 })
 export class ReviewModule {}
