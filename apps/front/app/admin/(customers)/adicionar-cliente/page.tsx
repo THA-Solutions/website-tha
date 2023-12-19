@@ -13,10 +13,15 @@ export default function Page() {
 
   const onSubmit = async (data: FieldValues) => {
     try {
+      const { imageFile, ...content } = data;
       const formData = new FormData();
 
-      for (let key in data) {
-        formData.append(key, data[key]);
+      if (imageFile[0] && typeof imageFile[0] === 'object') {
+        formData.append('imageFile', imageFile[0]);
+      }
+
+      for (let key in content) {
+        formData.append(key, content[key]);
       }
 
       await toast.promise(CustomerService.createCustomer(formData), {

@@ -7,14 +7,15 @@ import { ConfigService } from '@nestjs/config';
 import { ResponseUserDto } from './dto/response-user.dto';
 import { ImageService } from '../image/image.service';
 import { CompanyService } from '../company/company.service';
-
+import { MailService } from '../mail/mail.service';
 @Injectable()
 export class UserService {
   constructor(
     private readonly prisma: PrismaService,
     private configService: ConfigService,
     private companyService: CompanyService,
-    private imageService: ImageService
+    private imageService: ImageService,
+    private mailService: MailService
   ) {}
 
   //Criptografa a senha do usuário de acordo com a chave de criptografia definida no arquivo .env e protocolo AES-256-CBC
@@ -39,7 +40,10 @@ export class UserService {
     }
   }
 
-  async create(createUserDto: CreateUserDto): Promise<ResponseUserDto> {
+  async create(
+    createUserDto: CreateUserDto,
+    imageFile?: Express.Multer.File
+  ): Promise<ResponseUserDto> {
     try {
       const user = await this.prisma.user
         .findFirst({
@@ -50,8 +54,8 @@ export class UserService {
             throw Error('User already exists');
           }
 
-          if (createUserDto.role === 'customer' && createUserDto?.company) {
-            const company = await this.companyService
+          if (createUserDto.role === 'customer' && createUserDto.company) {
+            await this.companyService
               .findByTitle(createUserDto.company!)
               .then((company) => {
                 if (!company) {
@@ -72,7 +76,14 @@ export class UserService {
               if (!user) {
                 throw Error('User not found');
               }
-
+              if (imageFile) {
+                await this.imageService.create(
+                  {
+                    id_origem: user.id
+                  },
+                  imageFile
+                );
+              }
               return {
                 id: user.id,
                 firstName: user.firstName,
@@ -203,7 +214,6 @@ export class UserService {
           if (!user) {
             throw Error('User not found');
           }
-
           const image = await this.prisma.image.findFirst({
             where: {
               id_origem: user.id
@@ -253,6 +263,87 @@ export class UserService {
     } catch (error) {
       throw Error(`Error in update user ${error}`);
     }
+  }
+
+  async forgotPassword(email: string, request: any) {
+    const user = await this.findByEmail(email);
+
+    if (!user) {
+      throw Error('User not found');
+    }
+
+    const resetToken = await this.createResetToken(user);
+
+    const resetUrl = `${request.protocol}://${request.get(
+      'host'
+    )}/api/v1/auth/resetpassword/${resetToken.resetToken}`;
+
+    const message = `You are receiving this email because you has requested the reset of a password. Please make a PUT request to: \n\n ${resetUrl} \n\n If you did not request this, please ignore this email and your password will remain unchanged. \n This token will expire in 10 minutes.`;
+
+    this.mailService.passwordRecoveryMail({
+      email,
+      subject: 'Password change request received',
+      message: message
+    });
+
+    return;
+  }
+
+  async resetPassword(resetToken: string, password: string) {
+    const resetPasswordToken = crypto
+      .createHash('sha256')
+      .update(resetToken)
+      .digest('hex');
+
+    const accountToken = await this.prisma.account_Token.findFirst({
+      where: { token: resetPasswordToken }
+    });
+
+    if (!accountToken) {
+      throw Error('Invalid token');
+    }
+
+    const user = await this.prisma.user.findFirst({
+      where: { id: accountToken.id_user }
+    });
+
+    if (!user) {
+      throw Error('User not found');
+    }
+
+    const newPassword = this.crypter(password);
+
+    await this.prisma.user.update({
+      where: { id: user.id },
+      data: { password: newPassword }
+    });
+
+    await this.prisma.account_Token.delete({
+      where: { id_user: accountToken.id_user }
+    });
+
+    return;
+  }
+
+  async createResetToken(user: ResponseUserDto) {
+    const resetToken = crypto.randomBytes(32).toString('hex');
+
+    const resetPasswordToken = crypto
+      .createHash('sha256')
+      .update(resetToken)
+      .digest('hex');
+
+    const resetPasswordExpire = new Date(Date.now() + 10 * 60000); //10 minutos
+
+    await this.prisma.account_Token.create({
+      data: {
+        token: resetPasswordToken,
+        expires: resetPasswordExpire,
+        User: { connect: { id: user.id } }
+      }
+    });
+
+    return { resetToken, resetPasswordToken, resetPasswordExpire };
   }
 
   async remove(id: string) {
