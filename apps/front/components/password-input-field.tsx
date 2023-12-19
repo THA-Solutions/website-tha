@@ -21,20 +21,24 @@ const PasswordInputField = ({
   return (
     <div>
       <label
-        htmlFor="password"
+        htmlFor={input.name}
         className={`text-xl font-semibold leading-6 text-${colorLabel}`}
       >
         {input.label}
-        <span className="text-red-500 text-sm ml-1">*</span>
+        {input.required && <span className="text-red-500 text-sm ml-1">*</span>}
       </label>
       <div className="mt-2.5 relative">
         <input
-          {...register('password', { required: input.required })}
+          {...register(input.name, {
+            required: input.required,
+            pattern: input.pattern || undefined
+          })}
           type={passwordVisible ? 'text' : 'password'}
           placeholder={input.placeholder}
-          name="password"
-          id="password"
+          name={input.name}
+          id={input.name}
           autoComplete={input.autoComplete}
+          disabled={input.disabled || false}
           className={`w-full border-0 ${
             input.icon ? 'pl-14' : 'pl-4'
           } py-2 text-white bg-transparent shadow-sm ring-1 ring-inset ${colorRing} placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-tertiary`}
