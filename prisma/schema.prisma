@@ -40,9 +40,16 @@ model Company {
   trade_name  String?    @db.VarChar(100)
   legal_name  String     @db.VarChar(100)
   description String?    @db.VarChar(500)
-  address     String?    @db.VarChar(200)
   cnpj        String     @db.VarChar(18)
-  phone       String?    @db.VarChar(13)
+  street    String     @db.VarChar(100)
+  number    String     @db.VarChar(10)
+  complement  String?  @db.VarChar(100)
+  neighborhood  String @db.VarChar(100)
+  city    String     @db.VarChar(100)
+  state  String     @db.VarChar(2)
+  cep String     @db.VarChar(10)
+
+
   inverters   Inverter[]
 
   @@map("company")

@@ -7,9 +7,11 @@ export class CustomerService {
   private static readonly apiPath = `${ApiConfig.getApiUrl()}/user`;
 
   static async createCustomer(customer: FormData): Promise<User> {
-    const res = await axios.post(this.apiPath, {
-      ...customer,
-      role: 'customer'
+    customer.append('role', 'customer');
+    const res = await axios.post(this.apiPath, customer, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
     });
 
     return res.data;

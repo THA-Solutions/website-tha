@@ -40,7 +40,10 @@ export class UserService {
     }
   }
 
-  async create(createUserDto: CreateUserDto): Promise<ResponseUserDto> {
+  async create(
+    createUserDto: CreateUserDto,
+    imageFile?: Express.Multer.File
+  ): Promise<ResponseUserDto> {
     try {
       const user = await this.prisma.user
         .findFirst({
@@ -51,8 +54,8 @@ export class UserService {
             throw Error('User already exists');
           }
 
-          if (createUserDto.role === 'customer' && createUserDto?.company) {
-            const company = await this.companyService
+          if (createUserDto.role === 'customer' && createUserDto.company) {
+            await this.companyService
               .findByTitle(createUserDto.company!)
               .then((company) => {
                 if (!company) {
@@ -73,7 +76,14 @@ export class UserService {
               if (!user) {
                 throw Error('User not found');
               }
-
+              if (imageFile) {
+                await this.imageService.create(
+                  {
+                    id_origem: user.id
+                  },
+                  imageFile
+                );
+              }
               return {
                 id: user.id,
                 firstName: user.firstName,
@@ -324,7 +334,7 @@ export class UserService {
       .digest('hex');
 
     const resetPasswordExpire = new Date(Date.now() + 10 * 60000); //10 minutos
-    
+
     await this.prisma.account_Token.create({
       data: {
         token: resetPasswordToken,

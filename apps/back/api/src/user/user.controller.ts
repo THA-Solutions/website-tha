@@ -24,9 +24,13 @@ export class UserController {
 
   @Post()
   @Public()
-  create(@Body() createUserDto: CreateUserDto) {
+  @UseInterceptors(FileInterceptor('imageFile'))
+  create(
+    @Body() createUserDto: CreateUserDto,
+    @UploadedFile() imageFile?: Express.Multer.File
+  ) {
     try {
-      return this.userService.create(createUserDto);
+      return this.userService.create(createUserDto, imageFile);
     } catch (error) {
       throw Error(`Error in create user ${error}`);
     }
