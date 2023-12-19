@@ -1,23 +1,23 @@
 import { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 
-import { Client } from '@tha-solutions';
+import { User } from '@tha-solutions';
 import InputField from './input-field';
 import PasswordInputField from './password-input-field';
 
-interface ClientFormProps {
+interface CostumerFormProps {
   onSubmit: (data: FieldValues) => Promise<void>;
   buttonText: string;
-  editClientData?: Client;
+  editCustomerData?: User;
   isRequired: boolean;
 }
 
-const ClientForm = ({
+const CostumerForm = ({
   onSubmit,
   buttonText,
-  editClientData,
+  editCustomerData,
   isRequired
-}: ClientFormProps) => {
+}: CostumerFormProps) => {
   const {
     register,
     handleSubmit,
@@ -28,12 +28,28 @@ const ClientForm = ({
 
   const inputs = [
     {
-      label: 'Nome',
-      name: 'name',
+      label: 'Imagem',
+      name: 'imageFile',
+      type: 'file',
+      required: isRequired ? true : false,
+      placeholder: 'Selecione a imagem do colaborador',
+      value: editCustomerData?.imageUrl
+    },
+    {
+      label: 'Primeiro nome',
+      name: 'firstName',
       type: 'text',
       placeholder: 'Insira o nome do cliente',
       required: isRequired ? true : false,
-      value: editClientData?.name
+      value: editCustomerData?.firstName
+    },
+    {
+      label: 'Ultimo nome',
+      name: 'lastName',
+      type: 'text',
+      placeholder: 'Insira o sobrenome do cliente',
+      required: isRequired ? true : false,
+      value: editCustomerData?.lastName
     },
     {
       label: 'E-mail',
@@ -41,14 +57,15 @@ const ClientForm = ({
       type: 'email',
       placeholder: 'Insira o e-mail do cliente',
       required: isRequired ? true : false,
-      value: editClientData?.email
+      value: editCustomerData?.email
     },
     {
       label: 'Senha',
       name: 'password',
       type: 'password',
       placeholder: 'Insira a senha do cliente',
-      required: isRequired ? true : false
+      required: isRequired ? true : false,
+      value: editCustomerData?.password
     }
   ];
 
@@ -75,6 +92,7 @@ const ClientForm = ({
               key={input.name}
               input={input}
               register={register}
+              value={input.value}
               errors={errors}
               colorLabel="white"
               colorRing="ring-gray-400"
@@ -92,4 +110,4 @@ const ClientForm = ({
   );
 };
 
-export default ClientForm;
+export default CostumerForm;

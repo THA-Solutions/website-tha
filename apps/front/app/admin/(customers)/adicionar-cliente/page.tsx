@@ -5,8 +5,8 @@ import { useRouter } from 'next/navigation';
 import { FieldValues } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 
-import { ClientService } from '@tha-solutions';
-import ClientForm from 'apps/front/components/client-form';
+import { CustomerService } from '@tha-solutions';
+import CustomerForm from 'apps/front/components/customer-form';
 
 export default function Page() {
   const router = useRouter();
@@ -19,7 +19,7 @@ export default function Page() {
         formData.append(key, data[key]);
       }
 
-      await toast.promise(ClientService.createClient(formData), {
+      await toast.promise(CustomerService.createCustomer(formData), {
         pending: 'Criando cliente...',
         success: 'Cliente criado com sucesso!',
         error: 'Erro ao criar o cliente'
@@ -35,7 +35,7 @@ export default function Page() {
 
   return (
     <>
-      <ClientForm
+      <CustomerForm
         onSubmit={onSubmit}
         buttonText="ADICIONAR"
         isRequired={true}

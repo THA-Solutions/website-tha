@@ -12,6 +12,7 @@ export interface InputFieldProps {
     autoComplete?: string;
     icon?: JSX.Element;
     pattern?: RegExp;
+    disabled?: boolean;
   };
   register: UseFormRegister<FieldValues>;
   value?: string | null | undefined;
@@ -49,9 +50,13 @@ const InputField = ({
           name={input.name}
           id={input.name}
           autoComplete={input.autoComplete}
-          className={`w-full border-0 ${
-            input.icon ? 'pl-14' : 'pl-4'
-          } py-2 text-white bg-transparent shadow-sm ring-1 ring-inset ${colorRing} placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-tertiary`}
+          disabled={input.disabled || false}
+          className={`w-full border-0 ${input.icon ? 'pl-14' : 'pl-4'} 
+          py-2 bg-transparent shadow-sm ring-1 ring-inset placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-tertiary ${
+            input.disabled
+              ? 'ring-gray-700 text-gray-700'
+              : `text-white ${colorRing}`
+          }`}
         />
         <div className="absolute top-1/2 transform -translate-y-1/2 left-4">
           {input.icon}

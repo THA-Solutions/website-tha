@@ -2,8 +2,8 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import { useSession, signOut } from 'next-auth/react';
+import { usePathname } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import { Fragment, useEffect, useState } from 'react';
 
 import Logo from '../public/logo-colored.png';
@@ -17,22 +17,21 @@ import SyncAltRounded from '@mui/icons-material/SyncAltRounded';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuRounded from '@mui/icons-material/MenuRounded';
 import CloseRounded from '@mui/icons-material/CloseRounded';
-import ArrowRightAlt from '@mui/icons-material/ArrowRightAlt';
 import Article from '@mui/icons-material/Article';
-import Logout from '@mui/icons-material/Logout';
+
 import { CircularProgress } from '@mui/material';
 
 const solutions = [
   {
     name: 'Dashboard',
     description: 'Acesse seus dados de qualquer lugar',
-    href: '/dashboard',
+    href: '/admin',
     icon: LeaderboardRounded
   },
   {
     name: 'Comparativo',
     description: 'Compare as informações de equipamentos fotovaltaicos',
-    href: '/comparativo',
+    href: '/compara/1/2',
     icon: SyncAltRounded
   },
   {

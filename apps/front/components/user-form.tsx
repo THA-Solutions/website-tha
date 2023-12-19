@@ -1,7 +1,11 @@
 import { FieldValues, useForm } from 'react-hook-form';
 
+import Link from 'next/link';
+
 import { User } from '@tha-solutions';
 import InputField from './input-field';
+
+import ArrowRightAlt from '@mui/icons-material/ArrowRightAlt';
 
 interface UserFormProps {
   onSubmit: (data: FieldValues) => Promise<void>;
@@ -46,6 +50,24 @@ const UserForm = ({
       placeholder: 'Sobrenome',
       required: isRequired ? true : false,
       value: editUserData?.lastName
+    },
+    {
+      name: 'email',
+      label: 'E-mail',
+      type: 'email',
+      placeholder: 'E-mail',
+      required: isRequired ? true : false,
+      value: editUserData?.email,
+      disabled: true
+    },
+    {
+      name: 'password',
+      label: 'Senha',
+      type: 'password',
+      placeholder: 'Senha',
+      required: isRequired ? true : false,
+      value: 'senhaaleatoria',
+      disabled: true
     }
   ];
 
@@ -55,19 +77,38 @@ const UserForm = ({
       className="flex flex-col gap-4 max-w-xl w-full space-y-4"
     >
       {inputs.map((input) => (
-        <InputField
-          key={input.name}
-          input={input}
-          value={input.value}
-          register={register}
-          errors={errors}
-        />
+        <div key={input.name} className="flex flex-col">
+          <InputField
+            input={input}
+            value={input.value}
+            register={register}
+            errors={errors}
+          />
+          {input.name === 'email' && (
+            <Link
+              href={`/perfil/editar/${editUserData?.id}/editar-email`}
+              className="flex items-center w-fit px-1 py-2 text-indigo-400 hover:underline"
+            >
+              <span>Alterar e-mail</span>
+              <ArrowRightAlt fontSize="medium" />
+            </Link>
+          )}
+          {input.name === 'password' && (
+            <Link
+              href={`/perfil/editar/${editUserData?.id}/editar-senha`}
+              className="flex items-center w-fit px-1 py-2 text-indigo-400 hover:underline"
+            >
+              <span>Alterar senha</span>
+              <ArrowRightAlt fontSize="medium" />
+            </Link>
+          )}
+        </div>
       ))}
       <button
         type="submit"
         className="bg-green-400 hover:bg-green-600 text-background font-semibold font-alt uppercase py-2 px-4 shadow-lg hover:shadow-xl transition duration-200"
       >
-        Salvar
+        {buttonText}
       </button>
     </form>
   );
