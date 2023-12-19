@@ -108,7 +108,6 @@ export class ImageService {
     image?: Express.Multer.File
   ) {
     try {
-
       if (image) {
         //Remove a imagem do cloudinary
         await this.delete(id);
@@ -122,7 +121,7 @@ export class ImageService {
           }).then((image) => {
             //Atualiza o id da imagem
             id = image.id!;
-          })
+          });
           updateImageDto.url = url;
         });
       }

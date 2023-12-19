@@ -15,7 +15,7 @@ export interface InputFieldProps {
     disabled?: boolean;
   };
   register: UseFormRegister<FieldValues>;
-  value?: string | null | undefined;
+  value?: string | number | null | undefined;
   errors: FieldErrors<FieldValues>;
   colorLabel?: string;
   colorRing?: string;

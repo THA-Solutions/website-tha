@@ -1,10 +1,17 @@
 export interface Company {
   id: string;
-  image: string;
-  cnpj: string;
-  legal_name: string;
-  trade_name?: string;
-  email: string;
-  phone?: string;
+  cnpj: number;
+  legalName: string;
+
+  cep: number;
+  street: string;
+  number: string;
+  neighborhood: string;
+  complement?: string;
+  city: string;
+  state: string;
+
+  image?: string;
+  tradeName?: string;
   description?: string;
 }

@@ -6,7 +6,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { Edit, Instagram, LinkedIn, SearchOff } from '@mui/icons-material';
+import Edit from '@mui/icons-material/Edit';
+import SearchOff from '@mui/icons-material/SearchOff';
+
 import { CompanyService } from '@tha-solutions';
 import ImageNotFound from 'apps/front/components/image-not-found';
 import DeleteDialog from 'apps/front/components/delete-dialog';
@@ -77,6 +79,18 @@ export default function Page() {
           ))}
         </article>
       )}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </>
   );
 }

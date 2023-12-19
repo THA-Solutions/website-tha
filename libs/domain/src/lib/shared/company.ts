@@ -7,7 +7,11 @@ export class CompanyService {
   private static readonly apiPath = `${ApiConfig.getApiUrl()}/company`;
 
   static async createCompany(company: FormData): Promise<Company> {
-    const res = await axios.post(this.apiPath, company);
+    const res = await axios.post(this.apiPath, company, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
     return res.data;
   }
 
@@ -21,8 +25,15 @@ export class CompanyService {
     return res.data;
   }
 
-  static async updateCompany(id: string, company: Company): Promise<Company> {
-    const res = await axios.put(`${this.apiPath}/${id}`, company);
+  static async updateCompany(
+    id: string,
+    updatedCompany: FormData
+  ): Promise<Company> {
+    const res = await axios.put(`${this.apiPath}/${id}`, updatedCompany, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
     return res.data;
   }
 
