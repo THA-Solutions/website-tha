@@ -324,7 +324,7 @@ export class UserService {
       .digest('hex');
 
     const resetPasswordExpire = new Date(Date.now() + 10 * 60000); //10 minutos
-    console.log(resetPasswordExpire, new Date(resetPasswordExpire));
+    
     await this.prisma.account_Token.create({
       data: {
         token: resetPasswordToken,
