@@ -1,16 +1,16 @@
 import Link from 'next/link';
 
-import { Client } from '@tha-solutions';
+import { User } from '@tha-solutions';
 
 import Edit from '@mui/icons-material/Edit';
 import Delete from '@mui/icons-material/Delete';
 
-interface ClientTableProps {
-  clients: Client[];
+interface CustomerTableProps {
+  customers: User[];
   onDelete: (id: string) => void;
 }
 
-const ClientTable = ({ clients, onDelete }: ClientTableProps) => {
+const CustomerTable = ({ customers, onDelete }: CustomerTableProps) => {
   return (
     <div className="overflow-x-auto pt-6">
       <table className="min-w-full divide-y divide-gray-800">
@@ -55,19 +55,21 @@ const ClientTable = ({ clients, onDelete }: ClientTableProps) => {
           </tr>
         </thead>
         <tbody className="bg-backgroundAlt2 divide-y divide-gray-800">
-          {clients.map((client) => (
-            <tr key={client.id}>
+          {customers.map((customer) => (
+            <tr key={customer.id}>
               <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-200">{client.name}</div>
+                <div className="text-sm text-gray-200">
+                  {customer.firstName}
+                </div>
                 <div className="text-sm text-gray-400 sm:hidden">
-                  {client.email}
+                  {customer.email}
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap hidden sm:table-cell">
-                <div className="text-sm text-gray-400">{client.email}</div>
+                <div className="text-sm text-gray-400">{customer.email}</div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap hidden sm:table-cell">
-                <Link href={`/admin/editar-cliente/${client.id}`}>
+                <Link href={`/admin/editar-cliente/${customer.id}`}>
                   <span className="text-indigo-400 hover:text-indigo-800">
                     <Edit />
                   </span>
@@ -75,7 +77,7 @@ const ClientTable = ({ clients, onDelete }: ClientTableProps) => {
               </td>
               <td className="px-6 py-4 whitespace-nowrap hidden sm:table-cell">
                 <button
-                  onClick={() => onDelete(client.id)}
+                  onClick={() => onDelete(customer.id)}
                   className="text-red-400 hover:text-red-800"
                 >
                   <Delete />
@@ -83,13 +85,13 @@ const ClientTable = ({ clients, onDelete }: ClientTableProps) => {
               </td>
               <td className="px-6 py-4 whitespace-nowrap sm:hidden">
                 <div className="flex items-center gap-4">
-                  <Link href={`/admin/editar-cliente/${client.id}`}>
+                  <Link href={`/admin/editar-cliente/${customer.id}`}>
                     <span className="text-indigo-400 hover:text-indigo-800">
                       <Edit />
                     </span>
                   </Link>
                   <button
-                    onClick={() => onDelete(client.id)}
+                    onClick={() => onDelete(customer.id)}
                     className="text-red-400 hover:text-red-800"
                   >
                     <Delete />
@@ -104,4 +106,4 @@ const ClientTable = ({ clients, onDelete }: ClientTableProps) => {
   );
 };
 
-export default ClientTable;
+export default CustomerTable;

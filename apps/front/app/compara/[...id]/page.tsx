@@ -83,8 +83,12 @@ export default async function Comparacao({
 
   return (
     <>
-      <header>
-        <div>
+      <section className="flex p-10 gap-12">
+        <div className="ring-1 ring-gray-500 p-2">
+          <h1 className="py-2 uppercase text-primary font-bold text-xl">
+            {' '}
+            INVERSOR 1
+          </h1>
           {Object.keys(compareData.a).map((key, index) => {
             const formattedKey = formatFields[key];
             if (formattedKey)
@@ -92,13 +96,19 @@ export default async function Comparacao({
                 <div key={index}>
                   <p>
                     {formattedKey}: {compareData.a[key].valor} -{' '}
-                    {compareData.a[key].operador}
+                    <span className="text-yellow-400">
+                      {compareData.a[key].operador}
+                    </span>
                   </p>
                 </div>
               );
           })}
         </div>
-        <div>
+        <div className="ring-1 ring-gray-500 p-2">
+          <h1 className="py-2 uppercase text-primary font-bold text-xl">
+            {' '}
+            INVERSOR 2
+          </h1>
           {Object.keys(compareData.b).map((key, index) => {
             const formattedKey = formatFields[key];
             if (formattedKey)
@@ -106,14 +116,15 @@ export default async function Comparacao({
                 <div key={index}>
                   <p>
                     {formattedKey}: {compareData.b[key].valor} -{' '}
-                    {compareData.b[key].operador}
+                    <span className="text-yellow-400">
+                      {compareData.b[key].operador}
+                    </span>
                   </p>
                 </div>
               );
           })}
         </div>
-        <div></div>
-      </header>
+      </section>
     </>
   );
 }

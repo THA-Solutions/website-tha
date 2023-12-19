@@ -19,10 +19,6 @@ export const contact = {
 
 export const pages = [
   {
-    name: 'Blog',
-    path: '/blog'
-  },
-  {
     name: 'Suporte Técnico',
     path: '/suporte-tecnico'
   },
@@ -35,8 +31,12 @@ export const pages = [
     path: '/marketing'
   },
   {
-    name: 'Sobre',
+    name: 'Sobre nós',
     path: '/sobre'
+  },
+  {
+    name: 'Contato',
+    path: '/contato'
   }
 ];
 

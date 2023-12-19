@@ -29,7 +29,12 @@ export class CustomerService {
     id: string,
     updatedCustomer: FormData
   ): Promise<User> {
-    const res = await axios.patch(`${this.apiPath}/${id}`, updatedCustomer);
+    const res = await axios.patch(`${this.apiPath}/${id}`, updatedCustomer, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+
     return res.data;
   }
 
