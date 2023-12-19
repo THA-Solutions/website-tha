@@ -18,7 +18,7 @@ export default function Page() {
 
   const [user, setUser] = useState<User>();
   const [loading, setLoading] = useState(true);
-
+    console.log(user);
   useEffect(() => {
     const fetchUserData = async () => {
       if (status === 'authenticated') {
