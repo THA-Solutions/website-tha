@@ -82,7 +82,7 @@ export class CompanyService {
     try {
       return await this.prisma.company
         .findFirst({
-          where: { trade_name: title }
+          where: { legal_name: title }
         })
         .then(async (company) => {
           const image = await this.imageService.findByOrigin(company!.id);
