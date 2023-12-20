@@ -14,7 +14,7 @@ export default function Page() {
   const router = useRouter();
 
   const onSubmit = async (data: FieldValues) => {
-    console.log(data);
+
 
     try {
       const { imageFile, ...content } = data;
@@ -23,6 +23,8 @@ export default function Page() {
       if (imageFile[0] && typeof imageFile[0] === 'object') {
         formData.append('imageFile', imageFile[0]);
       }
+
+      formData.append('role', 'customer');
 
       for (let key in content) {
         formData.append(key, content[key]);

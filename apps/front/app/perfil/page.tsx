@@ -25,7 +25,7 @@ export default function Page() {
         try {
           setUser(await CustomerService.getCustomerById(session?.user.id));
         } catch (error) {
-          console.error('Erro ao buscar dados do usuário:', error);
+          console.error(error);
         } finally {
           setLoading(false);
         }

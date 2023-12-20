@@ -54,7 +54,8 @@ export class UserService {
             throw Error('User already exists');
           }
 
-          if (createUserDto.role === 'customer' && createUserDto.company) {
+          if (createUserDto.company || createUserDto.role === 'customer') {
+
             await this.companyService
               .findByTitle(createUserDto.company!)
               .then((company) => {
@@ -64,6 +65,7 @@ export class UserService {
                 createUserDto.company = company.id;
                 return company;
               });
+
           }
 
           createUserDto.password = this.crypter(createUserDto.password);
