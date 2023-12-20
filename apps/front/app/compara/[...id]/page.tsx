@@ -1,21 +1,9 @@
 import { InverterService } from '@tha-solutions';
-import { inverterFields } from '../../../constants/index';
-
-const compare = (a: any, b: any) => {
-  for (const key in inverterFields) {
-    if (a[key] > b[key]) {
-      a[key] = { valor: a[key], operador: 'maior' };
-      b[key] = { valor: b[key], operador: 'menor' };
-    } else if (a[key] < b[key]) {
-      b[key] = { valor: b[key], operador: 'maior' };
-      a[key] = { valor: a[key], operador: 'menor' };
-    } else {
-      a[key] = { valor: a[key], operador: 'igual' };
-      b[key] = { valor: b[key], operador: 'igual' };
-    }
-  }
-  return { a, b };
-};
+import { inverterFields } from 'apps/front/constants';
+import {
+  colourSelection,
+  comparation
+} from 'apps/front/utilities/comparation-utils';
 
 export default async function Comparacao({
   params
@@ -46,7 +34,7 @@ export default async function Comparacao({
     return filteredData;
   });
 
-  const compareData = compare(inverterData, inverterData2);
+  const compareData = comparation(inverterData, inverterData2);
 
   return (
     <>
@@ -56,15 +44,20 @@ export default async function Comparacao({
             {' '}
             INVERSOR 1
           </h1>
-          {Object.keys(compareData.a).map((key, index) => {
+          {Object.keys(compareData.firstInverter).map((key, index) => {
             const formattedKey = inverterFields[key];
             if (formattedKey)
               return (
                 <div key={index}>
                   <p>
-                    {formattedKey}: {compareData.a[key].valor} -{' '}
-                    <span className="text-yellow-400">
-                      {compareData.a[key].operador}
+                    {formattedKey}: {compareData.firstInverter[key].valor} -{' '}
+                    <span
+                      className={colourSelection({
+                        key,
+                        operador: compareData.firstInverter[key].operador
+                      })}
+                    >
+                      {compareData.firstInverter[key].operador}
                     </span>
                   </p>
                 </div>
@@ -76,15 +69,20 @@ export default async function Comparacao({
             {' '}
             INVERSOR 2
           </h1>
-          {Object.keys(compareData.b).map((key, index) => {
+          {Object.keys(compareData.secondInverter).map((key, index) => {
             const formattedKey = inverterFields[key];
             if (formattedKey)
               return (
                 <div key={index}>
                   <p>
-                    {formattedKey}: {compareData.b[key].valor} -{' '}
-                    <span className="text-yellow-400">
-                      {compareData.b[key].operador}
+                    {formattedKey}: {compareData.secondInverter[key].valor} -{' '}
+                    <span
+                      className={colourSelection({
+                        key,
+                        operador: compareData.secondInverter[key].operador
+                      })}
+                    >
+                      {compareData.secondInverter[key].operador}
                     </span>
                   </p>
                 </div>

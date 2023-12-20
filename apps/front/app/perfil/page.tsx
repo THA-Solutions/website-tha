@@ -13,7 +13,7 @@ import { CustomerService, User } from '@tha-solutions';
 import { CircularProgress } from '@mui/material';
 
 export default function Page() {
-  const { data: session, status } = useSession();
+  const { data: session, status , update } = useSession();
   const router = useRouter();
 
   const [user, setUser] = useState<User>();
