@@ -55,7 +55,6 @@ export class UserService {
           }
 
           if (createUserDto.company || createUserDto.role === 'customer') {
-
             await this.companyService
               .findByTitle(createUserDto.company!)
               .then((company) => {
@@ -65,7 +64,6 @@ export class UserService {
                 createUserDto.company = company.id;
                 return company;
               });
-
           }
 
           createUserDto.password = this.crypter(createUserDto.password);
@@ -125,7 +123,9 @@ export class UserService {
               if (!company) {
                 throw Error('Company not found');
               }
-              user.company = company.trade_name ? company.trade_name : company.legal_name!;
+              user.company = company.trade_name
+                ? company.trade_name
+                : company.legal_name!;
             });
           }
 
