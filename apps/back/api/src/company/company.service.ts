@@ -52,14 +52,16 @@ export class CompanyService {
 
       const companiesWithImage = await Promise.all(
         companies.map(async (company) => {
-          const image = await this.imageService.findOne(company.id);
+          const image = await this.imageService.findByOrigin(company.id);
 
           return {
             ...company,
-            image: image ? image.url : null
+            image: image ? image[0].url : null
           };
         })
       );
+
+      console.log('companiesWithImage', companiesWithImage);
       return companiesWithImage;
     } catch (error) {
       throw Error(`Error in find all company ${error}`);
@@ -82,7 +84,7 @@ export class CompanyService {
     try {
       return await this.prisma.company
         .findFirst({
-          where: { trade_name: title }
+          where: { legal_name: title }
         })
         .then(async (company) => {
           const image = await this.imageService.findByOrigin(company!.id);

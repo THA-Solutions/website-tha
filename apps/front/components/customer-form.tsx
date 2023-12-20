@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 
-import { User } from '@tha-solutions';
+import { Company, User } from '@tha-solutions';
 import InputField from './input-field';
 import PasswordInputField from './password-input-field';
 
@@ -9,6 +9,7 @@ interface CostumerFormProps {
   onSubmit: (data: FieldValues) => Promise<void>;
   buttonText: string;
   editCustomerData?: User;
+  companies?: Company[];
   isRequired: boolean;
 }
 
@@ -16,7 +17,8 @@ const CostumerForm = ({
   onSubmit,
   buttonText,
   editCustomerData,
-  isRequired
+  isRequired,
+  companies
 }: CostumerFormProps) => {
   const {
     register,
@@ -74,7 +76,29 @@ const CostumerForm = ({
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col space-y-12 w-full"
     >
-      <div className="flex flex-col w-full gap-4">
+      <div className="flex flex-col w-full gap-8">
+        <div>
+          <label
+            htmlFor="company"
+            className="text-xl font-semibold leading-6 text-tertiary"
+          >
+            Empresa
+            <span className="text-red-500 text-sm ml-1">*</span>
+          </label>
+          <select
+            {...register('company', { required: true })}
+            id="company"
+            name="company"
+            required={isRequired ? true : false}
+            className="w-full border-0 pl-4 py-2 mt-2.5 bg-transparent shadow-sm ring-1 ring-inset placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-tertiary text-white ring-gray-400"
+          >
+            {companies?.map((company) => (
+              <option key={company.id} value={company.legal_name}>
+                {company.legal_name}
+              </option>
+            ))}
+          </select>
+        </div>
         {inputs.map((input) =>
           input.type === 'password' ? (
             <PasswordInputField
@@ -84,7 +108,7 @@ const CostumerForm = ({
               passwordVisible={passwordVisible}
               setPasswordVisible={setPasswordVisible}
               errors={errors}
-              colorLabel="white"
+              colorLabel="tertiary"
               colorRing="ring-gray-400"
             />
           ) : (
@@ -94,7 +118,7 @@ const CostumerForm = ({
               register={register}
               value={input.value}
               errors={errors}
-              colorLabel="white"
+              colorLabel="tertiary"
               colorRing="ring-gray-400"
             />
           )

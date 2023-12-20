@@ -1,7 +1,7 @@
 export interface Company {
   id: string;
   cnpj: number;
-  legalName: string;
+  legal_name: string;
 
   cep: number;
   street: string;
@@ -12,6 +12,6 @@ export interface Company {
   state: string;
 
   image?: string;
-  tradeName?: string;
+  trade_name?: string;
   description?: string;
 }

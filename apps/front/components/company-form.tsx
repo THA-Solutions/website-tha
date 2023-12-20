@@ -2,6 +2,7 @@ import { FieldValues, useForm } from 'react-hook-form';
 
 import { Company } from '@tha-solutions';
 import InputField from './input-field';
+import axios from 'axios';
 
 interface CompanyFormProps {
   onSubmit: (data: FieldValues) => Promise<void>;
@@ -19,8 +20,30 @@ const CompanyForm = ({
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors }
   } = useForm();
+
+  const handleCepChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const cep = event.target.value.replace(/\D/g, '');
+
+    if (cep.length === 8) {
+      try {
+        const response = await axios.get(
+          `https://viacep.com.br/ws/${cep}/json/`
+        );
+
+        setValue('street', response.data.logradouro);
+        setValue('neighborhood', response.data.bairro);
+        setValue('city', response.data.localidade);
+        setValue('state', response.data.uf);
+      } catch (error) {
+        console.error('Erro ao obter informações do CEP', error);
+      }
+    }
+  };
 
   const inputs = [
     {
@@ -34,26 +57,26 @@ const CompanyForm = ({
     {
       label: 'CNPJ',
       name: 'cnpj',
-      type: 'number',
+      type: 'text',
       required: isRequired ? true : false,
       placeholder: 'Digite o CNPJ da empresa',
       value: editCompanyData?.cnpj
     },
     {
       label: 'Razão Social',
-      name: 'legalName',
+      name: 'legal_name',
       type: 'text',
       required: isRequired ? true : false,
       placeholder: 'Digite a razão social da empresa',
-      value: editCompanyData?.legalName
+      value: editCompanyData?.legal_name
     },
     {
       label: 'Nome Fantasia',
-      name: 'tradeName',
+      name: 'trade_name',
       type: 'text',
       required: false,
       placeholder: 'Digite o nome fantasia da empresa',
-      value: editCompanyData?.tradeName
+      value: editCompanyData?.trade_name
     },
     {
       label: 'Descrição',
@@ -66,10 +89,11 @@ const CompanyForm = ({
     {
       label: 'CEP',
       name: 'cep',
-      type: 'number',
+      type: 'text',
       required: isRequired ? true : false,
       placeholder: 'Digite o CEP',
-      value: editCompanyData?.cep
+      value: editCompanyData?.cep,
+      onChange: handleCepChange
     },
     {
       label: 'Logradouro',
@@ -131,8 +155,8 @@ const CompanyForm = ({
           key={input.name}
           input={input}
           register={register}
-          errors={errors}
           value={input.value}
+          errors={errors}
           colorLabel="tertiary"
           colorRing="ring-gray-400"
         />

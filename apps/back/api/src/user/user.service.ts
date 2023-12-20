@@ -156,6 +156,7 @@ export class UserService {
           lastName: user.lastName,
           email: user.email,
           role: user.role,
+          company: user.company,
           image: image ? image.url : null
         };
       })

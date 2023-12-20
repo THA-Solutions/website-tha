@@ -29,7 +29,7 @@ export class CompanyService {
     id: string,
     updatedCompany: FormData
   ): Promise<Company> {
-    const res = await axios.put(`${this.apiPath}/${id}`, updatedCompany, {
+    const res = await axios.patch(`${this.apiPath}/${id}`, updatedCompany, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }

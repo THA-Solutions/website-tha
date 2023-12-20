@@ -32,7 +32,7 @@ export default function Page({ params }: { params: { id: string } }) {
       });
 
       setTimeout(() => {
-        router.push('/admin/empresa');
+        router.push('/admin/empresas');
       }, 1500);
     } catch (error) {
       toast.error(`Erro ao atualizar a empresa: ${error}`);
@@ -58,6 +58,8 @@ export default function Page({ params }: { params: { id: string } }) {
         rtl={false}
         pauseOnFocusLoss
         draggable
+        pauseOnHover
+        theme="dark"
       />
     </>
   );

@@ -23,7 +23,9 @@ export default function Page() {
       error: 'Erro ao deletar a empresa'
     });
 
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
   };
 
   return (
@@ -40,38 +42,104 @@ export default function Page() {
               key={company.id}
               className="flex flex-col justify-between gap-4 p-4 ring-1 ring-gray-700 shadow-xl transition-all"
             >
-              <div className="flex flex-col gap-4">
+              <section className="flex flex-col gap-4">
                 {company.image ? (
                   <Image
                     src={company.image}
                     alt="Imagem da empresa"
-                    className="w-full h-72 object-cover sm:h-64 lg:h-56"
+                    className="w-full h-48 object-cover lg:h-56"
                     width={1000}
                     height={1000}
                   />
                 ) : (
                   <ImageNotFound />
                 )}
-              </div>
-              <section className="flex flex-col gap-2">
-                <h3 className="text-xl text-white font-semibold">
-                  {company.legal_name}
-                </h3>
-                <h4 className="text-lg text-tertiary font-semibold">
-                  {company.email}
-                </h4>
-                <p className="text-gray-400 font-normal">{company.phone}</p>
               </section>
-              <section className="flex flex-row gap-4 justify-between">
-                <Link href={`/admin/${company.id}/empresas/editar`}>
-                  <a className="flex flex-row gap-2 items-center justify-center bg-gray-700 text-white rounded-lg p-2 transition-all hover:bg-gray-600">
-                    <Edit />
-                    <span>Editar</span>
-                  </a>
+
+              <section className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2">
+                  <h2 className="text-base text-tertiary font-semibold">
+                    Informações
+                  </h2>
+                  <div className="flex flex-col gap-1 pl-2">
+                    <h1 className="text-base text-gray-400 font-semibold">
+                      Razão social:{' '}
+                      <span className="text-white">{company.legal_name}</span>
+                    </h1>
+                    <h2 className="text-base text-gray-400 font-semibold">
+                      Nome fantasia:{' '}
+                      <span className="text-white">{company.trade_name}</span>
+                    </h2>
+                    <h2 className="text-base text-gray-400 font-semibold">
+                      CNPJ: <span className="text-white">{company.cnpj}</span>
+                    </h2>
+                  </div>
+                </div>
+
+                <hr className="border-gray-700" />
+
+                <div className="flex flex-col gap-2">
+                  <h2 className="text-base text-tertiary font-semibold">
+                    Endereço
+                  </h2>
+                  <div className="flex flex-col gap-1 pl-2">
+                    <h3 className="text-base text-gray-400 font-semibold">
+                      Logradouro:{' '}
+                      <span className="text-white">{company.street}</span>
+                    </h3>
+                    <h3 className="text-base text-gray-400 font-semibold">
+                      Número:{' '}
+                      <span className="text-white">{company.number}</span>
+                    </h3>
+                    <h3 className="text-base text-gray-400 font-semibold">
+                      Bairro:{' '}
+                      <span className="text-white">{company.neighborhood}</span>
+                    </h3>
+                    <h3 className="text-base text-gray-400 font-semibold">
+                      Complemento:{' '}
+                      <span className="text-white">
+                        {company.complement ? (
+                          company.complement
+                        ) : (
+                          <span className="text-gray-600">Não fornecido</span>
+                        )}
+                      </span>
+                    </h3>
+                    <h3 className="text-base text-gray-400 font-semibold">
+                      Cidade: <span className="text-white">{company.city}</span>
+                    </h3>
+                    <h3 className="text-base text-gray-400 font-semibold">
+                      Estado:{' '}
+                      <span className="text-white">{company.state}</span>
+                    </h3>
+                    <h3 className="text-base text-gray-400 font-semibold">
+                      CEP: <span className="text-white">{company.cep}</span>
+                    </h3>
+                  </div>
+                </div>
+
+                {company.description && (
+                  <>
+                    <hr className="border-gray-700" />
+                    <h2 className="text-base text-gray-400 font-semibold">
+                      Descrição:{' '}
+                      <span className="text-white">{company.description}</span>
+                    </h2>
+                  </>
+                )}
+              </section>
+
+              <section className="flex flex-col gap-4 pt-2 md:flex-row md:justify-between">
+                <Link
+                  href={`/admin/editar-empresa/${company.id}`}
+                  className="w-full flex items-center justify-center font-semibold text-background px-2 py-1 gap-1 bg-indigo-500 ring-1 ring-indigo-600 transition-all hover:scale-105 hover:bg-indigo-300"
+                >
+                  <Edit />
+                  <span>Editar</span>
                 </Link>
                 <DeleteDialog
-                  title="Deletar empresa"
-                  description="Tem certeza que deseja deletar essa empresa?"
+                  title="Empresa"
+                  description={company.legal_name}
                   onConfirm={() => deleteCompany(company.id)}
                 />
               </section>
@@ -81,7 +149,7 @@ export default function Page() {
       )}
       <ToastContainer
         position="top-right"
-        autoClose={3000}
+        autoClose={1500}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

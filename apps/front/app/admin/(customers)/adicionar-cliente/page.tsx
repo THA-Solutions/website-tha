@@ -1,17 +1,21 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-
+import { use } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 
-import { CustomerService } from '@tha-solutions';
+import { useRouter } from 'next/navigation';
+
+import { CompanyService, CustomerService } from '@tha-solutions';
 import CustomerForm from 'apps/front/components/customer-form';
 
 export default function Page() {
+  const companies = use(CompanyService.getAllCompanies());
   const router = useRouter();
 
   const onSubmit = async (data: FieldValues) => {
+    console.log(data);
+
     try {
       const { imageFile, ...content } = data;
       const formData = new FormData();
@@ -43,6 +47,7 @@ export default function Page() {
       <CustomerForm
         onSubmit={onSubmit}
         buttonText="ADICIONAR"
+        companies={companies}
         isRequired={true}
       />
       <ToastContainer
