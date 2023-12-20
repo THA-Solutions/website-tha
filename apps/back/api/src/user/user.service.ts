@@ -123,7 +123,7 @@ export class UserService {
               if (!company) {
                 throw Error('Company not found');
               }
-              user.company = company.legal_name!;
+              user.company = company.trade_name ? company.trade_name : company.legal_name!;
             });
           }
 
@@ -166,7 +166,9 @@ export class UserService {
             if (!company) {
               throw Error('Company not found');
             }
-            user.company = company.legal_name!;
+            user.company = company.trade_name
+              ? company.trade_name
+              : company.legal_name!;
           });
         }
         return {
@@ -211,7 +213,9 @@ export class UserService {
               if (!company) {
                 throw Error('Company not found');
               }
-              user.company = company.legal_name!;
+              user.company = company.trade_name
+                ? company.trade_name
+                : company.legal_name!;
             });
           }
 
@@ -256,8 +260,9 @@ export class UserService {
               if (!company) {
                 throw Error('Company not found');
               }
-              user.company = company.legal_name!;
-              console.log(user.company);
+              user.company = company.trade_name
+                ? company.trade_name
+                : company.legal_name!;
             });
           }
 
