@@ -1,12 +1,14 @@
-'use client';
-
 import { use } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { Edit, Instagram, LinkedIn, SearchOff } from '@mui/icons-material';
+import Edit from '@mui/icons-material/Edit';
+import Instagram from '@mui/icons-material/Instagram';
+import LinkedIn from '@mui/icons-material/LinkedIn';
+import SearchOff from '@mui/icons-material/SearchOff';
+
 import { TeamService } from '@tha-solutions';
 import ImageNotFound from 'apps/front/components/image-not-found';
 import DeleteDialog from 'apps/front/components/delete-dialog';

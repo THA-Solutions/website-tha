@@ -255,7 +255,6 @@ export class UserService {
           });
 
           if (user.company) {
-
             await this.companyService.findOne(user.company).then((company) => {
               if (!company) {
                 throw Error('Company not found');

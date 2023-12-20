@@ -3,6 +3,7 @@ import { SvgIconComponent } from '@mui/icons-material';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import Groups2Icon from '@mui/icons-material/Groups2';
+import Apartment from '@mui/icons-material/Apartment';
 
 export interface PageAdminType {
   name: string;
@@ -50,6 +51,11 @@ export const pagesAdmin: PageAdminType[] = [
     name: 'Clientes',
     path: '/admin/clientes',
     icon: ManageAccountsIcon
+  },
+  {
+    name: 'Empresas',
+    path: '/admin/empresas',
+    icon: Apartment
   },
   {
     name: 'Artigos',
@@ -104,4 +110,3 @@ export const inverterFields: { [key: string]: string } = {
   protection_degree: 'Grau de Proteção ambiental',
   warranty: 'Garantia'
 };
-
