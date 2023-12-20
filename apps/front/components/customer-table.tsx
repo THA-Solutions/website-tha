@@ -36,19 +36,25 @@ const CustomerTable = ({ customers, onDelete }: CustomerTableProps) => {
             </th>
             <th
               scope="col"
-              className="px-6 py-3 text-left text-sm font-medium text-tertiary uppercase tracking-wider sm:hidden"
+              className="px-6 py-3 text-left text-sm font-medium text-tertiary uppercase tracking-wider hidden sm:table-cell"
+            >
+              Empresa
+            </th>
+            <th
+              scope="col"
+              className="px-6 py-3 text-left text-sm font-medium text-tertiary uppercase tracking-wider md:hidden"
             >
               Ações
             </th>
             <th
               scope="col"
-              className="px-6 py-3 text-left text-sm font-medium text-tertiary uppercase tracking-wider hidden sm:table-cell"
+              className="px-6 py-3 text-left text-sm font-medium text-tertiary uppercase tracking-wider hidden md:table-cell"
             >
               Editar
             </th>
             <th
               scope="col"
-              className="px-6 py-3 text-left text-sm font-medium text-tertiary uppercase tracking-wider hidden sm:table-cell"
+              className="px-6 py-3 text-left text-sm font-medium text-tertiary uppercase tracking-wider hidden md:table-cell"
             >
               Deletar
             </th>
@@ -59,23 +65,29 @@ const CustomerTable = ({ customers, onDelete }: CustomerTableProps) => {
             <tr key={customer.id}>
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="text-sm text-gray-200">
-                  {customer.firstName}
+                  {customer.firstName} {customer.lastName}
                 </div>
                 <div className="text-sm text-gray-400 sm:hidden">
                   {customer.email}
+                </div>
+                <div className="text-sm text-gray-400 sm:hidden">
+                  {customer.company}
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap hidden sm:table-cell">
                 <div className="text-sm text-gray-400">{customer.email}</div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap hidden sm:table-cell">
+                <div className="text-sm text-gray-400">{customer.company}</div>
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap hidden md:table-cell">
                 <Link href={`/admin/editar-cliente/${customer.id}`}>
                   <span className="text-indigo-400 hover:text-indigo-800">
                     <Edit />
                   </span>
                 </Link>
               </td>
-              <td className="px-6 py-4 whitespace-nowrap hidden sm:table-cell">
+              <td className="px-6 py-4 whitespace-nowrap hidden md:table-cell">
                 <button
                   onClick={() => onDelete(customer.id)}
                   className="text-red-400 hover:text-red-800"
@@ -83,7 +95,7 @@ const CustomerTable = ({ customers, onDelete }: CustomerTableProps) => {
                   <Delete />
                 </button>
               </td>
-              <td className="px-6 py-4 whitespace-nowrap sm:hidden">
+              <td className="px-6 py-4 whitespace-nowrap md:hidden">
                 <div className="flex items-center gap-4">
                   <Link href={`/admin/editar-cliente/${customer.id}`}>
                     <span className="text-indigo-400 hover:text-indigo-800">
