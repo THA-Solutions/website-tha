@@ -117,13 +117,24 @@ export class UserService {
               id_origem: user.id
             }
           });
+
+          if (user.company) {
+            await this.companyService.findOne(user.company).then((company) => {
+              if (!company) {
+                throw Error('Company not found');
+              }
+              user.company = company.legal_name!;
+            });
+          }
+
           return {
             id: user.id,
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
             role: user.role,
-            image: image ? image.url : null
+            image: image ? image.url : null,
+            company: user.company
           };
         })
       );
@@ -150,14 +161,22 @@ export class UserService {
             id_origem: user.id
           }
         });
+        if (user.company) {
+          await this.companyService.findOne(user.company).then((company) => {
+            if (!company) {
+              throw Error('Company not found');
+            }
+            user.company = company.legal_name!;
+          });
+        }
         return {
           id: user.id,
           firstName: user.firstName,
           lastName: user.lastName,
           email: user.email,
           role: user.role,
-          company: user.company,
-          image: image ? image.url : null
+          image: image ? image.url : null,
+          company: user.company
         };
       })
     );
@@ -187,12 +206,22 @@ export class UserService {
             }
           });
 
+          if (user.company) {
+            await this.companyService.findOne(user.company).then((company) => {
+              if (!company) {
+                throw Error('Company not found');
+              }
+              user.company = company.legal_name!;
+            });
+          }
+
           return {
             id: user!.id,
             firstName: user!.firstName,
             lastName: user!.lastName,
             email: user!.email,
-            image: image ? image.url : null
+            image: image ? image.url : null,
+            company: user.company
           };
         });
 
@@ -221,6 +250,16 @@ export class UserService {
             }
           });
 
+          if (user.company) {
+            await this.companyService.findOne(user.company).then((company) => {
+              if (!company) {
+                throw Error('Company not found');
+              }
+              user.company = company.legal_name!;
+              console.log(user.company);
+            });
+          }
+
           return {
             id: user.id,
             firstName: user.firstName,
@@ -228,7 +267,8 @@ export class UserService {
             email: user.email,
             image: image ? image.url : null,
             password: user.password,
-            role: user.role
+            role: user.role,
+            company: user.company
           };
         });
 

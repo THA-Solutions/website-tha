@@ -1,10 +1,4 @@
-import {
-  IsAlphanumeric,
-  IsEmail,
-  IsNotEmpty,
-  IsPhoneNumber,
-  IsString
-} from 'class-validator';
+import { IsAlphanumeric, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateCompanyDto {
   @IsNotEmpty()
