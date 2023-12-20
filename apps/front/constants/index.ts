@@ -104,3 +104,4 @@ export const inverterFields: { [key: string]: string } = {
   protection_degree: 'Grau de Proteção ambiental',
   warranty: 'Garantia'
 };
+

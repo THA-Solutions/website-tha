@@ -52,11 +52,11 @@ export class CompanyService {
 
       const companiesWithImage = await Promise.all(
         companies.map(async (company) => {
-          const image = await this.imageService.findOne(company.id);
+          const image = await this.imageService.findByOrigin(company.id);
 
           return {
             ...company,
-            image: image ? image.url : null
+            image: image ? image[0].url : null
           };
         })
       );
