@@ -79,9 +79,8 @@ export default function Page() {
         </Link>
         <button
           onClick={() => {
-            signOut({ redirect: false }).then(() => {
-              router.push('/entrar');
-            });
+            router.push('/entrar');
+            signOut({ redirect: false });
           }}
           className="flex items-center text-red-400 gap-3 px-3 py-1 ring-1 ring-red-400 hover:bg-red-400 hover:text-background"
         >

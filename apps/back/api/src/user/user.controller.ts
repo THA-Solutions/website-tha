@@ -89,6 +89,7 @@ export class UserController {
   @Post('recovery-password')
   recoveryPassword(@Body() body: { email: string }, @Req() req: Request) {
     try {
+      console.log('controller', body);
       return this.userService.forgotPassword(body.email, req);
     } catch (error) {
       throw Error(`Error in recovery password ${error}`);
