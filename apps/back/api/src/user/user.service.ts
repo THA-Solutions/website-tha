@@ -54,7 +54,7 @@ export class UserService {
             throw Error('User already exists');
           }
 
-          if (createUserDto.role === 'customer' && createUserDto.company) {
+          if (createUserDto.company || createUserDto.role === 'customer') {
             await this.companyService
               .findByTitle(createUserDto.company!)
               .then((company) => {
@@ -123,7 +123,9 @@ export class UserService {
               if (!company) {
                 throw Error('Company not found');
               }
-              user.company = company.legal_name!;
+              user.company = company.trade_name
+                ? company.trade_name
+                : company.legal_name!;
             });
           }
 
@@ -166,7 +168,9 @@ export class UserService {
             if (!company) {
               throw Error('Company not found');
             }
-            user.company = company.legal_name!;
+            user.company = company.trade_name
+              ? company.trade_name
+              : company.legal_name!;
           });
         }
         return {
@@ -211,7 +215,9 @@ export class UserService {
               if (!company) {
                 throw Error('Company not found');
               }
-              user.company = company.legal_name!;
+              user.company = company.trade_name
+                ? company.trade_name
+                : company.legal_name!;
             });
           }
 
@@ -255,7 +261,10 @@ export class UserService {
               if (!company) {
                 throw Error('Company not found');
               }
-              user.company = company.legal_name!;
+
+              user.company = company.trade_name
+                ? company.trade_name
+                : company.legal_name!;
 
             });
           }
@@ -294,18 +303,35 @@ export class UserService {
             imageInDB[0].id,
             { id_origem: id },
             image
+          ).then((image) => {
+            if (!image) {
+              throw Error('Image not found');
+            }
+            updateUserDto.image = image.url;
+          }
           );
         } else {
           await this.imageService.create({ id_origem: id }, image);
         }
       }
 
+
       const updatedUser= await this.prisma.user.update({
         where: { id },
         data: data
       });
 
-      return 
+
+      const returnUser = {
+        id: updatedUser.id,
+        firstName: updatedUser.firstName,
+        lastName: updatedUser.lastName,
+        email: updatedUser.email,
+        role: updatedUser.role,
+        image: updateUserDto.image ? updateUserDto.image : null,
+      };
+      return returnUser;
+
     } catch (error) {
       throw Error(`Error in update user ${error}`);
     }
@@ -375,6 +401,10 @@ export class UserService {
 
   async createResetToken(user: ResponseUserDto) {
     const resetToken = crypto.randomBytes(32).toString('hex');
+
+    await this.prisma.account_Token.deleteMany({
+      where: { id_user: user.id }
+    });
 
     const resetPasswordToken = crypto
       .createHash('sha256')

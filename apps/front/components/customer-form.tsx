@@ -5,7 +5,7 @@ import { Company, User } from '@tha-solutions';
 import InputField from './input-field';
 import PasswordInputField from './password-input-field';
 
-interface CostumerFormProps {
+interface CustomerFormProps {
   onSubmit: (data: FieldValues) => Promise<void>;
   buttonText: string;
   editCustomerData?: User;
@@ -13,13 +13,13 @@ interface CostumerFormProps {
   isRequired: boolean;
 }
 
-const CostumerForm = ({
+const CustomerForm = ({
   onSubmit,
   buttonText,
   editCustomerData,
   isRequired,
   companies
-}: CostumerFormProps) => {
+}: CustomerFormProps) => {
   const {
     register,
     handleSubmit,
@@ -134,4 +134,4 @@ const CostumerForm = ({
   );
 };
 
-export default CostumerForm;
+export default CustomerForm;
