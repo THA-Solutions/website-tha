@@ -299,15 +299,32 @@ export class UserService {
             imageInDB[0].id,
             { id_origem: id },
             image
+          ).then((image) => {
+            if (!image) {
+              throw Error('Image not found');
+            }
+            updateUserDto.image = image.url;
+          }
           );
         } else {
           await this.imageService.create({ id_origem: id }, image);
         }
       }
-      return await this.prisma.user.update({
+
+      const updatedUser = await this.prisma.user.update({
         where: { id },
         data: data
       });
+
+      const returnUser = {
+        id: updatedUser.id,
+        firstName: updatedUser.firstName,
+        lastName: updatedUser.lastName,
+        email: updatedUser.email,
+        role: updatedUser.role,
+        image: updateUserDto.image ? updateUserDto.image : null,
+      };
+      return returnUser;
     } catch (error) {
       throw Error(`Error in update user ${error}`);
     }
