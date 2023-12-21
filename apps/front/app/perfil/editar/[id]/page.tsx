@@ -16,7 +16,6 @@ export default function Page({ params }: { params: { id: string } }) {
   const { data: session, update } = useSession();
   const onSubmit = async (data: FieldValues) => {
     try {
-      
       const { imageFile, ...content } = data;
       const formData = new FormData();
 
@@ -27,12 +26,14 @@ export default function Page({ params }: { params: { id: string } }) {
       for (let key in content) {
         formData.append(key, content[key]);
       }
-      const updatedData = await toast.promise(CustomerService.updateCustomer(params.id, formData), {
-        pending: 'Atualizando...',
-        success: 'Atualizado com sucesso!',
-        error: 'Erro ao atualizar as informações'
-      });
-      
+      const updatedData = await toast.promise(
+        CustomerService.updateCustomer(params.id, formData),
+        {
+          pending: 'Atualizando...',
+          success: 'Atualizado com sucesso!',
+          error: 'Erro ao atualizar as informações'
+        }
+      );
 
       await update({ ...session, user: { ...session?.user, ...content } });
 

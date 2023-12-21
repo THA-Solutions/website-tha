@@ -18,13 +18,17 @@ export const authOptions: AuthOptions = {
             },
             body: JSON.stringify(credentials)
           });
+
           const user = await res.json();
 
           if (res.ok && user) {
             return user;
+          } else {
+            return null; // ou algum valor que indica credenciais inválidas
           }
         } catch (error) {
-          throw new Error(`Sign-in error ${error}`);
+          console.error('Error during sign-in:', error);
+          return null; // ou algum valor que indica erro no processo de login
         }
       }
     })

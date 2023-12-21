@@ -30,7 +30,6 @@ export class CustomerService {
     id: string,
     updatedCustomer: FormData
   ): Promise<User> {
-
     const res = await axios.patch(`${this.apiPath}/${id}`, updatedCustomer, {
       headers: {
         'Content-Type': 'multipart/form-data'
@@ -47,6 +46,14 @@ export class CustomerService {
 
   static async sendTokenToResetPassword(email: object): Promise<void> {
     const res = await axios.post(`${this.apiPath}/recovery-password`, email);
+    return res.data;
+  }
+
+  static async resetPassword(data: {
+    token: string;
+    password: string;
+  }): Promise<void> {
+    const res = await axios.post(`${this.apiPath}/reset-password`, data);
     return res.data;
   }
 }
