@@ -17,7 +17,6 @@ export default function Page({ params }: { params: { id: string } }) {
   const { data: session, update } = useSession();
   const onSubmit = async (data: FieldValues) => {
     try {
-      
       const { imageFile, ...content } = data;
       const formData = new FormData();
 
@@ -38,7 +37,6 @@ export default function Page({ params }: { params: { id: string } }) {
           error: 'Erro ao atualizar as informações'
         })
         .then(async (res) => {
-
           await update({
             ...session,
             user: {
