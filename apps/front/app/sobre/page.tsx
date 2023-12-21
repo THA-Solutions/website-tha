@@ -120,21 +120,23 @@ export default function About() {
           {values.map((value, index) => (
             <div
               key={index}
-              className={`flex flex-col items-center gap-10 ${value.isAlt ? 'bg-tertiary' : 'bg-backgroundAlt2'
-                } p-8 rounded-xl shadow-2xl sm:flex-row sm:items-start sm:gap-20 lg:flex-col lg:gap-10`}
+              className={`flex flex-col items-center gap-10 ${
+                value.isAlt ? 'bg-tertiary' : 'bg-backgroundAlt2'
+              } p-8 rounded-xl shadow-2xl sm:flex-row sm:items-start sm:gap-20 lg:flex-col lg:gap-10`}
             >
-              {/* <Image src={value.image} alt={value.title} /> */}
               {value.icon}
               <div className="flex flex-col items-center text-center gap-5 sm:text-start sm:items-start">
                 <h1
-                  className={`text-4xl font-bold ${value.isAlt ? 'text-backgroundAlt2' : 'text-tertiary'
-                    }`}
+                  className={`text-4xl font-bold ${
+                    value.isAlt ? 'text-backgroundAlt2' : 'text-tertiary'
+                  }`}
                 >
                   {value.title}
                 </h1>
                 <p
-                  className={`text-xl font-medium ${value.isAlt ? 'text-background' : 'text-tertiary'
-                    }`}
+                  className={`text-xl font-medium ${
+                    value.isAlt ? 'text-background' : 'text-tertiary'
+                  }`}
                 >
                   {value.description}
                 </p>

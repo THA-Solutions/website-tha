@@ -21,7 +21,7 @@ export const InputSearch = ({
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         placeholder={placeholder}
-        className="p-2 pl-12 rounded-lg border-none bg-background focus:outline-none focus:ring-2 focus:ring-tertiary w-full box-border"
+        className="p-2 pl-12 rounded-xl bg-transparent border border-gray-700 w-full"
       />
       <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
         {searchTerm && ( // Renderize o botão apenas se searchTerm tiver algum valor

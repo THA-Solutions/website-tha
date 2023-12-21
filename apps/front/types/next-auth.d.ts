@@ -1,0 +1,8 @@
+import { User } from '@tha-solutions';
+import NextAuth from 'next-auth';
+
+declare module 'next-auth' {
+  interface Session {
+    user: User;
+  }
+}

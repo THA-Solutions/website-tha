@@ -1,16 +1,31 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UploadedFile,
+  UseInterceptors,
+  UploadedFiles
+} from '@nestjs/common';
 import { ArticleService } from './article.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 
 @Controller('article')
 export class ArticleController {
-  constructor(private readonly articleService: ArticleService) { }
+  constructor(private readonly articleService: ArticleService) {}
 
   @Post()
-  async create(@Body() createArticleDto: CreateArticleDto) {
-
-    return await this.articleService.create(createArticleDto);
+  @UseInterceptors(FilesInterceptor('imageFile'))
+  create(
+    @Body() createArticleDto: CreateArticleDto,
+    @UploadedFiles() imageFile?: Express.Multer.File[]
+  ) {
+    return this.articleService.create(createArticleDto, imageFile);
   }
 
   @Get()
@@ -24,6 +39,7 @@ export class ArticleController {
   }
 
   @Patch(':id')
+  @UseInterceptors(FilesInterceptor('imageFile'))
   update(@Param('id') id: string, @Body() updateArticleDto: UpdateArticleDto) {
     return this.articleService.update(id, updateArticleDto);
   }

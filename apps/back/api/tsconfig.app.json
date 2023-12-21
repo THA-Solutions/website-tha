@@ -3,9 +3,7 @@
   "compilerOptions": {
     "outDir": "../../../dist/out-tsc",
     "module": "commonjs",
-    "types": [
-      "node"
-    ],
+    "types": ["node"],
     "emitDecoratorMetadata": true,
     "target": "es2021",
     "strictNullChecks": true,
@@ -14,12 +12,11 @@
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true
   },
-  "exclude": [
-    "jest.config.ts",
-    "src/**/*.spec.ts",
-    "src/**/*.test.ts"
-  ],
+  "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"],
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "../../../libs/domain/src/lib/entities/inverter.entity.ts",
+    "../../../libs/domain/src/lib/shared/team.entity.ts",
+    "../../../libs/domain/src/lib/entities/review.entity.ts"
   ]
 }

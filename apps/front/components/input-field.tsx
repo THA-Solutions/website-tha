@@ -1,18 +1,22 @@
 import { UseFormRegister, FieldValues, FieldErrors } from 'react-hook-form';
 
-import { InfoOutlined } from '@mui/icons-material';
+import InfoOutlined from '@mui/icons-material/InfoOutlined';
 
 export interface InputFieldProps {
   input: {
     label: string;
     name: string;
     type: string;
-    placeholder?: string;
-    autoComplete: string;
     required: boolean;
+    placeholder?: string;
+    autoComplete?: string;
     icon?: JSX.Element;
+    pattern?: RegExp;
+    disabled?: boolean;
+    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   };
   register: UseFormRegister<FieldValues>;
+  value?: string | number | null | undefined;
   errors: FieldErrors<FieldValues>;
   colorLabel?: string;
   colorRing?: string;
@@ -21,6 +25,7 @@ export interface InputFieldProps {
 const InputField = ({
   input,
   register,
+  value,
   errors,
   colorLabel,
   colorRing
@@ -36,22 +41,40 @@ const InputField = ({
       </label>
       <div className="mt-2.5 relative">
         <input
-          {...register(input.name, { required: input.required })}
+          {...register(input.name, {
+            required: input.required,
+            pattern: input.pattern || undefined,
+            value: value ?? ''
+          })}
+          id={input.name}
+          name={input.name}
           type={input.type}
           placeholder={input.placeholder}
-          name={input.name}
-          id={input.name}
           autoComplete={input.autoComplete}
-          className={`w-full rounded-md border-0 pl-14 py-2 text-white bg-transparent shadow-sm ring-1 ring-inset ${colorRing} placeholder:text-white/80 focus:ring-2 focus:ring-inset focus:ring-tertiary`}
+          onChange={input.onChange}
+          disabled={input.disabled || false}
+          className={`w-full border-0 ${input.icon ? 'pl-14' : 'pl-4'} 
+          py-2 bg-transparent shadow-sm ring-1 ring-inset placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-tertiary ${
+            input.disabled
+              ? 'ring-gray-700 text-gray-700'
+              : `text-white ${colorRing}`
+          }`}
         />
         <div className="absolute top-1/2 transform -translate-y-1/2 left-4">
           {input.icon}
         </div>
       </div>
-      {errors[input.name] && (
+      {errors[input.name]?.type === 'required' && (
         <span className="flex items-center gap-2 mt-2 text-sm text-red-500">
           <InfoOutlined />
           Campo obrigatório
+        </span>
+      )}
+
+      {errors[input.name]?.type === 'pattern' && (
+        <span className="flex items-center gap-2 mt-2 text-sm text-red-500">
+          <InfoOutlined />
+          Insira apenas letras
         </span>
       )}
     </div>

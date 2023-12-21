@@ -7,30 +7,30 @@ import {
   Param,
   Delete,
   UseInterceptors,
-  UploadedFile
+  UploadedFile,
+  Req
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { UseGuards } from '@nestjs/common';
-import { RolesGuard } from '../auth/roles.guard';
-import { Roles } from '../auth/roles.decorator';
-import { Role } from '../auth/roles.enum';
+
 import { ResponseUserDto } from './dto/response-user.dto';
+import { Public } from '../auth/decorators/public.decorator';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) { }
+  constructor(private readonly userService: UserService) {}
 
   @Post()
-  @UseInterceptors(FileInterceptor('image'))
+  @Public()
+  @UseInterceptors(FileInterceptor('imageFile'))
   create(
     @Body() createUserDto: CreateUserDto,
-    @UploadedFile() image: Express.Multer.File,
+    @UploadedFile() imageFile?: Express.Multer.File
   ) {
     try {
-      return this.userService.create(createUserDto, image);
+      return this.userService.create(createUserDto, imageFile);
     } catch (error) {
       throw Error(`Error in create user ${error}`);
     }
@@ -46,9 +46,9 @@ export class UserController {
   }
 
   @Get('email/:email')
-  async findByEmail(@Param('email') email: string) {
+  findByEmail(@Param('email') email: string) {
     try {
-      return await this.userService.findByEmail(email);
+      return this.userService.findByEmail(email);
     } catch (error) {
       throw Error(`Error in find user by email ${error}`);
     }
@@ -63,30 +63,47 @@ export class UserController {
     }
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  @Get('role/:role')
+  findByRole(@Param('role') role: string) {
     try {
-      return this.userService.update(id, updateUserDto);
+      return this.userService.findByRole(role);
+    } catch (error) {
+      throw Error(`Error in find user by role ${error}`);
+    }
+  }
+
+  @Patch(':id')
+  @UseInterceptors(FileInterceptor('imageFile'))
+  update(
+    @Param('id') id: string,
+    @Body() updateUserDto: UpdateUserDto,
+    @UploadedFile() imageFile?: Express.Multer.File
+  ) {
+    try {
+      return this.userService.update(id, updateUserDto, imageFile);
     } catch (error) {
       throw Error(`Error in update user ${error}`);
     }
   }
 
-  @Patch('image/:id')
-  @UseInterceptors(FileInterceptor('image'))
-  updateImage(
-    @Param('id') id: string,
-    @UploadedFile() image: Express.Multer.File,
-  ) {
+  @Post('recovery-password')
+  recoveryPassword(@Body() body: { email: string }, @Req() req: Request) {
     try {
-      return this.userService.updateImage(id, image);
+      return this.userService.forgotPassword(body.email, req);
     } catch (error) {
-      throw Error(`Error in update user image ${error}`);
+      throw Error(`Error in recovery password ${error}`);
     }
   }
 
-  @UseGuards(RolesGuard)
-  @Roles(Role.Admin)
+  @Post('reset-password')
+  resetPassword(@Body() body: { token: string; password: string }) {
+    try {
+      return this.userService.resetPassword(body.token, body.password);
+    } catch (error) {
+      throw Error(`Error in reset password ${error}`);
+    }
+  }
+
   @Delete(':id')
   remove(@Param('id') id: string) {
     try {
@@ -96,5 +113,3 @@ export class UserController {
     }
   } //Rota de remocao de usuario, apenas o admin pode remover um usuario
 }
-
-

@@ -9,64 +9,22 @@ datasource db {
   relationMode      = "prisma"
 }
 
-model Account {
-  id                String  @id @default(cuid())
-  userId            String
-  providerAccountId String
-  access_token      String? @db.Text
-  expires_at        Int?
-  id_token          String? @db.Text
-  provider          String
-  refresh_token     String? @db.Text
-  scope             String?
-  session_state     String?
-  token_type        String?
-  type              String
-  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
-  @@index([userId])
-  @@map("account")
-}
-
-model Session {
-  id           String   @id @default(cuid())
-  userId       String
-  expires      DateTime
-  sessionToken String   @unique
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId])
-  @@map("session")
-}
-
 model User {
-  id            String    @id @default(cuid())
-  firstName     String?   @db.VarChar(25)
-  lastName      String?   @db.VarChar(25)
-  email         String?   @unique
+  id            String          @id @default(cuid())
+  firstName     String?         @db.VarChar(25)
+  lastName      String?         @db.VarChar(25)
+  email         String?         @unique
   emailVerified DateTime?
-  password      String?   @db.VarChar(500)
-  permissions   String    @default("customer") @db.VarChar(10)
-
-  accounts Account[]
-  sessions Session[]
+  password      String?         @db.VarChar(500)
+  role          String          @default("user") @db.VarChar(10)
+  company       String?
+  token         Account_Token[]
 
   @@map("user")
 }
 
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
-
-  @@unique([identifier, token])
-  @@map("verification_tokens")
-}
-
 model Article {
   id       String   @id @default(cuid())
-  imageSrc String   @db.VarChar(50)
   title    String   @db.VarChar(255)
   subTitle String   @db.VarChar(500)
   content  String   @db.Text
@@ -74,27 +32,37 @@ model Article {
   author   String   @db.VarChar(50)
   category String   @db.VarChar(20)
 
-
   @@map("article")
 }
 
-model Brand {
-  id   String @id @default(cuid())
-  name String @db.VarChar(100)
+model Company {
+  id          String     @id @default(cuid())
+  trade_name  String?    @db.VarChar(100)
+  legal_name  String     @db.VarChar(100)
+  description String?    @db.VarChar(500)
+  cnpj        String     @db.VarChar(18)
+  street    String     @db.VarChar(100)
+  number    String     @db.VarChar(10)
+  complement  String?  @db.VarChar(100)
+  neighborhood  String @db.VarChar(100)
+  city    String     @db.VarChar(100)
+  state  String     @db.VarChar(2)
+  cep String     @db.VarChar(10)
 
-  inverters Inverter[]
 
-  @@map("brand")
+  inverters   Inverter[]
+
+  @@map("company")
 }
 
 model Inverter {
   id                                    String  @id @default(cuid())
-  id_brand                              String
+  title                                 String  @db.VarChar(100)
   cc_voltage                            String  @db.VarChar(100)
   mppt_voltage_range                    String  @db.VarChar(100)
   max_input_current                     String  @db.VarChar(100)
   max_short_circuit_current_per_tracker String  @db.VarChar(100)
-  no_mppt                               Int
+  num_mppt                              Int
   max_output_current                    String  @db.VarChar(100)
   ca_nominal_power_range                String  @db.VarChar(100)
   adjustable_power_factor               String  @db.VarChar(100)
@@ -115,35 +83,54 @@ model Inverter {
   cooling                               String  @db.VarChar(100)
   protection_degree                     String  @db.VarChar(100)
   warranty                              String  @db.VarChar(100)
-  brand                                 Brand   @relation(fields: [id_brand], references: [id], onDelete: Cascade)
+  network_monitoring                    String? @db.VarChar(100)
+  id_company                            String
+  company                               Company @relation(fields: [id_company], references: [id], onDelete: Cascade)
 
-
-  @@index([id_brand], map: "inverter_FK")
+  @@index([id_company], map: "inverter_FK")
   @@map("inverter")
 }
 
-model Client {
-  email    String @db.VarChar(190)
-  password String @db.VarChar(500)
-  name     String @db.VarChar(100)
-  id       String @id @default(cuid())
-
-  @@map("client")
-}
-
 model Review {
-  id        String  @id
-  id_origin String
-  value     String? @db.VarChar(100)
-  comment   String? @db.VarChar(500)
+  id          String   @id @default(cuid())
+  value       Int?
+  comment     String?  @db.VarChar(500)
+  id_inverter String
+  id_user     String
+  date        DateTime @default(now()) @db.Timestamp(0)
 
   @@map("review")
 }
 
 model Image {
-  id         String    @id @default(cuid())
-  id_origem  String
-  url        String    @unique @db.VarChar(500)
+  id        String  @id @default(cuid())
+  id_origem String
+  url       String  @unique @db.VarChar(500)
+  alt       String? @db.VarChar(500)
+  source    String? @db.VarChar(500)
+  pos       Int?    @default(0)
 
   @@map("image")
+}
+
+model Team {
+  id          String  @id @default(cuid())
+  name        String  @db.VarChar(100)
+  role        String  @db.VarChar(100)
+  image       String? @db.VarChar(500)
+  order       Int?    @default(0)
+  linkedin    String? @db.VarChar(500)
+  instagram   String? @db.VarChar(500)
+  description String? @db.VarChar(500)
+
+  @@map("team")
+}
+
+model Account_Token {
+  token   String @db.VarChar(100)
+  id_user String @id @db.VarChar(100)
+  expires DateTime @default(now()) @db.Timestamp(0)
+  User    User?  @relation(fields: [id_user], references: [id])
+
+  @@map("account_token")
 }

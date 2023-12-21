@@ -8,8 +8,8 @@ import { ResponseUserDto } from '../user/dto/response-user.dto';
 export class AuthService {
   constructor(
     private usersService: UserService,
-    private configService: ConfigService,
-  ) { }
+    private configService: ConfigService
+  ) {}
 
   decrypter(password: string) {
     let passParts = password.split(':');
@@ -17,9 +17,11 @@ export class AuthService {
     const decipher = crypto.createDecipheriv(
       'aes-256-cbc',
       this.configService.get<string>('CRYPTO_SECRET')!,
-      Buffer.from(passParts[0], 'hex'),
+      Buffer.from(passParts[0], 'hex')
     );
-    let plaintext = decipher.update(passParts[1], 'hex', 'utf8') + decipher.final('utf8');
+
+    let plaintext =
+      decipher.update(passParts[1], 'hex', 'utf8') + decipher.final('utf8');
 
     return plaintext;
   }
@@ -28,11 +30,13 @@ export class AuthService {
     const user = await this.usersService.findByEmail(email);
 
     if (!user) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Usuário não encontrado');
     }
+
     if (pass !== this.decrypter(user.password)) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Senha inválida');
     }
+
     return user as ResponseUserDto;
   }
 }

@@ -16,12 +16,14 @@ import FGL from '../public/partners/fgl-distribuidora.png';
 import Growatt from '../public/partners/growatt.png';
 import Sungrow from '../public/partners/sungrow.png';
 import { contact } from '../constants';
+import { SET } from './api/cookie/route';
 
 import {
   SupportAgentRounded,
   TrendingUpRounded,
   MailOutlineRounded
 } from '@mui/icons-material';
+import { useLayoutEffect } from 'react';
 
 const metrics = [
   {
@@ -72,30 +74,36 @@ const features = [
 ];
 
 export default function Home() {
+  useLayoutEffect(() => {
+    const setCookie = async () => {
+      await SET();
+    };
+    setCookie();
+  }, []);
   return (
-    <main>
+    <>
       <Header />
 
       {/* Hero */}
       <main className="flex items-center justify-center relative h-screen">
-        <div className="max-w-7xl flex flex-col items-center justify-center w-full gap-8 h-4/6 md:flex-row md:justify-between md:px-12">
-          <div className=" flex items-center justify-center md:order-2">
+        <div className="max-w-7xl flex flex-col items-center justify-center w-full gap-8 h-4/6 lg:flex-row lg:justify-between lg:px-12">
+          <div className=" flex items-center justify-center lg:order-2">
             <Image
-              className="h-32 w-32 sm:h-40 sm:w-40 md:h-48 md:w-48 lg:h-64 lg:w-64 xl:h-80 xl:w-80"
+              className="h-32 w-32 sm:h-40 sm:w-40 lg:h-64 lg:w-64 xl:h-80 xl:w-80"
               src={Logo}
               alt="Logo da THA"
             />
           </div>
-          <div className="text-center md:text-left">
-            <div className="gap-4 flex font-alt text-center drop-shadow-md leading-none md:text-left border-b-2 border-backgroundAlt">
-              <h1 className="text-primary text-3xl font-semibold font-alt sm:text-6xl md:text-5xl lg:text-7xl xl:text-secondary-title">
+          <div className="text-center lg:text-left">
+            <div className="gap-4 flex font-alt text-center drop-shadow-md leading-none lg:text-left border-b border-backgroundAlt2">
+              <h1 className="text-primary text-3xl font-semibold font-alt sm:text-6xl lg:text-7xl xl:text-secondary-title">
                 THA
               </h1>
-              <h2 className="text-white font-semibold text-3xl font-alt pb-2 sm:text-6xl md:text-5xl lg:text-7xl xl:text-secondary-title">
+              <h2 className="text-white font-semibold text-3xl font-alt pb-2 sm:text-6xl lg:text-7xl xl:text-secondary-title">
                 SOLUTIONS
               </h2>
             </div>
-            <h3 className="text-lightGray text-md font-normal mt-2 ml-2 md:text-xl lg:text-2xl xl:text-slogan-title">
+            <h3 className="text-lightGray text-md font-normal mt-2 ml-2 sm:text-xl lg:text-2xl xl:text-slogan-title">
               Sabemos o que você precisa!
             </h3>
           </div>
@@ -216,6 +224,6 @@ export default function Home() {
       </section>
 
       <Footer />
-    </main>
+    </>
   );
 }

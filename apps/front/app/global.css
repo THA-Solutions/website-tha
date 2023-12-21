@@ -8,12 +8,12 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
   @apply bg-secondary;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 
 ::-webkit-scrollbar-track {
@@ -34,6 +34,38 @@ body {
   backdrop-filter: blur(5px);
 }
 
-input[type="password"]::-ms-reveal {
+input[type='password']::-ms-reveal {
   display: none;
+}
+
+.quill-content h1 {
+  @apply text-4xl font-bold;
+}
+
+.quill-content h2 {
+  @apply text-3xl font-semibold;
+}
+
+.quill-content p,
+li {
+  @apply text-xl;
+}
+
+.quill-content ul {
+  @apply list-disc list-inside;
+}
+
+.quill-content ol,
+ol {
+  @apply list-decimal list-inside;
+}
+
+ul {
+  @apply list-disc list-inside;
+}
+
+ol > li,
+ul > li {
+  @apply mb-2;
+  @apply ml-8;
 }

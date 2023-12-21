@@ -1,5 +1,5 @@
-import { Exclude } from "class-transformer";
-import { IsAlphanumeric, IsEmail, IsString } from "class-validator";
+import { Exclude } from 'class-transformer';
+import { IsAlphanumeric, IsEmail, IsString } from 'class-validator';
 
 export class ResponseUserDto {
   @IsString()
@@ -14,12 +14,15 @@ export class ResponseUserDto {
   @IsEmail()
   email: string;
 
-  @IsAlphanumeric()
-  imageUrl: string;
-
   @IsString()
-  permissions: string;
+  role: string;
 
   @Exclude()
   password: string;
+
+  @IsString()
+  image: string;
+
+  @IsString()
+  company: string;
 }

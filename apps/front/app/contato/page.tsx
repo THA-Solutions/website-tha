@@ -6,6 +6,8 @@ import InputField from '../../components/input-field';
 
 import { contact } from '../../constants';
 
+import axios from 'axios';
+
 import {
   Business,
   MailOutlineRounded,
@@ -24,7 +26,8 @@ export default function Contact() {
   } = useForm();
 
   async function onSubmit(data: FieldValues) {
-    alert(JSON.stringify(data, null, 2));
+    const mail = await axios.post('http://localhost:3000/api/mail/send', data);
+    return;
   }
 
   const formInputs = [
@@ -34,7 +37,8 @@ export default function Contact() {
       type: 'text',
       autoComplete: 'given-name',
       required: true,
-      icon: <Badge className=" text-lightGray" />
+      icon: <Badge className=" text-gray-400" />,
+      pattern: /^[^\d]+$/
     },
     {
       label: 'Último nome',
@@ -42,7 +46,8 @@ export default function Contact() {
       type: 'text',
       autoComplete: 'family-name',
       required: true,
-      icon: <Badge className=" text-lightGray" />
+      icon: <Badge className=" text-gray-400" />,
+      pattern: /^[^\d]+$/
     },
     {
       label: 'Empresa',
@@ -50,7 +55,7 @@ export default function Contact() {
       type: 'text',
       autoComplete: 'organization',
       required: false,
-      icon: <Apartment className=" text-lightGray" />
+      icon: <Apartment className=" text-gray-400" />
     },
     {
       label: 'E-mail',
@@ -58,7 +63,7 @@ export default function Contact() {
       type: 'email',
       autoComplete: 'email',
       required: true,
-      icon: <Email className=" text-lightGray" />
+      icon: <Email className=" text-gray-400" />
     }
   ];
 
@@ -102,7 +107,7 @@ export default function Contact() {
                 input={input}
                 register={register}
                 errors={errors}
-                colorRing="ring-lightGray"
+                colorRing="ring-gray-400"
               />
             ))}
 
@@ -120,7 +125,7 @@ export default function Contact() {
                   name="message"
                   id="message"
                   rows={4}
-                  className="w-full rounded-md border-0 py-2 text-white bg-transparent shadow-sm ring-1 ring-inset ring-lightGray placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-tertiary"
+                  className="w-full border-0 py-2 text-white bg-transparent shadow-sm ring-1 ring-inset ring-gray-400 focus:ring-2 focus:ring-inset focus:ring-tertiary"
                   defaultValue={''}
                 />
                 {errors.message && (
@@ -135,7 +140,7 @@ export default function Contact() {
           <div className="mt-10">
             <button
               type="submit"
-              className="block w-full rounded-md bg-tertiary px-3.5 py-2.5 text-center text-xl font-semibold font-alt text-white shadow-sm transition ease-in-out delay-100 hover:bg-opacity-60 hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tertiary"
+              className="block w-full bg-tertiary px-3.5 py-2.5 text-center text-xl font-semibold font-alt text-white shadow-sm transition ease-in-out hover:bg-opacity-60 hover:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tertiary"
             >
               Enviar
             </button>
