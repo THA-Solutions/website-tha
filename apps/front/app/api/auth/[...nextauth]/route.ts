@@ -3,6 +3,8 @@ import type { AuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
 import { User } from '@tha-solutions';
+import { setEmitFlags } from 'typescript';
+import { cp } from 'fs';
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -38,32 +40,33 @@ export const authOptions: AuthOptions = {
   },
 
   callbacks: {
-    jwt: async ({ token, user, trigger, session }) => {
+    jwt: async ({ token, trigger, session }) => {
       if (trigger === 'update') {
-        (token.user as User).imageUrl = session.imageUrl;
-        (token.user as User).firstName = session.firstName;
-        (token.user as User).lastName = session.lastName;
+        token.id = session.user.id;
+        token.firstName = session.user.firstName;
+        token.lastName = session.user.lastName;
+        token.email = session.user.email;
+        token.image = session.user.image;
+        token.role = session.user.role;
+        token.company = session.user.company;
       }
-      //if(user){
-      //  token.userRole= user.role;
-      //}
-      user && (token.user = user);
+
       return token;
     },
 
-    session: async ({ session, token }) => {
-      const sessionData = {
+    session: async ({ session, token, trigger, newSession }) => {
+      session = {
         user: {
-          id: (token.user as User).id,
-          firstName: (token.user as User).firstName,
-          lastName: (token.user as User).lastName,
-          email: (token.user as User).email,
-          image: (token.user as User).imageUrl as string,
-          role: (token.user as User).role
+          id: (token.user as { id: string }).id,
+          firstName: token.firstName as string,
+          lastName: token.lastName as string,
+          email: token.email as string,
+          image: token.image as string,
+          role: token.role as string,
+          company: token.company as string
         },
         expires: session.expires
       };
-      session = sessionData;
 
       return session;
     }

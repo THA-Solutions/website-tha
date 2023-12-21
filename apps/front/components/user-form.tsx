@@ -33,7 +33,7 @@ const UserForm = ({
       type: 'file',
       required: isRequired ? true : false,
       placeholder: 'Selecione a imagem do colaborador',
-      value: editUserData?.imageUrl
+      value: editUserData?.image
     },
     {
       name: 'firstName',
