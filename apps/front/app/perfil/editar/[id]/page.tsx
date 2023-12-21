@@ -4,7 +4,6 @@ import { use } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 
-import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
 import { User, CustomerService } from '@tha-solutions';
