@@ -7,4 +7,5 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
   password: string;
 
   imageFile?: Express.Multer.File | string;
+  image?: string;
 }

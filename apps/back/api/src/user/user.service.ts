@@ -265,7 +265,6 @@ export class UserService {
               user.company = company.trade_name
                 ? company.trade_name
                 : company.legal_name!;
-
             });
           }
 
@@ -298,29 +297,23 @@ export class UserService {
       if (image) {
         let imageInDB = await this.imageService.findByOrigin(id);
         if (imageInDB.length > 0) {
-
-          await this.imageService.update(
-            imageInDB[0].id,
-            { id_origem: id },
-            image
-          ).then((image) => {
-            if (!image) {
-              throw Error('Image not found');
-            }
-            updateUserDto.image = image.url;
-          }
-          );
+          await this.imageService
+            .update(imageInDB[0].id, { id_origem: id }, image)
+            .then((image) => {
+              if (!image) {
+                throw Error('Image not found');
+              }
+              updateUserDto.image = image.url;
+            });
         } else {
           await this.imageService.create({ id_origem: id }, image);
         }
       }
 
-
-      const updatedUser= await this.prisma.user.update({
+      const updatedUser = await this.prisma.user.update({
         where: { id },
         data: data
       });
-
 
       const returnUser = {
         id: updatedUser.id,
@@ -328,10 +321,9 @@ export class UserService {
         lastName: updatedUser.lastName,
         email: updatedUser.email,
         role: updatedUser.role,
-        image: updateUserDto.image ? updateUserDto.image : null,
+        image: updateUserDto.image ? updateUserDto.image : null
       };
       return returnUser;
-
     } catch (error) {
       throw Error(`Error in update user ${error}`);
     }
@@ -346,9 +338,11 @@ export class UserService {
 
     const resetToken = await this.createResetToken(user);
 
-    const resetUrl = `${request.protocol}://${request.get(
-      'host'
-    )}/api/v1/auth/resetpassword/${resetToken.resetToken}`;
+    // const resetUrl = `${request.protocol}://${request.get(
+    //   'host'
+    // )}/api/v1/auth/resetpassword/${resetToken.resetToken}`;
+
+    const resetUrl = `http://localhost:4200/perfil/editar/senha/${resetToken.resetToken}`;
 
     const message = `You are receiving this email because you has requested the reset of a password. Please make a PUT request to: \n\n ${resetUrl} \n\n If you did not request this, please ignore this email and your password will remain unchanged. \n This token will expire in 10 minutes.`;
 
