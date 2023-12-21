@@ -261,9 +261,11 @@ export class UserService {
               if (!company) {
                 throw Error('Company not found');
               }
+
               user.company = company.trade_name
                 ? company.trade_name
                 : company.legal_name!;
+
             });
           }
 
@@ -292,9 +294,11 @@ export class UserService {
   ) {
     try {
       const { imageFile, ...data } = updateUserDto;
+
       if (image) {
         let imageInDB = await this.imageService.findByOrigin(id);
         if (imageInDB.length > 0) {
+
           await this.imageService.update(
             imageInDB[0].id,
             { id_origem: id },
@@ -311,10 +315,12 @@ export class UserService {
         }
       }
 
-      const updatedUser = await this.prisma.user.update({
+
+      const updatedUser= await this.prisma.user.update({
         where: { id },
         data: data
       });
+
 
       const returnUser = {
         id: updatedUser.id,
@@ -325,6 +331,7 @@ export class UserService {
         image: updateUserDto.image ? updateUserDto.image : null,
       };
       return returnUser;
+
     } catch (error) {
       throw Error(`Error in update user ${error}`);
     }

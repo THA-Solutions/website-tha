@@ -4,6 +4,7 @@ import { use } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
 import { User, CustomerService } from '@tha-solutions';
@@ -16,6 +17,7 @@ export default function Page({ params }: { params: { id: string } }) {
   const { data: session, update } = useSession();
   const onSubmit = async (data: FieldValues) => {
     try {
+      
       const { imageFile, ...content } = data;
       const formData = new FormData();
 
