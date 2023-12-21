@@ -376,6 +376,10 @@ export class UserService {
   async createResetToken(user: ResponseUserDto) {
     const resetToken = crypto.randomBytes(32).toString('hex');
 
+    await this.prisma.account_Token.deleteMany({
+      where: { id_user: user.id }
+    });
+
     const resetPasswordToken = crypto
       .createHash('sha256')
       .update(resetToken)
