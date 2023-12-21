@@ -125,7 +125,6 @@ export class ImageService {
           updateImageDto.url = url;
         });
       }
-
       const updatedImage = await this.prisma.image.update({
         where: { id },
         data: {

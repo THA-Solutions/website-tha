@@ -14,8 +14,6 @@ export default function Page() {
   const router = useRouter();
 
   const onSubmit = async (data: FieldValues) => {
-    console.log(data);
-
     try {
       const { imageFile, ...content } = data;
       const formData = new FormData();
