@@ -256,7 +256,7 @@ export class UserService {
                 throw Error('Company not found');
               }
               user.company = company.legal_name!;
-              console.log(user.company);
+
             });
           }
 
@@ -285,9 +285,11 @@ export class UserService {
   ) {
     try {
       const { imageFile, ...data } = updateUserDto;
+
       if (image) {
         let imageInDB = await this.imageService.findByOrigin(id);
         if (imageInDB.length > 0) {
+
           await this.imageService.update(
             imageInDB[0].id,
             { id_origem: id },
@@ -297,10 +299,13 @@ export class UserService {
           await this.imageService.create({ id_origem: id }, image);
         }
       }
-      return await this.prisma.user.update({
+
+      const updatedUser= await this.prisma.user.update({
         where: { id },
         data: data
       });
+
+      return 
     } catch (error) {
       throw Error(`Error in update user ${error}`);
     }

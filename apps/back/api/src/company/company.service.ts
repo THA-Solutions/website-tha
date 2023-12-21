@@ -61,7 +61,7 @@ export class CompanyService {
         })
       );
 
-      console.log('companiesWithImage', companiesWithImage);
+
       return companiesWithImage;
     } catch (error) {
       throw Error(`Error in find all company ${error}`);
