@@ -22,6 +22,8 @@ export default function Page() {
         formData.append('imageFile', imageFile[0]);
       }
 
+      formData.append('role', 'customer');
+
       for (let key in content) {
         formData.append(key, content[key]);
       }
