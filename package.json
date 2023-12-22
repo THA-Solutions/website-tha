@@ -6,7 +6,8 @@
     "start": "nx run-many -t serve",
     "start:front": "nx run front:serve",
     "lint": "nx format:check --all",
-    "lint:write": "nx format:write"
+    "lint:write": "nx format:write",
+    "build": "npx prisma generate && nx run-many -t serve && nx run-many -t build"
   },
   "private": true,
   "dependencies": {
