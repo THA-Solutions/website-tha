@@ -35,7 +35,6 @@ export class CustomerService {
         'Content-Type': 'multipart/form-data'
       }
     });
-
     return res.data;
   }
 
