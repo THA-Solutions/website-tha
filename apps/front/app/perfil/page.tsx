@@ -42,7 +42,7 @@ export default function Page() {
       </div>
     );
   }
-  console.log(session, 'session');
+
   return (
     <section className="flex flex-col items-center justify-between h-96 p-4 space-y-4">
       <div className="flex flex-col items-center space-y-2">
