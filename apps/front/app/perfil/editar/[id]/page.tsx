@@ -36,7 +36,6 @@ export default function Page({ params }: { params: { id: string } }) {
         }
       );
 
-
       formData.delete('password');
 
       const updatedUser = await toast
