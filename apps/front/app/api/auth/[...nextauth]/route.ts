@@ -24,7 +24,8 @@ export const authOptions: AuthOptions = {
 
           return null;
         } catch (error) {
-          throw new Error(`Sign-in error ${error}`);
+          console.error('Error during sign-in:', error);
+          return null; // ou algum valor que indica erro no processo de login
         }
       }
     })

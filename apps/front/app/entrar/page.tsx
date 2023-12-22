@@ -28,24 +28,24 @@ export default function Page() {
 
   async function onSubmit(data: FieldValues) {
     try {
-      await toast.promise(
-        signIn('credentials', {
-          email: data.email,
-          password: data.password,
-          redirect: false
-        }),
-        {
-          pending: 'Entrando...',
-          success: 'Logado com sucesso!',
-          error: 'Erro ao fazer login'
-        }
-      );
+      const result = await signIn('credentials', {
+        email: data.email,
+        password: data.password,
+        redirect: false
+      });
+
+      if (result && result.error) {
+        // Se result.error existir, isso indica que houve um erro no login
+        throw new Error(result.error);
+      }
+
+      toast.success('Logado com sucesso!');
 
       setTimeout(() => {
         router.push('/');
       }, 1500);
     } catch (error) {
-      throw Error(`Error with login ${error}`);
+      toast.error('Credenciais inválidas!');
     }
   }
 
