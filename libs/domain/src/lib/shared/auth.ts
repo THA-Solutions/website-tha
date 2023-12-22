@@ -11,6 +11,7 @@ export class AuthorizationService {
       email: credentials!.email,
       password: credentials!.password
     });
+
     return res.data;
   }
 }

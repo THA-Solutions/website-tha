@@ -1,7 +1,8 @@
 import type { AuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { AuthorizationService } from '@tha-solutions';
+
 import { User } from '@tha-solutions';
+import { AuthorizationService } from '@tha-solutions';
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -22,9 +23,9 @@ export const authOptions: AuthOptions = {
           }
 
           return null;
-        } catch (error) {
-          console.error('Error during sign-in:', error);
-          return null; // ou algum valor que indica erro no processo de login
+        } catch (error: any) {
+          console.error('Error during sign-in:', error.response.data.message);
+          throw new Error(error.response.data.message);
         }
       }
     })
