@@ -14,7 +14,6 @@ model User {
   firstName     String?         @db.VarChar(25)
   lastName      String?         @db.VarChar(25)
   email         String?         @unique
-  emailVerified DateTime?
   password      String?         @db.VarChar(500)
   role          String          @default("user") @db.VarChar(10)
   company       String?
