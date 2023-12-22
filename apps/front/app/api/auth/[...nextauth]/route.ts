@@ -2,7 +2,7 @@ import NextAuth from 'next-auth';
 import type { AuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { AuthorizationService } from '@tha-solutions';
-import { User, Auth, Credentials } from '@tha-solutions';
+import { User } from '@tha-solutions';
 
 export const authOptions: AuthOptions = {
   providers: [
