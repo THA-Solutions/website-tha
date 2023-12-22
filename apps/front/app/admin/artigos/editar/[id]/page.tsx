@@ -8,7 +8,8 @@ import { FieldValues, useForm } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 import { replaceImages } from 'apps/front/utilities/replace-img';
 import txtFormat from 'apps/front/utilities/txt-format';
-import { images } from '@tha-solutions';
+import { ImageService } from '@tha-solutions';
+
 export default function EditArticle({ params }: { params: { id: string } }) {
   const [articleData, setArticleData] = useState<Article | null>(null);
   const router = useRouter();
@@ -58,16 +59,14 @@ export default function EditArticle({ params }: { params: { id: string } }) {
       const intextImage = content.content.match(/<img[^>]+src="([^">]+)">/g);
 
       if (imageFile && typeof imageFile === 'object') {
-        imagesArr[0] = await images
-          .createImage(
-            await createTempFormData(
-              0,
-              imageFile,
-              content.image.alt,
-              content.image.source
-            )
+        imagesArr[0] = await ImageService.createImage(
+          await createTempFormData(
+            0,
+            imageFile,
+            content.image.alt,
+            content.image.source
           )
-          .then((res) => (imagesArr[0] = res.url));
+        ).then((res) => (imagesArr[0] = res.url));
       } else {
         imagesArr[0] = articleData?.image[0].url;
       }
@@ -92,7 +91,7 @@ export default function EditArticle({ params }: { params: { id: string } }) {
 
           imagesArr.push(
             //Se for uma nova imagem base64 cria a imagem e retorna sua url
-            await images.createImage(tempFormData).then((res) => res.url)
+            await ImageService.createImage(tempFormData).then((res) => res.url)
           );
         } else {
           //Se não for base64, pega o src da imagem e adiciona ao array de arquivos

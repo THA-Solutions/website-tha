@@ -13,7 +13,7 @@ import { CustomerService, User } from '@tha-solutions';
 import { CircularProgress } from '@mui/material';
 
 export default function Page() {
-  const { data: session, status, update } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
 
   const [user, setUser] = useState<User>();
@@ -25,7 +25,7 @@ export default function Page() {
         try {
           setUser(await CustomerService.getCustomerById(session?.user.id));
         } catch (error) {
-          console.error(error);
+          throw new Error(`error: ${error}`);
         } finally {
           setLoading(false);
         }
@@ -46,9 +46,9 @@ export default function Page() {
   return (
     <section className="flex flex-col items-center justify-between h-96 p-4 space-y-4">
       <div className="flex flex-col items-center space-y-2">
-        {user?.imageUrl ? (
+        {user?.image ? (
           <Image
-            src={user?.imageUrl}
+            src={user?.image}
             alt="Foto de perfil"
             width={100}
             height={100}

@@ -5,6 +5,6 @@ export interface User {
   email: string;
   company: string;
   password?: string;
-  imageUrl?: string;
+  image?: string;
   role: string;
 }

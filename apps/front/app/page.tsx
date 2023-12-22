@@ -16,7 +16,7 @@ import FGL from '../public/partners/fgl-distribuidora.png';
 import Growatt from '../public/partners/growatt.png';
 import Sungrow from '../public/partners/sungrow.png';
 import { contact } from '../constants';
-import { SET } from './api/cookie/route';
+// import { SET } from './api/cookie/route';
 
 import {
   SupportAgentRounded,
@@ -74,12 +74,15 @@ const features = [
 ];
 
 export default function Home() {
-  useLayoutEffect(() => {
-    const setCookie = async () => {
-      await SET();
-    };
-    setCookie();
-  }, []);
+  // useLayoutEffect(() => {
+  //   const setCookie = async () => {
+  //     await SET();
+  //   };
+  //   setCookie();
+  // }, []);
+
+  //OWUzMDY3ZjctOGFmNi00MzJmLTgxZDctOWZkMGQ3MGQ0ZTc1fHJlYWQtd3JpdGU
+
   return (
     <>
       <Header />

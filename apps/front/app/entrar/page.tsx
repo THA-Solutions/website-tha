@@ -35,7 +35,6 @@ export default function Page() {
       });
 
       if (result && result.error) {
-        // Se result.error existir, isso indica que houve um erro no login
         throw new Error(result.error);
       }
 
@@ -45,7 +44,8 @@ export default function Page() {
         router.push('/');
       }, 1500);
     } catch (error) {
-      toast.error('Credenciais inválidas!');
+      console.error(error);
+      toast.error(`${error as string}`);
     }
   }
 

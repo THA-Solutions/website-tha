@@ -4,11 +4,11 @@ import { use } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 
-import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
 import { User, CustomerService } from '@tha-solutions';
 import UserForm from 'apps/front/components/user-form';
+import { useSession } from 'next-auth/react';
 
 export default function Page({ params }: { params: { id: string } }) {
   const user: User = use(CustomerService.getCustomerById(params.id));
@@ -26,6 +26,7 @@ export default function Page({ params }: { params: { id: string } }) {
       for (let key in content) {
         formData.append(key, content[key]);
       }
+
       const updatedData = await toast.promise(
         CustomerService.updateCustomer(params.id, formData),
         {
@@ -35,7 +36,27 @@ export default function Page({ params }: { params: { id: string } }) {
         }
       );
 
-      await update({ ...session, user: { ...session?.user, ...content } });
+      formData.delete('password');
+
+      const updatedUser = await toast
+        .promise(CustomerService.updateCustomer(params.id, formData), {
+          pending: 'Atualizando...',
+          success: 'Atualizado com sucesso!',
+          error: 'Erro ao atualizar as informações'
+        })
+        .then(async (res) => {
+          await update({
+            ...session,
+            user: {
+              id: res.id,
+              firstName: res.firstName,
+              lastName: res.lastName,
+              email: res.email,
+              company: res.company,
+              image: res.image ? res.image : null
+            }
+          });
+        });
 
       setTimeout(() => {
         router.push('/perfil');

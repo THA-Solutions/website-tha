@@ -43,7 +43,7 @@ export default function About() {
       role: 'Co-Founder / CEO',
       description:
         'Atuo na área de marketing regional, com foco especializado em estudos de mercado. Estou constantemente atento às tendências do mercado solar mundial, buscando análises críticas para impulsionar iniciativas que visam um mundo mais limpo e sustentável.',
-      imageUrl: TalesImage,
+      image: TalesImage,
       linkedin: 'https://www.linkedin.com/in/leslie-alexander-1a2b3c4d/',
       instagram: 'https://www.instagram.com/lesliealexander/'
     },
@@ -52,7 +52,7 @@ export default function About() {
       role: 'Co-Founder / CEO',
       description:
         'Atuo na área de marketing regional, com foco especializado em estudos de mercado. Estou constantemente atento às tendências do mercado solar mundial, buscando análises críticas para impulsionar iniciativas que visam um mundo mais limpo e sustentável.',
-      imageUrl: TalesImage,
+      image: TalesImage,
       linkedin: 'https://www.linkedin.com/in/leslie-alexander-1a2b3c4d/',
       instagram: 'https://www.instagram.com/lesliealexander/'
     },
@@ -61,7 +61,7 @@ export default function About() {
       role: 'Co-Founder / CEO',
       description:
         'Atuo na área de marketing regional, com foco especializado em estudos de mercado. Estou constantemente atento às tendências do mercado solar mundial, buscando análises críticas para impulsionar iniciativas que visam um mundo mais limpo e sustentável.',
-      imageUrl: TalesImage,
+      image: TalesImage,
       linkedin: 'https://www.linkedin.com/in/leslie-alexander-1a2b3c4d/',
       instagram: 'https://www.instagram.com/lesliealexander/'
     }
@@ -168,7 +168,7 @@ export default function About() {
                 <div className="flex flex-col items-start gap-6  w-full pb-3 border-b border-backgroundAlt lg:flex-row">
                   <Image
                     className="h-52 w-52 rounded-xl mb-6 lg:mb-0 lg:h-44 lg:w-44"
-                    src={person.imageUrl}
+                    src={person.image}
                     alt="Team member"
                   />
                   <div className="flex flex-col w-full">

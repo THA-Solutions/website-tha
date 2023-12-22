@@ -35,7 +35,7 @@ const CustomerForm = ({
       type: 'file',
       required: isRequired ? true : false,
       placeholder: 'Selecione a imagem do colaborador',
-      value: editCustomerData?.imageUrl
+      value: editCustomerData?.image
     },
     {
       label: 'Primeiro nome',
