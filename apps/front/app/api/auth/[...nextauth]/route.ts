@@ -1,33 +1,28 @@
 import NextAuth from 'next-auth';
 import type { AuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-
+import { AuthorizationService } from '@tha-solutions';
 import { User } from '@tha-solutions';
-import { setEmitFlags } from 'typescript';
-import { cp } from 'fs';
 
 export const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
       name: 'credentials',
       credentials: {},
-      async authorize(credentials) {
+      async authorize(credentials: any): Promise<User | null> {
         try {
-          const res = await fetch('http://localhost:3000/api/auth/login', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(credentials)
-          });
+          if (credentials?.email && credentials?.password) {
+            const user = await AuthorizationService.signIn({
+              email: credentials.email,
+              password: credentials.password
+            });
 
-          const user = await res.json();
-
-          if (res.ok && user) {
-            return user;
-          } else {
-            return null; // ou algum valor que indica credenciais inválidas
+            if (user) {
+              return user;
+            }
           }
+
+          return null;
         } catch (error) {
           console.error('Error during sign-in:', error);
           return null; // ou algum valor que indica erro no processo de login
@@ -44,7 +39,7 @@ export const authOptions: AuthOptions = {
   },
 
   callbacks: {
-    jwt: async ({ token, trigger, session }) => {
+    jwt: async ({ token, trigger, session, user }) => {
       if (trigger === 'update') {
         token.id = session.user.id;
         token.firstName = session.user.firstName;
@@ -53,6 +48,17 @@ export const authOptions: AuthOptions = {
         token.image = session.user.image;
         token.role = session.user.role;
         token.company = session.user.company;
+
+        return token;
+      }
+      if (user) {
+        token.id = user.id;
+        token.firstName = (user as User).firstName;
+        token.lastName = (user as User).lastName;
+        token.email = user.email;
+        token.image = user.image;
+        token.role = (user as User).role;
+        token.company = (user as User).company;
       }
 
       return token;
@@ -61,7 +67,7 @@ export const authOptions: AuthOptions = {
     session: async ({ session, token, trigger, newSession }) => {
       session = {
         user: {
-          id: (token.user as { id: string }).id,
+          id: token.sub || (token.user as { id: string }).id,
           firstName: token.firstName as string,
           lastName: token.lastName as string,
           email: token.email as string,

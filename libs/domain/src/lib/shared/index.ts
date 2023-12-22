@@ -5,3 +5,4 @@ export * from './inverters';
 export * from './team';
 export * from './customers';
 export * from './company';
+export * from './auth';
