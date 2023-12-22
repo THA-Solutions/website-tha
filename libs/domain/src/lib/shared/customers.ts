@@ -43,4 +43,17 @@ export class CustomerService {
     const res = await axios.delete(`${this.apiPath}/${id}`);
     return res.data;
   }
+
+  static async sendTokenToResetPassword(email: object): Promise<void> {
+    const res = await axios.post(`${this.apiPath}/recovery-password`, email);
+    return res.data;
+  }
+
+  static async resetPassword(data: {
+    token: string;
+    password: string;
+  }): Promise<void> {
+    const res = await axios.post(`${this.apiPath}/reset-password`, data);
+    return res.data;
+  }
 }

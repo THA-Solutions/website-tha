@@ -27,6 +27,16 @@ export default function Page({ params }: { params: { id: string } }) {
         formData.append(key, content[key]);
       }
 
+      const updatedData = await toast.promise(
+        CustomerService.updateCustomer(params.id, formData),
+        {
+          pending: 'Atualizando...',
+          success: 'Atualizado com sucesso!',
+          error: 'Erro ao atualizar as informações'
+        }
+      );
+
+
       formData.delete('password');
 
       const updatedUser = await toast

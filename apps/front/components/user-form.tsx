@@ -1,8 +1,9 @@
 import { FieldValues, useForm } from 'react-hook-form';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
-import { User } from '@tha-solutions';
+import { CustomerService, User } from '@tha-solutions';
 import InputField from './input-field';
 
 import ArrowRightAlt from '@mui/icons-material/ArrowRightAlt';
@@ -25,6 +26,8 @@ const UserForm = ({
     handleSubmit,
     formState: { errors }
   } = useForm();
+
+  const router = useRouter();
 
   const inputs = [
     {
@@ -95,7 +98,12 @@ const UserForm = ({
           )}
           {input.name === 'password' && (
             <Link
-              href={`/perfil/editar/${editUserData?.id}/editar-senha`}
+              href={`/perfil/editar/${editUserData?.id}/token`}
+              onClick={() =>
+                CustomerService.sendTokenToResetPassword({
+                  email: editUserData?.email
+                })
+              }
               className="flex items-center w-fit px-1 py-2 text-indigo-400 hover:underline"
             >
               <span>Alterar senha</span>

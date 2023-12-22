@@ -30,11 +30,11 @@ export class AuthService {
     const user = await this.usersService.findByEmail(email);
 
     if (!user) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Usuário não encontrado');
     }
 
     if (pass !== this.decrypter(user.password)) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Senha inválida');
     }
 
     return user as ResponseUserDto;
