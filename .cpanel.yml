@@ -1,0 +1,9 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=testes.thasolutions.com.br/testes/apps/front/app
+    - /bin/cp page.tsx $DEPLOYPATH
+    - /bin/cp layout.tsx $DEPLOYPATH
+    - /bin/cp global.css $DEPLOYPATH
+    - export DEPLOYPATH2=testes.thasolutions.com.br/testes/apps/back/api/src
+    - /bin/cp main.ts $DEPLOYPATH2y
