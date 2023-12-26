@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "https://website-m9b1t6q74-tha-solutions.vercel.app",
+    "target": "http://localhost:4200",
     "secure": false
   }
 }
