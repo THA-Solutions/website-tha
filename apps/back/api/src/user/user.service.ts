@@ -117,7 +117,7 @@ export class UserService {
               id_origem: user.id
             }
           });
-
+          
           if (user.company) {
             await this.companyService.findOne(user.company).then((company) => {
               if (!company) {
@@ -136,7 +136,7 @@ export class UserService {
             email: user.email,
             role: user.role,
             image: image ? image.url : null,
-            company: user.company
+            company: user.company ? user.company : null
           };
         })
       );
@@ -293,7 +293,7 @@ export class UserService {
   ) {
     try {
       const { imageFile, ...data } = updateUserDto;
-
+      console.log(updateUserDto);
       if (image) {
         let imageInDB = await this.imageService.findByOrigin(id);
         if (imageInDB.length > 0) {
@@ -312,7 +312,12 @@ export class UserService {
 
       const updatedUser = await this.prisma.user.update({
         where: { id },
-        data: data
+        data: {
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+          company: data.company
+        }
       });
 
       const returnUser = {
