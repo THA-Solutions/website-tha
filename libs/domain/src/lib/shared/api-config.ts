@@ -1,11 +1,11 @@
 class ApiConfig {
-  private static apiUrl: string = 'http://localhost:3000/api';
+  private static apiUrl = process.env['API_URL'];
 
   static setApiUrl(url: string): void {
     ApiConfig.apiUrl = url;
   }
 
-  static getApiUrl(): string {
+  static getApiUrl(): string | undefined {
     return ApiConfig.apiUrl;
   }
 }

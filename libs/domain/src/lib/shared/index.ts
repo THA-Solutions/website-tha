@@ -6,3 +6,4 @@ export * from './team';
 export * from './customers';
 export * from './company';
 export * from './auth';
+export * from './mail';

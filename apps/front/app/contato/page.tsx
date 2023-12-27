@@ -1,12 +1,11 @@
 'use client';
 
 import { useForm, FieldValues } from 'react-hook-form';
+import { toast, ToastContainer } from 'react-toastify';
 
 import InputField from '../../components/input-field';
 
 import { contact } from '../../constants';
-
-import axios from 'axios';
 
 import {
   Business,
@@ -17,6 +16,7 @@ import {
   Badge,
   Apartment
 } from '@mui/icons-material';
+import { MailService } from '@tha-solutions';
 
 export default function Contact() {
   const {
@@ -26,8 +26,18 @@ export default function Contact() {
   } = useForm();
 
   async function onSubmit(data: FieldValues) {
-    const mail = await axios.post('http://localhost:3000/api/mail/send', data);
-    return;
+    // const mail = await axios.post('http://localhost:3000/api/mail/send', data);
+    // return;
+
+    try {
+      await toast.promise(MailService.sendMail(data), {
+        pending: 'Enviando...',
+        success: 'Mensagem enviada com sucesso',
+        error: 'Erro ao enviar mensagem'
+      });
+    } catch (error) {
+      toast.error('Erro ao enviar mensagem');
+    }
   }
 
   const formInputs = [
@@ -147,6 +157,18 @@ export default function Contact() {
           </div>
         </form>
       </section>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </>
   );
 }

@@ -2,8 +2,7 @@ import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app/app.module';
-import { apiEnv } from './environments/environment'
-
+import { apiEnv } from './environments/environment';
 
 const { isProd, api } = apiEnv;
 

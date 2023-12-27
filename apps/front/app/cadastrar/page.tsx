@@ -17,6 +17,7 @@ import Email from '@mui/icons-material/Email';
 import Key from '@mui/icons-material/Key';
 import Person from '@mui/icons-material/Person';
 import PersonOutlined from '@mui/icons-material/PersonOutlined';
+import { CustomerService } from '@tha-solutions';
 
 export default function Page() {
   const {
@@ -28,21 +29,30 @@ export default function Page() {
 
   const router = useRouter();
 
-  async function onSubmit(data: FieldValues) {
+  const onSubmit = async (data: FieldValues) => {
     try {
-      await toast.promise(axios.post('http://localhost:3000/api/user', data), {
-        pending: 'Criando sua conta...',
-        success: 'Criada com sucesso!',
-        error: 'Erro ao criar sua conta'
+      const { ...content } = data;
+      const formData = new FormData();
+
+      formData.append('role', 'user');
+
+      for (let key in content) {
+        formData.append(key, content[key]);
+      }
+
+      await toast.promise(CustomerService.createCustomer(formData), {
+        pending: 'Cadastrando...',
+        success: 'Cadastrado com sucesso!',
+        error: 'Erro ao cadastrar sua conta'
       });
 
       setTimeout(() => {
         router.push('/entrar');
       }, 1500);
     } catch (error) {
-      throw Error(`Error in create user ${error}`);
+      throw Error(`Error in create account: ${error}`);
     }
-  }
+  };
 
   const formInputs = [
     {
