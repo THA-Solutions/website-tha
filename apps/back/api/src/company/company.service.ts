@@ -48,15 +48,15 @@ export class CompanyService {
 
   async findAll() {
     try {
-      const companies = await this.prisma.company.findMany({});
+      const companies = await this.prisma.company.findMany();
 
       const companiesWithImage = await Promise.all(
         companies.map(async (company) => {
-          const image = await this.imageService.findByOrigin(company.id);
+          let image = await this.imageService.findByOrigin(company.id);
 
           return {
             ...company,
-            image: image ? image[0].url : null
+            image: image[0]?.url || null
           };
         })
       );
@@ -68,15 +68,24 @@ export class CompanyService {
   }
 
   async findOne(id: string) {
-    return await this.prisma.company
-      .findFirst({ where: { id: id } })
-      .then(async (company) => {
-        const image = await this.imageService.findByOrigin(company!.id);
-        return {
-          ...company,
-          image: image ? image[0].url : null
-        };
-      });
+    try {
+      const company = await this.prisma.company
+        .findFirst({ where: { id: id } })
+        .then(async (company) => {
+          if (!company) {
+            throw Error('Company not found');
+          }
+          const image = await this.imageService.findByOrigin(company.id);
+          return {
+            ...company,
+            image: image[0]?.url || null
+          };
+        });
+
+      return company;
+    } catch (error) {
+      throw Error(`Error in find company ${error}`);
+    }
   }
 
   async findByTitle(title: string) {
