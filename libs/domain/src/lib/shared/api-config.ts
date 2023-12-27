@@ -1,5 +1,6 @@
 class ApiConfig {
-  private static apiUrl = process.env['API_URL'];
+  private static apiUrl: string =
+    'https://website-tha-production.up.railway.app/api';
 
   static setApiUrl(url: string): void {
     ApiConfig.apiUrl = url;
