@@ -1,6 +1,5 @@
 'use client';
 
-import axios from 'axios';
 import { useState } from 'react';
 import { useForm, FieldValues } from 'react-hook-form';
 import { toast, ToastContainer } from 'react-toastify';

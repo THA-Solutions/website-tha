@@ -13,7 +13,8 @@ import ApiConfig from 'libs/domain/src/lib/shared/api-config';
 
 import 'react-toastify/dist/ReactToastify.css';
 
-ApiConfig.setApiUrl(process.env.API_URL || 'http://localhost:3000/api');
+// ApiConfig.setApiUrl(process.env.API_URL || 'http://localhost:3000/api');
+ApiConfig.setApiUrl('http://localhost:3000/api');
 const roboto = Roboto({ subsets: ['latin'], variable: '--font-roboto' });
 const baiJamjuree = BaiJamjuree({
   subsets: ['latin'],
