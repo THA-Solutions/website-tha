@@ -170,7 +170,7 @@ export default function Page() {
 
       <section className="relative h-96 flex items-center justify-center bg-hero-background bg-center bg-no-repeat bg-cover">
         <div className="absolute inset-0 bg-[#251D43] opacity-70"></div>
-        <div className="z-10 flex flex-col items-center justify-center text-center">
+        <div className="z-10 flex flex-col items-center justify-center text-center px-4">
           <h2 className="text-xl text-primary font-alt font-bold">
             THA SOLUTIONS
           </h2>
