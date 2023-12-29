@@ -4,19 +4,14 @@ import { Header } from '../../components/header';
 import { contact } from '../../constants';
 
 export const metadata = {
-  title: `${contact.organization} - Marketing`,
-  description: `Página sobre o marketing técnico.`
+  title: `${contact.organization} - Marketing`
 };
 
-export default function MarketingLayout({
-  children
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Header />
-      <main>{children}</main>
+      <main className="pt-32">{children}</main>
       <Footer />
     </>
   );

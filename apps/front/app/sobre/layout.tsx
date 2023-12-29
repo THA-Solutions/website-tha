@@ -9,11 +9,7 @@ export const metadata = {
   description: `Página sobre a empresa`
 };
 
-export default function SobreLayout({
-  children
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Header />
