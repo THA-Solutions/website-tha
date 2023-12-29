@@ -26,14 +26,16 @@ export async function middleware(request: NextRequest, _next: NextFetchEvent) {
       return NextResponse.redirect(homeUrl);
     }
     if (protectedRoutesClient.some((route) => pathname.startsWith(route))) {
-      if (token.user?.role !== 'customer' && token.user?.role !== 'admin') {
-        const url = new URL('/404', request.url);
+      if (token.role !== 'customer' && token.role !== 'admin') {
+        const url = new URL('/403', request.url);
         return NextResponse.redirect(url);
       }
     }
     if (protectedRoutesAdmin.some((route) => pathname.startsWith(route))) {
-      if (token.user?.role !== 'admin') {
-        const url = new URL('/404', request.url);
+
+      if (token.role !== 'admin') {
+        const url = new URL('/403', request.url);
+
         return NextResponse.redirect(url);
       }
     }
