@@ -25,7 +25,7 @@ const solutions = [
   {
     name: 'Dashboard',
     description: 'Acesse seus dados de qualquer lugar',
-    href: '/admin',
+    href: '/dashboard',
     icon: LeaderboardRounded
   },
   {
