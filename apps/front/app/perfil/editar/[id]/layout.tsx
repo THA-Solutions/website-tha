@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { ArrowBack } from '@mui/icons-material';
+import ArrowBack from '@mui/icons-material/ArrowBack';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
