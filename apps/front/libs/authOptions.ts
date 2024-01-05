@@ -83,6 +83,7 @@ export const authOptions: AuthOptions = {
   },
 
   pages: {
-    signIn: '/entrar'
+    signIn: '/entrar',
+    signOut: '/entrar'
   }
 };

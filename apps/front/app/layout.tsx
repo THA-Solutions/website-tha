@@ -1,19 +1,17 @@
 'use client';
 
 import { AppProgressBar as ProgressBar } from 'next-nprogress-bar';
+import { SessionProvider } from 'next-auth/react';
 import {
   Roboto_Flex as Roboto,
   Bai_Jamjuree as BaiJamjuree
 } from 'next/font/google';
+
 import './global.css';
 
 import { contact } from '../constants';
-import { SessionProvider } from 'next-auth/react';
-import ApiConfig from 'libs/domain/src/lib/shared/api-config';
 
 import 'react-toastify/dist/ReactToastify.css';
-
-// ApiConfig.setApiUrl(process.env.NX_API_URL!)
 
 const roboto = Roboto({ subsets: ['latin'], variable: '--font-roboto' });
 const baiJamjuree = BaiJamjuree({

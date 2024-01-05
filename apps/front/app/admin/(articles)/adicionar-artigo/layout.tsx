@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { ArrowBack } from '@mui/icons-material';
+import ArrowBack from '@mui/icons-material/ArrowBack';
 import { contact } from '../../../../constants';
 
 export const metadata = {

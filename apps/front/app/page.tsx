@@ -1,5 +1,3 @@
-'use client';
-
 import Image from 'next/image';
 
 import { Card } from '../components/card';
@@ -16,14 +14,12 @@ import FGL from '../public/partners/fgl-distribuidora.png';
 import Growatt from '../public/partners/growatt.png';
 import Sungrow from '../public/partners/sungrow.png';
 import { contact } from '../constants';
-// import { SET } from './api/cookie/route';
 
 import {
   SupportAgentRounded,
   TrendingUpRounded,
   MailOutlineRounded
 } from '@mui/icons-material';
-import { useLayoutEffect } from 'react';
 
 const metrics = [
   {
