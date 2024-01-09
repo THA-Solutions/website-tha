@@ -17,6 +17,7 @@ export class ArticleSerivce {
 
   static async getAllArticles(): Promise<Article[]> {
     const res = await axios.get(this.apiPath);
+    console.log(ApiConfig.getApiUrl())
     return res.data;
   }
 
