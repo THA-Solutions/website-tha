@@ -1,6 +1,5 @@
 class ApiConfig {
-  private static apiUrl: string =
-    'https://website-tha-production.up.railway.app/api';
+  private static apiUrl: string = 'http://localhost:3000/api';
 
   static setApiUrl(url: string): void {
     ApiConfig.apiUrl = url;

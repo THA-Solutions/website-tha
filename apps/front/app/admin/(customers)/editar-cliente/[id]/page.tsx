@@ -15,6 +15,16 @@ export default function Page({ params }: { params: { id: string } }) {
 
   const router = useRouter();
 
+  function companiesFIlter(legalName: string) {
+    const company = companies.find(
+      (company) => company.legal_name === legalName
+    );
+    if (company) {
+      return company.id;
+    }
+    return '';
+  }
+
   const onSubmit = async (data: FieldValues) => {
     try {
       const { imageFile, ...content } = data;
@@ -27,7 +37,9 @@ export default function Page({ params }: { params: { id: string } }) {
       formData.append('role', 'customer');
 
       for (let key in content) {
-        formData.append(key, content[key]);
+        if (key === 'company') {
+          formData.append('company', companiesFIlter(content[key]));
+        } else formData.append(key, content[key]);
       }
 
       await toast.promise(CustomerService.updateCustomer(params.id, formData), {

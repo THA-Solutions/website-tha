@@ -293,7 +293,6 @@ export class UserService {
   ) {
     try {
       const { imageFile, ...data } = updateUserDto;
-      console.log(updateUserDto);
       if (image) {
         let imageInDB = await this.imageService.findByOrigin(id);
         if (imageInDB.length > 0) {
