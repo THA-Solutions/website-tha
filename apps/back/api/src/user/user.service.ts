@@ -117,7 +117,7 @@ export class UserService {
               id_origem: user.id
             }
           });
-          
+
           if (user.company) {
             await this.companyService.findOne(user.company).then((company) => {
               if (!company) {
