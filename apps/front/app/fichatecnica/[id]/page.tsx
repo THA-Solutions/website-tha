@@ -54,7 +54,7 @@ export default async function Fichatecnica({
             return (
               <div key={index}>
                 <p>
-                  {formattedKey}: {inverterData[key]}
+                  {/* {formattedKey}: {inverterData[key]} */}
                 </p>
               </div>
             );
