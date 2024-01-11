@@ -10,7 +10,7 @@ import { Label, Face, SearchOff, Today } from '@mui/icons-material';
 import { Article, ArticleSerivce, formatter } from '@tha-solutions';
 import ImageNotFound from 'apps/front/components/image-not-found';
 
-export default function Blog() {
+export default function Page() {
   const articles: Article[] = use(ArticleSerivce.getAllArticles());
 
   return (

@@ -1,7 +1,6 @@
 import { FieldValues, useForm } from 'react-hook-form';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 import { CustomerService, User } from '@tha-solutions';
 import InputField from './input-field';
@@ -27,7 +26,6 @@ const UserForm = ({
     formState: { errors }
   } = useForm();
 
-  const router = useRouter();
 
   const inputs = [
     {

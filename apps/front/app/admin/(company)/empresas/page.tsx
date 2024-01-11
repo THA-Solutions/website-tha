@@ -68,7 +68,11 @@ export default function Page() {
                     </h1>
                     <h2 className="text-base text-gray-400 font-semibold">
                       Nome fantasia:{' '}
-                      <span className="text-white">{company.trade_name}</span>
+                      {company.trade_name ? (
+                        <span className="text-white">{company.trade_name}</span>
+                      ) : (
+                        <span className="text-gray-600">Não fornecido</span>
+                      )}
                     </h2>
                     <h2 className="text-base text-gray-400 font-semibold">
                       CNPJ: <span className="text-white">{company.cnpj}</span>

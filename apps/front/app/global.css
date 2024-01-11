@@ -64,8 +64,8 @@ ul {
   @apply list-disc list-inside;
 }
 
-ol > li,
-ul > li {
+ol>li,
+ul>li {
   @apply mb-2;
   @apply ml-8;
 }

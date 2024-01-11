@@ -59,7 +59,7 @@ const TeamForm = ({
       label: 'Linkedin',
       name: 'linkedin',
       type: 'text',
-      required: isRequired ? true : false,
+      required: false,
       placeholder: 'Insira o link do Linkedin do colaborador',
       value: editTeamData?.linkedin
     },
@@ -67,7 +67,7 @@ const TeamForm = ({
       label: 'Instagram',
       name: 'instagram',
       type: 'text',
-      required: isRequired ? true : false,
+      required: false,
       placeholder: 'Insira o link do Instagram do colaborador',
       value: editTeamData?.instagram
     }

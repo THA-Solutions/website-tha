@@ -1,43 +1,73 @@
 import { getToken } from 'next-auth/jwt';
-import { NextFetchEvent, NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
-export async function middleware(request: NextRequest, _next: NextFetchEvent) {
-  const { pathname } = request.nextUrl;
+export const config = {
+  matcher: [
+    '/admin/:path*',
+    '/dashboard/:path*',
+    '/entrar',
+    '/cadastrar',
+    '/perfil/:path*'
+  ]
+};
 
-  const homeUrl = new URL('/', request.url);
+export async function middleware(request: NextRequest) {
+  console.log('middleware executou');
 
-  //Rotas em que o usuario precisa estar logado como admin para acessar
-  const protectedRoutesAdmin = ['/dashboard'];
-  //Rotas em que o usuario nao pode estar logado para acessar
-  const protectedRoutesUser = ['/entrar', '/cadastrar'];
-  //Rotas em que o usuario precisa estar logado para acessar
-  const tokenLinkedRoutes = ['/dashboard', '/perfil', '/admin'];
-  //Rotas em que o usuario precisa estar logado como cliente para acessar
-  const protectedRoutesClient = ['/dashboard'];
+  const token = await getToken({ req: request });
 
-  const token: any = await getToken({ req: request });
-
+  // Logout User
   if (!token) {
-    if (tokenLinkedRoutes.some((route) => pathname.startsWith(route))) {
-      return NextResponse.redirect(homeUrl);
+    if (
+      request.nextUrl.pathname.startsWith('/admin') ||
+      request.nextUrl.pathname.startsWith('/dashboard') ||
+      request.nextUrl.pathname.startsWith('/perfil')
+    ) {
+      return NextResponse.redirect(new URL('/entrar', request.url));
     }
-  } else {
-    if (protectedRoutesUser.some((route) => pathname.startsWith(route))) {
-      return NextResponse.redirect(homeUrl);
-    }
-    if (protectedRoutesClient.some((route) => pathname.startsWith(route))) {
-      if (token.role !== 'customer' && token.role !== 'admin') {
-        const url = new URL('/403', request.url);
-        return NextResponse.redirect(url);
-      }
-    }
-    if (protectedRoutesAdmin.some((route) => pathname.startsWith(route))) {
 
-      if (token.role !== 'admin') {
-        const url = new URL('/403', request.url);
-
-        return NextResponse.redirect(url);
-      }
-    }
+    return;
   }
+
+  // Login User
+  if (
+    request.nextUrl.pathname.startsWith('/entrar') ||
+    request.nextUrl.pathname.startsWith('/cadastrar')
+  ) {
+    return NextResponse.redirect(new URL('/', request.url));
+  }
+
+  // Admin
+  if (token.role === 'admin') {
+    if (request.nextUrl.pathname.startsWith('/dashboard')) {
+      return NextResponse.redirect(new URL('/admin', request.url));
+    }
+
+    return;
+  }
+
+  // Customer
+  if (token.role === 'customer') {
+    if (request.nextUrl.pathname.startsWith('/admin')) {
+      return NextResponse.redirect(new URL('/', request.url));
+    }
+
+    return;
+  }
+
+  // Commum User
+  if (token.role === 'user') {
+    if (request.nextUrl.pathname.startsWith('/admin')) {
+      return NextResponse.redirect(new URL('/', request.url));
+    }
+
+    if (request.nextUrl.pathname.startsWith('/dashboard')) {
+      return NextResponse.redirect(new URL('/seja-cliente', request.url));
+    }
+
+    return;
+  }
+
+  return NextResponse.redirect(new URL('/', request.url));
 }

@@ -19,13 +19,13 @@ import MenuRounded from '@mui/icons-material/MenuRounded';
 import CloseRounded from '@mui/icons-material/CloseRounded';
 import Article from '@mui/icons-material/Article';
 
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Skeleton } from '@mui/material';
 
 const solutions = [
   {
     name: 'Dashboard',
     description: 'Acesse seus dados de qualquer lugar',
-    href: '/admin',
+    href: '/dashboard',
     icon: LeaderboardRounded
   },
   {
@@ -149,19 +149,21 @@ export const Header = () => {
             <Link
               key={item.name}
               href={item.path}
-              className={`flex items-center justify-center text-lg leading-6 font-semibold ${
-                currentRoute === item.path
-                  ? 'text-white border-b-2 border-white font-bold cursor-default'
-                  : 'text-gray-400 transition-all ease-linear hover:text-tertiary hover:scale-90'
-              }`}
+              className={`flex items-center justify-center text-lg leading-6 font-semibold ${currentRoute === item.path
+                ? 'text-white border-b-2 border-white font-bold cursor-default'
+                : 'text-gray-400 transition-all ease-linear hover:text-tertiary hover:scale-90'
+                }`}
             >
               {item.name}
             </Link>
           ))}
         </Popover.Group>
+
         <div className="hidden lg:flex ">
           {status === 'loading' ? (
-            <CircularProgress />
+            <div className="w-44">
+              <Skeleton variant="text" width="100%" height={40} />
+            </div>
           ) : status === 'authenticated' ? (
             <Link
               href="/perfil"
@@ -176,18 +178,19 @@ export const Header = () => {
               </div>
             </Link>
           ) : (
-            <div className="flex gap-4 items-center text-base font-semibold font-alt">
+            <div className="flex gap-2 items-center text-base font-semibold font-alt">
               <Link
                 href="/entrar"
-                className="text-tertiary transition-all hover:text-white hover:scale-110"
+                className="text-tertiary transition-all hover:text-white hover:scale-105"
               >
-                Entrar
+                ENTRAR
               </Link>
+              <span className="text-gray-500">|</span>
               <Link
                 href="/cadastrar"
-                className="text-background px-2 bg-tertiary rounded-full transition-all hover:bg-white hover:scale-110"
+                className="text-tertiary transition-all hover:text-white hover:scale-105"
               >
-                Cadastre-se
+                CADASTRAR
               </Link>
             </div>
           )}
@@ -256,11 +259,10 @@ export const Header = () => {
                   <Link
                     key={item.name}
                     href={item.path}
-                    className={`-mx-3 block rounded-md px-3 py-2 text-base font-semibold transition-all ${
-                      currentRoute === item.path
-                        ? 'text-white border-b-2 border-white font-bold cursor-default'
-                        : 'text-gray-400 transition-all ease-linear hover:text-tertiary hover:scale-95'
-                    }`}
+                    className={`-mx-3 block rounded-md px-3 py-2 text-base font-semibold transition-all ${currentRoute === item.path
+                      ? 'text-white border-b-2 border-white font-bold cursor-default'
+                      : 'text-gray-400 transition-all ease-linear hover:text-tertiary hover:scale-95'
+                      }`}
                   >
                     {item.name}
                   </Link>
@@ -286,18 +288,19 @@ export const Header = () => {
                     </Link>
                   </div>
                 ) : (
-                  <div className="flex gap-4 items-center justify-between text-base font-semibold font-alt">
+                  <div className="flex gap-2 items-center text-base font-semibold font-alt">
                     <Link
                       href="/entrar"
-                      className="text-tertiary transition-all hover:text-white hover:scale-110"
+                      className="text-tertiary transition-all hover:text-white hover:scale-105"
                     >
-                      Entrar
+                      ENTRAR
                     </Link>
+                    <span className="text-gray-500">|</span>
                     <Link
                       href="/cadastrar"
-                      className="text-background px-2 bg-tertiary rounded-full transition-all hover:bg-white hover:scale-110"
+                      className="text-tertiary transition-all hover:text-white hover:scale-105"
                     >
-                      Cadastre-se
+                      CADASTRAR
                     </Link>
                   </div>
                 )}

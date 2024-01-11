@@ -83,8 +83,8 @@ export default function Support() {
           </div>
           <div className="mx-auto mt-12 max-w-2xl sm:mt-20 lg:mt-20 lg:max-w-7xl">
             <dl className="grid max-w-xl grid-cols-1 gap-x-24 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-20">
-              {features.map((feature) => (
-                <div key={feature.name} className="relative pl-14">
+              {features.map((feature, index) => (
+                <div key={index} className="relative pl-14">
                   <dt className="text-2xl font-semibold leading-7 text-gray-200 sm:text-3xl lg:text-4xl">
                     <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-backgroundAlt">
                       {feature.icon}
@@ -92,10 +92,8 @@ export default function Support() {
                     {feature.name}
                   </dt>
                   <dt className="mt-2 text-lg leading-relaxed text-gray-300 sm:text-xl lg:text-2xl">
-                    {feature.description.map((item) => (
-                      <p key={item} className="">
-                        {item}
-                      </p>
+                    {feature.description.map((item, index) => (
+                      <p key={index}>{item}</p>
                     ))}
                   </dt>
                 </div>

@@ -4,6 +4,7 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import Groups2Icon from '@mui/icons-material/Groups2';
 import Apartment from '@mui/icons-material/Apartment';
+import ElectricBolt from '@mui/icons-material/ElectricBolt'
 
 export interface PageAdminType {
   name: string;
@@ -66,6 +67,11 @@ export const pagesAdmin: PageAdminType[] = [
     name: 'Equipe',
     path: '/admin/equipe',
     icon: Groups2Icon
+  },
+  {
+    name: 'Inversores',
+    path: '/admin/inversores',
+    icon: ElectricBolt
   }
 ];
 

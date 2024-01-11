@@ -1,6 +1,6 @@
 import Skeleton from '@mui/material/Skeleton';
 
-export default function AdminArticlesLoading() {
+export default function Loading() {
   return (
     <article className="mx-auto grid  grid-cols-1 gap-x-8 gap-y-16 pt-10">
       {Array.from({ length: 3 }).map((_, index) => (

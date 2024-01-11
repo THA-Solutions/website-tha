@@ -28,21 +28,26 @@ export default function Page() {
 
   async function onSubmit(data: FieldValues) {
     try {
-      const result = await signIn('credentials', {
-        email: data.email,
-        password: data.password,
-        redirect: false
-      });
+      const result = await toast.promise(
+        signIn('credentials', {
+          email: data.email,
+          password: data.password,
+          redirect: false
+        }),
+        {
+          pending: 'Entrando...'
+        }
+      );
 
       if (result && result.error) {
         throw new Error(result.error);
       }
 
-      toast.success('Logado com sucesso!');
+      toast.success('Login realizado com sucesso!');
 
       setTimeout(() => {
         router.push('/');
-      }, 1500);
+      }, 2000);
     } catch (error) {
       console.error(error);
       toast.error(`${error as string}`);
@@ -142,7 +147,7 @@ export default function Page() {
       </section>
       <ToastContainer
         position="top-right"
-        autoClose={1500}
+        autoClose={2000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

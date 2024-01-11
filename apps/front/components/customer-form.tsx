@@ -83,17 +83,18 @@ const CustomerForm = ({
             className="text-xl font-semibold leading-6 text-tertiary"
           >
             Empresa
-            <span className="text-red-500 text-sm ml-1">*</span>
+            {isRequired && <span className="text-red-500 text-sm ml-1">*</span>}
           </label>
           <select
             {...register('company', { required: true })}
             id="company"
             name="company"
+            defaultValue={editCustomerData ? editCustomerData.company : ''}
             required={isRequired ? true : false}
             className="w-full border-0 pl-4 py-2 mt-2.5 bg-transparent shadow-sm ring-1 ring-inset placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-tertiary text-white ring-gray-400"
           >
             {companies?.map((company) => (
-              <option key={company.id} value={company.legal_name}>
+              <option key={company.id} value={company.legal_name} className='bg-backgroundAlt2 text-base text-gray-300'>
                 {company.legal_name}
               </option>
             ))}

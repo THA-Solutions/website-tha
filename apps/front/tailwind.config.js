@@ -8,7 +8,7 @@ module.exports = {
       __dirname,
       '{src,pages,components,app}/**/*!(*.stories|*.spec).{ts,tsx,html}'
     ),
-    ...createGlobPatternsForDependencies(__dirname),
+    ...createGlobPatternsForDependencies(__dirname)
   ],
   theme: {
     extend: {
@@ -23,7 +23,13 @@ module.exports = {
         'support-background': 'url("/features/atendimento.jpeg")',
         'laboratory-background': 'url("/features/laboratorio.jpeg")',
         'marketing-background': 'url("/features/marketing.jpeg")',
-        'supply-background': 'url("/features/supply_chain.jpeg")'
+        'supply-background': 'url("/features/supply_chain.jpeg")',
+        'abstract-background':
+          'url("https://images.unsplash.com/photo-1633436245198-44bc17f86b89?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")'
+      },
+
+      boxShadow: {
+        fill: '5px 5px 0 0'
       },
 
       colors: {
