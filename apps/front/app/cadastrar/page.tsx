@@ -53,7 +53,7 @@ export default function Page() {
     }
   };
 
-  const formInputs = [
+  const nameInputs = [
     {
       label: 'Nome',
       name: 'firstName',
@@ -71,7 +71,10 @@ export default function Page() {
       autoComplete: 'family-name',
       required: true,
       icon: <PersonOutlined className=" text-tertiary" />
-    },
+    }
+  ]
+
+  const otherInputs = [
     {
       label: 'E-mail',
       name: 'email',
@@ -95,22 +98,65 @@ export default function Page() {
   return (
     <>
       <section className="bg-hero-background bg-center bg-cover bg-no-repeat h-screen flex flex-col items-center justify-center text-left">
-        <div className="backdrop-blur-md bg-gray-800/80 py-8 px-4 w-full h-full flex flex-col justify-between shadow-[0_0_50px_10px] shadow-background ring-1 ring-gray-00 lg:max-w-2xl lg:my-4 lg:px-12">
-          <Link href="/" className="h-12 w-12 mb-8">
-            <Image src={Logo} alt="Logo da empresa" />
-          </Link>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="mb-12 flex flex-col gap-3">
-              <h1 className="text-3xl font-bold font-alt text-tertiary">
-                Bem-vindo!
-              </h1>
-              <h2 className="text-xl text-gray-400">
-                Faça seu cadastro e junte-se ao time
-              </h2>
+        <div className="backdrop-blur-md bg-gray-800/80 py-8 px-4 w-full h-full flex flex-col justify-between shadow-[0_0_50px_10px] shadow-background ring-1 ring-gray-00 md:max-w-2xl md:my-4 md:px-12">
+          <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col justify-between h-full'>
+            <div className='flex items-start justify-between'>
+              <Link href={"/"} className="h-12 w-12">
+                <Image src={Logo} alt="Logo da empresa" />
+              </Link>
+              <div className="flex flex-col text-right">
+                <h1 className="text-3xl font-bold font-alt text-tertiary md:text-4xl">
+                  Bem-vindo!
+                </h1>
+                <h2 className="text-sm text-gray-300 sm:text-lg md:text-xl">
+                  Faça seu cadastro e junte-se ao time
+                </h2>
+              </div>
             </div>
 
-            <div className="flex flex-col w-full gap-4">
-              {formInputs.map((input) =>
+            <div className="flex flex-col gap-4">
+              <div>
+                <label
+                  htmlFor="role"
+                  className="text-xl font-semibold leading-6 text-white"
+                >
+                  Escolha o tipo da sua conta
+                  <span className="text-red-500 text-sm ml-1">*</span>
+                </label>
+                <select
+                  {...register('role', { required: true })}
+                  id="role"
+                  name="role"
+                  className="w-full border-0 pl-4 py-2 mt-1 bg-transparent shadow-sm ring-1 ring-inset placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-tertiary text-white ring-gray-400"
+                >
+                  <option value='user' className='bg-backgroundAlt2 text-base text-gray-300'>
+                    Usuário comum
+                  </option>
+                  <option value='integrator' className='bg-backgroundAlt2 text-base text-gray-300'>
+                    Integrador
+                  </option>
+                  <option value='distributor' className='bg-backgroundAlt2 text-base text-gray-300'>
+                    Distribuidor
+                  </option>
+                </select>
+              </div>
+
+              <div className="flex flex-col w-full gap-4 sm:flex-row sm:justify-between">
+                {nameInputs.map((input) => (
+                  <div key={input.name} className='w-full'>
+                    <InputField
+                      key={input.name}
+                      input={input}
+                      register={register}
+                      errors={errors}
+                      colorLabel="white"
+                      colorRing="ring-gray-400"
+                    />
+                  </div>
+                ))}
+              </div>
+
+              {otherInputs.map((input) =>
                 input.type === 'password' ? (
                   <PasswordInputField
                     key={input.name}
@@ -133,14 +179,13 @@ export default function Page() {
                   />
                 )
               )}
+              <button
+                type="submit"
+                className="w-full bg-tertiary px-3.5 py-2.5 text-center text-xl font-bold font-alt text-gray-800/80 shadow-sm transition-all hover:bg-tertiary/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tertiary"
+              >
+                CADASTRAR
+              </button>
             </div>
-
-            <button
-              type="submit"
-              className="w-full mt-8 bg-tertiary px-3.5 py-2.5 text-center text-xl font-bold font-alt text-gray-800/80 shadow-sm transition-all hover:bg-tertiary/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tertiary"
-            >
-              CADASTRAR
-            </button>
           </form>
 
           <footer className="mt-6 flex w-full justify-center">
