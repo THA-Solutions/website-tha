@@ -10,7 +10,7 @@ export default async function Comparacao({
 }: {
   params: { id: string[] };
 }) {
-  const inverterData = await InverterService.getInvertersDataById(
+  const inverterData = await InverterService.getInverterById(
     params.id[0]
   ).then((data) => {
     const filteredData: any = {};
@@ -22,7 +22,7 @@ export default async function Comparacao({
     return filteredData;
   });
 
-  const inverterData2 = await InverterService.getInvertersDataById(
+  const inverterData2 = await InverterService.getInverterById(
     params.id[1]
   ).then((data) => {
     const filteredData: any = {};

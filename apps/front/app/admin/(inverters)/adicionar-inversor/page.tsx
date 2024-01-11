@@ -1,14 +1,16 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-
+import { use } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 
-import { CompanyService } from '@tha-solutions';
-import CompanyForm from 'apps/front/components/company-form';
+import { useRouter } from 'next/navigation';
+
+import { CompanyService, InverterService } from '@tha-solutions';
+import InverterForm from 'apps/front/components/inverter-form';
 
 export default function Page() {
+  const companies = use(CompanyService.getAllCompanies());
   const router = useRouter();
 
   const onSubmit = async (data: FieldValues) => {
@@ -22,25 +24,26 @@ export default function Page() {
         formData.append(key, content[key]);
       }
 
-      await toast.promise(CompanyService.createCompany(formData), {
-        pending: 'Criando empresa...',
-        success: 'Empresa criada com sucesso!',
-        error: 'Erro ao criar a empresa'
+      await toast.promise(InverterService.createInverter(formData), {
+        pending: 'Criando Inversor...',
+        success: 'Inversor criado com sucesso!',
+        error: 'Erro ao criar inversor'
       });
 
       setTimeout(() => {
-        router.push('/admin/empresas');
+        router.push('/admin/inversores');
       }, 1500);
     } catch (error) {
-      throw Error(`Error in create company: ${error}`);
+      throw Error(`Error in create inverter: ${error}`);
     }
   };
 
   return (
     <>
-      <CompanyForm
+      <InverterForm
         onSubmit={onSubmit}
         buttonText="ADICIONAR"
+        companies={companies}
         isRequired={true}
       />
       <ToastContainer
@@ -56,5 +59,5 @@ export default function Page() {
         theme="dark"
       />
     </>
-  );
+  )
 }

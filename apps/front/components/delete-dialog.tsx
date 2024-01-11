@@ -9,13 +9,15 @@ import { Delete } from '@mui/icons-material';
 interface DeleteDialogProps {
   title: string;
   description: string;
+  isShort?: boolean
   onConfirm: () => void;
 }
 
 export default function DeleteDialog({
   title,
   description,
-  onConfirm
+  onConfirm,
+  isShort
 }: DeleteDialogProps) {
   const [open, setOpen] = React.useState(false);
 
@@ -34,13 +36,22 @@ export default function DeleteDialog({
 
   return (
     <React.Fragment>
-      <button
-        onClick={handleClickOpen}
-        className="w-full flex items-center justify-center font-semibold text-background px-2 py-1 gap-1 bg-red-500 ring-1 ring-red-600 transition-all hover:scale-105 hover:bg-red-300"
-      >
-        <Delete />
-        <span>Deletar</span>
-      </button>
+      {!isShort ? (
+        <button
+          onClick={handleClickOpen}
+          className="w-full flex items-center justify-center font-semibold text-background px-2 py-1 gap-1 bg-red-500 ring-1 ring-red-600 transition-all hover:scale-105 hover:bg-red-300"
+        >
+          <Delete />
+          <span>Deletar</span>
+        </button>
+      ) : (
+        <button
+          onClick={handleClickOpen}
+          className="text-red-400 hover:text-red-800"
+        >
+          <Delete />
+        </button>
+      )}
       <Dialog
         open={open}
         onClose={handleClose}

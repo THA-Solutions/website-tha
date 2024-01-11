@@ -39,7 +39,7 @@ export default async function Fichatecnica({
 }: {
   params: { id: string };
 }) {
-  const inverterData = await InverterService.getInvertersDataById(params.id);
+  const inverterData = await InverterService.getInverterById(params.id);
 
   return (
     <>

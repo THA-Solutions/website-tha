@@ -16,7 +16,7 @@ export class UserService {
     private companyService: CompanyService,
     private imageService: ImageService,
     private mailService: MailService
-  ) {}
+  ) { }
 
   //Criptografa a senha do usuário de acordo com a chave de criptografia definida no arquivo .env e protocolo AES-256-CBC
   crypter(password: string) {
@@ -215,9 +215,7 @@ export class UserService {
               if (!company) {
                 throw Error('Company not found');
               }
-              user.company = company.trade_name
-                ? company.trade_name
-                : company.legal_name!;
+              user.company = company.legal_name
             });
           }
 
