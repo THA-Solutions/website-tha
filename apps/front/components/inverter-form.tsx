@@ -258,21 +258,25 @@ const InverterForm = ({
             {isRequired && <span className="text-red-500 text-sm ml-1">*</span>}
           </label>
           <select
-            {...register('company', { required: true })}
+            {...register('id_company', { required: true })}
             id="company"
             name="company"
-            defaultValue={editInverterData ? editInverterData.company : ''}
+            defaultValue={editInverterData ? editInverterData.id_company : ''}
             required={isRequired ? true : false}
             className="w-full border-0 pl-4 py-2 mt-2.5 bg-transparent shadow-sm ring-1 ring-inset placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-tertiary text-white ring-gray-400"
           >
             {companies?.map((company) => (
-              <option key={company.id} value={company.id} className='bg-backgroundAlt2 text-base text-gray-300'>
+              <option
+                key={company.id}
+                value={company.id}
+                className="bg-backgroundAlt2 text-base text-gray-300"
+              >
                 {company.legal_name}
               </option>
             ))}
           </select>
         </div>
-        {inputs.map((input) =>
+        {inputs.map((input) => (
           <InputField
             key={input.name}
             input={input}
@@ -282,7 +286,7 @@ const InverterForm = ({
             colorLabel="tertiary"
             colorRing="ring-gray-400"
           />
-        )}
+        ))}
       </div>
       <button
         type="submit"
@@ -291,7 +295,7 @@ const InverterForm = ({
         {buttonText}
       </button>
     </form>
-  )
+  );
 }
 
 export default InverterForm;
