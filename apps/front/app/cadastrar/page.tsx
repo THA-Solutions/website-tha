@@ -99,21 +99,21 @@ export default function Page() {
     <>
       <section className="bg-hero-background bg-center bg-cover bg-no-repeat h-screen flex flex-col items-center justify-center text-left">
         <div className="backdrop-blur-md bg-gray-800/80 py-8 px-4 w-full h-full flex flex-col justify-between shadow-[0_0_50px_10px] shadow-background ring-1 ring-gray-00 md:max-w-2xl md:my-4 md:px-12">
-          <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col justify-between h-full'>
-            <div className='flex items-start justify-between'>
-              <Link href={"/"} className="h-12 w-12">
-                <Image src={Logo} alt="Logo da empresa" />
-              </Link>
-              <div className="flex flex-col text-right">
-                <h1 className="text-3xl font-bold font-alt text-tertiary md:text-4xl">
-                  Bem-vindo!
-                </h1>
-                <h2 className="text-sm text-gray-300 sm:text-lg md:text-xl">
-                  Faça seu cadastro e junte-se ao time
-                </h2>
-              </div>
+          <header className='flex items-start justify-between'>
+            <Link href={"/"} className="h-12 w-12">
+              <Image src={Logo} alt="Logo da empresa" />
+            </Link>
+            <div className="flex flex-col text-right">
+              <h1 className="text-3xl font-bold font-alt text-tertiary md:text-4xl">
+                Bem-vindo!
+              </h1>
+              <h2 className="text-sm text-gray-300 sm:text-lg md:text-xl">
+                Faça seu cadastro e junte-se ao time
+              </h2>
             </div>
+          </header>
 
+          <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col justify-between'>
             <div className="flex flex-col gap-4">
               <div>
                 <label
