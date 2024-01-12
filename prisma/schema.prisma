@@ -83,8 +83,9 @@ model Inverter {
   protection_degree                     String  @db.VarChar(100)
   warranty                              String  @db.VarChar(100)
   network_monitoring                    String? @db.VarChar(100)
-  id_company                            String
-  company                               Company @relation(fields: [id_company], references: [id], onDelete: Cascade)
+  id_company                            String 
+  Company                               Company? @relation(fields: [id_company], references: [id], onDelete: Cascade)   
+                        
 
   @@index([id_company], map: "inverter_FK")
   @@map("inverter")

@@ -13,8 +13,6 @@ export const config = {
 };
 
 export async function middleware(request: NextRequest) {
-  console.log('middleware executou');
-
   const token = await getToken({ req: request });
 
   // Logout User
