@@ -70,7 +70,7 @@ const UserForm = ({
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+    const file: any = event.target.files?.[0];
     setSelectedFile(file);
 
     // Se precisar realizar alguma ação imediatamente após a seleção do arquivo
