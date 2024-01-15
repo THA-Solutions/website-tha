@@ -10,7 +10,7 @@ export class CompanyService {
   constructor(
     private readonly prisma: PrismaService,
     private imageService: ImageService
-  ) {}
+  ) { }
 
   async create(
     createCompanyDto: CreateCompanyDto,
@@ -124,7 +124,7 @@ export class CompanyService {
     try {
       if (imageFile) {
         this.imageService.deleteAll(id);
-         await this.imageService.create(
+        await this.imageService.create(
           {
             id_origem: id
           },
@@ -162,7 +162,7 @@ export class CompanyService {
           throw Error('Company not found');
         }
       });
-      if (await this.prisma.user.findMany({ where: { company: id } })) {
+      if ((await this.prisma.user.findMany({ where: { company: id } })).length > 0) {
         throw Error('Company has users');
       }
       return await this.prisma.company.delete({ where: { id: id } });

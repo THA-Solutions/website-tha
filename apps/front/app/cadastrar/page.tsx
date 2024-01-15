@@ -33,8 +33,6 @@ export default function Page() {
       const { ...content } = data;
       const formData = new FormData();
 
-      formData.append('role', 'user');
-
       for (let key in content) {
         formData.append(key, content[key]);
       }
@@ -181,7 +179,7 @@ export default function Page() {
               )}
               <button
                 type="submit"
-                className="w-full bg-tertiary px-3.5 py-2.5 text-center text-xl font-bold font-alt text-gray-800/80 shadow-sm transition-all hover:bg-tertiary/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tertiary"
+                className="w-full bg-tertiary px-3.5 py-2.5 text-center text-xl font-bold font-alt text-gray-800/80 shadow-sm transition-all hover:bg-tertiary/60 hover:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tertiary"
               >
                 CADASTRAR
               </button>
@@ -193,7 +191,7 @@ export default function Page() {
               Já possui uma conta?{' '}
               <Link
                 href="/entrar"
-                className="text-tertiary font-bold hover:underline"
+                className="text-tertiary font-bold transition-all hover:underline"
               >
                 ENTRE
               </Link>

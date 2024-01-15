@@ -1,23 +1,29 @@
 'use client';
 
-import { use } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 
 import { useRouter } from 'next/navigation';
 
-import { User, CustomerService } from '@tha-solutions';
+import { CustomerService } from '@tha-solutions';
 import UserForm from 'apps/front/components/user-form';
 import { useSession } from 'next-auth/react';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function Page({ params }: { params: { id: string } }) {
-  const user: User = use(CustomerService.getCustomerById(params.id));
+  const { data: session, status, update } = useSession();
+
   const router = useRouter();
-  const { data: session, update } = useSession();
+
   const onSubmit = async (data: FieldValues) => {
     try {
+      console.log(data)
+
       const { imageFile, ...content } = data;
       const formData = new FormData();
+
+      console.log(typeof imageFile[0])
+
 
       if (imageFile[0] && typeof imageFile[0] === 'object') {
         formData.append('imageFile', imageFile[0]);
@@ -27,36 +33,23 @@ export default function Page({ params }: { params: { id: string } }) {
         formData.append(key, content[key]);
       }
 
-      const updatedData = await toast.promise(
-        CustomerService.updateCustomer(params.id, formData),
-        {
-          pending: 'Atualizando...',
-          success: 'Atualizado com sucesso!',
-          error: 'Erro ao atualizar as informações'
-        }
-      );
-
       formData.delete('password');
 
-      const updatedUser = await toast
-        .promise(CustomerService.updateCustomer(params.id, formData), {
-          pending: 'Atualizando...',
-          success: 'Atualizado com sucesso!',
-          error: 'Erro ao atualizar as informações'
+      await toast.promise(CustomerService.updateCustomer(params.id, formData), {
+        pending: 'Atualizando...',
+        success: 'Atualizado com sucesso!',
+        error: 'Erro ao atualizar as informações'
+      }).then(async (res) => {
+        await update({
+          ...session,
+          user: {
+            ...session?.user,
+            firstName: res.firstName,
+            lastName: res.lastName,
+            image: res.image
+          }
         })
-        .then(async (res) => {
-          await update({
-            ...session,
-            user: {
-              id: res.id,
-              firstName: res.firstName,
-              lastName: res.lastName,
-              email: res.email,
-              company: res.company,
-              image: res.image ? res.image : null
-            }
-          });
-        });
+      })
 
       setTimeout(() => {
         router.push('/perfil');
@@ -68,13 +61,17 @@ export default function Page({ params }: { params: { id: string } }) {
 
   return (
     <>
-      {user && (
+      {status === 'authenticated' ? (
         <UserForm
           onSubmit={onSubmit}
           buttonText="ATUALIZAR"
-          editUserData={user}
+          editUserData={session.user}
           isRequired={false}
         />
+      ) : (
+        <div className="flex items-center justify-center h-72">
+          <CircularProgress color="primary" />
+        </div>
       )}
       <ToastContainer
         position="top-right"

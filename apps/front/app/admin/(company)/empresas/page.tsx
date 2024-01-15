@@ -20,7 +20,7 @@ export default function Page() {
     await toast.promise(CompanyService.deleteCompany(id), {
       pending: 'Deletando a empresa...',
       success: 'Empresa deletada com sucesso!',
-      error: 'Erro ao deletar a empresa'
+      error: 'Empresa possui clientes, remova-os primeiro'
     });
 
     setTimeout(() => {
@@ -153,7 +153,7 @@ export default function Page() {
       )}
       <ToastContainer
         position="top-right"
-        autoClose={1500}
+        autoClose={3000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

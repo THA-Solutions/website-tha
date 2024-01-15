@@ -167,12 +167,13 @@ export const Header = () => {
           ) : status === 'authenticated' ? (
             <Link
               href="/perfil"
-              className="flex items-center text-sm font-semibold gap-2 text-gray-200 transition ease-linear hover:text-tertiary hover:scale-90"
+              aria-label='Acessar perfil'
+              className="group flex items-center text-sm font-semibold gap-2 text-gray-200 transition ease-linear hover:scale-105"
             >
-              <AccountCircle className="text-4xl" />
+              {session.user.image ? <Image src={session.user.image} alt='Imagem de perfil do usuário' width={120} height={120} className='rounded-full w-9' /> : <AccountCircle className="text-4xl" />}
               <div className="flex gap-1">
-                Olá,{' '}
-                <span className="text-tertiary">
+                Olá,
+                <span className="font-bold text-primary group-hover:text-gray-500">
                   {session?.user?.firstName}
                 </span>
               </div>
