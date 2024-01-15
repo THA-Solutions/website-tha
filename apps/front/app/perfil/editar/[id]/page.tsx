@@ -17,13 +17,8 @@ export default function Page({ params }: { params: { id: string } }) {
 
   const onSubmit = async (data: FieldValues) => {
     try {
-      console.log(data)
-
       const { imageFile, ...content } = data;
       const formData = new FormData();
-
-      console.log(typeof imageFile[0])
-
 
       if (imageFile[0] && typeof imageFile[0] === 'object') {
         formData.append('imageFile', imageFile[0]);

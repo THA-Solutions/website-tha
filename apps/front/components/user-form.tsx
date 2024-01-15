@@ -70,33 +70,32 @@ const UserForm = ({
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const file: any = event.target.files?.[0];
-    setSelectedFile(file);
+    const file = event.target.files?.[0];
 
-    // Se precisar realizar alguma ação imediatamente após a seleção do arquivo
-    // você pode adicionar o código aqui
+    if (file) {
+      setSelectedFile(file);
+    }
   };
+
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col gap-4 max-w-xl w-full space-y-4"
     >
-      <div className='flex flex-col items-center space-y-6 w-full p-2'>
-        <div className="shrink-0">
-          <Image className="h-24 w-24 object-cover rounded-full" src={selectedFile ? URL.createObjectURL(selectedFile) : editUserData?.image ? editUserData.image : Logo} alt="Foto de perfil atual" width={96} height={96} />
-        </div>
-        <label className="block">
-          <span className="sr-only">Escolha um arquivo</span>
-          <input
-            {...register("imageFile", { required: isRequired ? true : false })}
-            id="imageFile"
-            name="imageFile"
-            type="file"
-            onChange={handleFileChange}
-            className="block w-full text-sm text-gray-300 file:py-1 file:px-2 file:border-0 file:mr-4 file:text-sm file:font-semibold file:bg-blue-400 file:text-background hover:file:bg-background hover:file:text-blue-400"
-          />
-        </label>
+      <div className="shrink-0 flex w-full justify-center items-center">
+        <Image className="h-24 w-24 object-cover rounded-full" src={selectedFile ? URL.createObjectURL(selectedFile) : editUserData?.image ? editUserData.image : Logo} alt="Foto de perfil atual" width={96} height={96} />
+      </div>
+      <div>
+        <label className="text-xl font-semibold leading-6 text-white" htmlFor="file_input">Foto de perfil</label>
+        <input
+          {...register("imageFile", { required: isRequired ? true : false })}
+          id="fileInput"
+          name="imageFile"
+          type="file"
+          onChange={handleFileChange}
+          className="mt-1 block w-full px-4 py-2 text-sm text-gray-500 ring-1 ring-gray-500 file:transition-all file:cursor-pointer focus:outline-none file:border-0 file:mr-2 file:text-sm file:font-semibold file:bg-gray-500 file:text-background hover:file:bg-gray-900 hover:file:text-gray-500"
+        />
       </div>
       {inputs.map((input) => (
         <div key={input.name} className="flex flex-col">
@@ -104,6 +103,7 @@ const UserForm = ({
             input={input}
             value={input.value}
             register={register}
+            colorRing='ring-gray-500'
             errors={errors}
           />
           {input.name === 'email' && (

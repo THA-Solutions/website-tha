@@ -1,6 +1,5 @@
 'use client';
 
-import { use, useEffect, useState } from 'react';
 import { signOut, useSession } from 'next-auth/react';
 
 import Image from 'next/image';
@@ -9,7 +8,7 @@ import { useRouter } from 'next/navigation';
 
 import Edit from '@mui/icons-material/Edit';
 import Logout from '@mui/icons-material/Logout';
-import { CircularProgress } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function Page() {
   const { data: session, status } = useSession();
@@ -73,8 +72,3 @@ export default function Page() {
     </>
   );
 }
-
-//Fabricante (admin)
-//Cliente final
-//Integrador
-//Distribuidor
