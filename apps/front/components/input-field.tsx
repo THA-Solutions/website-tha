@@ -39,7 +39,7 @@ const InputField = ({
         {input.label}
         {input.required && <span className="text-red-500 text-sm ml-1">*</span>}
       </label>
-      <div className="mt-2.5 relative">
+      <div className="mt-1 relative">
         <input
           {...register(input.name, {
             required: input.required,
@@ -53,12 +53,11 @@ const InputField = ({
           autoComplete={input.autoComplete}
           onChange={input.onChange}
           disabled={input.disabled || false}
-          className={`w-full border-0 ${input.icon ? 'pl-14' : 'pl-4'} 
-          py-2 bg-transparent shadow-sm ring-1 ring-inset placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-tertiary ${
-            input.disabled
+          className={`w-full border-0 ${input.icon ? 'pl-14' : 'pl-4'}
+          py-2 bg-transparent shadow-sm ring-1 ring-inset placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-tertiary ${input.disabled
               ? 'ring-gray-700 text-gray-700'
               : `text-white ${colorRing}`
-          }`}
+            }`}
         />
         <div className="absolute top-1/2 transform -translate-y-1/2 left-4">
           {input.icon}

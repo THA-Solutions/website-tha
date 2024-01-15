@@ -1,11 +1,14 @@
+import { ChangeEvent, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 
 import Link from 'next/link';
 
 import { CustomerService, User } from '@tha-solutions';
 import InputField from './input-field';
+import Logo from '../public/logo-colored.png'
 
 import ArrowRightAlt from '@mui/icons-material/ArrowRightAlt';
+import Image from 'next/image';
 
 interface UserFormProps {
   onSubmit: (data: FieldValues) => Promise<void>;
@@ -28,14 +31,6 @@ const UserForm = ({
 
 
   const inputs = [
-    {
-      label: 'Imagem',
-      name: 'imageFile',
-      type: 'file',
-      required: isRequired ? true : false,
-      placeholder: 'Selecione a imagem do colaborador',
-      value: editUserData?.image
-    },
     {
       name: 'firstName',
       label: 'Nome',
@@ -72,11 +67,37 @@ const UserForm = ({
     }
   ];
 
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file: any = event.target.files?.[0];
+    setSelectedFile(file);
+
+    // Se precisar realizar alguma ação imediatamente após a seleção do arquivo
+    // você pode adicionar o código aqui
+  };
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col gap-4 max-w-xl w-full space-y-4"
     >
+      <div className='flex flex-col items-center space-y-6 w-full p-2'>
+        <div className="shrink-0">
+          <Image className="h-24 w-24 object-cover rounded-full" src={selectedFile ? URL.createObjectURL(selectedFile) : editUserData?.image ? editUserData.image : Logo} alt="Foto de perfil atual" width={96} height={96} />
+        </div>
+        <label className="block">
+          <span className="sr-only">Escolha um arquivo</span>
+          <input
+            {...register("imageFile", { required: isRequired ? true : false })}
+            id="imageFile"
+            name="imageFile"
+            type="file"
+            onChange={handleFileChange}
+            className="block w-full text-sm text-gray-300 file:py-1 file:px-2 file:border-0 file:mr-4 file:text-sm file:font-semibold file:bg-blue-400 file:text-background hover:file:bg-background hover:file:text-blue-400"
+          />
+        </label>
+      </div>
       {inputs.map((input) => (
         <div key={input.name} className="flex flex-col">
           <InputField
