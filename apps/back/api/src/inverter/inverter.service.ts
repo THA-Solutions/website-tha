@@ -129,7 +129,6 @@ export class InverterService {
             image: image ? image : null
           };
         });
-      console.log(inverter);
       return inverter;
     } catch (error) {
       throw new Error(`Error in find inverter by id ${error}`);
