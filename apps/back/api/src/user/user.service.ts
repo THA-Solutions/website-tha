@@ -236,6 +236,7 @@ export class UserService {
   }
 
   async findByEmail(email: string): Promise<ResponseUserDto> {
+    
     try {
       //Busca o usuário pelo email e sua respectiva imagem e retorna um objeto com os dados do usuário e a url da imagem
       const user = await this.prisma.user
@@ -289,8 +290,10 @@ export class UserService {
     updateUserDto: UpdateUserDto,
     image?: Express.Multer.File
   ) {
+    const responseUser = new ResponseUserDto();
     try {
       const { imageFile, ...data } = updateUserDto;
+
       if (image) {
         let imageInDB = await this.imageService.findByOrigin(id);
         if (imageInDB.length > 0) {
@@ -298,37 +301,46 @@ export class UserService {
             .update(imageInDB[0].id, { id_origem: id }, image)
             .then((image) => {
               if (!image) {
-                throw Error('Image not found');
+                throw Error('Image not updated');
               }
-              updateUserDto.image = image.url;
+              responseUser.image = image.url;
             });
         } else {
-          await this.imageService.create({ id_origem: id }, image);
+          await this.imageService
+            .create({ id_origem: id }, image)
+            .then((image) => {
+              if (!image) {
+                throw Error('Image not updated');
+              }
+              responseUser.image = image.url;
+            });
         }
       }
 
-      const updatedUser = await this.prisma.user.update({
-        where: { id },
-        data: {
-          firstName: data.firstName,
-          lastName: data.lastName,
-          email: data.email,
-          company: data.company
-        }
-      });
+      await this.prisma.user
+        .update({
+          where: { id },
+          data: {
+            firstName: data.firstName,
+            lastName: data.lastName,
+            email: data.email,
+            company: data.company
+          }
+        })
+        .then(async (user) => {
+          responseUser.id = user.id!;
+          responseUser.email = user.email!;
+          responseUser.firstName = user.firstName!;
+          responseUser.lastName = user.lastName!;
+          responseUser.company = user.company!;
+          return;
+        });
 
-      const returnUser = {
-        id: updatedUser.id,
-        firstName: updatedUser.firstName,
-        lastName: updatedUser.lastName,
-        email: updatedUser.email,
-        role: updatedUser.role,
-        image: updateUserDto.image ? updateUserDto.image : null
-      };
-      return returnUser;
+      return responseUser;
     } catch (error) {
       throw Error(`Error in update user ${error}`);
     }
+    
   }
 
   async forgotPassword(email: string, request: any) {

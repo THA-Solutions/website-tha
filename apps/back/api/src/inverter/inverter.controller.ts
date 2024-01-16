@@ -24,34 +24,60 @@ export class InverterController {
     @Body() createInverterDto: CreateInverterDto,
     @UploadedFile() imageFile: Express.Multer.File
   ) {
-    return this.inverterService.create(createInverterDto, imageFile);
+    try {
+      return this.inverterService.create(createInverterDto, imageFile);
+    } catch (error) {
+      throw Error(`Error in create inverter ${error}`);
+    }
   }
 
   @Get()
   findAll() {
-    return this.inverterService.findAll();
+    try {
+      return this.inverterService.findAll();
+    } catch (error) {
+      throw Error(`Error in find all inverters ${error}`);
+    }
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.inverterService.findOne(id);
+    try {
+      return this.inverterService.findOne(id);
+    } catch (error) {
+      throw Error(`Error in find inverter by id ${error}`);
+    }
   }
 
   @Get('title/:title')
   findByTitle(@Param('title') title: string) {
-    return this.inverterService.findByTitle(title);
+    try {
+      return this.inverterService.findByTitle(title);
+    } catch (error) {
+      throw Error(`Error in find inverter by title ${error}`);
+    }
   }
 
   @Patch(':id')
+  @UseInterceptors(FileInterceptor('imageFile'))
   update(
     @Param('id') id: string,
-    @Body() updateInverterDto: UpdateInverterDto
+    @Body() updateInverterDto: UpdateInverterDto,
+    @UploadedFile() imageFile: Express.Multer.File
   ) {
-    return this.inverterService.update(id, updateInverterDto);
+    try {
+      return this.inverterService.update(id, updateInverterDto, imageFile);
+    } catch (error) {
+      throw Error(`Error in update inverter ${error}`);
+    }
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.inverterService.remove(id);
+    try {
+      return this.inverterService.remove(id);
+    } catch (error) {
+      throw Error(`Error in delete inverter ${error}`);
+    }
   }
 }
