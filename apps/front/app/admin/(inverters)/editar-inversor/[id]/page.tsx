@@ -6,11 +6,11 @@ import { ToastContainer, toast } from 'react-toastify';
 
 import { useRouter } from 'next/navigation';
 
-import { User, CustomerService, Company, CompanyService } from '@tha-solutions';
-import CustomerForm from 'apps/front/components/customer-form';
+import { Inverter, InverterService, Company, CompanyService } from '@tha-solutions';
+import InverterForm from 'apps/front/components/inverter-form';
 
 export default function Page({ params }: { params: { id: string } }) {
-  const customer: User = use(CustomerService.getCustomerById(params.id));
+  const inverter: Inverter = use(InverterService.getInverterById(params.id));
   const companies: Company[] = use(CompanyService.getAllCompanies());
 
   const router = useRouter();
@@ -34,35 +34,33 @@ export default function Page({ params }: { params: { id: string } }) {
         formData.append('imageFile', imageFile[0]);
       }
 
-      formData.append('role', 'customer');
-
       for (let key in content) {
         if (key === 'company') {
           formData.append('company', companiesFIlter(content[key]));
         } else formData.append(key, content[key]);
       }
 
-      await toast.promise(CustomerService.updateCustomer(params.id, formData), {
-        pending: 'Atualizando cliente...',
-        success: 'Cliente atualizado com sucesso!',
-        error: 'Erro ao atualizar o cliente'
+      await toast.promise(InverterService.updateInverter(params.id, formData), {
+        pending: 'Atualizando inversor...',
+        success: 'Inversor atualizado com sucesso!',
+        error: 'Erro ao atualizar inversor'
       });
 
       setTimeout(() => {
-        router.push('/admin/clientes');
+        router.push('/admin/inversores');
       }, 1500);
     } catch (error) {
-      toast.error(`Erro ao atualizar o cliente: ${error}`);
+      toast.error(`Erro ao atualizar inversor: ${error}`);
     }
   };
 
   return (
     <>
-      {customer && (
-        <CustomerForm
+      {inverter && (
+        <InverterForm
           onSubmit={onSubmit}
           buttonText="ATUALIZAR"
-          editCustomerData={customer}
+          editInverterData={inverter}
           companies={companies}
           isRequired={false}
         />

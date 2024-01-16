@@ -31,7 +31,6 @@ const InverterForm = ({
       type: 'file',
       required: false,
       placeholder: 'Selecione a imagem da empresa',
-      value: editInverterData?.image.url
     },
     {
       label: 'Título',
@@ -268,7 +267,7 @@ const InverterForm = ({
             {companies?.map((company) => (
               <option
                 key={company.id}
-                value={company.id}
+                value={company.legal_name}
                 className="bg-backgroundAlt2 text-base text-gray-300"
               >
                 {company.legal_name}

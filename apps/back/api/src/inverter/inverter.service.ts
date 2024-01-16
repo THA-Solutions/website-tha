@@ -13,7 +13,7 @@ export class InverterService {
     private prisma: PrismaService,
     private imageService: ImageService,
     private companyService: CompanyService
-  ) {}
+  ) { }
 
   async create(
     createInverterDto: CreateInverterDto,
@@ -129,7 +129,7 @@ export class InverterService {
         });
 
       return inverter;
-    } catch (error) {}
+    } catch (error) { }
   }
 
   async findByTitle(title: string): Promise<ResponseInverterDto[]> {
@@ -168,7 +168,7 @@ export class InverterService {
       });
 
       return inverter;
-    } catch (error) {}
+    } catch (error) { }
   }
 
   async remove(id: string) {
@@ -178,6 +178,6 @@ export class InverterService {
       });
       await this.imageService.deleteAll(id);
       return;
-    } catch (error) {}
+    } catch (error) { }
   }
 }
