@@ -65,7 +65,7 @@ export default function Page() {
                 <div className="flex flex-col gap-1 pl-2">
                   <h3 className="text-base text-gray-400 font-semibold">
                     Empresa: {' '}
-                    <span className="text-white">{inverter.id_company}</span>
+                    <span className="text-white">{inverter.company}</span>
                   </h3>
                   <h3 className="text-base text-gray-400 font-semibold">
                     Título: {' '}

@@ -7,6 +7,7 @@ export interface Inverter {
   id: string;
   title: string;
   id_company: string;
+  company: string;
   cc_voltage: string;
   mppt_voltage_range: string;
   max_input_current: string;

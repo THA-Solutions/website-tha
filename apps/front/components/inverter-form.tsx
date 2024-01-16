@@ -267,7 +267,7 @@ const InverterForm = ({
             {companies?.map((company) => (
               <option
                 key={company.id}
-                value={company.legal_name}
+                value={company.id}
                 className="bg-backgroundAlt2 text-base text-gray-300"
               >
                 {company.legal_name}
