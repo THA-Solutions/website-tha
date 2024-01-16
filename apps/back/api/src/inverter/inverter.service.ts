@@ -21,7 +21,6 @@ export class InverterService {
   ) {
     try {
       const { image, ...data } = createInverterDto;
-
       data.num_mppt = Number(data.num_mppt);
 
       const company = await this.companyService.findOne(data.id_company);
