@@ -333,6 +333,7 @@ export class UserService {
           responseUser.firstName = user.firstName!;
           responseUser.lastName = user.lastName!;
           responseUser.company = user.company!;
+          return;
         });
 
       return responseUser;
