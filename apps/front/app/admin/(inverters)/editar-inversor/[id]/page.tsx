@@ -13,17 +13,9 @@ export default function Page({ params }: { params: { id: string } }) {
   const inverter: Inverter = use(InverterService.getInverterById(params.id));
   const companies: Company[] = use(CompanyService.getAllCompanies());
 
-  const router = useRouter();
+  console.log(companies)
 
-  function companiesFIlter(legalName: string) {
-    const company = companies.find(
-      (company) => company.legal_name === legalName
-    );
-    if (company) {
-      return company.id;
-    }
-    return '';
-  }
+  const router = useRouter();
 
   const onSubmit = async (data: FieldValues) => {
     try {
@@ -35,9 +27,7 @@ export default function Page({ params }: { params: { id: string } }) {
       }
 
       for (let key in content) {
-        if (key === 'company') {
-          formData.append('company', companiesFIlter(content[key]));
-        } else formData.append(key, content[key]);
+        formData.append(key, content[key]);
       }
 
       await toast.promise(InverterService.updateInverter(params.id, formData), {

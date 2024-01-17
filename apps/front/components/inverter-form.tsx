@@ -250,7 +250,7 @@ const InverterForm = ({
       <div className="flex flex-col w-full gap-8">
         <div>
           <label
-            htmlFor="company"
+            htmlFor="id_company"
             className="text-xl font-semibold leading-6 text-tertiary"
           >
             Empresa
@@ -258,8 +258,8 @@ const InverterForm = ({
           </label>
           <select
             {...register('id_company', { required: true })}
-            id="company"
-            name="company"
+            id="id_company"
+            name="id_company"
             defaultValue={editInverterData ? editInverterData.id_company : ''}
             required={isRequired ? true : false}
             className="w-full border-0 pl-4 py-2 mt-2.5 bg-transparent shadow-sm ring-1 ring-inset placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-tertiary text-white ring-gray-400"

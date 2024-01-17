@@ -2,13 +2,14 @@ import { ChangeEvent, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 
 import Link from 'next/link';
+import Image from 'next/image';
 
-import { CustomerService, User } from '@tha-solutions';
+import { User } from '@tha-solutions';
+
 import InputField from './input-field';
 import Logo from '../public/logo-colored.png'
-
 import ArrowRightAlt from '@mui/icons-material/ArrowRightAlt';
-import Image from 'next/image';
+
 
 interface UserFormProps {
   onSubmit: (data: FieldValues) => Promise<void>;
@@ -28,7 +29,6 @@ const UserForm = ({
     handleSubmit,
     formState: { errors }
   } = useForm();
-
 
   const inputs = [
     {
@@ -71,12 +71,10 @@ const UserForm = ({
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-
     if (file) {
       setSelectedFile(file);
     }
   };
-
 
   return (
     <form
@@ -117,12 +115,7 @@ const UserForm = ({
           )}
           {input.name === 'password' && (
             <Link
-              href={`/perfil/editar/${editUserData?.id}/token`}
-              onClick={() =>
-                CustomerService.sendTokenToResetPassword({
-                  email: editUserData?.email
-                })
-              }
+              href={'/recuperar-senha'}
               className="flex items-center w-fit px-1 py-2 text-indigo-400 hover:underline"
             >
               <span>Alterar senha</span>
