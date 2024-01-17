@@ -9,12 +9,12 @@ import Image from 'next/image';
 import Edit from '@mui/icons-material/Edit';
 import SearchOff from '@mui/icons-material/SearchOff';
 
-import { InverterService } from '@tha-solutions';
+import { Inverter, InverterService } from '@tha-solutions';
 import ImageNotFound from 'apps/front/components/image-not-found';
 import DeleteDialog from 'apps/front/components/delete-dialog';
 
 export default function Page() {
-  const inverters = use(InverterService.getAllInverters());
+  const inverters: Inverter[] = use(InverterService.getAllInverters());
 
   const deleteInverter = async (id: string) => {
     await toast.promise(InverterService.deleteInverter(id), {
