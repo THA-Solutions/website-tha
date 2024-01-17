@@ -92,9 +92,12 @@ export class InverterService {
       const returnInverters = await Promise.all(
         inverters.map(async (inverter) => {
           let [image] = await this.imageService.findByOrigin(inverter.id);
-
+          const company = await this.companyService.findOne(
+            inverter.id_company
+          );
           return {
             ...inverter,
+            company: company ? company.legal_name : null,
             image
           };
         })
