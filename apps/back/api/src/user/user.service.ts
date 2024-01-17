@@ -236,7 +236,7 @@ export class UserService {
   }
 
   async findByEmail(email: string): Promise<ResponseUserDto> {
-    
+
     try {
       //Busca o usuário pelo email e sua respectiva imagem e retorna um objeto com os dados do usuário e a url da imagem
       const user = await this.prisma.user
@@ -340,7 +340,7 @@ export class UserService {
     } catch (error) {
       throw Error(`Error in update user ${error}`);
     }
-    
+
   }
 
   async forgotPassword(email: string, request: any) {
@@ -356,14 +356,37 @@ export class UserService {
     //   'host'
     // )}/api/v1/auth/resetpassword/${resetToken.resetToken}`;
 
-    // const resetUrl = `http://localhost:4200/perfil/editar/senha/${resetToken.resetToken}`;
     const resetUrl = `http://localhost:4200/recuperar-senha/${resetToken.resetToken}`;
 
-    const message = `You are receiving this email because you has requested the reset of a password. Please make a PUT request to: \n\n ${resetUrl} \n\n If you did not request this, please ignore this email and your password will remain unchanged. \n This token will expire in 10 minutes.`;
+    const message = `
+      <div style="text-align: center; color: #ffffff; background-color: #242130;">
+        <header style="background-color: #1B1924;">
+          <p style="padding: 10px; font-size: 20px; font-weight: bold; color: #cacaca;">
+            THA SOLUTIONS
+          </p>
+        </header>
+        <div style="padding: 20px;">
+          <p style="font-size: 18px;">Para realizar a alteração da sua senha acesse o link abaixo:</p>
+          <p>
+            <a href="${resetUrl}"
+              style="display: inline-block; padding: 10px 20px; background-color: #f01966; color: #242130; text-decoration: none; font-size: 16px; font-weight: 700; text-transform: uppercase; margin-top: 25px; margin-bottom: 25px;">
+              Trocar Senha
+            </a>
+          </p>
+          <p style="font-size: 18px;">
+            O link de acesso expira em
+            <strong style="color: #f01966;">10 minutos</strong>.
+          </p>
+          <p style="font-size: 14px; color: lightslategray;">
+            Se você não solicitou esta alteração, por favor ignore este e-mail ou entre em contato conosco.
+          </p>
+        </div>
+      </div>
+    `;
 
     this.mailService.passwordRecoveryMail({
       email,
-      subject: 'Password change request received',
+      subject: '',
       message: message
     });
 
