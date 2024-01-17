@@ -1,17 +1,19 @@
 'use client';
 
+import { use } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 
 import { useRouter } from 'next/navigation';
 
-import { CustomerService } from '@tha-solutions';
-import UserForm from 'apps/front/components/user-form';
-import { useSession } from 'next-auth/react';
-import CircularProgress from '@mui/material/CircularProgress';
+import { Inverter, InverterService, Company, CompanyService } from '@tha-solutions';
+import InverterForm from 'apps/front/components/inverter-form';
 
 export default function Page({ params }: { params: { id: string } }) {
-  const { data: session, status, update } = useSession();
+  const inverter: Inverter = use(InverterService.getInverterById(params.id));
+  const companies: Company[] = use(CompanyService.getAllCompanies());
+
+  console.log(companies)
 
   const router = useRouter();
 
@@ -28,45 +30,30 @@ export default function Page({ params }: { params: { id: string } }) {
         formData.append(key, content[key]);
       }
 
-      formData.delete('password');
-
-      await toast.promise(CustomerService.updateCustomer(params.id, formData), {
-        pending: 'Atualizando...',
-        success: 'Atualizado com sucesso!',
-        error: 'Erro ao atualizar as informações'
-      }).then(async (res) => {
-        await update({
-          ...session,
-          user: {
-            ...session?.user,
-            firstName: res.firstName,
-            lastName: res.lastName,
-            image: res.image
-          }
-        })
-      })
+      await toast.promise(InverterService.updateInverter(params.id, formData), {
+        pending: 'Atualizando inversor...',
+        success: 'Inversor atualizado com sucesso!',
+        error: 'Erro ao atualizar inversor'
+      });
 
       setTimeout(() => {
-        router.push('/perfil');
+        router.push('/admin/inversores');
       }, 1500);
     } catch (error) {
-      toast.error(`Erro ao atualizar as informações: ${error}`);
+      toast.error(`Erro ao atualizar inversor: ${error}`);
     }
   };
 
   return (
     <>
-      {status === 'authenticated' ? (
-        <UserForm
+      {inverter && (
+        <InverterForm
           onSubmit={onSubmit}
           buttonText="ATUALIZAR"
-          editUserData={session.user}
+          editInverterData={inverter}
+          companies={companies}
           isRequired={false}
         />
-      ) : (
-        <div className="flex items-center justify-center h-72">
-          <CircularProgress color="primary" />
-        </div>
       )}
       <ToastContainer
         position="top-right"

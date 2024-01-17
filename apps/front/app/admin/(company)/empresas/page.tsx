@@ -20,7 +20,7 @@ export default function Page() {
     await toast.promise(CompanyService.deleteCompany(id), {
       pending: 'Deletando a empresa...',
       success: 'Empresa deletada com sucesso!',
-      error: 'Erro ao deletar a empresa'
+      error: 'Empresa possui clientes, remova-os primeiro'
     });
 
     setTimeout(() => {
@@ -62,17 +62,21 @@ export default function Page() {
                     Informações
                   </h2>
                   <div className="flex flex-col gap-1 pl-2">
-                    <h1 className="text-base text-gray-400 font-semibold">
+                    <h3 className="text-base text-gray-400 font-semibold">
                       Razão social:{' '}
                       <span className="text-white">{company.legal_name}</span>
-                    </h1>
-                    <h2 className="text-base text-gray-400 font-semibold">
+                    </h3>
+                    <h3 className="text-base text-gray-400 font-semibold">
                       Nome fantasia:{' '}
-                      <span className="text-white">{company.trade_name}</span>
-                    </h2>
-                    <h2 className="text-base text-gray-400 font-semibold">
+                      {company.trade_name ? (
+                        <span className="text-white">{company.trade_name}</span>
+                      ) : (
+                        <span className="text-gray-600">Não fornecido</span>
+                      )}
+                    </h3>
+                    <h3 className="text-base text-gray-400 font-semibold">
                       CNPJ: <span className="text-white">{company.cnpj}</span>
-                    </h2>
+                    </h3>
                   </div>
                 </div>
 
@@ -149,7 +153,7 @@ export default function Page() {
       )}
       <ToastContainer
         position="top-right"
-        autoClose={1500}
+        autoClose={3000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

@@ -149,26 +149,31 @@ export const Header = () => {
             <Link
               key={item.name}
               href={item.path}
-              className={`flex items-center justify-center text-lg leading-6 font-semibold ${
-                currentRoute === item.path
-                  ? 'text-white border-b-2 border-white font-bold cursor-default'
-                  : 'text-gray-400 transition-all ease-linear hover:text-tertiary hover:scale-90'
-              }`}
+              className={`flex items-center justify-center text-lg leading-6 font-semibold ${currentRoute === item.path
+                ? 'text-white border-b-2 border-white font-bold cursor-default'
+                : 'text-gray-400 transition-all ease-linear hover:text-tertiary hover:scale-90'
+                }`}
             >
               {item.name}
             </Link>
           ))}
         </Popover.Group>
+
         <div className="hidden lg:flex ">
-          {status === 'loading' ? null : status === 'authenticated' ? (
+          {status === 'loading' ? (
+            <div className="w-44">
+              <Skeleton variant="text" width="100%" height={40} />
+            </div>
+          ) : status === 'authenticated' ? (
             <Link
               href="/perfil"
-              className="flex items-center text-sm font-semibold gap-2 text-gray-200 transition ease-linear hover:text-tertiary hover:scale-90"
+              aria-label='Acessar perfil'
+              className="group flex items-center text-sm font-semibold gap-2 text-gray-200 transition ease-linear hover:scale-105"
             >
-              <AccountCircle className="text-4xl" />
+              {session.user.image ? <Image src={session.user.image} alt='Imagem de perfil do usuário' width={120} height={120} className='rounded-full w-9' /> : <AccountCircle className="text-4xl" />}
               <div className="flex gap-1">
-                Olá,{' '}
-                <span className="text-tertiary">
+                Olá,
+                <span className="font-bold text-primary group-hover:text-gray-500">
                   {session?.user?.firstName}
                 </span>
               </div>
@@ -255,11 +260,10 @@ export const Header = () => {
                   <Link
                     key={item.name}
                     href={item.path}
-                    className={`-mx-3 block rounded-md px-3 py-2 text-base font-semibold transition-all ${
-                      currentRoute === item.path
-                        ? 'text-white border-b-2 border-white font-bold cursor-default'
-                        : 'text-gray-400 transition-all ease-linear hover:text-tertiary hover:scale-95'
-                    }`}
+                    className={`-mx-3 block rounded-md px-3 py-2 text-base font-semibold transition-all ${currentRoute === item.path
+                      ? 'text-white border-b-2 border-white font-bold cursor-default'
+                      : 'text-gray-400 transition-all ease-linear hover:text-tertiary hover:scale-95'
+                      }`}
                   >
                     {item.name}
                   </Link>

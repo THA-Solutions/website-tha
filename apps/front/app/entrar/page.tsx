@@ -78,21 +78,24 @@ export default function Page() {
   return (
     <>
       <section className="bg-hero-background bg-center bg-cover bg-no-repeat h-screen flex flex-col items-center justify-center text-left">
-        <div className="backdrop-blur-md bg-gray-800/80 py-8 px-4 w-full h-full flex flex-col justify-between shadow-[0_0_50px_10px] shadow-background ring-1 ring-gray-00 lg:max-w-2xl lg:my-4 lg:px-12">
-          <Link href="/" className="h-12 w-12 mb-8">
-            <Image src={Logo} alt="Logo da empresa" />
-          </Link>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="mb-12 flex flex-col gap-3">
-              <h1 className="text-3xl font-bold font-alt text-tertiary">
+        <div className="backdrop-blur-md bg-gray-800/80 py-8 px-4 w-full h-full flex flex-col justify-between shadow-[0_0_50px_10px] shadow-background ring-1 ring-gray-00 md:max-w-2xl md:my-4 md:px-12">
+          <header className='flex flex-col items-start justify-between gap-4 sm:flex-row'>
+            <Link href={"/"} className="h-12 w-12">
+              <Image src={Logo} alt="Logo da empresa" />
+            </Link>
+            <div className="flex flex-col text-left sm:text-right">
+              <h1 className="text-3xl font-bold font-alt text-tertiary md:text-4xl">
                 Bem-vindo de volta!
               </h1>
-              <h2 className="text-xl text-gray-400">
+              <h2 className="text-sm text-gray-300 sm:text-lg md:text-xl">
                 Faça o login com sua conta para continuar
               </h2>
             </div>
+          </header>
 
-            <div className="flex flex-col w-full gap-16">
+
+          <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col justify-between'>
+            <div className="flex flex-col w-full gap-6">
               {formInputs.map((input) =>
                 input.type === 'password' ? (
                   <PasswordInputField
@@ -119,14 +122,14 @@ export default function Page() {
             </div>
 
             <div className="w-full flex justify-end my-3">
-              <Link href="#" className="text-sm font-normal  text-indigo-400">
+              <Link href="/recuperar-senha" className="text-sm font-normal text-indigo-400 hover:underline">
                 Esqueceu a senha?
               </Link>
             </div>
 
             <button
               type="submit"
-              className="w-full mt-8 bg-tertiary px-3.5 py-2.5 text-center text-xl font-bold font-alt text-gray-800/80 shadow-sm transition-all hover:bg-tertiary/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tertiary"
+              className="w-full bg-tertiary px-3.5 py-2.5 text-center text-xl font-bold font-alt text-gray-800/80 shadow-sm transition-all hover:bg-tertiary/60 hover:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tertiary"
             >
               ENTRAR
             </button>
@@ -147,7 +150,7 @@ export default function Page() {
       </section>
       <ToastContainer
         position="top-right"
-        autoClose={2000}
+        autoClose={1500}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

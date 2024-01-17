@@ -23,8 +23,6 @@ export default function Page() {
 
   return (
     <>
-      {/* <h1>Esta retornando a password, corrigir!!</h1> */}
-
       {customer.length === 0 ? (
         <div className="h-96 flex flex-col items-center justify-center text-gray-700">
           <SearchOff className="text-6xl" />

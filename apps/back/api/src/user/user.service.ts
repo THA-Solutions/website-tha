@@ -16,7 +16,7 @@ export class UserService {
     private companyService: CompanyService,
     private imageService: ImageService,
     private mailService: MailService
-  ) {}
+  ) { }
 
   //Criptografa a senha do usuário de acordo com a chave de criptografia definida no arquivo .env e protocolo AES-256-CBC
   crypter(password: string) {
@@ -117,7 +117,7 @@ export class UserService {
               id_origem: user.id
             }
           });
-          
+
           if (user.company) {
             await this.companyService.findOne(user.company).then((company) => {
               if (!company) {
@@ -215,9 +215,7 @@ export class UserService {
               if (!company) {
                 throw Error('Company not found');
               }
-              user.company = company.trade_name
-                ? company.trade_name
-                : company.legal_name!;
+              user.company = company.legal_name
             });
           }
 
@@ -238,6 +236,7 @@ export class UserService {
   }
 
   async findByEmail(email: string): Promise<ResponseUserDto> {
+
     try {
       //Busca o usuário pelo email e sua respectiva imagem e retorna um objeto com os dados do usuário e a url da imagem
       const user = await this.prisma.user
@@ -291,9 +290,10 @@ export class UserService {
     updateUserDto: UpdateUserDto,
     image?: Express.Multer.File
   ) {
+    const responseUser = new ResponseUserDto();
     try {
       const { imageFile, ...data } = updateUserDto;
-      console.log(updateUserDto);
+
       if (image) {
         let imageInDB = await this.imageService.findByOrigin(id);
         if (imageInDB.length > 0) {
@@ -301,37 +301,46 @@ export class UserService {
             .update(imageInDB[0].id, { id_origem: id }, image)
             .then((image) => {
               if (!image) {
-                throw Error('Image not found');
+                throw Error('Image not updated');
               }
-              updateUserDto.image = image.url;
+              responseUser.image = image.url;
             });
         } else {
-          await this.imageService.create({ id_origem: id }, image);
+          await this.imageService
+            .create({ id_origem: id }, image)
+            .then((image) => {
+              if (!image) {
+                throw Error('Image not updated');
+              }
+              responseUser.image = image.url;
+            });
         }
       }
 
-      const updatedUser = await this.prisma.user.update({
-        where: { id },
-        data: {
-          firstName: data.firstName,
-          lastName: data.lastName,
-          email: data.email,
-          company: data.company
-        }
-      });
+      await this.prisma.user
+        .update({
+          where: { id },
+          data: {
+            firstName: data.firstName,
+            lastName: data.lastName,
+            email: data.email,
+            company: data.company
+          }
+        })
+        .then(async (user) => {
+          responseUser.id = user.id!;
+          responseUser.email = user.email!;
+          responseUser.firstName = user.firstName!;
+          responseUser.lastName = user.lastName!;
+          responseUser.company = user.company!;
+          return;
+        });
 
-      const returnUser = {
-        id: updatedUser.id,
-        firstName: updatedUser.firstName,
-        lastName: updatedUser.lastName,
-        email: updatedUser.email,
-        role: updatedUser.role,
-        image: updateUserDto.image ? updateUserDto.image : null
-      };
-      return returnUser;
+      return responseUser;
     } catch (error) {
       throw Error(`Error in update user ${error}`);
     }
+
   }
 
   async forgotPassword(email: string, request: any) {
@@ -347,13 +356,37 @@ export class UserService {
     //   'host'
     // )}/api/v1/auth/resetpassword/${resetToken.resetToken}`;
 
-    const resetUrl = `http://localhost:4200/perfil/editar/senha/${resetToken.resetToken}`;
+    const resetUrl = `http://localhost:4200/recuperar-senha/${resetToken.resetToken}`;
 
-    const message = `You are receiving this email because you has requested the reset of a password. Please make a PUT request to: \n\n ${resetUrl} \n\n If you did not request this, please ignore this email and your password will remain unchanged. \n This token will expire in 10 minutes.`;
+    const message = `
+      <div style="text-align: center; color: #ffffff; background-color: #242130;">
+        <header style="background-color: #1B1924;">
+          <p style="padding: 10px; font-size: 20px; font-weight: bold; color: #cacaca;">
+            THA SOLUTIONS
+          </p>
+        </header>
+        <div style="padding: 20px;">
+          <p style="font-size: 18px;">Para realizar a alteração da sua senha acesse o link abaixo:</p>
+          <p>
+            <a href="${resetUrl}"
+              style="display: inline-block; padding: 10px 20px; background-color: #f01966; color: #242130; text-decoration: none; font-size: 16px; font-weight: 700; text-transform: uppercase; margin-top: 25px; margin-bottom: 25px;">
+              Trocar Senha
+            </a>
+          </p>
+          <p style="font-size: 18px;">
+            O link de acesso expira em
+            <strong style="color: #f01966;">10 minutos</strong>.
+          </p>
+          <p style="font-size: 14px; color: lightslategray;">
+            Se você não solicitou esta alteração, por favor ignore este e-mail ou entre em contato conosco.
+          </p>
+        </div>
+      </div>
+    `;
 
     this.mailService.passwordRecoveryMail({
       email,
-      subject: 'Password change request received',
+      subject: '',
       message: message
     });
 

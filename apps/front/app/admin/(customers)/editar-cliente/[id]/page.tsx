@@ -6,14 +6,24 @@ import { ToastContainer, toast } from 'react-toastify';
 
 import { useRouter } from 'next/navigation';
 
-import { User, CustomerService, CompanyService } from '@tha-solutions';
+import { User, CustomerService, Company, CompanyService } from '@tha-solutions';
 import CustomerForm from 'apps/front/components/customer-form';
 
 export default function Page({ params }: { params: { id: string } }) {
   const customer: User = use(CustomerService.getCustomerById(params.id));
-  const companies = use(CompanyService.getAllCompanies());
+  const companies: Company[] = use(CompanyService.getAllCompanies());
 
   const router = useRouter();
+
+  function companiesFIlter(legalName: string) {
+    const company = companies.find(
+      (company) => company.legal_name === legalName
+    );
+    if (company) {
+      return company.id;
+    }
+    return '';
+  }
 
   const onSubmit = async (data: FieldValues) => {
     try {
@@ -27,7 +37,9 @@ export default function Page({ params }: { params: { id: string } }) {
       formData.append('role', 'customer');
 
       for (let key in content) {
-        formData.append(key, content[key]);
+        if (key === 'company') {
+          formData.append('company', companiesFIlter(content[key]));
+        } else formData.append(key, content[key]);
       }
 
       await toast.promise(CustomerService.updateCustomer(params.id, formData), {

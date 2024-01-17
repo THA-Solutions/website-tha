@@ -4,6 +4,7 @@ import { User } from '@tha-solutions';
 
 import Edit from '@mui/icons-material/Edit';
 import Delete from '@mui/icons-material/Delete';
+import DeleteDialog from './delete-dialog';
 
 interface CustomerTableProps {
   customers: User[];
@@ -88,12 +89,12 @@ const CustomerTable = ({ customers, onDelete }: CustomerTableProps) => {
                 </Link>
               </td>
               <td className="px-6 py-4 whitespace-nowrap hidden md:table-cell">
-                <button
-                  onClick={() => onDelete(customer.id)}
-                  className="text-red-400 hover:text-red-800"
-                >
-                  <Delete />
-                </button>
+                <DeleteDialog
+                  title="Cliente"
+                  description={customer.firstName + ' ' + customer.lastName}
+                  onConfirm={() => onDelete(customer.id)}
+                  isShort={true}
+                />
               </td>
               <td className="px-6 py-4 whitespace-nowrap md:hidden">
                 <div className="flex items-center gap-4">
@@ -102,12 +103,12 @@ const CustomerTable = ({ customers, onDelete }: CustomerTableProps) => {
                       <Edit />
                     </span>
                   </Link>
-                  <button
-                    onClick={() => onDelete(customer.id)}
-                    className="text-red-400 hover:text-red-800"
-                  >
-                    <Delete />
-                  </button>
+                  <DeleteDialog
+                    title="Cliente"
+                    description={customer.firstName + ' ' + customer.lastName}
+                    onConfirm={() => onDelete(customer.id)}
+                    isShort={true}
+                  />
                 </div>
               </td>
             </tr>

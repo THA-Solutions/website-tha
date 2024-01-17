@@ -1,12 +1,15 @@
+import { ChangeEvent, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
-import { CustomerService, User } from '@tha-solutions';
+import { User } from '@tha-solutions';
+
 import InputField from './input-field';
-
+import Logo from '../public/logo-colored.png'
 import ArrowRightAlt from '@mui/icons-material/ArrowRightAlt';
+
 
 interface UserFormProps {
   onSubmit: (data: FieldValues) => Promise<void>;
@@ -27,17 +30,7 @@ const UserForm = ({
     formState: { errors }
   } = useForm();
 
-  const router = useRouter();
-
   const inputs = [
-    {
-      label: 'Imagem',
-      name: 'imageFile',
-      type: 'file',
-      required: isRequired ? true : false,
-      placeholder: 'Selecione a imagem do colaborador',
-      value: editUserData?.image
-    },
     {
       name: 'firstName',
       label: 'Nome',
@@ -74,17 +67,41 @@ const UserForm = ({
     }
   ];
 
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setSelectedFile(file);
+    }
+  };
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col gap-4 max-w-xl w-full space-y-4"
     >
+      <div className="shrink-0 flex w-full justify-center items-center">
+        <Image className="h-24 w-24 object-cover rounded-full" src={selectedFile ? URL.createObjectURL(selectedFile) : editUserData?.image ? editUserData.image : Logo} alt="Foto de perfil atual" width={96} height={96} />
+      </div>
+      <div>
+        <label className="text-xl font-semibold leading-6 text-white" htmlFor="file_input">Foto de perfil</label>
+        <input
+          {...register("imageFile", { required: isRequired ? true : false })}
+          id="fileInput"
+          name="imageFile"
+          type="file"
+          onChange={handleFileChange}
+          className="mt-1 block w-full px-4 py-2 text-sm text-gray-500 ring-1 ring-gray-500 file:transition-all file:cursor-pointer focus:outline-none file:border-0 file:mr-2 file:text-sm file:font-semibold file:bg-gray-500 file:text-background hover:file:bg-gray-900 hover:file:text-gray-500"
+        />
+      </div>
       {inputs.map((input) => (
         <div key={input.name} className="flex flex-col">
           <InputField
             input={input}
             value={input.value}
             register={register}
+            colorRing='ring-gray-500'
             errors={errors}
           />
           {input.name === 'email' && (
@@ -98,12 +115,7 @@ const UserForm = ({
           )}
           {input.name === 'password' && (
             <Link
-              href={`/perfil/editar/${editUserData?.id}/token`}
-              onClick={() =>
-                CustomerService.sendTokenToResetPassword({
-                  email: editUserData?.email
-                })
-              }
+              href={'/recuperar-senha'}
               className="flex items-center w-fit px-1 py-2 text-indigo-400 hover:underline"
             >
               <span>Alterar senha</span>

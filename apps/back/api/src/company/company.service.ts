@@ -10,7 +10,7 @@ export class CompanyService {
   constructor(
     private readonly prisma: PrismaService,
     private imageService: ImageService
-  ) {}
+  ) { }
 
   async create(
     createCompanyDto: CreateCompanyDto,
@@ -20,7 +20,17 @@ export class CompanyService {
       const company = await this.prisma.company
         .create({
           data: {
-            ...createCompanyDto
+            cnpj: createCompanyDto.cnpj,
+            legal_name: createCompanyDto.legal_name,
+            trade_name: createCompanyDto.trade_name,
+            description: createCompanyDto.description,
+            street: createCompanyDto.street,
+            number: createCompanyDto.number,
+            complement: createCompanyDto.complement,
+            neighborhood: createCompanyDto.neighborhood,
+            city: createCompanyDto.city,
+            state: createCompanyDto.state,
+            cep: createCompanyDto.cep
           }
         })
         .then(async (company) => {
@@ -114,7 +124,7 @@ export class CompanyService {
     try {
       if (imageFile) {
         this.imageService.deleteAll(id);
-        const companyImage = await this.imageService.create(
+        await this.imageService.create(
           {
             id_origem: id
           },
@@ -126,7 +136,17 @@ export class CompanyService {
           id: id
         },
         data: {
-          ...updateCompanyDto
+          cnpj: updateCompanyDto.cnpj,
+          legal_name: updateCompanyDto.legal_name,
+          trade_name: updateCompanyDto.trade_name,
+          description: updateCompanyDto.description,
+          street: updateCompanyDto.street,
+          number: updateCompanyDto.number,
+          complement: updateCompanyDto.complement,
+          neighborhood: updateCompanyDto.neighborhood,
+          city: updateCompanyDto.city,
+          state: updateCompanyDto.state,
+          cep: updateCompanyDto.cep
         }
       });
       return updatedCompany;
@@ -137,6 +157,14 @@ export class CompanyService {
 
   async remove(id: string) {
     try {
+      this.findOne(id).then((company) => {
+        if (!company) {
+          throw Error('Company not found');
+        }
+      });
+      if ((await this.prisma.user.findMany({ where: { company: id } })).length > 0) {
+        throw Error('Company has users');
+      }
       return await this.prisma.company.delete({ where: { id: id } });
     } catch (error) {
       throw Error(`Error in delete company ${error}`);

@@ -4,7 +4,7 @@ import { inviteMailDto } from './dto/invite-mail.dto';
 import { recoveryMailDto } from './dto/recovery-mail.dto';
 @Injectable()
 export class MailService {
-  constructor(private mailer: MailerService) {}
+  constructor(private mailer: MailerService) { }
 
   async sendMail(inviteMailDto: inviteMailDto) {
     try {
@@ -24,10 +24,10 @@ export class MailService {
   async passwordRecoveryMail(recoveryMailDto: recoveryMailDto) {
     try {
       const options = {
-        from: `THA Solution support<${process.env.MAIL_USER}>`,
+        from: `THA Solutions [Suporte]<${process.env.MAIL_USER}>`,
         to: recoveryMailDto.email,
         subject: 'Recuperação de senha',
-        text: 'Recuperação de senha' + recoveryMailDto.message
+        html: recoveryMailDto.message
       };
 
       await this.mailer.sendMail(options);
