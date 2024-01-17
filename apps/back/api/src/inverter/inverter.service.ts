@@ -13,7 +13,7 @@ export class InverterService {
     private prisma: PrismaService,
     private imageService: ImageService,
     private companyService: CompanyService
-  ) {}
+  ) { }
 
   async create(
     createInverterDto: CreateInverterDto,

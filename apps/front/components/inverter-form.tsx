@@ -31,7 +31,6 @@ const InverterForm = ({
       type: 'file',
       required: false,
       placeholder: 'Selecione a imagem da empresa',
-      value: editInverterData?.image.url
     },
     {
       label: 'Título',

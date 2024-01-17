@@ -16,7 +16,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('inverter')
 export class InverterController {
-  constructor(private readonly inverterService: InverterService) {}
+  constructor(private readonly inverterService: InverterService) { }
 
   @Post()
   @UseInterceptors(FileInterceptor('imageFile'))

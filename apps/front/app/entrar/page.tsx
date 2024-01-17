@@ -122,7 +122,7 @@ export default function Page() {
             </div>
 
             <div className="w-full flex justify-end my-3">
-              <Link href="#" className="text-sm font-normal text-indigo-400 trasition-all hover:underline">
+              <Link href="/recuperar-senha" className="text-sm font-normal text-indigo-400 hover:underline">
                 Esqueceu a senha?
               </Link>
             </div>
