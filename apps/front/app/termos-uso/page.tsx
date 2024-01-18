@@ -1,4 +1,4 @@
-export default function Terms() {
+export default function Page() {
   return (
     <>
       <section className="flex flex-col space-y-4">
@@ -69,7 +69,7 @@ export default function Terms() {
         <h1 className="text-3xl font-bold text-white">4. LIMITAÇÕES</h1>
         <p className="text-xl text-gray-300 text-justify sm:text-left">
           Em nenhum caso o THA Solutions ou seus fornecedores serão responsáveis
-          ​​por quaisquer danos (incluindo, sem limitação, danos por perda de
+          por quaisquer danos (incluindo, sem limitação, danos por perda de
           dados ou lucro ou devido a interrupção dos negócios) decorrentes do
           uso ou da incapacidade de usar os materiais em THA Solutions, mesmo
           que THA Solutions ou um representante autorizado da THA Solutions

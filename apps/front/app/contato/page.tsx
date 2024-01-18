@@ -3,22 +3,19 @@
 import { useForm, FieldValues } from 'react-hook-form';
 import { toast, ToastContainer } from 'react-toastify';
 
-import InputField from '../../components/input-field';
-
-import { contact } from '../../constants';
-
-import {
-  Business,
-  MailOutlineRounded,
-  WhatsApp,
-  InfoOutlined,
-  Email,
-  Badge,
-  Apartment
-} from '@mui/icons-material';
+import InputField from 'apps/front/components/input-field';
+import { contact } from 'apps/front/constants';
 import { MailService } from '@tha-solutions';
 
-export default function Contact() {
+import Business from '@mui/icons-material/Business';
+import MailOutlineRounded from '@mui/icons-material/MailOutlineRounded';
+import WhatsApp from '@mui/icons-material/WhatsApp';
+import InfoOutlined from '@mui/icons-material/InfoOutlined';
+import Email from '@mui/icons-material/Email';
+import Badge from '@mui/icons-material/Badge';
+import Apartment from '@mui/icons-material/Apartment';
+
+export default function Page() {
   const {
     register,
     handleSubmit,
@@ -26,9 +23,6 @@ export default function Contact() {
   } = useForm();
 
   async function onSubmit(data: FieldValues) {
-    // const mail = await axios.post('http://localhost:3000/api/mail/send', data);
-    // return;
-
     try {
       await toast.promise(MailService.sendMail(data), {
         pending: 'Enviando...',

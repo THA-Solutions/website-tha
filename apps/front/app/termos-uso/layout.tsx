@@ -1,22 +1,18 @@
-import { Footer } from '../../components/footer';
-import { Header } from '../../components/header';
-import { PageTitle } from '../../components/page-title';
+import Footer from 'apps/front/components/footer';
+import Navbar from 'apps/front/components/navbar';
+import PageTitle from 'apps/front/components/page-title';
 
-import { contact } from '../../constants';
+import { contact } from 'apps/front/constants';
 
 export const metadata = {
   title: `${contact.organization} - Termos de Uso`,
   description: 'Descrição dos termos de uso do site'
 };
 
-export default function TermsLayout({
-  children
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <Header />
+      <Navbar />
       <main className="pt-28 pb-10 sm:pt-32">
         <div className="mx-auto max-w-7xl px-6 space-y-12 lg:px-8">
           <PageTitle title="Termos de uso" />

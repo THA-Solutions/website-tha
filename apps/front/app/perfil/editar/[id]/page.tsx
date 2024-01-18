@@ -4,10 +4,11 @@ import { FieldValues } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 import { CustomerService } from '@tha-solutions';
-import UserForm from 'apps/front/components/user-form';
-import { useSession } from 'next-auth/react';
+import UserForm from 'apps/front/components/forms/user-form';
+
 import CircularProgress from '@mui/material/CircularProgress';
 
 export default function Page({ params }: { params: { id: string } }) {

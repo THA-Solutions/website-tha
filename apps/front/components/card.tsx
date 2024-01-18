@@ -47,3 +47,5 @@ export const Card = ({ title, description, image }: CardProps) => {
     </div>
   );
 };
+
+export default Card;

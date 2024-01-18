@@ -3,13 +3,13 @@
 import { use } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 
-import { CustomerService } from '@tha-solutions';
+import { CustomerService, User } from '@tha-solutions';
 import CustomerTable from 'apps/front/components/customer-table';
 
 import SearchOff from '@mui/icons-material/SearchOff';
 
 export default function Page() {
-  const customer = use(CustomerService.getAllCustomers());
+  const customer: User[] = use(CustomerService.getAllCustomers());
 
   const deleteCustomer = async (id: string) => {
     await toast.promise(CustomerService.deleteCustomer(id), {

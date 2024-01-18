@@ -5,9 +5,10 @@ import { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form"
 import { ToastContainer, toast } from 'react-toastify';
 
+import { CustomerService } from "@tha-solutions";
+
 import InputField from "apps/front/components/input-field"
 import Email from "@mui/icons-material/Email";
-import { CustomerService } from "@tha-solutions";
 import MarkEmailRead from "@mui/icons-material/MarkEmailRead";
 
 export default function Page() {

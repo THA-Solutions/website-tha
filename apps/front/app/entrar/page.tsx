@@ -9,9 +9,9 @@ import Link from 'next/link';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
-import InputField from '../../components/input-field';
-import PasswordInputField from '../../components/password-input-field';
-import Logo from '../../public/logo-white.png';
+import InputField from 'apps/front/components/input-field';
+import PasswordInputField from 'apps/front/components/password-input-field';
+import Logo from 'apps/front/public/logo-white.png';
 
 import Email from '@mui/icons-material/Email';
 import Key from '@mui/icons-material/Key';

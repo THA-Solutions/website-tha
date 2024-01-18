@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 
 import { Team, TeamService } from '@tha-solutions';
-import TeamForm from 'apps/front/components/team-form';
+import TeamForm from 'apps/front/components/forms/team-form';
 
 export default function Page({ params }: { params: { id: string } }) {
   const employee: Team = use(TeamService.getEmployeeById(params.id));

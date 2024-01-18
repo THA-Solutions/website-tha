@@ -6,7 +6,7 @@ import { FieldValues } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 
 import { ArticleSerivce } from '@tha-solutions';
-import ArticleForm from 'apps/front/components/article-form';
+import ArticleForm from 'apps/front/components/forms/article-form';
 import txtFormat from 'apps/front/utilities/txt-format';
 
 import 'react-quill/dist/quill.snow.css';

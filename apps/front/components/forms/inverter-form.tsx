@@ -1,7 +1,7 @@
 import { FieldValues, useForm } from 'react-hook-form';
 
+import InputField from 'apps/front/components/input-field';
 import { Company, Inverter } from '@tha-solutions';
-import InputField from './input-field';
 
 interface InverterFormProps {
   onSubmit: (data: FieldValues) => Promise<void>;

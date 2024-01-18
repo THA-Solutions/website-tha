@@ -1,4 +1,4 @@
-import { InputFieldProps } from './input-field';
+import { InputFieldProps } from 'apps/front/components/input-field';
 
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Visibility from '@mui/icons-material/Visibility';

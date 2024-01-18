@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 
+import InputField from 'apps/front/components/input-field';
+import PasswordInputField from 'apps/front/components/password-input-field';
 import { Company, User } from '@tha-solutions';
-import InputField from './input-field';
-import PasswordInputField from './password-input-field';
 
 interface CustomerFormProps {
   onSubmit: (data: FieldValues) => Promise<void>;

@@ -1,10 +1,11 @@
 import * as React from 'react';
+
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { Delete } from '@mui/icons-material';
+import Delete from '@mui/icons-material/Delete';
 
 interface DeleteDialogProps {
   title: string;
@@ -13,12 +14,12 @@ interface DeleteDialogProps {
   onConfirm: () => void;
 }
 
-export default function DeleteDialog({
+const DeleteDialog = ({
   title,
   description,
   onConfirm,
   isShort
-}: DeleteDialogProps) {
+}: DeleteDialogProps) => {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -96,3 +97,5 @@ export default function DeleteDialog({
     </React.Fragment>
   );
 }
+
+export default DeleteDialog;

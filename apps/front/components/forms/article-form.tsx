@@ -1,13 +1,14 @@
-import dynamic from 'next/dynamic';
 
 import { useEffect, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 
-import 'react-quill/dist/quill.snow.css';
+import dynamic from 'next/dynamic';
 
-import InputField from './input-field';
-import { categoriesArticles } from '../constants';
+import InputField from 'apps/front/components/input-field';
+import { categoriesArticles } from 'apps/front/constants';
 import { Article } from '@tha-solutions';
+
+import 'react-quill/dist/quill.snow.css';
 
 interface ArticleFormProps {
   onSubmit: (data: FieldValues) => Promise<void>;

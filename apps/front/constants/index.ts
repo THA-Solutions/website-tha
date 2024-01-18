@@ -16,7 +16,13 @@ export const contact = {
   organization: 'THA Solutions',
   email: 'walisson@thasolutions.com.br',
   phone: '(44) 3301-7871',
-  address: 'Av. Melvin Jones, 1194, Barracão 13 - Maringá PR'
+  address: 'Av. Melvin Jones, 1194, Barracão 13 - Maringá PR',
+  social: {
+    linkedin: 'https://www.linkedin.com/company/tha-solu%C3%A7%C3%B5es-fv/',
+    instagram: 'https://www.instagram.com/thasolutions/',
+    youtube: 'https://www.youtube.com.br',
+    whatsapp: '#'
+  }
 };
 
 export const pages = [

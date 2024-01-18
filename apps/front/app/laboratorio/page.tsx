@@ -1,12 +1,12 @@
 'use client';
 
-import { LaboratorySection } from '../../components/laboratory-section';
+import LaboratorySection from 'apps/front/components/laboratory-section';
+import SectionData from './section-data';
 
-import { sectionData } from './section-data';
+import ElectricBolt from '@mui/icons-material/ElectricBolt';
+import Handyman from '@mui/icons-material/Handyman';
 
-import { ElectricBolt, Handyman } from '@mui/icons-material';
-
-export default function Laboratory() {
+export default function Page() {
   return (
     <>
       <header className="relative">
@@ -72,7 +72,7 @@ export default function Laboratory() {
         </svg>
       </section>
 
-      {sectionData.map((data, index) => (
+      {SectionData.map((data, index) => (
         <LaboratorySection key={index} {...data} showSVG={index > 0} />
       ))}
     </>

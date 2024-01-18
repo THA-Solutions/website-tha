@@ -1,5 +1,5 @@
 import NavbarAdmin from 'apps/front/components/navbar-admin';
-import { contact } from '../../constants';
+import { contact } from 'apps/front/constants';
 
 export const metadata = {
   title: `${contact.organization} - Admin`,

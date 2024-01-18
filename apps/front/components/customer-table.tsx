@@ -1,10 +1,9 @@
 import Link from 'next/link';
 
 import { User } from '@tha-solutions';
+import DeleteDialog from 'apps/front/components/delete-dialog';
 
 import Edit from '@mui/icons-material/Edit';
-import Delete from '@mui/icons-material/Delete';
-import DeleteDialog from './delete-dialog';
 
 interface CustomerTableProps {
   customers: User[];

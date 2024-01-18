@@ -2,12 +2,10 @@ import Image from 'next/image';
 
 import SupportImage from '../../public/features/analise_dados.png';
 
-import {
-  WorkOutline,
-  IntegrationInstructionsOutlined,
-  SupportAgentOutlined,
-  DisplaySettingsOutlined
-} from '@mui/icons-material';
+import WorkOutline from '@mui/icons-material/WorkOutline';
+import IntegrationInstructionsOutlined from '@mui/icons-material/IntegrationInstructionsOutlined';
+import SupportAgentOutlined from '@mui/icons-material/SupportAgentOutlined';
+import DisplaySettingsOutlined from '@mui/icons-material/DisplaySettingsOutlined';
 
 const features = [
   {
@@ -70,7 +68,7 @@ const features = [
   }
 ];
 
-export default function Support() {
+export default function Page() {
   return (
     <>
       {/* Tech profile */}

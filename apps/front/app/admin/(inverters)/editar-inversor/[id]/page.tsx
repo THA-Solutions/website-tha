@@ -7,13 +7,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 
 import { Inverter, InverterService, Company, CompanyService } from '@tha-solutions';
-import InverterForm from 'apps/front/components/inverter-form';
+import InverterForm from 'apps/front/components/forms/inverter-form';
 
 export default function Page({ params }: { params: { id: string } }) {
   const inverter: Inverter = use(InverterService.getInverterById(params.id));
   const companies: Company[] = use(CompanyService.getAllCompanies());
-
-  console.log(companies)
 
   const router = useRouter();
 

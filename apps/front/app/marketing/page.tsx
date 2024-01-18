@@ -3,17 +3,14 @@
 import { useRef } from 'react';
 
 import Image from 'next/image';
-
-import {
-  QueryStats,
-  Public,
-  Handshake,
-  Translate,
-  VideoSettings,
-  ConnectWithoutContact,
-  ArrowRightAlt
-} from '@mui/icons-material';
 import Link from 'next/link';
+
+import QueryStats from '@mui/icons-material/QueryStats';
+import Public from '@mui/icons-material/Public';
+import Handshake from '@mui/icons-material/Handshake';
+import Translate from '@mui/icons-material/Translate';
+import VideoSettings from '@mui/icons-material/VideoSettings';
+import ArrowRightAlt from '@mui/icons-material/ArrowRightAlt';
 
 export default function Page() {
   const features = [

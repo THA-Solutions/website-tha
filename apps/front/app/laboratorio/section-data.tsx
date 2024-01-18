@@ -1,11 +1,9 @@
 import { Icon } from '@iconify/react';
-import {
-  BuildRounded,
-  PublicRounded,
-  SolarPowerRounded
-} from '@mui/icons-material';
+import BuildRounded from '@mui/icons-material/BuildRounded';
+import PublicRounded from '@mui/icons-material/PublicRounded';
+import SolarPowerRounded from '@mui/icons-material/SolarPowerRounded';
 
-export const sectionData = [
+export const SectionData = [
   {
     id: 'inversores',
     title: 'INVERSORES',
@@ -106,3 +104,5 @@ export const sectionData = [
     ]
   }
 ];
+
+export default SectionData;

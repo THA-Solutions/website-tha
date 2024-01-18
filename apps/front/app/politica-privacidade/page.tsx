@@ -1,4 +1,4 @@
-export default function PrivacyPolicy() {
+export default function Page() {
   return (
     <>
       <section className="flex flex-col space-y-4">

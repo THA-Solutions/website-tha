@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 
 import { User, CustomerService, Company, CompanyService } from '@tha-solutions';
-import CustomerForm from 'apps/front/components/customer-form';
+import CustomerForm from 'apps/front/components/forms/customer-form';
 
 export default function Page({ params }: { params: { id: string } }) {
   const customer: User = use(CustomerService.getCustomerById(params.id));
