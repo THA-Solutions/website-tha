@@ -1,7 +1,7 @@
 import { FieldValues, useForm } from 'react-hook-form';
 
 import { Team } from '@tha-solutions';
-import InputField from './input-field';
+import InputField from 'apps/front/components/input-field';
 
 interface TeamFormProps {
   onSubmit: (data: FieldValues) => Promise<void>;

@@ -4,11 +4,12 @@ import { toast } from 'react-toastify';
 
 import { useRouter } from 'next/navigation';
 
+import { CustomerService } from '@tha-solutions';
+
 import InfoOutlined from '@mui/icons-material/InfoOutlined';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Visibility from '@mui/icons-material/Visibility';
 
-import { CustomerService } from '@tha-solutions';
 
 interface RecoveryPasswordFormProps {
   resetToken: string;

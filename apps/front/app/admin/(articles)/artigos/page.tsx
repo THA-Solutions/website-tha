@@ -6,13 +6,16 @@ import { ToastContainer, toast } from 'react-toastify';
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { Edit, Launch, LibraryAdd, SearchOff } from '@mui/icons-material';
-import { ArticleSerivce, formatter } from '@tha-solutions';
+import { ArticleSerivce, Article, formatter } from '@tha-solutions';
 import ImageNotFound from 'apps/front/components/image-not-found';
 import DeleteDialog from 'apps/front/components/delete-dialog';
 
+import Edit from '@mui/icons-material/Edit';
+import Launch from '@mui/icons-material/Launch';
+import SearchOff from '@mui/icons-material/SearchOff';
+
 export default function Page() {
-  const articles = use(ArticleSerivce.getAllArticles());
+  const articles: Article[] = use(ArticleSerivce.getAllArticles());
 
   const deleteArticle = async (id: string) => {
     await toast.promise(ArticleSerivce.deleteArticle(id), {

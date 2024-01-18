@@ -8,15 +8,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-import InputField from '../../components/input-field';
-import PasswordInputField from '../../components/password-input-field';
-import Logo from '../../public/logo-white.png';
+import InputField from 'apps/front/components/input-field';
+import PasswordInputField from 'apps/front/components/password-input-field';
+import Logo from 'apps/front/public/logo-white.png';
+import { CustomerService } from '@tha-solutions';
 
 import Email from '@mui/icons-material/Email';
 import Key from '@mui/icons-material/Key';
 import Person from '@mui/icons-material/Person';
 import PersonOutlined from '@mui/icons-material/PersonOutlined';
-import { CustomerService } from '@tha-solutions';
 
 export default function Page() {
   const {

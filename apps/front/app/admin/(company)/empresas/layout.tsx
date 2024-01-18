@@ -1,6 +1,6 @@
-import AddBusiness from '@mui/icons-material/AddBusiness';
-
 import HeaderAdmin from 'apps/front/components/header-admin';
+
+import AddBusiness from '@mui/icons-material/AddBusiness';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

@@ -6,7 +6,7 @@ import { FieldValues } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 
 import { CompanyService } from '@tha-solutions';
-import CompanyForm from 'apps/front/components/company-form';
+import CompanyForm from 'apps/front/components/forms/company-form';
 
 export default function Page() {
   const router = useRouter();

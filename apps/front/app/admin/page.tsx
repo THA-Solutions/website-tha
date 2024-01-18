@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 
-import { pagesAdmin, PageAdminType } from '../../constants';
+import { pagesAdmin, PageAdminType } from 'apps/front/constants';
 
 export default function Page() {
   const { data: session } = useSession();

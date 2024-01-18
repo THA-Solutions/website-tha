@@ -6,15 +6,15 @@ import { ToastContainer, toast } from 'react-toastify';
 import Link from 'next/link';
 import Image from 'next/image';
 
-import Edit from '@mui/icons-material/Edit';
-import SearchOff from '@mui/icons-material/SearchOff';
-
-import { CompanyService } from '@tha-solutions';
+import { CompanyService, Company } from '@tha-solutions';
 import ImageNotFound from 'apps/front/components/image-not-found';
 import DeleteDialog from 'apps/front/components/delete-dialog';
 
+import Edit from '@mui/icons-material/Edit';
+import SearchOff from '@mui/icons-material/SearchOff';
+
 export default function Page() {
-  const companies = use(CompanyService.getAllCompanies());
+  const companies: Company[] = use(CompanyService.getAllCompanies());
 
   const deleteCompany = async (id: string) => {
     await toast.promise(CompanyService.deleteCompany(id), {

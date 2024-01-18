@@ -4,18 +4,16 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import HistoryImage from '../../public/hero-background.png';
+import { TeamService, Team } from '@tha-solutions';
 
-import {
-  Flag,
-  Diversity3,
-  Public,
-  LinkedIn,
-  Instagram
-} from '@mui/icons-material';
-import { TeamService } from '@tha-solutions';
+import Flag from '@mui/icons-material/Flag';
+import Diversity3 from '@mui/icons-material/Diversity3';
+import Public from '@mui/icons-material/Public';
+import LinkedIn from '@mui/icons-material/LinkedIn';
+import Instagram from '@mui/icons-material/Instagram';
 
 export default function Page() {
-  const employees = use(TeamService.getAllEmployees());
+  const employees: Team[] = use(TeamService.getAllEmployees());
 
   const values = [
     {
@@ -94,23 +92,20 @@ export default function Page() {
           {values.map((value, index) => (
             <div
               key={index}
-              className={`flex flex-col items-center gap-10 ${
-                value.isAlt ? 'bg-tertiary' : 'bg-backgroundAlt2'
-              } p-8 rounded-xl shadow-2xl sm:flex-row sm:items-start sm:gap-20 lg:flex-col lg:gap-10`}
+              className={`flex flex-col items-center gap-10 ${value.isAlt ? 'bg-tertiary' : 'bg-backgroundAlt2'
+                } p-8 rounded-xl shadow-2xl sm:flex-row sm:items-start sm:gap-20 lg:flex-col lg:gap-10`}
             >
               {value.icon}
               <div className="flex flex-col items-center text-center gap-5 sm:text-start sm:items-start">
                 <h1
-                  className={`text-4xl font-bold ${
-                    value.isAlt ? 'text-backgroundAlt2' : 'text-tertiary'
-                  }`}
+                  className={`text-4xl font-bold ${value.isAlt ? 'text-backgroundAlt2' : 'text-tertiary'
+                    }`}
                 >
                   {value.title}
                 </h1>
                 <p
-                  className={`text-xl font-medium ${
-                    value.isAlt ? 'text-background' : 'text-tertiary'
-                  }`}
+                  className={`text-xl font-medium ${value.isAlt ? 'text-background' : 'text-tertiary'
+                    }`}
                 >
                   {value.description}
                 </p>

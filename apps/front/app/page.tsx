@@ -1,8 +1,8 @@
 import Image from 'next/image';
 
-import { Card } from '../components/card';
-import { Footer } from '../components/footer';
-import { Header } from '../components/header';
+import Navbar from 'apps/front/components/navbar';
+import Footer from 'apps/front/components/footer';
+import Card from 'apps/front/components/card';
 
 import Atendimento from '../public/features/atendimento.jpeg';
 import Laboratorio from '../public/features/laboratorio.jpeg';
@@ -15,11 +15,9 @@ import Growatt from '../public/partners/growatt.png';
 import Sungrow from '../public/partners/sungrow.png';
 import { contact } from '../constants';
 
-import {
-  SupportAgentRounded,
-  TrendingUpRounded,
-  MailOutlineRounded
-} from '@mui/icons-material';
+import SupportAgentRounded from '@mui/icons-material/SupportAgentRounded';
+import TrendingUpRounded from '@mui/icons-material/TrendingUpRounded';
+import MailOutlineRounded from '@mui/icons-material/MailOutlineRounded';
 
 const metrics = [
   {
@@ -81,7 +79,7 @@ export default function Home() {
 
   return (
     <>
-      <Header />
+      <Navbar />
 
       {/* Hero */}
       <main className="flex items-center justify-center relative h-screen">

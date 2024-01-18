@@ -1,13 +1,14 @@
 'use client';
 
+import { Fragment, useEffect, useState } from 'react';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { Fragment, useEffect, useState } from 'react';
 
-import Logo from '../public/logo-colored.png';
-import { contact, pages } from '../constants';
+import Logo from 'apps/front/public/logo-colored.png';
+import { contact, pages } from 'apps/front/constants';
 
 import { Dialog, Disclosure, Popover, Transition } from '@headlessui/react';
 
@@ -18,41 +19,39 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuRounded from '@mui/icons-material/MenuRounded';
 import CloseRounded from '@mui/icons-material/CloseRounded';
 import Article from '@mui/icons-material/Article';
+import Skeleton from '@mui/material/Skeleton';
 
-import { CircularProgress, Skeleton } from '@mui/material';
-
-const solutions = [
-  {
-    name: 'Dashboard',
-    description: 'Acesse seus dados de qualquer lugar',
-    href: '/dashboard',
-    icon: LeaderboardRounded
-  },
-  {
-    name: 'Comparativo',
-    description: 'Compare as informações de equipamentos fotovaltaicos',
-    href: '/compara/1/2',
-    icon: SyncAltRounded
-  },
-  {
-    name: 'Blog',
-    description: 'Acompanhe as novidades do mundo fotovoltaico',
-    href: '/blog',
-    icon: Article
-  }
-];
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ');
-}
-
-export const Header = () => {
+const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currentRoute, setCurrentRoute] = useState('');
 
   const { data: session, status } = useSession();
   const pathname = usePathname();
+  const solutions = [
+    {
+      name: 'Dashboard',
+      description: 'Acesse seus dados de qualquer lugar',
+      href: '/dashboard',
+      icon: LeaderboardRounded
+    },
+    {
+      name: 'Comparativo',
+      description: 'Compare as informações de equipamentos fotovaltaicos',
+      href: '/compara/1/2',
+      icon: SyncAltRounded
+    },
+    {
+      name: 'Blog',
+      description: 'Acompanhe as novidades do mundo fotovoltaico',
+      href: '/blog',
+      icon: Article
+    }
+  ];
+
+  function classNames(...classes: string[]) {
+    return classes.filter(Boolean).join(' ');
+  }
 
   useEffect(() => {
     setCurrentRoute(pathname);
@@ -314,4 +313,4 @@ export const Header = () => {
   );
 };
 
-export default Header;
+export default Navbar;

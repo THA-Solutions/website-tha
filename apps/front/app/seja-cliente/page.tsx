@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
-import ArrowRightAlt from '@mui/icons-material/ArrowRightAlt';
+import { contact } from 'apps/front/constants';
 
-import { contact } from '../../constants';
+import ArrowRightAlt from '@mui/icons-material/ArrowRightAlt';
 
 export default function Page() {
   return (

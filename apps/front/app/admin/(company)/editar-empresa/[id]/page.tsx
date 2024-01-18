@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 
 import { Company, CompanyService } from '@tha-solutions';
-import CompanyForm from 'apps/front/components/company-form';
+import CompanyForm from 'apps/front/components/forms/company-form';
 
 export default function Page({ params }: { params: { id: string } }) {
   const company: Company = use(CompanyService.getCompanyById(params.id));

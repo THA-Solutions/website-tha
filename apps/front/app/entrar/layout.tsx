@@ -1,8 +1,8 @@
-import { contact } from '../../constants';
+import { contact } from 'apps/front/constants';
 
 export const metadata = {
   title: `${contact.organization} - Entrar`,
-  description: `Página de login`
+  description: 'Realize o login na sua conta.'
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

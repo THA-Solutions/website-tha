@@ -1,12 +1,6 @@
 import Link from 'next/link';
 
 import ArrowBack from '@mui/icons-material/ArrowBack';
-import { contact } from '../../../../constants';
-
-export const metadata = {
-  title: `${contact.organization} - adicionar empresa`,
-  description: 'Página de cadastro de empresa'
-};
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

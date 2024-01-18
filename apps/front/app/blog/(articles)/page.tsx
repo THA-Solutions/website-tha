@@ -5,7 +5,10 @@ import { use } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { Label, Face, SearchOff, Today } from '@mui/icons-material';
+import Label from '@mui/icons-material/Label';
+import Face from '@mui/icons-material/Face';
+import SearchOff from '@mui/icons-material/SearchOff';
+import Today from '@mui/icons-material/Today';
 
 import { Article, ArticleSerivce, formatter } from '@tha-solutions';
 import ImageNotFound from 'apps/front/components/image-not-found';
