@@ -1,4 +1,4 @@
-import { ArrowBackIosNewRounded } from '@mui/icons-material';
+import ArrowBackIosNewRounded from '@mui/icons-material/ArrowBackIosNewRounded';
 import Skeleton from '@mui/material/Skeleton';
 
 export default function Loading() {

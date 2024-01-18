@@ -1,22 +1,18 @@
-import { Footer } from '../../components/footer';
-import { Header } from '../../components/header';
-import { PageTitle } from '../../components/page-title';
+import Navbar from 'apps/front/components/navbar';
+import Footer from 'apps/front/components/footer';
+import PageTitle from 'apps/front/components/page-title';
 
-import { contact } from '../../constants';
+import { contact } from 'apps/front/constants';
 
 export const metadata = {
   title: `${contact.organization} - Suporte`,
-  description: `Página do suporte técnico`
+  description: 'Entenda como funciona nosso processo de suporte técnico.'
 };
 
-export default function SupportLayout({
-  children
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <Header />
+      <Navbar />
       <main className="pt-28 pb-10 sm:pt-32">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <PageTitle

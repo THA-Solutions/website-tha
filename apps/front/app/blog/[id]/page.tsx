@@ -2,12 +2,12 @@ import { use } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
-import {
-  ArrowBackIosNewRounded,
-  Category,
-  Face,
-  Today
-} from '@mui/icons-material';
+
+import ArrowBackIosNewRounded from '@mui/icons-material/ArrowBackIosNewRounded'
+import Category from '@mui/icons-material/Category'
+import Face from '@mui/icons-material/Face'
+import Today from '@mui/icons-material/Today'
+
 import { Article, ArticleSerivce, formatter } from '@tha-solutions';
 import ImageNotFound from 'apps/front/components/image-not-found';
 
@@ -58,9 +58,8 @@ export default function Page({ params }: { params: { id: string } }) {
 
       <div className="pt-2 space-y-12 xl:grid xl:grid-cols-4 xl:space-x-8 xl:space-y-0">
         <main
-          className={`${
-            articlesRelated.length === 0 ? 'lg:col-span-4' : 'lg:col-span-3'
-          }`}
+          className={`${articlesRelated.length === 0 ? 'lg:col-span-4' : 'lg:col-span-3'
+            }`}
         >
           {article.image && article.image.length > 0 ? (
             <Image
@@ -119,7 +118,7 @@ export default function Page({ params }: { params: { id: string } }) {
                       className="flex flex-col justify-between space-y-6 p-4 ring-1 ring-gray-700 transition-all hover:ring-tertiary hover:bg-backgroundAlt2 hover:scale-105"
                     >
                       {articleRelated.image &&
-                      articleRelated.image.length > 0 ? (
+                        articleRelated.image.length > 0 ? (
                         <Image
                           src={articleRelated.image[0].url}
                           alt={

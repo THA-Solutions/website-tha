@@ -1,21 +1,17 @@
-import { Footer } from '../../components/footer';
-import { Header } from '../../components/header';
+import Footer from 'apps/front/components/footer';
+import Navbar from 'apps/front/components/navbar';
 
-import { contact } from '../../constants';
+import { contact } from 'apps/front/constants';
 
 export const metadata = {
   title: `${contact.organization} - Laboratório`,
-  description: `Página do laboratório`
+  description: 'Entenda como funciona nosso laboratório fotovoltáico.'
 };
 
-export default function LaboratoryLayout({
-  children
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <Header />
+      <Navbar />
       <main className="md:pt-20">{children}</main>
       <Footer />
     </>

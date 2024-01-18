@@ -6,11 +6,11 @@ import { ToastContainer, toast } from 'react-toastify';
 
 import { useRouter } from 'next/navigation';
 
-import { CompanyService, InverterService } from '@tha-solutions';
-import InverterForm from 'apps/front/components/inverter-form';
+import { CompanyService, InverterService, Company } from '@tha-solutions';
+import InverterForm from 'apps/front/components/forms/inverter-form';
 
 export default function Page() {
-  const companies = use(CompanyService.getAllCompanies());
+  const companies: Company[] = use(CompanyService.getAllCompanies());
   const router = useRouter();
 
   const onSubmit = async (data: FieldValues) => {

@@ -1,35 +1,41 @@
 import Link from 'next/link';
 
-import { contact, pages } from '../constants';
+import { contact, pages } from 'apps/front/constants';
 
 import LinkedIn from '@mui/icons-material/LinkedIn';
 import Instagram from '@mui/icons-material/Instagram';
 import WhatsApp from '@mui/icons-material/WhatsApp';
 import Place from '@mui/icons-material/Place';
+import YouTube from '@mui/icons-material/YouTube';
 
-export const Footer = () => {
+const Footer = () => {
   const social = [
     {
       name: 'LinkedIn',
-      href: 'https://www.linkedin.com/company/tha-solu%C3%A7%C3%B5es-fv/',
+      href: contact.social.linkedin,
       icon: <LinkedIn className="h-6 w-6 flex-none text-gray-300" />
     },
     {
       name: 'Instagram',
-      href: 'https://www.instagram.com/thasolutions/',
+      href: contact.social.instagram,
       icon: <Instagram className="h-6 w-6 flex-none text-gray-300" />
     },
     {
       name: 'WhatsApp',
-      href: '/',
+      href: contact.social.whatsapp,
       icon: <WhatsApp className="h-6 w-6 flex-none text-gray-300" />
+    },
+    {
+      name: 'Youtube',
+      href: contact.social.youtube,
+      icon: <YouTube className="h-6 w-6 flex-none text-gray-300" />
     }
   ];
 
   return (
     <footer className="bg-backgroundAlt p-4">
       <section className="text-lightGray p-6 grid grid-cols-2 items-start center justify-center w-full grid-rows-2 gap-10 border-b-2 border-backgroundAlt2 md:grid-cols-4 md:grid-rows-1 xl:px-24">
-        <dl className="flex flex-col gap-3">
+        <dl className="flex flex-col gap-2">
           <dt>
             <h2 className="text-primary text-lg font-semibold mb-4 uppercase">
               Soluções
@@ -58,7 +64,7 @@ export const Footer = () => {
           </dt>
         </dl>
 
-        <dl className="flex flex-col gap-3">
+        <dl className="flex flex-col gap-2">
           <dt>
             <h2 className="text-primary text-lg font-semibold mb-4 uppercase">
               Suporte
@@ -82,7 +88,7 @@ export const Footer = () => {
           </dt>
         </dl>
 
-        <dl className="flex flex-col gap-3">
+        <dl className="flex flex-col gap-2">
           <dt>
             <h2 className="text-primary text-lg font-semibold mb-4 uppercase">
               Empresa
@@ -114,7 +120,7 @@ export const Footer = () => {
           </dt>
         </dl>
 
-        <dl className="flex flex-col gap-3">
+        <dl className="flex flex-col gap-2">
           <dt>
             <h2 className="text-primary text-lg font-semibold mb-4 uppercase">
               Legal
@@ -139,7 +145,7 @@ export const Footer = () => {
         </dl>
       </section>
       <section className="mt-5 flex flex-col gap-5 py-4 px-6 md:flex-row md:justify-between md:items-center">
-        <div className="flex gap-6 md:order-3">
+        <div className="flex gap-4 md:gap-2 md:order-3 lg:gap-5">
           {social.map((item) => (
             <Link
               href={item.href}

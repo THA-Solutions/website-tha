@@ -1,8 +1,8 @@
-import { contact } from '../../constants';
+import { contact } from 'apps/front/constants';
 
 export const metadata = {
   title: `${contact.organization} - Cadastrar`,
-  description: `Página de cadastro de usuário`
+  description: 'Faça seu cadastro em nosso site e junte-se ao time!'
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

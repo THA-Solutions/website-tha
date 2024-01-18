@@ -1,7 +1,8 @@
 'use client';
 
 import { ToastContainer } from 'react-toastify';
-import RecoveryPasswordForm from 'apps/front/components/recovery-pass-form';
+
+import RecoveryPasswordForm from 'apps/front/components/forms/recovery-pass-form';
 
 export default function Page({ params }: { params: { resetToken: string } }) {
   return (

@@ -6,7 +6,7 @@ import { FieldValues } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 
 import { TeamService } from '@tha-solutions';
-import TeamForm from 'apps/front/components/team-form';
+import TeamForm from 'apps/front/components/forms/team-form';
 
 export default function Page() {
   const router = useRouter();

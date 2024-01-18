@@ -6,17 +6,17 @@ import { ToastContainer, toast } from 'react-toastify';
 import Link from 'next/link';
 import Image from 'next/image';
 
+import { TeamService, Team } from '@tha-solutions';
+import ImageNotFound from 'apps/front/components/image-not-found';
+import DeleteDialog from 'apps/front/components/delete-dialog';
+
 import Edit from '@mui/icons-material/Edit';
 import Instagram from '@mui/icons-material/Instagram';
 import LinkedIn from '@mui/icons-material/LinkedIn';
 import SearchOff from '@mui/icons-material/SearchOff';
 
-import { TeamService } from '@tha-solutions';
-import ImageNotFound from 'apps/front/components/image-not-found';
-import DeleteDialog from 'apps/front/components/delete-dialog';
-
 export default function Page() {
-  const employees = use(TeamService.getAllEmployees());
+  const employees: Team[] = use(TeamService.getAllEmployees());
 
   const deleteEmployee = async (id: string) => {
     await toast.promise(TeamService.deleteEmployee(id), {

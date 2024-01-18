@@ -5,9 +5,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 import { User } from '@tha-solutions';
+import InputField from 'apps/front/components/input-field';
+import Logo from 'apps/front/public/logo-colored.png'
 
-import InputField from './input-field';
-import Logo from '../public/logo-colored.png'
 import ArrowRightAlt from '@mui/icons-material/ArrowRightAlt';
 
 

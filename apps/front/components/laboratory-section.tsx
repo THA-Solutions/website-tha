@@ -45,8 +45,8 @@ export const LaboratorySection = ({
     )}
     <h1
       className={`pt-32 text-4xl text-center font-bold font-alt ${isAlternative
-          ? 'text-white text-shadow-black'
-          : 'text-labPrimary text-shadow-white'
+        ? 'text-white text-shadow-black'
+        : 'text-labPrimary text-shadow-white'
         } sm:text-6xl`}
     >
       {title}
@@ -86,8 +86,8 @@ export const LaboratorySection = ({
             >
               <h2
                 className={`text-6xl font-semibold font-alt ${isAlternative
-                    ? 'text-background text-shadow-black'
-                    : 'text-labSecondary text-shadow-white'
+                  ? 'text-background text-shadow-black'
+                  : 'text-labSecondary text-shadow-white'
                   }`}
               >
                 {number}
@@ -100,3 +100,5 @@ export const LaboratorySection = ({
     </div>
   </section>
 );
+
+export default LaboratorySection;

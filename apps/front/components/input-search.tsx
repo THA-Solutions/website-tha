@@ -1,4 +1,5 @@
-import { SearchRounded, CloseRounded } from '@mui/icons-material';
+import CloseRounded from '@mui/icons-material/CloseRounded';
+import SearchRounded from '@mui/icons-material/SearchRounded';
 
 interface InputSearchProps {
   searchTerm: string;
@@ -6,7 +7,7 @@ interface InputSearchProps {
   placeholder?: string;
 }
 
-export const InputSearch = ({
+const InputSearch = ({
   searchTerm,
   setSearchTerm,
   placeholder

@@ -1,8 +1,9 @@
 import { FieldValues, useForm } from 'react-hook-form';
 
-import { Company } from '@tha-solutions';
-import InputField from './input-field';
 import axios from 'axios';
+
+import InputField from 'apps/front/components/input-field';
+import { Company } from '@tha-solutions';
 
 interface CompanyFormProps {
   onSubmit: (data: FieldValues) => Promise<void>;

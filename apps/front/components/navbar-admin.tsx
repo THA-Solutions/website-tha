@@ -1,16 +1,18 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+
 import Image from 'next/image';
 import Link from 'next/link';
-
-import { contact, pagesAdmin } from '../constants';
-
-import { Dialog, Popover } from '@headlessui/react';
-import { MenuRounded, CloseRounded } from '@mui/icons-material';
 import { usePathname } from 'next/navigation';
 
-export const NavbarAdmin = () => {
+import { contact, pagesAdmin } from 'apps/front/constants';
+
+import { Dialog, Popover } from '@headlessui/react';
+import MenuRounded from '@mui/icons-material/MenuRounded';
+import CloseRounded from '@mui/icons-material/CloseRounded';
+
+const NavbarAdmin = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currentRoute, setCurrentRoute] = useState('');
 
@@ -54,11 +56,10 @@ export const NavbarAdmin = () => {
             <Link
               key={item.name}
               href={item.path}
-              className={`flex items-center justify-center text-base uppercase font-semibold transition-all ${
-                currentRoute === item.path
-                  ? 'text-background px-4 py-1 bg-gray-300 rounded-full cursor-default'
-                  : 'text-tertiary hover:text-gray-600 hover:text-lg'
-              }`}
+              className={`flex items-center justify-center text-base uppercase font-semibold transition-all ${currentRoute === item.path
+                ? 'text-background px-4 py-1 bg-gray-300 rounded-full cursor-default'
+                : 'text-tertiary hover:text-gray-600 hover:text-lg'
+                }`}
             >
               {item.name}
             </Link>
@@ -104,11 +105,10 @@ export const NavbarAdmin = () => {
                   <Link
                     key={item.name}
                     href={item.path}
-                    className={`-mx-3 block rounded-lg px-3 py-2 text-base font-semibold transition-all ${
-                      currentRoute === item.path
-                        ? 'text-background font-bold bg-gray-300 rounded-full cursor-default'
-                        : 'text-tertiary hover:text-gray-300 hover:bg-backgroundAlt2'
-                    }`}
+                    className={`-mx-3 block rounded-lg px-3 py-2 text-base font-semibold transition-all ${currentRoute === item.path
+                      ? 'text-background font-bold bg-gray-300 rounded-full cursor-default'
+                      : 'text-tertiary hover:text-gray-300 hover:bg-backgroundAlt2'
+                      }`}
                   >
                     {item.name}
                   </Link>
