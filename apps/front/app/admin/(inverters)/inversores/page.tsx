@@ -37,9 +37,9 @@ export default function Page() {
         </div>
       ) : (
         <article className="mx-auto grid grid-cols-1 gap-x-8 gap-y-16 pt-10 md:grid-cols-2">
-          {inverters.map((inverter) => (
+          {inverters.map((inverter, index) => (
             <main
-              key={inverter.id}
+              key={index}
               className="flex flex-col justify-between gap-4 p-4 ring-1 ring-gray-700 shadow-xl transition-all"
             >
               <section className="flex flex-col gap-4">
