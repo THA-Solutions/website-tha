@@ -9,6 +9,8 @@ export class ResponseInverterDto {
 
   title: string;
 
+  id: string;
+
   @IsString()
   id_company?: string | null;
 
