@@ -52,7 +52,7 @@ const Footer = () => {
           <dt>
             <Link
               className="hover:text-secondary transition-all"
-              href="/compara/1/2"
+              href="/comparativo"
             >
               Comparativo
             </Link>

@@ -16,7 +16,7 @@ export default function Page({ params }: { params: { id: string } }) {
       <nav className='pb-12'>
         <Link
           href="/comparativo"
-          className="flex items-center bg-gray-500 px-4 py-1 rounded-2xl space-x-2 text-background w-fit transition-all hover:bg-gray-700 cursor-pointer"
+          className="flex items-center bg-gray-400 px-4 py-1 rounded-2xl space-x-2 text-background w-fit transition-all hover:bg-gray-700 cursor-pointer"
         >
           <ArrowBackIosNewRounded fontSize="small" />
           <p className="text-base font-semibold">VOLTAR</p>

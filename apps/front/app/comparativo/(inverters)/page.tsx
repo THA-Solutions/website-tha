@@ -12,8 +12,8 @@ import SearchOff from '@mui/icons-material/SearchOff';
 import ArrowRightAlt from '@mui/icons-material/ArrowRightAlt';
 import Add from '@mui/icons-material/Add';
 import Remove from '@mui/icons-material/Remove';
-import { Icon } from '@iconify/react';
 import ImageNotSupported from '@mui/icons-material/ImageNotSupported';
+import { Icon } from '@iconify/react';
 
 export default function Page() {
   const inverters: Inverter[] = use(InverterService.getAllInverters());

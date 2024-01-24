@@ -1,4 +1,3 @@
-
 // @ts-nocheck
 
 import { use } from "react";
@@ -10,7 +9,7 @@ import { Inverter, InverterService } from "@tha-solutions";
 import { inverterFields } from "apps/front/constants";
 import ImageNotFound from "apps/front/components/image-not-found";
 
-import ArrowBack from "@mui/icons-material/ArrowBack";
+import ArrowBackIosNewRounded from "@mui/icons-material/ArrowBackIosNewRounded";
 
 export default function Page({ params }: { params: { id: string[] } }) {
   const inverterData: Inverter = use(InverterService.getInverterById(params.id[0]));
@@ -30,14 +29,17 @@ export default function Page({ params }: { params: { id: string[] } }) {
     }
   };
 
-  const excludedFields = ['id_company', 'title', 'image', 'company'];
+  const excludedFields = ['id', 'id_company', 'title', 'image', 'company'];
 
   return (
     <>
       <header className="flex flex-col gap-6 w-full">
-        <Link href={'/comparativo'} className="w-fit flex gap-2 items-center px-3 py-1 uppercase font-semibold rounded-2xl text-background bg-gray-400 transition-all hover:bg-gray-500">
-          <ArrowBack />
-          <span>Voltar</span>
+        <Link
+          href="/comparativo"
+          className="flex items-center bg-gray-400 px-4 py-1 rounded-2xl space-x-2 text-background w-fit transition-all hover:bg-gray-700 cursor-pointer"
+        >
+          <ArrowBackIosNewRounded fontSize="small" />
+          <p className="text-base font-semibold">VOLTAR</p>
         </Link>
         <h1 className="mt-5 text-2xl font-bold sm:uppercase sm:text-3xl">Comparação de Inversores</h1>
         <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:gap-6">
