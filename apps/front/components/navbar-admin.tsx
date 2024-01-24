@@ -51,7 +51,7 @@ const NavbarAdmin = () => {
             <MenuRounded className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
-        <Popover.Group className="hidden lg:flex lg:gap-x-12">
+        <Popover.Group className="hidden lg:flex lg:gap-x-8">
           {pagesAdmin.map((item) => (
             <Link
               key={item.name}
@@ -66,7 +66,7 @@ const NavbarAdmin = () => {
           ))}
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <h2 className="font-alt text-gray-600">DASHBOARD ADMIN</h2>
+          <p className="text-sm font-alt text-gray-600 xl:text-base">DASHBOARD ADMIN</p>
         </div>
       </nav>
 

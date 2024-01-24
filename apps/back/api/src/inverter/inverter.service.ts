@@ -99,6 +99,7 @@ export class InverterService {
             inverter.id_company
           );
 
+          responseInverter.id = inverter.id;
           responseInverter.ac_overvoltage_protection =
             inverter.ac_overvoltage_protection;
           responseInverter.adjustable_power_factor =
@@ -166,6 +167,7 @@ export class InverterService {
             inverter.id_company
           );
 
+          responseInverter.id = inverter.id;
           responseInverter.ac_overvoltage_protection =
             inverter.ac_overvoltage_protection;
           responseInverter.adjustable_power_factor =
@@ -201,7 +203,7 @@ export class InverterService {
           responseInverter.warranty = inverter.warranty;
           responseInverter.weight = inverter.weight;
           responseInverter.image = image;
-          responseInverter.company= company ? company.legal_name : null;
+          responseInverter.company = company ? company.legal_name : null;
 
           return
         });
@@ -231,51 +233,52 @@ export class InverterService {
             inverter.id_company
           );
 
-                   responseInverter.ac_overvoltage_protection =
-                     inverter.ac_overvoltage_protection;
-                   responseInverter.adjustable_power_factor =
-                     inverter.adjustable_power_factor;
-                   responseInverter.cooling = inverter.cooling;
-                   responseInverter.cc_reverse_polarity_protection =
-                     inverter.cc_reverse_polarity_protection;
-                   responseInverter.cc_surge_protection =
-                     inverter.cc_surge_protection;
-                   responseInverter.cc_switch = inverter.cc_switch;
-                   responseInverter.cc_voltage = inverter.cc_voltage;
-                   responseInverter.dimensions = inverter.dimensions;
-                   responseInverter.european_efficiency =
-                     inverter.european_efficiency;
-                   responseInverter.ground_fault_monitoring =
-                     inverter.ground_fault_monitoring;
-                   responseInverter.id_company = inverter.id_company;
-                   responseInverter.max_efficiency = inverter.max_efficiency;
-                   responseInverter.max_input_current =
-                     inverter.max_input_current;
-                   responseInverter.max_output_current =
-                     inverter.max_output_current;
-                   responseInverter.max_short_circuit_current_per_tracker =
-                     inverter.max_short_circuit_current_per_tracker;
-                   responseInverter.mppt_efficiency = inverter.mppt_efficiency;
-                   responseInverter.mppt_voltage_range =
-                     inverter.mppt_voltage_range;
-                   responseInverter.nighttime_power_consumption =
-                     inverter.nighttime_power_consumption;
-                   responseInverter.num_mppt = inverter.num_mppt;
-                   responseInverter.operating_temperature_range =
-                     inverter.operating_temperature_range;
-                   responseInverter.output_overcurrent_protection =
-                     inverter.output_overcurrent_protection;
-                   responseInverter.protection_degree =
-                     inverter.protection_degree;
-                   responseInverter.thdi = inverter.thdi;
-                   responseInverter.title = inverter.title;
-                   responseInverter.warranty = inverter.warranty;
-                   responseInverter.weight = inverter.weight;
-                   responseInverter.image = image;
-                   responseInverter.company = company
-                     ? company.legal_name
+          responseInverter.id = inverter.id;
+          responseInverter.ac_overvoltage_protection =
+            inverter.ac_overvoltage_protection;
+          responseInverter.adjustable_power_factor =
+            inverter.adjustable_power_factor;
+          responseInverter.cooling = inverter.cooling;
+          responseInverter.cc_reverse_polarity_protection =
+            inverter.cc_reverse_polarity_protection;
+          responseInverter.cc_surge_protection =
+            inverter.cc_surge_protection;
+          responseInverter.cc_switch = inverter.cc_switch;
+          responseInverter.cc_voltage = inverter.cc_voltage;
+          responseInverter.dimensions = inverter.dimensions;
+          responseInverter.european_efficiency =
+            inverter.european_efficiency;
+          responseInverter.ground_fault_monitoring =
+            inverter.ground_fault_monitoring;
+          responseInverter.id_company = inverter.id_company;
+          responseInverter.max_efficiency = inverter.max_efficiency;
+          responseInverter.max_input_current =
+            inverter.max_input_current;
+          responseInverter.max_output_current =
+            inverter.max_output_current;
+          responseInverter.max_short_circuit_current_per_tracker =
+            inverter.max_short_circuit_current_per_tracker;
+          responseInverter.mppt_efficiency = inverter.mppt_efficiency;
+          responseInverter.mppt_voltage_range =
+            inverter.mppt_voltage_range;
+          responseInverter.nighttime_power_consumption =
+            inverter.nighttime_power_consumption;
+          responseInverter.num_mppt = inverter.num_mppt;
+          responseInverter.operating_temperature_range =
+            inverter.operating_temperature_range;
+          responseInverter.output_overcurrent_protection =
+            inverter.output_overcurrent_protection;
+          responseInverter.protection_degree =
+            inverter.protection_degree;
+          responseInverter.thdi = inverter.thdi;
+          responseInverter.title = inverter.title;
+          responseInverter.warranty = inverter.warranty;
+          responseInverter.weight = inverter.weight;
+          responseInverter.image = image;
+          responseInverter.company = company
+            ? company.legal_name
             : null;
-            responseInverters.push(responseInverter);
+          responseInverters.push(responseInverter);
           return
         })
       );

@@ -38,7 +38,7 @@ const Navbar = () => {
     {
       name: 'Comparativo',
       description: 'Compare as informações de equipamentos fotovaltaicos',
-      href: '/compara/1/2',
+      href: '/comparativo',
       icon: SyncAltRounded
     },
     {
