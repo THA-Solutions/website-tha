@@ -103,7 +103,7 @@ export const inverterFields: { [key: string]: string } = {
   max_output_current: 'Corrente de saída (MAX)',
   ca_nominal_power_range: 'Potência nominal de saida CA',
   adjustable_power_factor: 'Fator de potência ajustável',
-  thdi: 'THDI',
+  thdi: 'THDi',
   max_efficiency: 'Eficiência máxima',
   european_efficiency: 'Eficiência europeia',
   mppt_efficiency: 'Eficiência MPPT',
@@ -120,5 +120,6 @@ export const inverterFields: { [key: string]: string } = {
   nighttime_power_consumption: 'Auto-consumo noturno',
   cooling: 'Resfriamento',
   protection_degree: 'Grau de Proteção ambiental',
-  warranty: 'Garantia'
+  warranty: 'Garantia (anos)',
+  company: 'Empresa'
 };

@@ -3,13 +3,13 @@ import { use } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { Article, ArticleSerivce, formatter } from '@tha-solutions';
+import ImageNotFound from 'apps/front/components/image-not-found';
+
 import ArrowBackIosNewRounded from '@mui/icons-material/ArrowBackIosNewRounded'
 import Category from '@mui/icons-material/Category'
 import Face from '@mui/icons-material/Face'
 import Today from '@mui/icons-material/Today'
-
-import { Article, ArticleSerivce, formatter } from '@tha-solutions';
-import ImageNotFound from 'apps/front/components/image-not-found';
 
 export default function Page({ params }: { params: { id: string } }) {
   const article: Article = use(ArticleSerivce.getArticleById(params.id));

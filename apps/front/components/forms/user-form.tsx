@@ -62,7 +62,7 @@ const UserForm = ({
       type: 'password',
       placeholder: 'Senha',
       required: isRequired ? true : false,
-      value: 'senhaaleatoria',
+      value: '*********',
       disabled: true
     }
   ];
@@ -92,7 +92,7 @@ const UserForm = ({
           name="imageFile"
           type="file"
           onChange={handleFileChange}
-          className="mt-1 block w-full px-4 py-2 text-sm text-gray-500 ring-1 ring-gray-500 file:transition-all file:cursor-pointer focus:outline-none file:border-0 file:mr-2 file:text-sm file:font-semibold file:bg-gray-500 file:text-background hover:file:bg-gray-900 hover:file:text-gray-500"
+          className="mt-1 block w-full px-4 py-2 text-sm text-gray-200 ring-1 ring-gray-500 file:transition-all file:cursor-pointer focus:outline-none file:border-0 file:mr-2 file:text-sm file:font-semibold file:bg-gray-200 file:text-background hover:file:bg-gray-600 hover:file:text-gray-200"
         />
       </div>
       {inputs.map((input) => (
@@ -107,7 +107,7 @@ const UserForm = ({
           {input.name === 'email' && (
             <Link
               href={`/perfil/editar/${editUserData?.id}/editar-email`}
-              className="flex items-center w-fit px-1 py-2 text-indigo-400 hover:underline"
+              className="flex items-center w-fit p-0.5 text-tertiary hover:underline"
             >
               <span>Alterar e-mail</span>
               <ArrowRightAlt fontSize="medium" />
@@ -116,7 +116,7 @@ const UserForm = ({
           {input.name === 'password' && (
             <Link
               href={'/recuperar-senha'}
-              className="flex items-center w-fit px-1 py-2 text-indigo-400 hover:underline"
+              className="flex items-center w-fit p-0.5 text-tertiary hover:underline"
             >
               <span>Alterar senha</span>
               <ArrowRightAlt fontSize="medium" />
@@ -126,7 +126,7 @@ const UserForm = ({
       ))}
       <button
         type="submit"
-        className="bg-green-400 hover:bg-green-600 text-background font-semibold font-alt uppercase py-2 px-4 shadow-lg hover:shadow-xl transition duration-200"
+        className="bg-tertiary hover:bg-tertiary/70 text-background font-semibold font-alt uppercase py-2 px-4 shadow-xl transition-all hover:scale-105 hover:shadow-xl"
       >
         {buttonText}
       </button>
