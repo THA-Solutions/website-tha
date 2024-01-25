@@ -1,8 +1,7 @@
-// @ts-nocheck
 
 'use client';
 
-import { use } from "react";
+import { useEffect, useState } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -16,8 +15,25 @@ import ArrowBackIosNewRounded from "@mui/icons-material/ArrowBackIosNewRounded";
 export default function Page({ params }: { params: { id: string[] } }) {
   console.log('ID 1: ', params.id[0])
   console.log('ID 2: ', params.id[1])
-  const inverterData: Inverter = use(InverterService.getInverterById(params.id[0]));
-  const inverterData2: Inverter = use(InverterService.getInverterById(params.id[1]));
+
+  const [inverterData, setInverterData] = useState<Inverter>();
+  const [inverterData2, setInverterData2] = useState<Inverter>();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data1 = await InverterService.getInverterById(params.id[0]);
+        const data2 = await InverterService.getInverterById(params.id[1]);
+
+        setInverterData(data1);
+        setInverterData2(data2);
+      } catch (error) {
+        console.error('Error fetching inverter data:', error);
+      }
+    };
+
+    fetchData();
+  }, [params.id]);
 
   const translateField = (field: string): string => {
     return inverterFields[field] || field;
@@ -64,23 +80,23 @@ export default function Page({ params }: { params: { id: string[] } }) {
           <thead>
             <tr>
               <th className="border border-gray-500 p-2 bg-backgroundAlt2 w-1/3">Campo</th>
-              <th className="border border-gray-500 p-2 bg-backgroundAlt2 w-1/3">{inverterData.title}</th>
-              <th className="border border-gray-500 p-2 bg-backgroundAlt2 w-1/3">{inverterData2.title}</th>
+              <th className="border border-gray-500 p-2 bg-backgroundAlt2 w-1/3">{inverterData?.title}</th>
+              <th className="border border-gray-500 p-2 bg-backgroundAlt2 w-1/3">{inverterData2?.title}</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td className="border border-gray-500 p-2">Imagem do inversor</td>
               <td className="border border-gray-500 p-2">
-                {inverterData.image?.url ? (
-                  <Image src={inverterData.image.url} alt="Imagem do primeiro inversor" width={250} height={250} className="w-full h-full" />
+                {inverterData?.image?.url ? (
+                  <Image src={inverterData?.image.url} alt="Imagem do primeiro inversor" width={250} height={250} className="w-full h-full" />
                 ) : (
                   <ImageNotFound />
                 )}
               </td>
               <td className="border border-gray-500 p-2">
-                {inverterData2.image?.url ? (
-                  <Image src={inverterData2.image.url} alt="Imagem do segundo inversor" width={250} height={250} className="w-full h-full" />
+                {inverterData2?.image?.url ? (
+                  <Image src={inverterData2?.image.url} alt="Imagem do segundo inversor" width={250} height={250} className="w-full h-full" />
                 ) : (
                   <ImageNotFound />
                 )}
@@ -89,13 +105,13 @@ export default function Page({ params }: { params: { id: string[] } }) {
             <tr>
               <td className="border border-gray-500 p-2">Empresa</td>
               <td className="border border-gray-500 p-2">
-                <span className="block rounded-full p-1 text-center font-bold text-background bg-gray-300">{inverterData.company}</span>
+                <span className="block rounded-full p-1 text-center font-bold text-background bg-gray-300">{inverterData?.company}</span>
               </td>
               <td className="border border-gray-500 p-2">
-                <span className="block rounded-full p-1 text-center font-bold text-background bg-gray-300">{inverterData2.company}</span>
+                <span className="block rounded-full p-1 text-center font-bold text-background bg-gray-300">{inverterData2?.company}</span>
               </td>
             </tr>
-            {Object.entries(inverterData).map(([key, value]) => (
+            {Object.entries(inverterData ?? {}).map(([key, value]) => (
               !excludedFields.includes(key) && (
                 <tr key={key}>
                   <td className="border border-gray-500 p-2">{translateField(key)}</td>
@@ -118,10 +134,10 @@ export default function Page({ params }: { params: { id: string[] } }) {
 
       <section className="sm:hidden space-y-8">
         <div>
-          <h2 className="border border-gray-500 p-2 bg-backgroundAlt2">{inverterData.title}</h2>
+          <h2 className="border border-gray-500 p-2 bg-backgroundAlt2">{inverterData?.title}</h2>
           <div className="border border-gray-500 p-2">
-            {inverterData.image?.url ? (
-              <Image src={inverterData.image.url} alt="Imagem do primeiro inversor" width={300} height={300} className="w-full h-full" />
+            {inverterData?.image?.url ? (
+              <Image src={inverterData?.image.url} alt="Imagem do primeiro inversor" width={300} height={300} className="w-full h-full" />
             ) : (
               <ImageNotFound />
             )}
@@ -129,9 +145,9 @@ export default function Page({ params }: { params: { id: string[] } }) {
 
           <div className="border border-gray-500 p-2">
             Empresa: {' '}
-            <span className="font-bold text-gray-100">{inverterData.company}</span>
+            <span className="font-bold text-gray-100">{inverterData?.company}</span>
           </div>
-          {Object.entries(inverterData).map(([key, value]) => (
+          {Object.entries(inverterData ?? {}).map(([key, value]) => (
             !excludedFields.includes(key) && (
               <div key={key} className="flex gap-2 border border-gray-500 p-2 items-center">
                 <span className="w-3/4 font-bold text-gray-100">{translateField(key)}:</span>
@@ -144,10 +160,10 @@ export default function Page({ params }: { params: { id: string[] } }) {
         </div>
 
         <div>
-          <h2 className="border border-gray-500 p-2 bg-backgroundAlt2">{inverterData2.title}</h2>
+          <h2 className="border border-gray-500 p-2 bg-backgroundAlt2">{inverterData2?.title}</h2>
           <div className="border border-gray-500 p-2">
-            {inverterData2.image?.url ? (
-              <Image src={inverterData2.image.url} alt="Imagem do primeiro inversor" width={300} height={300} className="w-full h-full" />
+            {inverterData2?.image?.url ? (
+              <Image src={inverterData2?.image.url} alt="Imagem do primeiro inversor" width={300} height={300} className="w-full h-full" />
             ) : (
               <ImageNotFound />
             )}
@@ -155,9 +171,9 @@ export default function Page({ params }: { params: { id: string[] } }) {
 
           <div className="border border-gray-500 p-2">
             Empresa: {' '}
-            <span className="font-bold text-gray-100">{inverterData2.company}</span>
+            <span className="font-bold text-gray-100">{inverterData2?.company}</span>
           </div>
-          {Object.entries(inverterData).map(([key, value]) => (
+          {Object.entries(inverterData ?? {}).map(([key, value]) => (
             !excludedFields.includes(key) && (
               <div key={key} className="flex gap-2 border border-gray-500 p-2 items-center">
                 <span className="w-3/4 font-bold text-gray-100">{translateField(key)}:</span>{' '}
