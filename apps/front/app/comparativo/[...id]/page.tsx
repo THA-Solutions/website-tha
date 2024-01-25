@@ -12,6 +12,8 @@ import ImageNotFound from "apps/front/components/image-not-found";
 import ArrowBackIosNewRounded from "@mui/icons-material/ArrowBackIosNewRounded";
 
 export default function Page({ params }: { params: { id: string[] } }) {
+  console.log(params.id[0])
+  console.log(params.id[1])
   const inverterData: Inverter = use(InverterService.getInverterById(params.id[0]));
   const inverterData2: Inverter = use(InverterService.getInverterById(params.id[1]));
 

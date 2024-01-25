@@ -33,6 +33,7 @@ export default function RootLayout({
       </head>
 
       <body
+        suppressHydrationWarning={true}
         className={`${roboto.variable} ${baiJamjuree.variable} bg-background font-sans text-gray-100`}
       >
         <SessionProvider>{children}</SessionProvider>
