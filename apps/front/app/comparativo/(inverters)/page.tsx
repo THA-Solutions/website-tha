@@ -20,6 +20,8 @@ export default function Page() {
   const [inverterData, setInverterData] = useState<Inverter | null>(null);
   const [inverterData2, setInverterData2] = useState<Inverter | null>(null);
 
+  console.log('aleatorio');
+
   return (
     <>
       {inverters.length === 0 ? (
