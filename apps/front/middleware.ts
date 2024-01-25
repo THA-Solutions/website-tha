@@ -8,7 +8,8 @@ export const config = {
     '/dashboard/:path*',
     '/entrar',
     '/cadastrar',
-    '/perfil/:path*'
+    '/perfil/:path*',
+    '/comparativo/:path*'
   ]
 };
 
