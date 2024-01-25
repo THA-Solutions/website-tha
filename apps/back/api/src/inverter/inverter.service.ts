@@ -149,6 +149,7 @@ export class InverterService {
   }
 
   async findOne(id: string) {
+    console.log('id na service: ', id)
     const responseInverter = new ResponseInverterDto();
     try {
       let inverter = await this.prisma.inverter
