@@ -1,4 +1,3 @@
-
 // @ts-nocheck
 
 'use client';
@@ -15,8 +14,11 @@ import ImageNotFound from "apps/front/components/image-not-found";
 import ArrowBackIosNewRounded from "@mui/icons-material/ArrowBackIosNewRounded";
 
 export default function Page({ params }: { params: { id: string[] } }) {
-  console.log('ID 1: ', params.id[0])
-  console.log('ID 2: ', params.id[1])
+  const idInverter1 = params.id[0]
+  const idInverter2 = params.id[1]
+
+  console.log('ID 1: ', idInverter1)
+  console.log('ID 2: ', idInverter2)
 
   const [inverterData, setInverterData] = useState<Inverter>();
   const [inverterData2, setInverterData2] = useState<Inverter>();
@@ -24,8 +26,8 @@ export default function Page({ params }: { params: { id: string[] } }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data1 = await InverterService.getInverterById(params.id[0]);
-        const data2 = await InverterService.getInverterById(params.id[1]);
+        const data1 = await InverterService.getInverterById(idInverter1);
+        const data2 = await InverterService.getInverterById(idInverter2);
 
         setInverterData(data1);
         setInverterData2(data2);
