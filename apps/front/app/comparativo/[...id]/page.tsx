@@ -13,6 +13,7 @@ import ImageNotFound from "apps/front/components/image-not-found";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 
 export default function Page({ params }: { params: { id: string[] } }) {
+  console.log(params);
   const inverterData: Inverter = use(InverterService.getInverterById(params.id[0]));
   const inverterData2: Inverter = use(InverterService.getInverterById(params.id[1]));
 
