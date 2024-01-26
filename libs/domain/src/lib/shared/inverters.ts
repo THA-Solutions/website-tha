@@ -24,6 +24,8 @@ export class InverterService {
     console.log('id na lib shared: ', id)
     if (id.search(/\/+/g){
       console.log("tem barra")
+    } else {
+      console.log("nao tem barra")
     }
     
     ) const res = await axios.get(`${this.apiPath}/${id}`);
