@@ -22,13 +22,13 @@ export class InverterService {
 
   static async getInverterById(id: string): Promise<Inverter> {
     console.log('id na lib shared: ', id)
-    if (id.search(/\/+/g){
-      console.log("tem barra")
+    if (id.search(/\/+/g) || id.search(/%2F/g)) {
+      console.log('tem barra');
     } else {
-      console.log("nao tem barra")
+      console.log('nao tem barra');
     }
-    
-    ) const res = await axios.get(`${this.apiPath}/${id}`);
+
+    const res = await axios.get(`${this.apiPath}/${id}`);
     return res.data;
   }
 
