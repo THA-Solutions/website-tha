@@ -25,7 +25,10 @@ export class InverterService {
     return res.data;
   }
 
-  static async updateInverter(id: string, updatedInverter: FormData): Promise<Inverter> {
+  static async updateInverter(
+    id: string,
+    updatedInverter: FormData
+  ): Promise<Inverter> {
     const res = await axios.patch(`${this.apiPath}/${id}`, updatedInverter, {
       headers: {
         'Content-Type': 'multipart/form-data'
