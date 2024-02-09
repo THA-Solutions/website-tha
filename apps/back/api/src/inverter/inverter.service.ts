@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { CreateInverterDto } from './dto/create-inverter.dto';
-import { UpdateInverterDto } from './dto/update-inverter.dto';
-import PrismaService from '../prisma.service';
-import { ImageService } from '../image/image.service';
-import { ResponseImageDto } from '../image/dto/response-image.dto';
-import { ResponseInverterDto } from './dto/response-inverter.dto';
 import { CompanyService } from '../company/company.service';
+import { ResponseImageDto } from '../image/dto/response-image.dto';
+import { ImageService } from '../image/image.service';
+import PrismaService from '../prisma.service';
+import { CreateInverterDto } from './dto/create-inverter.dto';
+import { ResponseInverterDto } from './dto/response-inverter.dto';
+import { UpdateInverterDto } from './dto/update-inverter.dto';
 
 @Injectable()
 export class InverterService {
@@ -149,7 +149,6 @@ export class InverterService {
   }
 
   async findOne(id: string) {
-    console.log('id na service: ', id)
     const responseInverter = new ResponseInverterDto();
     try {
       let inverter = await this.prisma.inverter

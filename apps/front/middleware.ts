@@ -1,6 +1,6 @@
 import { getToken } from 'next-auth/jwt';
-import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 
 export const config = {
   matcher: [
@@ -15,8 +15,6 @@ export const config = {
 
 export async function middleware(request: NextRequest) {
   const token = await getToken({ req: request });
-
-  console.log('middleware:', request.nextUrl.pathname)
 
   // Logout User
   if (!token) {

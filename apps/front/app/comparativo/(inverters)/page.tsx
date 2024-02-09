@@ -1,5 +1,6 @@
 'use client';
 
+import { Icon } from '@iconify/react';
 import { use, useState } from 'react';
 
 import Image from 'next/image';
@@ -8,19 +9,16 @@ import Link from 'next/link';
 import { Inverter, InverterService } from '@tha-solutions';
 import ImageNotFound from 'apps/front/components/image-not-found';
 
-import SearchOff from '@mui/icons-material/SearchOff';
-import ArrowRightAlt from '@mui/icons-material/ArrowRightAlt';
 import Add from '@mui/icons-material/Add';
-import Remove from '@mui/icons-material/Remove';
+import ArrowRightAlt from '@mui/icons-material/ArrowRightAlt';
 import ImageNotSupported from '@mui/icons-material/ImageNotSupported';
-import { Icon } from '@iconify/react';
+import Remove from '@mui/icons-material/Remove';
+import SearchOff from '@mui/icons-material/SearchOff';
 
 export default function Page() {
   const inverters: Inverter[] = use(InverterService.getAllInverters());
   const [inverterData, setInverterData] = useState<Inverter | null>(null);
   const [inverterData2, setInverterData2] = useState<Inverter | null>(null);
-
-  console.log('aleatorio');
 
   return (
     <>
@@ -31,7 +29,7 @@ export default function Page() {
         </div>
       ) : (
         <>
-          <main className='bg-backgroundAlt2 ring-1 ring-gray-700 mt-8 flex flex-col items-center justify-center p-8 gap-6 md:flex-row'>
+          <main className='bg-backgroundAlt2 ring-1 ring-gray-700 mt-8 flex flex-col items-center justify-between p-8 gap-6 md:flex-row'>
             {inverterData ? (
               <section className="flex flex-col space-y-4 p-3 w-full ring-1 ring-tertiary sm:w-80">
                 {inverterData.image ? (
@@ -111,7 +109,7 @@ export default function Page() {
               </div>
             )}
             {inverterData !== null && inverterData2 !== null && (
-              <Link href={`/comparativo/${inverterData?.id}/${inverterData2?.id}`} className='p-2 flex items-center justify-center gap-2 w-full text-center text-background uppercase font-semibold transition-all bg-tertiary sm:w-80 hover:bg-tertiary/70'>
+              <Link href={`/comparativo/${inverterData.id}/${inverterData2.id}`} className='p-2 flex items-center justify-center gap-2 w-full text-center text-background uppercase font-semibold transition-all bg-tertiary sm:w-80 hover:bg-tertiary/70'>
                 <span>Comparar</span>
                 <ArrowRightAlt />
               </Link>
@@ -144,7 +142,7 @@ export default function Page() {
                 </div>
                 <div className='flex flex-col gap-2'>
                   <Link
-                    href={`/comparativo/${inverter.id}`}
+                    href={`/inversores/${inverter.id}`}
                     className='bg-blue-500 p-1 text-center text-background font-bold flex items-center justify-center gap-2 transition-all hover:bg-blue-300'
                   >
                     <span>Ver detalhes</span>

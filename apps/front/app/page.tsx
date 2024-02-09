@@ -1,9 +1,10 @@
 import Image from 'next/image';
 
-import Navbar from 'apps/front/components/navbar';
-import Footer from 'apps/front/components/footer';
 import Card from 'apps/front/components/card';
+import Footer from 'apps/front/components/footer';
+import Navbar from 'apps/front/components/navbar';
 
+import { contact } from '../constants';
 import Atendimento from '../public/features/atendimento.jpeg';
 import Laboratorio from '../public/features/laboratorio.jpeg';
 import Marketing from '../public/features/marketing.jpeg';
@@ -13,11 +14,10 @@ import Chint from '../public/partners/chint.png';
 import FGL from '../public/partners/fgl-distribuidora.png';
 import Growatt from '../public/partners/growatt.png';
 import Sungrow from '../public/partners/sungrow.png';
-import { contact } from '../constants';
 
+import MailOutlineRounded from '@mui/icons-material/MailOutlineRounded';
 import SupportAgentRounded from '@mui/icons-material/SupportAgentRounded';
 import TrendingUpRounded from '@mui/icons-material/TrendingUpRounded';
-import MailOutlineRounded from '@mui/icons-material/MailOutlineRounded';
 
 const metrics = [
   {

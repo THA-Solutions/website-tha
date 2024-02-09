@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-import ApiConfig from './api-config';
 import { Inverter } from '../entities';
+import ApiConfig from './api-config';
 
 export class InverterService {
   private static readonly apiPath = `${ApiConfig.getApiUrl()}/inverter`;
@@ -21,7 +21,6 @@ export class InverterService {
   }
 
   static async getInverterById(id: string): Promise<Inverter> {
-    console.log('id na lib shared: ', id)
     const res = await axios.get(`${this.apiPath}/${id}`);
     return res.data;
   }

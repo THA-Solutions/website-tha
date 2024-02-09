@@ -1,10 +1,10 @@
 'use client';
 
-import { AppProgressBar as ProgressBar } from 'next-nprogress-bar';
 import { SessionProvider } from 'next-auth/react';
+import { AppProgressBar as ProgressBar } from 'next-nprogress-bar';
 import {
-  Roboto_Flex as Roboto,
-  Bai_Jamjuree as BaiJamjuree
+  Bai_Jamjuree as BaiJamjuree,
+  Roboto_Flex as Roboto
 } from 'next/font/google';
 
 import './global.css';
@@ -13,7 +13,7 @@ import { contact } from '../constants';
 
 import 'react-toastify/dist/ReactToastify.css';
 
-const roboto = Roboto({ subsets: ['latin'], variable: '--font-roboto' });
+const roboto = Roboto({ subsets: ['latin'], variable: '--font-roboto', weight: '400' });
 const baiJamjuree = BaiJamjuree({
   subsets: ['latin'],
   weight: '700',

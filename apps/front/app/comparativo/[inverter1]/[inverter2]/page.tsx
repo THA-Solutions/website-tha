@@ -8,26 +8,20 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Inverter, InverterService } from "@tha-solutions";
-import { inverterFields } from "apps/front/constants";
 import ImageNotFound from "apps/front/components/image-not-found";
+import { inverterFields } from "apps/front/constants";
 
 import ArrowBackIosNewRounded from "@mui/icons-material/ArrowBackIosNewRounded";
 
-export default function Page({ params }: { params: { id: string[] } }) {
-  const idInverter1 = params.id[0]
-  const idInverter2 = params.id[1]
-
-  console.log('ID 1: ', idInverter1)
-  console.log('ID 2: ', idInverter2)
-
+export default function Page({ params }: { params: { inverter1: string, inverter2: string } }) {
   const [inverterData, setInverterData] = useState<Inverter>();
   const [inverterData2, setInverterData2] = useState<Inverter>();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data1 = await InverterService.getInverterById(idInverter1);
-        const data2 = await InverterService.getInverterById(idInverter2);
+        const data1 = await InverterService.getInverterById(params.inverter1);
+        const data2 = await InverterService.getInverterById(params.inverter2);
 
         setInverterData(data1);
         setInverterData2(data2);
@@ -37,7 +31,7 @@ export default function Page({ params }: { params: { id: string[] } }) {
     };
 
     fetchData();
-  }, [params.id]);
+  }, [params.inverter1, params.inverter2]);
 
   const translateField = (field: string): string => {
     return inverterFields[field] || field;
