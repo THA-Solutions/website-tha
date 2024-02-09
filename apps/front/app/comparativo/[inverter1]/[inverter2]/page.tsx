@@ -12,7 +12,6 @@ import { inverterFields } from "apps/front/constants";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 
 export default function Page({ params }: { params: { inverter1: string; inverter2: string } }) {
-  console.log('ids', params.inverter1, params.inverter2)
   const inverterData: Inverter = use(InverterService.getInverterById(params.inverter1));
   const inverterData2: Inverter = use(InverterService.getInverterById(params.inverter2));
 

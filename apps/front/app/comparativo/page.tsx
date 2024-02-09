@@ -109,7 +109,7 @@ export default function Page() {
               </div>
             )}
             {inverterData !== null && inverterData2 !== null && (
-              <Link href={`/comparacao/${inverterData.id}/${inverterData2.id}`} className='p-2 flex items-center justify-center gap-2 w-full text-center text-background uppercase font-semibold transition-all bg-tertiary sm:w-80 hover:bg-tertiary/70'>
+              <Link href={`/comparativo/${inverterData.id}/${inverterData2.id}`} className='p-2 flex items-center justify-center gap-2 w-full text-center text-background uppercase font-semibold transition-all bg-tertiary sm:w-80 hover:bg-tertiary/70'>
                 <span>Comparar</span>
                 <ArrowRightAlt />
               </Link>
