@@ -1,6 +1,6 @@
-
 // @ts-nocheck
 
+import { use } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -11,25 +11,10 @@ import { inverterFields } from "apps/front/constants";
 
 import ArrowBack from "@mui/icons-material/ArrowBack";
 
-export default function Page({ params }: { params: { inverter1: string, inverter2: string } }) {
-  const [inverterData, setInverterData] = useState<Inverter>();
-  const [inverterData2, setInverterData2] = useState<Inverter>();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data1 = await InverterService.getInverterById(params.inverter1);
-        const data2 = await InverterService.getInverterById(params.inverter2);
-
-        setInverterData(data1);
-        setInverterData2(data2);
-      } catch (error) {
-        console.error('Error fetching inverter data:', error);
-      }
-    };
-
-    fetchData();
-  }, [params.inverter1, params.inverter2]);
+export default function Page({ params }: { params: { inverter1: string; inverter2: string } }) {
+  console.log('ids', params.inverter1, params.inverter2)
+  const inverterData: Inverter = use(InverterService.getInverterById(params.inverter1));
+  const inverterData2: Inverter = use(InverterService.getInverterById(params.inverter2));
 
   const translateField = (field: string): string => {
     return inverterFields[field] || field;
@@ -45,7 +30,7 @@ export default function Page({ params }: { params: { inverter1: string, inverter
     }
   };
 
-  const excludedFields = ['id_company', 'title', 'image', 'company'];
+  const excludedFields = ['id', 'id_company', 'title', 'image', 'company'];
 
   return (
     <>

@@ -14,13 +14,13 @@ export const SectionData = [
     content: [
       {
         icon: (
-          <SolarPowerRounded className="text-4xl text-labSecondary md:text-5xl" />
+          <SolarPowerRounded className="h-10 w-10 text-labSecondary" />
         ),
         text: 'A energia fotovoltaica tem sido reconhecida mundialmente como uma das fontes de energia mais sustentáveis e promissoras.'
       },
       {
         icon: (
-          <BuildRounded className="text-4xl text-labSecondary md:text-5xl" />
+          <BuildRounded className="h-10 w-10 text-labSecondary" />
         ),
         text: 'Com sua crescente popularidade, a necessidade de manutenção e reparo de equipamentos relacionados também tem aumentado.'
       }
@@ -55,7 +55,7 @@ export const SectionData = [
       },
       {
         icon: (
-          <PublicRounded className="text-4xl text-background md:text-5xl" />
+          <PublicRounded className="h-10 w-10 text-background" />
         ),
         text: 'Veículos Importados: Muitos veículos importados vêm equipados com tecnologia fotovoltaica de ponta. Estes requerem um conhecimento especializado para consertos e reparos, considerando as especificações e normas internacionais.'
       }
@@ -63,46 +63,14 @@ export const SectionData = [
     footerData: [
       {
         number: '+250',
-        label: 'Inversores Concertados'
+        label: 'Módulos Concertados'
       },
       {
-        number: '94%',
+        number: '97%',
         label: 'Taxa de Sucesso'
       }
     ]
   },
-  {
-    id: 'inversores',
-    title: 'INVERSORES',
-    isAlternative: false,
-    backgroundColor: 'bg-backgroundAlt',
-    image: '/features/inversor-solar-off-grid.webp',
-    imageAlt: 'inversor solar off grid',
-    content: [
-      {
-        icon: (
-          <SolarPowerRounded className="text-4xl text-labSecondary md:text-5xl" />
-        ),
-        text: 'A energia fotovoltaica tem sido reconhecida mundialmente como uma das fontes de energia mais sustentáveis e promissoras.'
-      },
-      {
-        icon: (
-          <BuildRounded className="text-4xl text-labSecondary md:text-5xl" />
-        ),
-        text: 'Com sua crescente popularidade, a necessidade de manutenção e reparo de equipamentos relacionados também tem aumentado.'
-      }
-    ],
-    footerData: [
-      {
-        number: '+500',
-        label: 'Inversores\nConcertados'
-      },
-      {
-        number: '98%',
-        label: 'Taxa de\nSucesso'
-      }
-    ]
-  }
 ];
 
 export default SectionData;

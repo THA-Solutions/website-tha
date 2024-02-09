@@ -27,12 +27,6 @@ export default function Page() {
             <h1 className="text-4xl text-center font-bold font-alt text-labPrimary text-shadow-white sm:text-6xl md:text-7xl lg:text-9xl">
               LABORATÓRIO <br /> FOTOVOLTAICO
             </h1>
-            {/* <p className="text-md text-justify sm:text-lg md:text-xl lg:text-3xl lg:text-center">
-              A energia fotovoltaica tem sido reconhecida mundialmente como uma
-              das fontes de energia mais sustentáveis e promissoras. Com sua
-              crescente popularidade, a necessidade de manutenção e reparo de
-              equipamentos relacionados também tem aumentado.
-            </p> */}
           </div>
         </section>
 
@@ -51,12 +45,13 @@ export default function Page() {
       <section className="h-80 relative">
         <main className="flex flex-col items-center justify-center h-full">
           <div className="flex gap-8 p-4">
-            <Handyman className="text-4xl text-labPrimary md:text-6xl" />
-            <ElectricBolt className="text-4xl text-labPrimary md:text-6xl" />
+            <Handyman className="h-10 w-10 text-labPrimary" />
+            <ElectricBolt className="h-10 w-10 text-labPrimary" />
           </div>
           <h1 className="text-center text-2xl font-bold font-alt sm:text-5xl md:mb-28">
             MANUTENÇÃO DE
-            <br /> EQUIPAMENTOS
+            <br />
+            EQUIPAMENTOS
           </h1>
         </main>
 
