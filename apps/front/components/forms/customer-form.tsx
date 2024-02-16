@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 
@@ -94,7 +96,11 @@ const CustomerForm = ({
             className="w-full border-0 pl-4 py-2 mt-2.5 bg-transparent shadow-sm ring-1 ring-inset placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-tertiary text-white ring-gray-400"
           >
             {companies?.map((company) => (
-              <option key={company.id} value={company.legal_name} className='bg-backgroundAlt2 text-base text-gray-300'>
+              <option
+                key={company.id}
+                value={company.legal_name}
+                className="bg-backgroundAlt2 text-base text-gray-300"
+              >
                 {company.legal_name}
               </option>
             ))}

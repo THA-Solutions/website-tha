@@ -1,3 +1,5 @@
+'use client';
+
 import { ChangeEvent, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 
@@ -6,10 +8,9 @@ import Image from 'next/image';
 
 import { User } from '@tha-solutions';
 import InputField from 'apps/front/components/input-field';
-import Logo from 'apps/front/public/logo-colored.png'
+import Logo from 'apps/front/public/logo-colored.png';
 
 import ArrowRightAlt from '@mui/icons-material/ArrowRightAlt';
-
 
 interface UserFormProps {
   onSubmit: (data: FieldValues) => Promise<void>;
@@ -82,12 +83,29 @@ const UserForm = ({
       className="flex flex-col gap-4 max-w-xl w-full space-y-4"
     >
       <div className="shrink-0 flex w-full justify-center items-center">
-        <Image className="h-24 w-24 object-cover rounded-full" src={selectedFile ? URL.createObjectURL(selectedFile) : editUserData?.image ? editUserData.image : Logo} alt="Foto de perfil atual" width={96} height={96} />
+        <Image
+          className="h-24 w-24 object-cover rounded-full"
+          src={
+            selectedFile
+              ? URL.createObjectURL(selectedFile)
+              : editUserData?.image
+              ? editUserData.image
+              : Logo
+          }
+          alt="Foto de perfil atual"
+          width={96}
+          height={96}
+        />
       </div>
       <div>
-        <label className="text-xl font-semibold leading-6 text-white" htmlFor="file_input">Foto de perfil</label>
+        <label
+          className="text-xl font-semibold leading-6 text-white"
+          htmlFor="file_input"
+        >
+          Foto de perfil
+        </label>
         <input
-          {...register("imageFile", { required: isRequired ? true : false })}
+          {...register('imageFile', { required: isRequired ? true : false })}
           id="fileInput"
           name="imageFile"
           type="file"
@@ -101,7 +119,7 @@ const UserForm = ({
             input={input}
             value={input.value}
             register={register}
-            colorRing='ring-gray-500'
+            colorRing="ring-gray-500"
             errors={errors}
           />
           {input.name === 'email' && (

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import ApiConfig from './api-config';
+import ApiConfig from 'libs/domain/src/lib/shared/api-config';
 
 export class ImageService {
   private static readonly apiPath = `${ApiConfig.getApiUrl()}/image`;

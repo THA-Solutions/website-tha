@@ -1,23 +1,25 @@
 import Image from 'next/image';
 
-import Navbar from 'apps/front/components/navbar';
-import Footer from 'apps/front/components/footer';
 import Card from 'apps/front/components/card';
+import Footer from 'apps/front/components/footer';
+import Navbar from 'apps/front/components/navbar';
 
+import { contact } from '../constants';
 import Atendimento from '../public/features/atendimento.jpeg';
 import Laboratorio from '../public/features/laboratorio.jpeg';
 import Marketing from '../public/features/marketing.jpeg';
 import SupplyChain from '../public/features/supply_chain.jpeg';
 import Logo from '../public/logo-colored.png';
+import SDA from '../public/partners/SDA.png';
+import Apice from '../public/partners/apice.png';
 import Chint from '../public/partners/chint.png';
-import FGL from '../public/partners/fgl-distribuidora.png';
-import Growatt from '../public/partners/growatt.png';
+import Solplanet from '../public/partners/solplanet.png';
 import Sungrow from '../public/partners/sungrow.png';
-import { contact } from '../constants';
 
+import MailOutlineRounded from '@mui/icons-material/MailOutlineRounded';
 import SupportAgentRounded from '@mui/icons-material/SupportAgentRounded';
 import TrendingUpRounded from '@mui/icons-material/TrendingUpRounded';
-import MailOutlineRounded from '@mui/icons-material/MailOutlineRounded';
+
 
 const metrics = [
   {
@@ -66,17 +68,7 @@ const features = [
     imageSrc: SupplyChain
   }
 ];
-
 export default function Home() {
-  // useLayoutEffect(() => {
-  //   const setCookie = async () => {
-  //     await SET();
-  //   };
-  //   setCookie();
-  // }, []);
-
-  //OWUzMDY3ZjctOGFmNi00MzJmLTgxZDctOWZkMGQ3MGQ0ZTc1fHJlYWQtd3JpdGU
-
   return (
     <>
       <Navbar />
@@ -168,41 +160,46 @@ export default function Home() {
       </article>
 
       {/* Partners */}
-      <section className="bg-background py-24 sm:py-28">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <h2 className="text-center text-3xl font-semibold leading-8 text-lightGray lg:text-4xl lg:py-8">
-            Nossos parceiros
-          </h2>
-          <div className="mx-auto mt-14 grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-4">
-            <Image
-              className="col-span-2 max-h-16 w-full object-contain lg:col-span-1"
-              src={Growatt}
-              alt="Growatt"
-              width={158}
-              height={48}
-            />
-            <Image
-              className="col-span-2 max-h-10 w-full object-contain lg:col-span-1"
-              src={Sungrow}
-              alt="Sungrow"
-              width={158}
-              height={48}
-            />
-            <Image
-              className="col-span-2 max-h-12 w-full object-contain lg:col-span-1"
-              src={Chint}
-              alt="Chint"
-              width={158}
-              height={48}
-            />
-            <Image
-              className="col-span-2 max-h-12 w-full object-contain  lg:col-span-1"
-              src={FGL}
-              alt="FGL Distribuidora"
-              width={158}
-              height={48}
-            />
-          </div>
+      <section className="bg-background mx-auto max-w-7xl flex flex-col gap-16 px-6 py-24 md:px-10">
+        <h2 className="text-center text-3xl font-semibold leading-8 text-lightGray lg:text-5xl">
+          Nossos parceiros
+        </h2>
+        <div className="mx-auto grid max-w-lg grid-cols-2 items-center gap-x-16 gap-y-12 md:grid-cols-3 md:mx-0 md:max-w-none lg:grid-cols-4">
+          <Image
+            className="h-full w-full object-contain"
+            src={Apice}
+            alt="Imagem do parceiro Ápice Distribuidora"
+            width={800}
+            height={800}
+          />
+          <Image
+            className="h-full w-full object-contain"
+            src={Sungrow}
+            alt="Imagem do parceiro Sungrow"
+            width={800}
+            height={800}
+          />
+          <Image
+            className="h-full w-full object-contain"
+            src={Chint}
+            alt="Imagem do parceiro Chint Power"
+            width={800}
+            height={800}
+          />
+          <Image
+            className="h-full w-full object-contain"
+            src={SDA}
+            alt="Imagem do parceiro SDA"
+            width={800}
+            height={800}
+          />
+          <Image
+            className="h-full w-full object-contain"
+            src={Solplanet}
+            alt="Imagem do parceiro Solplanet"
+            width={800}
+            height={800}
+          />
         </div>
       </section>
 

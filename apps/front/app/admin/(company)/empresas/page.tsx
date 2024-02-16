@@ -1,6 +1,6 @@
 'use client';
 
-import { use } from 'react';
+import { useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 
 import Link from 'next/link';
@@ -14,7 +14,15 @@ import Edit from '@mui/icons-material/Edit';
 import SearchOff from '@mui/icons-material/SearchOff';
 
 export default function Page() {
-  const companies: Company[] = use(CompanyService.getAllCompanies());
+  const [companies, setCompanies] = useState<Company[]>([]);
+
+  useEffect(() => {
+    const getCompanies = async () => {
+      setCompanies(await CompanyService.getAllCompanies());
+    };
+
+    getCompanies();
+  }, []);
 
   const deleteCompany = async (id: string) => {
     await toast.promise(CompanyService.deleteCompany(id), {

@@ -1,6 +1,6 @@
 'use client';
 
-import { use } from 'react';
+import { useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 
 import { CustomerService, User } from '@tha-solutions';
@@ -9,8 +9,15 @@ import CustomerTable from 'apps/front/components/customer-table';
 import SearchOff from '@mui/icons-material/SearchOff';
 
 export default function Page() {
-  const customer: User[] = use(CustomerService.getAllCustomers());
+  const [customer, setCustomer] = useState<User[]>([]);
 
+  useEffect(() => {
+    const getCustomers = async () => {
+      setCustomer(await CustomerService.getAllCustomers());
+    };
+
+    getCustomers();
+  }, []);
   const deleteCustomer = async (id: string) => {
     await toast.promise(CustomerService.deleteCustomer(id), {
       pending: 'Deletando o cliente...',

@@ -16,7 +16,7 @@ export default class CloudinaryService {
   async uploadImage(file: Express.Multer.File): Promise<string> {
     return new Promise((resolve, reject) => {
       const upload = v2.uploader.upload_stream(
-        { folder: 'images' },
+        { folder: this.configService.get('CLOUDINARY_FOLDER') },
         (error: UploadApiErrorResponse, result: UploadApiResponse) => {
           if (result) {
             resolve(result.secure_url);

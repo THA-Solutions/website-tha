@@ -16,29 +16,7 @@ export class UserService {
     private companyService: CompanyService,
     private imageService: ImageService,
     private mailService: MailService
-  ) { }
-
-  //Criptografa a senha do usuário de acordo com a chave de criptografia definida no arquivo .env e protocolo AES-256-CBC
-  crypter(password: string) {
-    try {
-      const iv = Buffer.from(crypto.randomBytes(16));
-
-      const cipher = crypto.createCipheriv(
-        'aes-256-cbc',
-        this.configService.get<string>('CRYPTO_SECRET')!,
-        iv
-      );
-
-      let crypted = cipher.update(password, 'utf8', 'hex');
-      crypted += cipher.final('hex');
-
-      password = `${iv.toString('hex')}:${crypted}`;
-
-      return password;
-    } catch (error) {
-      throw Error(`Error in cryptography ${error}`);
-    }
-  }
+  ) {}
 
   async create(
     createUserDto: CreateUserDto,
@@ -68,6 +46,10 @@ export class UserService {
 
           createUserDto.password = this.crypter(createUserDto.password);
 
+          createUserDto.role && createUserDto.role != 'admin'
+            ? createUserDto.role
+            : 'user';
+
           const createdUser = await this.prisma.user
             .create({
               data: createUserDto
@@ -84,6 +66,7 @@ export class UserService {
                   imageFile
                 );
               }
+
               return {
                 id: user.id,
                 firstName: user.firstName,
@@ -121,7 +104,7 @@ export class UserService {
           if (user.company) {
             await this.companyService.findOne(user.company).then((company) => {
               if (!company) {
-                throw Error('Company not found');
+                user.company = null;
               }
               user.company = company.trade_name
                 ? company.trade_name
@@ -166,7 +149,7 @@ export class UserService {
         if (user.company) {
           await this.companyService.findOne(user.company).then((company) => {
             if (!company) {
-              throw Error('Company not found');
+              user.company = null;
             }
             user.company = company.trade_name
               ? company.trade_name
@@ -213,9 +196,9 @@ export class UserService {
           if (user.company) {
             await this.companyService.findOne(user.company).then((company) => {
               if (!company) {
-                throw Error('Company not found');
+                user.company = null;
               }
-              user.company = company.legal_name
+              user.company = company.legal_name;
             });
           }
 
@@ -236,7 +219,6 @@ export class UserService {
   }
 
   async findByEmail(email: string): Promise<ResponseUserDto> {
-
     try {
       //Busca o usuário pelo email e sua respectiva imagem e retorna um objeto com os dados do usuário e a url da imagem
       const user = await this.prisma.user
@@ -258,7 +240,7 @@ export class UserService {
           if (user.company) {
             await this.companyService.findOne(user.company).then((company) => {
               if (!company) {
-                throw Error('Company not found');
+                user.company = null;
               }
 
               user.company = company.trade_name
@@ -340,7 +322,6 @@ export class UserService {
     } catch (error) {
       throw Error(`Error in update user ${error}`);
     }
-
   }
 
   async forgotPassword(email: string, request: any) {
@@ -351,10 +332,6 @@ export class UserService {
     }
 
     const resetToken = await this.createResetToken(user);
-
-    // const resetUrl = `${request.protocol}://${request.get(
-    //   'host'
-    // )}/api/v1/auth/resetpassword/${resetToken.resetToken}`;
 
     const resetUrl = `http://localhost:4200/recuperar-senha/${resetToken.resetToken}`;
 
@@ -441,7 +418,7 @@ export class UserService {
       .update(resetToken)
       .digest('hex');
 
-    const resetPasswordExpire = new Date(Date.now() + 10 * 60000); //10 minutos
+    const resetPasswordExpire = new Date(Date.now() + 10 * 60000);
 
     await this.prisma.account_Token.create({
       data: {
@@ -471,6 +448,28 @@ export class UserService {
         });
     } catch (error) {
       throw Error(`Error in delete user ${error}`);
+    }
+  }
+
+  //Criptografa a senha do usuário de acordo com a chave de criptografia definida no arquivo .env e protocolo AES-256-CBC
+  crypter(password: string) {
+    try {
+      const iv = Buffer.from(crypto.randomBytes(16));
+
+      const cipher = crypto.createCipheriv(
+        'aes-256-cbc',
+        this.configService.get<string>('CRYPTO_SECRET')!,
+        iv
+      );
+
+      let crypted = cipher.update(password, 'utf8', 'hex');
+      crypted += cipher.final('hex');
+
+      password = `${iv.toString('hex')}:${crypted}`;
+
+      return password;
+    } catch (error) {
+      throw Error(`Error in cryptography ${error}`);
     }
   }
 }

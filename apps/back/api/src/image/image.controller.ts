@@ -62,7 +62,7 @@ export class ImageController {
   }
 
   @Delete('offset/:id')
-  removeOffset(@Body() imageSet: UpdateImageDto[]) {
-    return this.imageService.deleteOffSet(imageSet);
+  removeOffset(@Param('id') id: string, @Body() imageSet: UpdateImageDto[]) {
+    return this.imageService.deleteOffSet(id, imageSet);
   }
 }

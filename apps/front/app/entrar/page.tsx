@@ -15,6 +15,7 @@ import Logo from 'apps/front/public/logo-white.png';
 
 import Email from '@mui/icons-material/Email';
 import Key from '@mui/icons-material/Key';
+import { getSession } from 'next-auth/react';
 
 export default function Page() {
   const {
@@ -34,10 +35,14 @@ export default function Page() {
           password: data.password,
           redirect: false
         }),
+
         {
           pending: 'Entrando...'
         }
       );
+      const session = await getSession();
+
+      localStorage.setItem('role', session?.user?.role as string);
 
       if (result && result.error) {
         throw new Error(result.error);
@@ -79,8 +84,8 @@ export default function Page() {
     <>
       <section className="bg-hero-background bg-center bg-cover bg-no-repeat h-screen flex flex-col items-center justify-center text-left">
         <div className="backdrop-blur-md bg-gray-800/80 py-8 px-4 w-full h-full flex flex-col justify-between shadow-[0_0_50px_10px] shadow-background ring-1 ring-gray-00 md:max-w-2xl md:my-4 md:px-12">
-          <header className='flex flex-col items-start justify-between gap-4 sm:flex-row'>
-            <Link href={"/"} className="h-12 w-12">
+          <header className="flex flex-col items-start justify-between gap-4 sm:flex-row">
+            <Link href={'/'} className="h-12 w-12">
               <Image src={Logo} alt="Logo da empresa" />
             </Link>
             <div className="flex flex-col text-left sm:text-right">
@@ -93,8 +98,10 @@ export default function Page() {
             </div>
           </header>
 
-
-          <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col justify-between'>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col justify-between"
+          >
             <div className="flex flex-col w-full gap-6">
               {formInputs.map((input) =>
                 input.type === 'password' ? (
@@ -122,7 +129,10 @@ export default function Page() {
             </div>
 
             <div className="w-full flex justify-end my-3">
-              <Link href="/recuperar-senha" className="text-sm font-normal text-indigo-400 hover:underline">
+              <Link
+                href="/recuperar-senha"
+                className="text-sm font-normal text-indigo-400 hover:underline"
+              >
                 Esqueceu a senha?
               </Link>
             </div>

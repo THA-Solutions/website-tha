@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-import ApiConfig from './api-config';
 import { Inverter } from '../entities';
+import ApiConfig from './api-config';
 
 export class InverterService {
   private static readonly apiPath = `${ApiConfig.getApiUrl()}/inverter`;
@@ -9,33 +9,54 @@ export class InverterService {
   static async createInverter(inverter: FormData): Promise<Inverter> {
     const res = await axios.post(this.apiPath, inverter, {
       headers: {
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${localStorage.getItem('role')}`
       }
     });
     return res.data;
   }
 
   static async getAllInverters(): Promise<Inverter[]> {
-    const res = await axios.get(this.apiPath);
+    const res = await axios.get(this.apiPath, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('role')}`
+      }
+    });
+
     return res.data;
   }
 
   static async getInverterById(id: string): Promise<Inverter> {
-    const res = await axios.get(`${this.apiPath}/${id}`);
+    const res = await axios.get(`${this.apiPath}/${id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('role')}`
+      }
+    });
     return res.data;
   }
 
-  static async updateInverter(id: string, updatedInverter: FormData): Promise<Inverter> {
+  static async updateInverter(
+    id: string,
+    updatedInverter: FormData
+  ): Promise<Inverter> {
     const res = await axios.patch(`${this.apiPath}/${id}`, updatedInverter, {
       headers: {
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${localStorage.getItem('role')}`
       }
     });
     return res.data;
   }
 
   static async deleteInverter(id: string): Promise<Inverter> {
-    const res = await axios.delete(`${this.apiPath}/${id}`);
+    const res = await axios.delete(`${this.apiPath}/${id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('role')}`
+      }
+    });
     return res.data;
   }
 }
