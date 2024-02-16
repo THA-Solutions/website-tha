@@ -1,7 +1,7 @@
-import { contact } from 'apps/front/constants';
+import { company } from 'apps/front/constants';
 
 export const metadata = {
-  title: `${contact.organization} - Cadastrar`,
+  title: `${company.name} - Cadastrar`,
   description: 'Faça seu cadastro em nosso site e junte-se ao time!'
 };
 

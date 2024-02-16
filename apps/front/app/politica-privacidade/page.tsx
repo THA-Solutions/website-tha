@@ -46,7 +46,7 @@ export default function Page() {
           O uso continuado de nosso site será considerado como aceitação de
           nossas práticas em torno de privacidade e informações pessoais. Se
           você tiver alguma dúvida sobre como lidamos com dados do usuário e
-          informações pessoais, entre em contacto connosco.
+          informações pessoais, entre em contato conosco.
         </p>
 
         <ul className="text-xl text-gray-300 text-justify sm:text-left">

@@ -5,20 +5,21 @@ import PageTitle from 'apps/front/components/page-title';
 import { company } from 'apps/front/constants';
 
 export const metadata = {
-  title: `${company.name} - Blog`,
-  description: 'Fique por dentro das novidades da nossa empresa e do mundo fotovoltáico.'
+  title: `${company.name} - Instalação e Manutenção`,
+  description: 'Realizamos a manutenção e instalação do seu inversor, entre em contato conosco.'
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Navbar />
-      <main className="pt-24 pb-8 mx-auto max-w-7xl px-6 sm:pt-32 lg:px-8">
+      <div className='pt-28 mx-auto max-w-7xl sm:pt-32'>
         <PageTitle
-          title="Blog"
-          description="Fique por dentro das novidades da nossa empresa e do mundo
-          fotovoltáico."
-        />
+          title="Instalação e manutenção"
+          description="Realizamos a manutenção e instalação do seu inversor, entre em contato conosco."
+          />
+      </div>
+      <main>
         {children}
       </main>
       <Footer />

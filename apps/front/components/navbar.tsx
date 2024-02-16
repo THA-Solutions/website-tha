@@ -2,23 +2,23 @@
 
 import { Fragment, useEffect, useState } from 'react';
 
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useSession } from 'next-auth/react';
 
+import { company, pages } from 'apps/front/constants';
 import Logo from 'apps/front/public/logo-colored.png';
-import { contact, pages } from 'apps/front/constants';
 
 import { Dialog, Disclosure, Popover, Transition } from '@headlessui/react';
 
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import Article from '@mui/icons-material/Article';
+import CloseRounded from '@mui/icons-material/CloseRounded';
 import ExpandMoreRounded from '@mui/icons-material/ExpandMoreRounded';
 import LeaderboardRounded from '@mui/icons-material/LeaderboardRounded';
-import SyncAltRounded from '@mui/icons-material/SyncAltRounded';
-import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuRounded from '@mui/icons-material/MenuRounded';
-import CloseRounded from '@mui/icons-material/CloseRounded';
-import Article from '@mui/icons-material/Article';
+import SyncAltRounded from '@mui/icons-material/SyncAltRounded';
 import Skeleton from '@mui/material/Skeleton';
 
 const Navbar = () => {
@@ -66,7 +66,7 @@ const Navbar = () => {
       >
         <div>
           <Link href="/" className="-m-1.5 p-1.5">
-            <span className="sr-only">{contact.organization}</span>
+            <span className="sr-only">{company.name}</span>
             <Image
               className="h-8 w-auto hover:animate-spin"
               src={Logo}
@@ -148,7 +148,7 @@ const Navbar = () => {
             <Link
               key={item.name}
               href={item.path}
-              className={`flex items-center justify-center text-lg leading-6 font-semibold ${currentRoute === item.path
+              className={`flex items-center justify-center text-base leading-6 font-semibold xl:text-lg ${currentRoute === item.path
                 ? 'text-white border-b-2 border-white font-bold cursor-default'
                 : 'text-gray-400 transition-all ease-linear hover:text-tertiary hover:scale-90'
                 }`}
@@ -208,7 +208,7 @@ const Navbar = () => {
         <Dialog.Panel className="fixed inset-y-0 right-0 z-40 w-full overflow-y-auto bg-backgroundAlt px-5 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
             <Link href="/" className="-m-1.5 p-1.5">
-              <span className="sr-only">{contact.organization}</span>
+              <span className="sr-only">{company.name}</span>
               <Image
                 className="h-8 w-auto hover:animate-spin"
                 src={Logo}
@@ -217,7 +217,7 @@ const Navbar = () => {
             </Link>
             <button
               type="button"
-              className="-m-2.5 rounded-md p-2.5 text-secondary hover:text-tertiary"
+              className="-m-4 rounded-md p-2.5 text-secondary hover:text-tertiary"
               onClick={() => setMobileMenuOpen(false)}
             >
               <span className="sr-only">Fechar menu</span>

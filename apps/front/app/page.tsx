@@ -4,7 +4,8 @@ import Card from 'apps/front/components/card';
 import Footer from 'apps/front/components/footer';
 import Navbar from 'apps/front/components/navbar';
 
-import { contact } from '../constants';
+import { company } from '../constants';
+
 import Atendimento from '../public/features/atendimento.jpeg';
 import Laboratorio from '../public/features/laboratorio.jpeg';
 import Marketing from '../public/features/marketing.jpeg';
@@ -74,9 +75,10 @@ export default function Home() {
       <Navbar />
 
       {/* Hero */}
-      <main className="flex items-center justify-center relative h-screen">
-        <div className="max-w-7xl flex flex-col items-center justify-center w-full gap-8 h-4/6 lg:flex-row lg:justify-between lg:px-12">
-          <div className=" flex items-center justify-center lg:order-2">
+      <main className="bg-home-background bg-center bg-cover bg-no-repeat flex items-center justify-center relative h-screen">
+      <div className="absolute inset-0 bg-[#121118] opacity-60"></div>
+        <div className="max-w-7xl flex flex-col items-center justify-center z-20 w-full gap-8 h-4/6 lg:flex-row lg:justify-between lg:px-12">
+          <div className="flex items-center justify-center lg:order-2">
             <Image
               className="h-32 w-32 sm:h-40 sm:w-40 lg:h-64 lg:w-64 xl:h-80 xl:w-80"
               src={Logo}
@@ -84,15 +86,15 @@ export default function Home() {
             />
           </div>
           <div className="text-center lg:text-left">
-            <div className="gap-4 flex font-alt text-center drop-shadow-md leading-none lg:text-left border-b border-backgroundAlt2">
-              <h1 className="text-primary text-3xl font-semibold font-alt sm:text-6xl lg:text-7xl xl:text-secondary-title">
+            <div className="gap-4 flex font-alt text-center drop-shadow-md leading-none lg:text-left">
+              <h1 className="text-primary text-3xl font-extrabold font-alt sm:text-6xl lg:text-7xl xl:text-secondary-title">
                 THA
               </h1>
-              <h2 className="text-white font-semibold text-3xl font-alt pb-2 sm:text-6xl lg:text-7xl xl:text-secondary-title">
+              <h2 className="text-gray-200 font-extrabold text-3xl font-alt pb-2 sm:text-6xl lg:text-7xl xl:text-secondary-title">
                 SOLUTIONS
               </h2>
             </div>
-            <h3 className="text-lightGray text-md font-normal mt-2 ml-2 sm:text-xl lg:text-2xl xl:text-slogan-title">
+            <h3 className="text-gray-300 text-md font-normal ml-2 sm:text-xl lg:text-2xl xl:text-slogan-title">
               Sabemos o que você precisa!
             </h3>
           </div>
@@ -123,7 +125,7 @@ export default function Home() {
                 </p>
                 <p className="mt-6 text-lg leading-8 text-lightGray">
                   No coração de cada sistema fotovoltaico está um compromisso
-                  com um futuro mais sustentável. Na {contact.organization},
+                  com um futuro mais sustentável. Na {company.name},
                   entendemos a essência desse compromisso e trabalhamos
                   incansavelmente para garantir que a infraestrutura que
                   alimenta essa esperança esteja sempre a funcionar no seu

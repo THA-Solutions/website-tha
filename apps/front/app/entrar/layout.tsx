@@ -1,7 +1,7 @@
-import { contact } from 'apps/front/constants';
+import { company } from 'apps/front/constants';
 
 export const metadata = {
-  title: `${contact.organization} - Entrar`,
+  title: `${company.name} - Entrar`,
   description: 'Realize o login na sua conta.'
 };
 

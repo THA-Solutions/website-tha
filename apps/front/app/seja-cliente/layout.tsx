@@ -1,11 +1,11 @@
-import Navbar from 'apps/front/components/navbar';
 import Footer from 'apps/front/components/footer';
+import Navbar from 'apps/front/components/navbar';
 import PageTitle from 'apps/front/components/page-title';
 
-import { contact } from 'apps/front/constants';
+import { company } from 'apps/front/constants';
 
 export const metadata = {
-  title: `${contact.organization} - Seja cliente`
+  title: `${company.name} - Seja cliente`
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

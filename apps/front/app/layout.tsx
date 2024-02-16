@@ -3,13 +3,13 @@
 import { SessionProvider } from 'next-auth/react';
 import { AppProgressBar as ProgressBar } from 'next-nprogress-bar';
 import {
-  Bai_Jamjuree as BaiJamjuree,
-  Roboto_Flex as Roboto
+    Bai_Jamjuree as BaiJamjuree,
+    Roboto_Flex as Roboto
 } from 'next/font/google';
 
 import './global.css';
 
-import { contact } from '../constants';
+import { company } from '../constants';
 
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -29,7 +29,7 @@ export default function RootLayout({
     <html lang="pt-br">
       <head>
         <meta charSet="UTF-8" />
-        <title>{contact.organization}</title>
+        <title>{company.name}</title>
       </head>
 
       <body

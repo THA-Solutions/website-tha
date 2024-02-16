@@ -1,8 +1,8 @@
 import NavbarAdmin from 'apps/front/components/navbar-admin';
-import { contact } from 'apps/front/constants';
+import { company } from 'apps/front/constants';
 
 export const metadata = {
-  title: `${contact.organization} - Dashboard`,
+  title: `${company.name} - Dashboard`,
   description: 'Dashboard'
 };
 

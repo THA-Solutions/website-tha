@@ -1,16 +1,16 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { contact, pagesAdmin } from 'apps/front/constants';
+import { company, pagesAdmin } from 'apps/front/constants';
 
 import { Dialog, Popover } from '@headlessui/react';
-import MenuRounded from '@mui/icons-material/MenuRounded';
 import CloseRounded from '@mui/icons-material/CloseRounded';
+import MenuRounded from '@mui/icons-material/MenuRounded';
 
 const NavbarAdmin = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -31,7 +31,7 @@ const NavbarAdmin = () => {
       >
         <div className="flex lg:flex-1">
           <Link href="/" className="-m-1.5 p-1.5">
-            <span className="sr-only">{contact.organization}</span>
+            <span className="sr-only">{company.name}</span>
             <Image
               src={'/logo-white.png'}
               alt="Logo THA Solutions"
@@ -81,7 +81,7 @@ const NavbarAdmin = () => {
         <Dialog.Panel className="fixed inset-y-0 right-0 z-40 w-full overflow-y-auto bg-backgroundAlt px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
             <Link href="/">
-              <span className="sr-only">{contact.organization}</span>
+              <span className="sr-only">{company.name}</span>
               <Image
                 src={'/logo-white.png'}
                 alt="Logo THA Solutions"

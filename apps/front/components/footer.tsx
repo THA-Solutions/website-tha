@@ -1,174 +1,103 @@
-import Link from 'next/link';
+'use client'
 
-import { contact, pages } from 'apps/front/constants';
+import { Icon } from '@iconify/react'
 
-import LinkedIn from '@mui/icons-material/LinkedIn';
-import Instagram from '@mui/icons-material/Instagram';
-import WhatsApp from '@mui/icons-material/WhatsApp';
-import Place from '@mui/icons-material/Place';
-import YouTube from '@mui/icons-material/YouTube';
+import Image from 'next/image'
+import Link from 'next/link'
+
+import { company, pages } from 'apps/front/constants'
+import Logo from '/public/logo-footer.png'
 
 const Footer = () => {
   const social = [
     {
-      name: 'LinkedIn',
-      href: contact.social.linkedin,
-      icon: <LinkedIn className="h-6 w-6 flex-none text-gray-300" />
+      icon: 'basil:linkedin-solid',
+      href: company.social.linkedin
     },
     {
-      name: 'Instagram',
-      href: contact.social.instagram,
-      icon: <Instagram className="h-6 w-6 flex-none text-gray-300" />
+      icon: 'basil:instagram-solid',
+      href: company.social.instagram
     },
     {
-      name: 'WhatsApp',
-      href: contact.social.whatsapp,
-      icon: <WhatsApp className="h-6 w-6 flex-none text-gray-300" />
+      icon: 'formkit:whatsapp',
+      href: company.social.whatsapp
     },
     {
-      name: 'Youtube',
-      href: contact.social.youtube,
-      icon: <YouTube className="h-6 w-6 flex-none text-gray-300" />
-    }
-  ];
+      icon: 'basil:youtube-solid',
+      href: company.social.youtube
+    },
+  ]
 
   return (
-    <footer className="bg-backgroundAlt p-4">
-      <section className="text-lightGray p-6 grid grid-cols-2 items-start center justify-center w-full grid-rows-2 gap-10 border-b-2 border-backgroundAlt2 md:grid-cols-4 md:grid-rows-1 xl:px-24">
-        <dl className="flex flex-col gap-2">
-          <dt>
-            <h2 className="text-primary text-lg font-semibold mb-4 uppercase">
-              Soluções
-            </h2>
-          </dt>
-          <dt>
-            <Link
-              className="hover:text-secondary transition-all"
-              href="/dashboard"
-            >
-              Dashboard
-            </Link>
-          </dt>
-          <dt>
-            <Link
-              className="hover:text-secondary transition-all"
-              href="/comparativo"
-            >
-              Comparativo
-            </Link>
-          </dt>
-          <dt>
-            <Link className="hover:text-secondary transition-all" href="/blog">
-              Blog
-            </Link>
-          </dt>
-        </dl>
-
-        <dl className="flex flex-col gap-2">
-          <dt>
-            <h2 className="text-primary text-lg font-semibold mb-4 uppercase">
-              Suporte
-            </h2>
-          </dt>
-          <dt>
-            <Link
-              className="hover:text-secondary transition-all"
-              href={pages[4].path}
-            >
-              {pages[4].name}
-            </Link>
-          </dt>
-          <dt>
-            <Link
-              className="hover:text-secondary transition-all"
-              href={pages[0].path}
-            >
-              {pages[0].name}
-            </Link>
-          </dt>
-        </dl>
-
-        <dl className="flex flex-col gap-2">
-          <dt>
-            <h2 className="text-primary text-lg font-semibold mb-4 uppercase">
-              Empresa
-            </h2>
-          </dt>
-          <dt>
-            <Link
-              className="hover:text-secondary transition-all"
-              href={pages[2].path}
-            >
-              {pages[2].name}
-            </Link>
-          </dt>
-          <dt>
-            <Link
-              className="hover:text-secondary transition-all"
-              href={pages[3].path}
-            >
-              {pages[3].name}
-            </Link>
-          </dt>
-          <dt>
-            <Link
-              className="hover:text-secondary transition-all"
-              href={pages[1].path}
-            >
-              {pages[1].name}
-            </Link>
-          </dt>
-        </dl>
-
-        <dl className="flex flex-col gap-2">
-          <dt>
-            <h2 className="text-primary text-lg font-semibold mb-4 uppercase">
-              Legal
-            </h2>
-          </dt>
-          <dt>
-            <Link
-              className="hover:text-secondary transition-all"
-              href="/termos-uso"
-            >
-              Termos de Uso
-            </Link>
-          </dt>
-          <dt>
-            <Link
-              className="hover:text-secondary transition-all"
-              href="/politica-privacidade"
-            >
-              Política de Privacidade
-            </Link>
-          </dt>
-        </dl>
-      </section>
-      <section className="mt-5 flex flex-col gap-5 py-4 px-6 md:flex-row md:justify-between md:items-center">
-        <div className="flex gap-4 md:gap-2 md:order-3 lg:gap-5">
-          {social.map((item) => (
+    <footer className="bg-backgroundAlt p-8">
+      <section className="mx-auto max-w-7xl grid w-full grid-cols-1 items-start justify-center gap-10 border-b border-backgroundAlt2 pb-4 md:grid-cols-2 lg:grid-cols-4 xl:gap-x-16">
+        <Link href={'/'} className="w-64 lg:mt-6 lg:w-52 xl:w-64">
+          <Image
+            src={Logo}
+            alt="Logo da empresa"
+            className="transition-all hover:scale-105"
+          />
+        </Link>
+        <div>
+          <h2 className="pb-2 text-2xl font-semibold normal-case text-primary lg:text-lg xl:text-2xl">
+            Fale conosco
+          </h2>
+          <h3 className="text-base text-gray-300 lg:text-sm xl:text-base">{company.email}</h3>
+          <h3 className="text-base text-gray-300 lg:text-sm xl:text-base">{company.phone}</h3>
+          <Link href={'/contato'} className='font-semibold text-base text-gray-100 lg:text-sm xl:text-base transition-all hover:underline'>Mande uma mensagem &rarr;</Link>
+        </div>
+        <div>
+          <h2 className="pb-2 text-2xl font-semibold normal-case text-primary lg:text-lg xl:text-2xl">
+            Venha nos visitar
+          </h2>
+          <h3 className="text-base font-thin text-gray-300 lg:text-sm xl:text-base">{company.address}</h3>
+        </div>
+        <div>
+          <h2 className="pb-2 text-2xl font-semibold normal-case text-primary lg:text-lg xl:text-2xl">
+            Redes sociais
+          </h2>
+          <div className="flex items-center gap-4">
+            {social.map((item) => (
             <Link
               href={item.href}
-              key={item.name}
-              target="_blank"
-              className="p-2 bg-background rounded-full transition-all ease-linear hover:bg-primary hover:scale-110"
+              className="flex group items-center justify-center rounded-full border border-gray-800 p-2 transition-all hover:border-gray-700"
             >
-              {item.icon}
+              <Icon icon={`${item.icon}`} className="text-3xl text-gray-300 group-hover:text-primary" />
             </Link>
-          ))}
+            ))}
+          </div>
         </div>
-        <div className="flex items-center text-sm text-gray-300 gap-2 sm:text-xl md:text-sm lg:text-xl">
-          <Place className="hidden text-2xl lg:flex" />
-          <p>{contact.address}</p>
+      </section>
+
+      <section className="mx-auto max-w-7xl flex flex-col items-start gap-6 pt-6 text-gray-300 lg:flex-row lg:justify-between">
+        <div className="flex w-full flex-col items-start gap-4 sm:flex-row lg:w-fit">
+          {pages.map((page) => {
+            return (
+              <Link
+                key={page.name}
+                href={page.path}
+                className="text-lg font-semibold hover:underline sm:text-sm"
+              >
+                {page.name}
+              </Link>
+            )
+          })}
         </div>
-        <div className="flex">
-          <p className="text-sm text-gray-500 sm:text-xl md:text-sm lg:text-lg">
-            © {new Date().getFullYear()} {contact.organization}
-          </p>
+        <p className="text-sm text-gray-500">
+          {' '}
+          © {new Date().getFullYear()} {company.name}
+        </p>
+        <div className="flex flex-col items-start gap-2 font-semibold sm:flex-row sm:gap-6 sm:text-sm">
+          <Link href="/termos-uso" className="hover:underline">
+            Termos de uso
+          </Link>
+          <Link href="/politica-privacidade" className="hover:underline">
+            Política de privacidade
+          </Link>
         </div>
       </section>
     </footer>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer

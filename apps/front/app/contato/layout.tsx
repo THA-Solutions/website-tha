@@ -1,10 +1,10 @@
 import Footer from 'apps/front/components/footer';
 import Navbar from 'apps/front/components/navbar';
 
-import { contact } from 'apps/front/constants';
+import { company } from 'apps/front/constants';
 
 export const metadata = {
-  title: `${contact.organization} - Contato`,
+  title: `${company.name} - Contato`,
   description: 'Entre em contato conosco para qualquer informação adicional.'
 };
 

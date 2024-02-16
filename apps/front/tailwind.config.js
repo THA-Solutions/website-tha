@@ -18,6 +18,7 @@ module.exports = {
       },
 
       backgroundImage: {
+        'home-background': 'url(/home-background.webp)',
         'hero-background': 'url("/hero-background.png")',
         'not-found-background': 'url("/not-found-background.jpg")',
         'support-background': 'url("/features/atendimento.jpeg")',

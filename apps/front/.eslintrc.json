@@ -8,8 +8,5 @@
   "ignorePatterns": [
     "!**/*",
     ".next/**/*"
-  ],
-  "overrides": [
-    // ... suas regras específicas para o front ...
   ]
 }

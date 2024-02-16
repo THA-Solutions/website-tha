@@ -1,19 +1,19 @@
 'use client';
 
-import { useForm, FieldValues } from 'react-hook-form';
-import { toast, ToastContainer } from 'react-toastify';
+import { FieldValues, useForm } from 'react-hook-form';
+import { ToastContainer, toast } from 'react-toastify';
 
-import InputField from 'apps/front/components/input-field';
-import { contact } from 'apps/front/constants';
 import { MailService } from '@tha-solutions';
+import InputField from 'apps/front/components/input-field';
+import { company } from 'apps/front/constants';
 
+import Apartment from '@mui/icons-material/Apartment';
+import Badge from '@mui/icons-material/Badge';
 import Business from '@mui/icons-material/Business';
+import Email from '@mui/icons-material/Email';
+import InfoOutlined from '@mui/icons-material/InfoOutlined';
 import MailOutlineRounded from '@mui/icons-material/MailOutlineRounded';
 import WhatsApp from '@mui/icons-material/WhatsApp';
-import InfoOutlined from '@mui/icons-material/InfoOutlined';
-import Email from '@mui/icons-material/Email';
-import Badge from '@mui/icons-material/Badge';
-import Apartment from '@mui/icons-material/Apartment';
 
 export default function Page() {
   const {
@@ -57,7 +57,7 @@ export default function Page() {
       label: 'Empresa',
       name: 'company',
       type: 'text',
-      autoComplete: 'organization',
+      autoComplete: 'name',
       required: false,
       icon: <Apartment className=" text-gray-400" />
     },
@@ -82,15 +82,15 @@ export default function Page() {
         <div className="flex flex-col px-4 gap-8 2xl:text-2xl">
           <span className="flex items-center gap-4 text-sm 2xl:text-2xl">
             <Business className="text-tertiary 2xl:text-4xl" />
-            {contact.address}
+            {company.address}
           </span>
           <span className="flex items-center gap-4">
             <MailOutlineRounded className="text-tertiary 2xl:text-4xl" />
-            {contact.email}
+            {company.email}
           </span>
           <span className="flex items-center gap-4">
             <WhatsApp className="text-tertiary 2xl:text-4xl" />
-            {contact.phone}
+            {company.phone}
           </span>
         </div>
       </section>

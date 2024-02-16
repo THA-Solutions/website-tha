@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { contact } from 'apps/front/constants';
+import { company } from 'apps/front/constants';
 
 import ArrowRightAlt from '@mui/icons-material/ArrowRightAlt';
 
@@ -21,7 +21,7 @@ export default function Page() {
         <div className="backdrop-blur bg-[#2d2d2d] bg-opacity-60 flex flex-col items-center justify-center text-center gap-10 p-10 ring-2 ring-secondary/70">
           <div className="flex flex-col items-center gap-2">
             <h3 className="uppercase text-md font-semibold text-gray-500">
-              {contact.organization}
+              {company.name}
             </h3>
             <h2 className="uppercase text-secondary text-5xl font-bold font-alt md:text-6xl">
               FALE CONOSCO
@@ -29,9 +29,9 @@ export default function Page() {
           </div>
 
           <div className="flex flex-col text-gray-300 gap-3 text-lg md:text-xl">
-            <h3>{contact.address}</h3>
-            <h3>{contact.phone}</h3>
-            <h3>{contact.email}</h3>
+            <h3>{company.address}</h3>
+            <h3>{company.phone}</h3>
+            <h3>{company.email}</h3>
           </div>
 
           <Link

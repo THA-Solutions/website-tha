@@ -1,10 +1,10 @@
 import { SvgIconComponent } from '@mui/icons-material';
 
+import Apartment from '@mui/icons-material/Apartment';
+import ElectricBolt from '@mui/icons-material/ElectricBolt';
+import Groups2Icon from '@mui/icons-material/Groups2';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
-import Groups2Icon from '@mui/icons-material/Groups2';
-import Apartment from '@mui/icons-material/Apartment';
-import ElectricBolt from '@mui/icons-material/ElectricBolt'
 
 export interface PageAdminType {
   name: string;
@@ -12,20 +12,25 @@ export interface PageAdminType {
   icon: SvgIconComponent | null;
 }
 
-export const contact = {
-  organization: 'THA Solutions',
-  email: 'walisson@thasolutions.com.br',
+export const company = {
+  name: 'THA Solutions',
+  email: 'talyson@thasolutions.com.br',
   phone: '(44) 3301-7871',
-  address: 'Av. Melvin Jones, 1194, Barracão 13 - Maringá PR',
+  address:
+    'Av. Melvin Jones, 1194, Pq. Industrial Bandeirantes, Barracão 13 - Maringá PR, 87.040-500',
   social: {
     linkedin: 'https://www.linkedin.com/company/tha-solu%C3%A7%C3%B5es-fv/',
     instagram: 'https://www.instagram.com/thasolutions/',
-    youtube: 'https://www.youtube.com.br',
-    whatsapp: '#'
-  }
-};
+    youtube: '#',
+    whatsapp: '#',
+  },
+}
 
 export const pages = [
+  {
+    name: 'Instalação e Manutenção',
+    path: '/instalacao-manutencao'
+  },
   {
     name: 'Suporte Técnico',
     path: '/suporte-tecnico'
@@ -41,10 +46,6 @@ export const pages = [
   {
     name: 'Sobre nós',
     path: '/sobre'
-  },
-  {
-    name: 'Contato',
-    path: '/contato'
   }
 ];
 
