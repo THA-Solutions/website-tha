@@ -149,7 +149,7 @@ export class ArticleService {
       image = JSON.parse(image as any);
 
       if (imageFile) {
-        await this.imageService.deleteOffSet(imageFile);
+        await this.imageService.deleteOffSet(id, imageFile);
         for (let i = 0; i < imageFile.length; i++) {
           if (i == 0) {
             this.imageService

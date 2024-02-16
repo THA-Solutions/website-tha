@@ -8,10 +8,10 @@ export class AuthorizationService {
 
   static async signIn(credentials: Auth): Promise<User> {
     const res = await axios.post(`${this.apiPath}/login`, {
-      email: credentials!.email,
-      password: credentials!.password
+      email: credentials.email,
+      password: credentials.password
     });
 
-    return res.data;
+    return res.data as any;
   }
 }

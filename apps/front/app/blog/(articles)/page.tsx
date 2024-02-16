@@ -1,6 +1,6 @@
 'use client';
 
-import { use } from 'react';
+import { useEffect, useState } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -14,7 +14,15 @@ import SearchOff from '@mui/icons-material/SearchOff';
 import Today from '@mui/icons-material/Today';
 
 export default function Page() {
-  const articles: Article[] = use(ArticleSerivce.getAllArticles());
+  const [articles, setArticles] = useState<Article[]>([]);
+
+  useEffect(() => {
+    const getArticles = async () => {
+      setArticles(await ArticleSerivce.getAllArticles());
+    };
+
+    getArticles();
+  }, []);
 
   return (
     <>

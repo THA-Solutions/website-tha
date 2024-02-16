@@ -1,6 +1,6 @@
 'use client';
 
-import { use } from 'react';
+import { useEffect, useState } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -10,7 +10,16 @@ import { Company, CompanyService } from '@tha-solutions';
 import CompanyForm from 'apps/front/components/forms/company-form';
 
 export default function Page({ params }: { params: { id: string } }) {
-  const company: Company = use(CompanyService.getCompanyById(params.id));
+  const [company, setCompany] = useState<Company | null>(null);
+
+  useEffect(() => {
+    const getCompany = async () => {
+      setCompany(await CompanyService.getCompanyById(params.id));
+    };
+
+    getCompany();
+  }, [params.id]);
+
   const router = useRouter();
 
   const onSubmit = async (data: FieldValues) => {

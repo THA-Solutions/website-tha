@@ -5,12 +5,14 @@ import CloudinaryService from '../cloudinary/cloudinary.service';
 import { ResponseImageDto } from './dto/response-image.dto';
 import { UpdateCompanyDto } from '../company/dto/update-company.dto';
 import { UpdateImageDto } from './dto/update-image.dto';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class ImageService {
   constructor(
     private prisma: PrismaService,
-    private cloudinary: CloudinaryService
+    private cloudinary: CloudinaryService,
+    private configService: ConfigService
   ) {}
 
   async create(
@@ -160,7 +162,10 @@ export class ImageService {
       //Remove a imagem do cloudinary
       this.findOne(id).then(async (image) => {
         //Extrai o id publico da imagem
-        let id = image!.url.match(/\images\/[^/.]+(?=\.)/)![0];
+        let folder = this.configService.get('CLOUDINARY_FOLDER');
+        let regex = new RegExp(`${folder}/[^/.]+(?=\\.)`);
+
+        let id = image!.url.match(regex)![0];
         await this.cloudinary.removeImage(id);
       });
       return await this.prisma.image.delete({ where: { id } });
@@ -169,22 +174,26 @@ export class ImageService {
     }
   }
 
-  async deleteOffSet(images: any[]) {
+  async deleteOffSet(id: string, images: any[]) {
     try {
-      const ids = await this.prisma.image.findMany({
-        select: {
-          id: true
-        },
-        where: {
-          url: {
-            notIn: images
+      const ids = await this.prisma.image
+        .findMany({
+          select: {
+            id: true
+          },
+          where: {
+            url: {
+              notIn: images
+            },
+            id_origem: id
           }
-        }
-      });
-
-      for (const id of ids) {
-        await this.delete(id.id);
-      }
+        })
+        .then((images) => {
+          images.map((image) => {
+            this.delete(image.id);
+          });
+          return;
+        });
     } catch (error) {
       throw Error(`Error in remove image ${error}`);
     }
@@ -195,10 +204,13 @@ export class ImageService {
       //Busca todas as imagens do requisitante de acordo com o id de origem (Relacionamento entre imagem e tabela)
       const oldImages = await this.findByOrigin(id);
 
+      let folder = this.configService.get('CLOUDINARY_FOLDER');
+      let regex = new RegExp(`${folder}/[^/.]+(?=\\.)`);
+
       if (oldImages.length > 0) {
         for (const image of oldImages) {
           //Extrai o id publico da imagem
-          let id = image.url.match(/\images\/[^/.]+(?=\.)/)![0];
+          let id = image.url.match(regex)![0];
 
           await this.cloudinary.removeImage(id);
         }

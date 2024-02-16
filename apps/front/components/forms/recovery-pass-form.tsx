@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -9,7 +11,6 @@ import { CustomerService } from '@tha-solutions';
 import InfoOutlined from '@mui/icons-material/InfoOutlined';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Visibility from '@mui/icons-material/Visibility';
-
 
 interface RecoveryPasswordFormProps {
   resetToken: string;
@@ -140,7 +141,7 @@ const RecoveryPasswordForm = ({ resetToken }: RecoveryPasswordFormProps) => {
         ATUALIZAR
       </button>
     </form>
-  )
-}
+  );
+};
 
 export default RecoveryPasswordForm;

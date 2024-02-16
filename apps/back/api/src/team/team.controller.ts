@@ -13,6 +13,9 @@ import { TeamService } from './team.service';
 import { CreateTeamDto } from './dto/create-team.dto';
 import { UpdateTeamDto } from './dto/update-team.dto';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import { Role } from '../auth/enums';
+import { Roles } from '../auth/decorators/role.decorator';
+import { Public } from '../auth/decorators/public.decorator';
 
 @Controller('team')
 export class TeamController {
@@ -20,6 +23,7 @@ export class TeamController {
 
   @Post()
   @UseInterceptors(FileInterceptor('imageFile'))
+  @Roles(Role.ADMIN)
   create(
     @Body() createTeamDto: CreateTeamDto,
     @UploadedFile() imageFile?: Express.Multer.File
@@ -28,16 +32,19 @@ export class TeamController {
   }
 
   @Get()
+  @Public()
   findAll() {
     return this.teamService.findAll();
   }
 
   @Get(':id')
+  @Public()
   findOne(@Param('id') id: string) {
     return this.teamService.findOne(id);
   }
 
   @Patch(':id')
+  @Roles(Role.ADMIN)
   @UseInterceptors(FileInterceptor('imageFile'))
   update(
     @Param('id') id: string,
@@ -48,6 +55,7 @@ export class TeamController {
   }
 
   @Delete(':id')
+  @Roles(Role.ADMIN)
   remove(@Param('id') id: string) {
     return this.teamService.remove(id);
   }

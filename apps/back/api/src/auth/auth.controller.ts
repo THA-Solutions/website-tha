@@ -7,8 +7,8 @@ import { Public } from './decorators/public.decorator';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Public()
   @Post('login')
+  @Public()
   async login(@Body() signInDto: signInDto) {
     const user = await this.authService.signIn(
       signInDto.email,

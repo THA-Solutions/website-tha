@@ -20,6 +20,7 @@ import MailOutlineRounded from '@mui/icons-material/MailOutlineRounded';
 import SupportAgentRounded from '@mui/icons-material/SupportAgentRounded';
 import TrendingUpRounded from '@mui/icons-material/TrendingUpRounded';
 
+
 const metrics = [
   {
     name: 'Atendimento Profissional: ',
@@ -67,7 +68,6 @@ const features = [
     imageSrc: SupplyChain
   }
 ];
-
 export default function Home() {
   return (
     <>
@@ -160,48 +160,48 @@ export default function Home() {
       </article>
 
       {/* Partners */}
-        <section className="bg-background mx-auto max-w-7xl flex flex-col gap-16 px-6 py-24 md:px-10">
-          <h2 className="text-center text-3xl font-semibold leading-8 text-lightGray lg:text-5xl">
-            Nossos parceiros
-          </h2>
-          <div className="mx-auto grid max-w-lg grid-cols-2 items-center gap-x-16 gap-y-12 md:grid-cols-3 md:mx-0 md:max-w-none lg:grid-cols-4">
-            <Image
-              className="h-full w-full object-contain"
-              src={Apice}
-              alt="Imagem do parceiro Ápice Distribuidora"
-              width={800}
-              height={800}
-            />
-            <Image
-              className="h-full w-full object-contain"
-              src={Sungrow}
-              alt="Imagem do parceiro Sungrow"
-              width={800}
-              height={800}
-            />
-            <Image
-              className="h-full w-full object-contain"
-              src={Chint}
-              alt="Imagem do parceiro Chint Power"
-              width={800}
-              height={800}
-            />
-            <Image
-              className="h-full w-full object-contain"
-              src={SDA}
-              alt="Imagem do parceiro SDA"
-              width={800}
-              height={800}
-            />
-            <Image
-              className="h-full w-full object-contain"
-              src={Solplanet}
-              alt="Imagem do parceiro Solplanet"
-              width={800}
-              height={800}
-            />
-          </div>
-        </section>
+      <section className="bg-background mx-auto max-w-7xl flex flex-col gap-16 px-6 py-24 md:px-10">
+        <h2 className="text-center text-3xl font-semibold leading-8 text-lightGray lg:text-5xl">
+          Nossos parceiros
+        </h2>
+        <div className="mx-auto grid max-w-lg grid-cols-2 items-center gap-x-16 gap-y-12 md:grid-cols-3 md:mx-0 md:max-w-none lg:grid-cols-4">
+          <Image
+            className="h-full w-full object-contain"
+            src={Apice}
+            alt="Imagem do parceiro Ápice Distribuidora"
+            width={800}
+            height={800}
+          />
+          <Image
+            className="h-full w-full object-contain"
+            src={Sungrow}
+            alt="Imagem do parceiro Sungrow"
+            width={800}
+            height={800}
+          />
+          <Image
+            className="h-full w-full object-contain"
+            src={Chint}
+            alt="Imagem do parceiro Chint Power"
+            width={800}
+            height={800}
+          />
+          <Image
+            className="h-full w-full object-contain"
+            src={SDA}
+            alt="Imagem do parceiro SDA"
+            width={800}
+            height={800}
+          />
+          <Image
+            className="h-full w-full object-contain"
+            src={Solplanet}
+            alt="Imagem do parceiro Solplanet"
+            width={800}
+            height={800}
+          />
+        </div>
+      </section>
 
       {/* Features */}
       <section className="bg-backgroundAlt2 flex items-center justify-center">

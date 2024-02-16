@@ -1,6 +1,6 @@
 'use client';
 
-import { use } from 'react';
+import { useEffect, useState } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -10,7 +10,15 @@ import { CompanyService, CustomerService, Company } from '@tha-solutions';
 import CustomerForm from 'apps/front/components/forms/customer-form';
 
 export default function Page() {
-  const companies: Company[] = use(CompanyService.getAllCompanies());
+  const [companies, setCompanies] = useState<Company[]>([]);
+
+  useEffect(() => {
+    const getCompanies = async () => {
+      setCompanies(await CompanyService.getAllCompanies());
+    };
+
+    getCompanies();
+  }, []);
   const router = useRouter();
 
   const onSubmit = async (data: FieldValues) => {

@@ -13,13 +13,17 @@ import { InverterService } from './inverter.service';
 import { CreateInverterDto } from './dto/create-inverter.dto';
 import { UpdateInverterDto } from './dto/update-inverter.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { Roles } from '../auth/decorators/role.decorator';
+import { Role } from '../auth/enums';
+import { Public } from '../auth/decorators/public.decorator';
 
 @Controller('inverter')
 export class InverterController {
-  constructor(private readonly inverterService: InverterService) { }
+  constructor(private readonly inverterService: InverterService) {}
 
   @Post()
   @UseInterceptors(FileInterceptor('imageFile'))
+  @Roles(Role.ADMIN, Role.SUPPLIER)
   create(
     @Body() createInverterDto: CreateInverterDto,
     @UploadedFile() imageFile: Express.Multer.File
@@ -32,6 +36,7 @@ export class InverterController {
   }
 
   @Get()
+  @Public()
   findAll() {
     try {
       return this.inverterService.findAll();
@@ -41,6 +46,7 @@ export class InverterController {
   }
 
   @Get(':id')
+  @Public()
   findOne(@Param('id') id: string) {
     try {
       return this.inverterService.findOne(id);
@@ -50,6 +56,7 @@ export class InverterController {
   }
 
   @Get('title/:title')
+  @Public()
   findByTitle(@Param('title') title: string) {
     try {
       return this.inverterService.findByTitle(title);
@@ -60,6 +67,7 @@ export class InverterController {
 
   @Patch(':id')
   @UseInterceptors(FileInterceptor('imageFile'))
+  @Roles(Role.ADMIN, Role.SUPPLIER)
   update(
     @Param('id') id: string,
     @Body() updateInverterDto: UpdateInverterDto,
@@ -73,6 +81,7 @@ export class InverterController {
   }
 
   @Delete(':id')
+  @Roles(Role.ADMIN, Role.SUPPLIER)
   remove(@Param('id') id: string) {
     try {
       return this.inverterService.remove(id);

@@ -13,12 +13,16 @@ import { CompanyService } from './company.service';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { Roles } from '../auth/decorators/role.decorator';
+import { Role } from '../auth/enums';
+import { Public } from '../auth/decorators/public.decorator';
 
 @Controller('company')
 export class CompanyController {
   constructor(private readonly companyService: CompanyService) {}
 
   @Post()
+  @Roles(Role.ADMIN)
   @UseInterceptors(FileInterceptor('imageFile'))
   create(
     @Body() createCompanyDto: CreateCompanyDto,
@@ -28,22 +32,26 @@ export class CompanyController {
   }
 
   @Get()
+  @Public()
   findAll() {
     return this.companyService.findAll();
   }
 
   @Get('/title/:title')
+  @Public()
   findByTitle(@Body() title: string) {
     return this.companyService.findByTitle(title);
   }
 
   @Get(':id')
+  @Public()
   findOne(@Param('id') id: string) {
     return this.companyService.findOne(id);
   }
 
   @Patch(':id')
   @UseInterceptors(FileInterceptor('imageFile'))
+  @Roles(Role.ADMIN)
   update(
     @Param('id') id: string,
     @Body() updateCompanyDto: UpdateCompanyDto,
@@ -53,6 +61,7 @@ export class CompanyController {
   }
 
   @Delete(':id')
+  @Roles(Role.ADMIN)
   remove(@Param('id') id: string) {
     return this.companyService.remove(id);
   }

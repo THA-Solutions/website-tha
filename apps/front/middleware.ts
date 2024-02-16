@@ -1,3 +1,5 @@
+'use client';
+
 import { getToken } from 'next-auth/jwt';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
@@ -14,6 +16,7 @@ export const config = {
 };
 
 export async function middleware(request: NextRequest) {
+  'use client';
   const token = await getToken({ req: request });
 
   // Logout User

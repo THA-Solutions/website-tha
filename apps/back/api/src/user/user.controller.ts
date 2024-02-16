@@ -17,13 +17,15 @@ import { UpdateUserDto } from './dto/update-user.dto';
 
 import { ResponseUserDto } from './dto/response-user.dto';
 import { Public } from '../auth/decorators/public.decorator';
+import { Roles } from '../auth/decorators/role.decorator';
+import { Role } from '../auth/enums';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  @Public()
+  @Roles(Role.ADMIN, Role.GUEST)
   @UseInterceptors(FileInterceptor('imageFile'))
   create(
     @Body() createUserDto: CreateUserDto,
@@ -37,6 +39,7 @@ export class UserController {
   }
 
   @Get()
+  @Roles(Role.ADMIN)
   findAll(): Promise<ResponseUserDto[]> {
     try {
       return this.userService.findAll();
@@ -46,6 +49,7 @@ export class UserController {
   }
 
   @Get('email/:email')
+  @Roles(Role.ADMIN)
   findByEmail(@Param('email') email: string) {
     try {
       return this.userService.findByEmail(email);
@@ -55,6 +59,7 @@ export class UserController {
   }
 
   @Get(':id')
+  @Public()
   findOne(@Param('id') id: string) {
     try {
       return this.userService.findOne(id);
@@ -64,6 +69,7 @@ export class UserController {
   }
 
   @Get('role/:role')
+  @Roles(Role.ADMIN)
   findByRole(@Param('role') role: string) {
     try {
       return this.userService.findByRole(role);
@@ -74,6 +80,7 @@ export class UserController {
 
   @Patch(':id')
   @UseInterceptors(FileInterceptor('imageFile'))
+  @Roles(Role.USER, Role.CUSTOMER, Role.ADMIN, Role.SUPPLIER, Role.INTEGRATOR)
   update(
     @Param('id') id: string,
     @Body() updateUserDto: UpdateUserDto,
@@ -87,6 +94,7 @@ export class UserController {
   }
 
   @Post('recovery-password')
+  @Roles(Role.USER, Role.CUSTOMER, Role.ADMIN, Role.SUPPLIER, Role.INTEGRATOR)
   recoveryPassword(@Body() body: { email: string }, @Req() req: Request) {
     try {
       return this.userService.forgotPassword(body.email, req);
@@ -96,6 +104,7 @@ export class UserController {
   }
 
   @Post('reset-password')
+  @Roles(Role.USER, Role.CUSTOMER, Role.ADMIN, Role.SUPPLIER, Role.INTEGRATOR)
   resetPassword(@Body() body: { token: string; password: string }) {
     try {
       return this.userService.resetPassword(body.token, body.password);
@@ -105,11 +114,12 @@ export class UserController {
   }
 
   @Delete(':id')
+  @Roles(Role.USER, Role.CUSTOMER, Role.ADMIN, Role.SUPPLIER, Role.INTEGRATOR)
   remove(@Param('id') id: string) {
     try {
       return this.userService.remove(id);
     } catch (error) {
       throw Error(`Error in remove user ${error}`);
     }
-  } //Rota de remocao de usuario, apenas o admin pode remover um usuario
+  }
 }

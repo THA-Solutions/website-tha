@@ -13,6 +13,7 @@ import PrismaService from '../prisma.service';
 import { AuthGuard } from '../auth/auth.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { MailModule } from '../mail/mail.module';
+import { RoleGuard } from '../auth/role.guard';
 
 @Module({
   imports: [
@@ -31,7 +32,7 @@ import { MailModule } from '../mail/mail.module';
     ConfigModule,
     {
       provide: APP_GUARD,
-      useClass: AuthGuard
+      useClass: RoleGuard
     }
   ],
   exports: [PrismaService]

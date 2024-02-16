@@ -53,6 +53,7 @@ export default function Page() {
             <button
               onClick={async () => {
                 await signOut({ redirect: false });
+                localStorage.removeItem('role');
                 router.push('/entrar');
               }}
               className="flex items-center text-red-400 gap-3 px-3 py-1 ring-1 ring-red-400 hover:bg-red-400 hover:text-background"

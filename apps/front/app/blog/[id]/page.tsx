@@ -1,4 +1,6 @@
-import { use } from 'react';
+'use client';
+
+import { useEffect, useState } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -6,14 +8,36 @@ import Link from 'next/link';
 import { Article, ArticleSerivce, formatter } from '@tha-solutions';
 import ImageNotFound from 'apps/front/components/image-not-found';
 
-import ArrowBackIosNewRounded from '@mui/icons-material/ArrowBackIosNewRounded'
-import Category from '@mui/icons-material/Category'
-import Face from '@mui/icons-material/Face'
-import Today from '@mui/icons-material/Today'
+import ArrowBackIosNewRounded from '@mui/icons-material/ArrowBackIosNewRounded';
+import Category from '@mui/icons-material/Category';
+import Face from '@mui/icons-material/Face';
+import Today from '@mui/icons-material/Today';
 
 export default function Page({ params }: { params: { id: string } }) {
-  const article: Article = use(ArticleSerivce.getArticleById(params.id));
-  const articlesRelated: Article[] = use(ArticleSerivce.getAllArticles());
+  const [article, setArticle] = useState<Article>({
+    id: '',
+    image: [],
+    title: '',
+    subTitle: '',
+    content: '',
+    pubDate: new Date(),
+    author: '',
+    category: ''
+  });
+  const [articlesRelated, setArticlesRelated] = useState<Article[]>([]);
+
+  useEffect(() => {
+    const getArticle = async () => {
+      setArticle(await ArticleSerivce.getArticleById(params.id));
+    };
+
+    const getArticlesRelated = async () => {
+      setArticlesRelated(await ArticleSerivce.getAllArticles());
+    };
+
+    getArticle();
+    getArticlesRelated();
+  }, []);
 
   const replaceImagesInText = (content: string, images: any) => {
     return content.replace(/<image(\d+)>/g, (match, pos) => {
@@ -58,13 +82,14 @@ export default function Page({ params }: { params: { id: string } }) {
 
       <div className="pt-2 space-y-12 xl:grid xl:grid-cols-4 xl:space-x-8 xl:space-y-0">
         <main
-          className={`${articlesRelated.length === 0 ? 'lg:col-span-4' : 'lg:col-span-3'
-            }`}
+          className={`${
+            articlesRelated.length === 0 ? 'lg:col-span-4' : 'lg:col-span-3'
+          }`}
         >
           {article.image && article.image.length > 0 ? (
             <Image
-              src={article.image[0].url}
-              alt={article.image[0].alt || 'Descrição não fornecida'}
+              src={article.image[0]?.url}
+              alt={article.image[0]?.alt || 'Descrição não fornecida'}
               className="w-full h-auto object-cover max-w-3xl"
               width={1920}
               height={1080}
@@ -74,7 +99,7 @@ export default function Page({ params }: { params: { id: string } }) {
           )}
 
           <h3 className="pt-1 text-base text-gray-500 lg:text-base">
-            [Fonte: {article.image[0].source}]
+            [Fonte: {article.image[0]?.source}]
           </h3>
 
           <h2 className="pt-8 text-gray-300 text-2xl lg:text-3xl">
@@ -118,7 +143,7 @@ export default function Page({ params }: { params: { id: string } }) {
                       className="flex flex-col justify-between space-y-6 p-4 ring-1 ring-gray-700 transition-all hover:ring-tertiary hover:bg-backgroundAlt2 hover:scale-105"
                     >
                       {articleRelated.image &&
-                        articleRelated.image.length > 0 ? (
+                      articleRelated.image.length > 0 ? (
                         <Image
                           src={articleRelated.image[0].url}
                           alt={

@@ -9,7 +9,8 @@ export class CustomerService {
   static async createCustomer(customer: FormData): Promise<User> {
     const res = await axios.post(this.apiPath, customer, {
       headers: {
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${localStorage.getItem('role')}`
       }
     });
 
@@ -17,12 +18,22 @@ export class CustomerService {
   }
 
   static async getAllCustomers(): Promise<User[]> {
-    const res = await axios.get(`${this.apiPath}/role/customer`);
+    const res = await axios.get(`${this.apiPath}/role/customer`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('role')}`
+      }
+    });
     return res.data;
   }
 
   static async getCustomerById(id: string): Promise<User> {
-    const res = await axios.get(`${this.apiPath}/${id}`);
+    const res = await axios.get(`${this.apiPath}/${id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('role')}`
+      }
+    });
     return res.data;
   }
 
@@ -32,19 +43,30 @@ export class CustomerService {
   ): Promise<User> {
     const res = await axios.patch(`${this.apiPath}/${id}`, updatedCustomer, {
       headers: {
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${localStorage.getItem('role')}`
       }
     });
     return res.data;
   }
 
   static async deleteCustomer(id: string): Promise<User> {
-    const res = await axios.delete(`${this.apiPath}/${id}`);
+    const res = await axios.delete(`${this.apiPath}/${id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('role')}`
+      }
+    });
     return res.data;
   }
 
   static async sendTokenToResetPassword(email: object): Promise<void> {
-    const res = await axios.post(`${this.apiPath}/recovery-password`, email);
+    const res = await axios.post(`${this.apiPath}/recovery-password`, email, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('role')}`
+      }
+    });
     return res.data;
   }
 
@@ -52,7 +74,12 @@ export class CustomerService {
     token: string;
     password: string;
   }): Promise<void> {
-    const res = await axios.post(`${this.apiPath}/reset-password`, data);
+    const res = await axios.post(`${this.apiPath}/reset-password`, data, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('role')}`
+      }
+    });
     return res.data;
   }
 }
