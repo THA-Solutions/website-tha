@@ -11,8 +11,8 @@ export class MailService {
       await this.mailer.sendMail({
         to: process.env.TARGET_MAIL,
         from: inviteMailDto.email,
-        subject: '',
-        html: ``
+        subject: inviteMailDto ? inviteMailDto.subject : '',
+        html: inviteMailDto ? inviteMailDto.message : ''
       });
 
       return;

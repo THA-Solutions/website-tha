@@ -19,4 +19,7 @@ export class inviteMailDto {
   @IsNotEmpty()
   @IsAlphanumeric()
   message: string;
+
+  @IsAlphanumeric()
+  subject: string;
 }
