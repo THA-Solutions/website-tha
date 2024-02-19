@@ -10,7 +10,6 @@ import { PrismaModule } from '../prisma.module';
 import { CloudinaryModule } from '../cloudinary/cloudinary.module';
 import { CloudinaryController } from '../cloudinary/cloudinary.controller';
 import PrismaService from '../prisma.service';
-import { AuthGuard } from '../auth/auth.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { MailModule } from '../mail/mail.module';
 import { RoleGuard } from '../auth/role.guard';
