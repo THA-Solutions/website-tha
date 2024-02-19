@@ -15,6 +15,9 @@
     "plugin:prettier/recommended",
     "prettier"
   ],
+  "ignorePatterns": [
+    ".next/**/*"
+  ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": "latest",

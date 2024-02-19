@@ -18,14 +18,14 @@ const Footer = () => {
       icon: 'basil:instagram-solid',
       href: company.social.instagram
     },
-    {
-      icon: 'formkit:whatsapp',
-      href: company.social.whatsapp
-    },
-    {
-      icon: 'basil:youtube-solid',
-      href: company.social.youtube
-    },
+    // {
+    //   icon: 'formkit:whatsapp',
+    //   href: company.social.whatsapp
+    // },
+    // {
+    //   icon: 'basil:youtube-solid',
+    //   href: company.social.youtube
+    // },
   ]
 
   return (
@@ -58,12 +58,14 @@ const Footer = () => {
           </h2>
           <div className="flex items-center gap-4">
             {social.map((item) => (
-            <Link
-              href={item.href}
-              className="flex group items-center justify-center rounded-full border border-gray-800 p-2 transition-all hover:border-gray-700"
-            >
-              <Icon icon={`${item.icon}`} className="text-3xl text-gray-300 group-hover:text-primary" />
-            </Link>
+              <Link
+                key={item.icon}
+                href={item.href}
+                target='_blank'
+                className="flex group items-center justify-center rounded-full border border-gray-800 p-2 transition-all hover:border-gray-700"
+              >
+                <Icon icon={`${item.icon}`} className="text-3xl text-gray-300 group-hover:text-primary" />
+              </Link>
             ))}
           </div>
         </div>

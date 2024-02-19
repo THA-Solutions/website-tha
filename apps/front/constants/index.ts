@@ -14,7 +14,7 @@ export interface PageAdminType {
 
 export const company = {
   name: 'THA Solutions',
-  email: 'talyson@thasolutions.com.br',
+  email: 'atendimento@thasolutions.com.br',
   phone: '(44) 3301-7871',
   address:
     'Av. Melvin Jones, 1194, Pq. Industrial Bandeirantes, Barracão 13 - Maringá PR, 87.040-500',

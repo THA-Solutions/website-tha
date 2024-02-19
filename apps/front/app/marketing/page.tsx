@@ -5,12 +5,12 @@ import { useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import QueryStats from '@mui/icons-material/QueryStats';
-import Public from '@mui/icons-material/Public';
+import ArrowRightAlt from '@mui/icons-material/ArrowRightAlt';
 import Handshake from '@mui/icons-material/Handshake';
+import Public from '@mui/icons-material/Public';
+import QueryStats from '@mui/icons-material/QueryStats';
 import Translate from '@mui/icons-material/Translate';
 import VideoSettings from '@mui/icons-material/VideoSettings';
-import ArrowRightAlt from '@mui/icons-material/ArrowRightAlt';
 
 export default function Page() {
   const features = [
@@ -19,7 +19,7 @@ export default function Page() {
       colorText: 'text-white',
       icon: <Public className="text-6xl" />,
       description:
-        'Nosso objetivo é fazer sua marca chinesa se destacar no mercado brasileiro. Através da tropicalização, adaptamos sua marca para ressoar com o público local, considerando cultura, linguagem e tendências do mercado.',
+        'Nosso objetivo é fazer sua marca se destacar no mercado brasileiro. Através da tropicalização, adaptamos sua marca para ressoar com o público local, considerando cultura, linguagem e tendências do mercado.',
       image: '/features/analise_dados.png',
       bg: 'bg-backgroundAlt'
     },
@@ -28,7 +28,7 @@ export default function Page() {
       colorText: 'text-white',
       icon: <Handshake className="text-6xl" />,
       description:
-        'Facilitamos as parcerias entre empresas chinesas e distribuidores brasileiros. Nosso gerenciamento garante que ambas as partes se beneficiem, fortalecendo a presença da marca no mercado local.',
+        'Facilitamos as parcerias entre empresas estrangeiras e distribuidores brasileiros. Nosso gerenciamento garante que ambas as partes se beneficiem, fortalecendo a presença da marca no mercado local.',
       image: '/features/atendimento.jpeg',
       bg: 'bg-backgroundAlt2'
     },
@@ -37,7 +37,7 @@ export default function Page() {
       colorText: 'text-white',
       icon: <Translate className="text-6xl" />,
       description:
-        'Garantimos que sua tecnologia seja compreendida. Nossos especialistas em tradução transformam manuais, datasheets e whitepapers técnicos em documentos claros e precisos em português.',
+        'Garantimos que sua tecnologia seja compreendida. Nossos especialistas em tradução transformam manuais, datasheets e whitepapers técnicos em documentos claros e precisos.',
       image: '/features/laboratorio.jpeg',
       bg: 'bg-backgroundAlt'
     },

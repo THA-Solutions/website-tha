@@ -7,10 +7,13 @@ import Navbar from 'apps/front/components/navbar';
 import { company } from '../constants';
 
 import Atendimento from '../public/features/atendimento.jpeg';
+import Instalacoes from '../public/features/casa-placas.jpeg';
 import Laboratorio from '../public/features/laboratorio.jpeg';
 import Marketing from '../public/features/marketing.jpeg';
 import SupplyChain from '../public/features/supply_chain.jpeg';
+
 import Logo from '../public/logo-colored.png';
+
 import SDA from '../public/partners/SDA.png';
 import Apice from '../public/partners/apice.png';
 import Chint from '../public/partners/chint.png';
@@ -25,47 +28,58 @@ const metrics = [
   {
     name: 'Atendimento Profissional: ',
     description:
-      'Com mais de 500 ligações atendidas diariamente, estamos prontos para resolver qualquer desafio que surja no horizonte.',
+      'Com mais de 100 ligações atendidas diariamente, estamos prontos para resolver qualquer desafio que surja no horizonte.',
     icon: SupportAgentRounded
   },
   {
     name: 'Eficiência Inigualável: ',
     description:
-      'Nos orgulhamos da nossa taxa média de 98% de eficiência. Quando se trata do seu negócio, o bom não é suficiente; nós miramos na excelência.',
+      'Nos orgulhamos da nossa taxa média de 98% de eficiência. Quando se trata do seu negócio, o bom não é suficiente, nós miramos na excelência.',
     icon: TrendingUpRounded
   },
   {
     name: 'Comunicação Sem Barreiras: ',
     description:
-      'Atendendo a mais de 550 casos via e-mail por mês, garantimos que suas preocupações sejam ouvidas e tratadas com a devida importância.',
+      'Atendendo mais de 200 casos via e-mail por mês, garantimos que suas preocupações sejam ouvidas e tratadas com a devida importância.',
     icon: MailOutlineRounded
   }
 ];
 
 const features = [
   {
+    name: 'Instalações e Manutenções',
+    description:
+      'Soluções completas em instalação e manutenção de inversores fotovoltaicos. Nossa equipe qualificada garante instalações eficientes e realiza serviços de manutenção para garantir o desempenho contínuo do seu sistema solar.',
+    imageSrc: Instalacoes,
+    href: '/instalacao-manutencao'
+  },
+  {
     name: 'Suporte Técnico',
     description:
       'Nossa equipe altamente qualificada está pronta para resolver desafios técnicos complexos, garantindo a funcionalidade e o desempenho máximo dos produtos.',
-    imageSrc: Atendimento
+    imageSrc: Atendimento,
+    href: '/suporte-tecnico'
   },
   {
     name: 'Laboratório',
     description:
       'Contamos com um laboratório de última geração para diagnóstico e manutenção de inversores fotovoltaicos.',
-    imageSrc: Laboratorio
+    imageSrc: Laboratorio,
+    href: '/laboratorio'
   },
   {
     name: 'Marketing',
     description:
       'Criação de videos, traduções de materiais, criação de guias de instalações e tropicalização de marcas orientais',
-    imageSrc: Marketing
+    imageSrc: Marketing,
+    href: '/marketing'
   },
   {
     name: 'Supply Chain',
     description:
       'Simplificamos o gerenciamento da cadeia de suprimentos, ajudando nossos parceiros a garantir que os componentes certos estejam disponíveis no momento certo',
-    imageSrc: SupplyChain
+    imageSrc: SupplyChain,
+    href: '#'
   }
 ];
 
@@ -76,7 +90,7 @@ export default function Home() {
 
       {/* Hero */}
       <main className="bg-home-background bg-center bg-cover bg-no-repeat flex items-center justify-center relative h-screen">
-      <div className="absolute inset-0 bg-[#121118] opacity-60"></div>
+        <div className="absolute inset-0 bg-[#121118] opacity-60"></div>
         <div className="max-w-7xl flex flex-col items-center justify-center z-20 w-full gap-8 h-4/6 lg:flex-row lg:justify-between lg:px-12">
           <div className="flex items-center justify-center lg:order-2">
             <Image
@@ -116,14 +130,14 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
             <div className="lg:pr-8 lg:pt-4">
-              <div className="text-justify lg:max-w-lg">
+              <div className="lg:max-w-lg">
                 <h2 className="text-sm font-bold leading-7 text-tertiary">
                   A LUZ DO SEU PROBLEMA
                 </h2>
                 <p className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
                   Solucionamos a parte mais vulnerável do seu negócio.
                 </p>
-                <p className="mt-6 text-lg leading-8 text-lightGray">
+                <p className="mt-6 text-lg text-justify leading-8 text-lightGray">
                   No coração de cada sistema fotovoltaico está um compromisso
                   com um futuro mais sustentável. Na {company.name},
                   entendemos a essência desse compromisso e trabalhamos
@@ -162,58 +176,59 @@ export default function Home() {
       </article>
 
       {/* Partners */}
-        <section className="bg-background mx-auto max-w-7xl flex flex-col gap-16 px-6 py-24 md:px-10">
-          <h2 className="text-center text-3xl font-semibold leading-8 text-lightGray lg:text-5xl">
-            Nossos parceiros
-          </h2>
-          <div className="mx-auto grid max-w-lg grid-cols-2 items-center gap-x-16 gap-y-12 md:grid-cols-3 md:mx-0 md:max-w-none lg:grid-cols-4">
-            <Image
-              className="h-full w-full object-contain"
-              src={Apice}
-              alt="Imagem do parceiro Ápice Distribuidora"
-              width={800}
-              height={800}
-            />
-            <Image
-              className="h-full w-full object-contain"
-              src={Sungrow}
-              alt="Imagem do parceiro Sungrow"
-              width={800}
-              height={800}
-            />
-            <Image
-              className="h-full w-full object-contain"
-              src={Chint}
-              alt="Imagem do parceiro Chint Power"
-              width={800}
-              height={800}
-            />
-            <Image
-              className="h-full w-full object-contain"
-              src={SDA}
-              alt="Imagem do parceiro SDA"
-              width={800}
-              height={800}
-            />
-            <Image
-              className="h-full w-full object-contain"
-              src={Solplanet}
-              alt="Imagem do parceiro Solplanet"
-              width={800}
-              height={800}
-            />
-          </div>
-        </section>
+      <section className="bg-background mx-auto max-w-7xl flex flex-col gap-16 px-6 py-24 md:px-10">
+        <h2 className="text-center text-3xl font-semibold leading-8 text-lightGray lg:text-5xl">
+          Nossos parceiros
+        </h2>
+        <div className="mx-auto grid max-w-lg grid-cols-2 items-center gap-x-16 gap-y-12 md:grid-cols-3 md:mx-0 md:max-w-none lg:grid-cols-4">
+          <Image
+            className="h-full w-full object-contain"
+            src={Apice}
+            alt="Imagem do parceiro Ápice Distribuidora"
+            width={800}
+            height={800}
+          />
+          <Image
+            className="h-full w-full object-contain"
+            src={Sungrow}
+            alt="Imagem do parceiro Sungrow"
+            width={800}
+            height={800}
+          />
+          <Image
+            className="h-full w-full object-contain"
+            src={Chint}
+            alt="Imagem do parceiro Chint Power"
+            width={800}
+            height={800}
+          />
+          <Image
+            className="h-full w-full object-contain"
+            src={SDA}
+            alt="Imagem do parceiro SDA"
+            width={800}
+            height={800}
+          />
+          <Image
+            className="h-full w-full object-contain"
+            src={Solplanet}
+            alt="Imagem do parceiro Solplanet"
+            width={800}
+            height={800}
+          />
+        </div>
+      </section>
 
       {/* Features */}
       <section className="bg-backgroundAlt2 flex items-center justify-center">
-        <div className="max-w-7xl grid  gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="max-w-7xl grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {features.map((feature, index) => (
             <Card
               key={index}
               title={feature.name}
               description={feature.description}
               image={feature.imageSrc}
+              href={feature.href}
             />
           ))}
         </div>
