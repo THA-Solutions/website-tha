@@ -17,6 +17,7 @@ import Logo from '../public/logo-colored.png';
 import SDA from '../public/partners/SDA.png';
 import Apice from '../public/partners/apice.png';
 import Chint from '../public/partners/chint.png';
+import PVClean from '../public/partners/pvclean.png';
 import Solplanet from '../public/partners/solplanet.png';
 import Sungrow from '../public/partners/sungrow.png';
 
@@ -213,6 +214,13 @@ export default function Home() {
             className="h-full w-full object-contain"
             src={Solplanet}
             alt="Imagem do parceiro Solplanet"
+            width={800}
+            height={800}
+          />
+          <Image
+            className="h-full w-full object-contain"
+            src={PVClean}
+            alt="Imagem do parceiro PVClean"
             width={800}
             height={800}
           />

@@ -2,7 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 import Instalacao from "../../public/features/instalacao.jpeg";
-import Manutencao from "../../public/features/manutencao.jpeg";
+import Manutencao1 from "../../public/features/manutencao1.jpeg";
+import Manutencao2 from "../../public/features/manutencao2.jpeg";
 
 export default function Page() {
   return (
@@ -31,7 +32,7 @@ export default function Page() {
         <div className="mx-auto max-w-7xl px-6">
           <div className="flex flex-col justify-center gap-4 text-center pb-8">
             <h3 className="text-gray-400 text-base sm:text-lg md:text-xl">Veja também</h3>
-            <h2 className="text-gray-100 text-3xl font-extrabold sm:text-4xl md:text-5xl">Algumas de nossas instalações</h2>
+            <h2 className="text-gray-100 text-3xl font-extrabold sm:text-4xl md:text-5xl">Uma de nossas manutenções</h2>
             <p>Video em processamento</p>
           </div>
           {/* <video
@@ -46,22 +47,47 @@ export default function Page() {
       </section>
 
       <section className="py-12">
-        <div className="mx-auto max-w-7xl px-6 md:flex md:gap-8 lg:gap-20">
-          <div className="flex flex-col justify-center gap-4 text-left pb-8 md:pb-0 md:w-1/2">
+        <div className="mx-auto max-w-7xl flex flex-col px-6 gap-8">
+          <div className="flex flex-col justify-center gap-2">
             <h4 className="text-tertiary font-alt font-bold text-sm sm:text-lg">Manutenção</h4>
-            <h2 className="pb-6 text-gray-100 text-2xl normal-case font-extrabold sm:text-4xl">
+            <h2 className="pb-4 text-gray-100 text-2xl normal-case font-extrabold sm:text-4xl">
               Manutenções preventivas e corretivas
             </h2>
             <h3 className="text-gray-300 text-base md:text-xl md:text-justify">
               Nossos serviços de manutenção garantem o funcionamento adequado dos inversores fotovoltaicos, maximizando sua vida útil e desempenho.
               Com uma equipe especializada e utilizando tecnologias avançadas, estamos preparados para atender às necessidades de manutenção de seus sistemas de energia solar de forma rápida e eficiente.
+              <span className="font-bold"> Atendemos fabricantes, distribuidores, integradores e clientes finais.</span>
             </h3>
           </div>
-          <Image
-            src={Manutencao}
-            alt="Imagem das instalações de inversores"
-            className="object-center w-full h-full ring-4 ring-backgroundAlt2 md:w-1/2"
-          />
+
+          <div className="flex flex-col items-center gap-8 sm:flex-row sm:items-start md:gap-24">
+            <div className="flex flex-col gap-2 w-full sm:w-1/2">
+              <div className="flex flex-col gap-1 sm:h-full">
+                <h2 className="text-xl font-semibold text-tertiary">Manutenções On-Grid</h2>
+                <h3 className="text-gray-300 text-base leading-5 md:text-lg md:text-justify">
+                  Nossa equipe especializada oferece serviços de diagnóstico, reparo e substituição de componentes, assegurando o desempenho contínuo do seu sistema fotovoltaico.
+                </h3>
+              </div>
+              <Image
+                src={Manutencao1}
+                alt="Imagem das instalações de inversores"
+                className="object-cover w-full h-[450px] ring-4 ring-backgroundAlt2 md:object-center lg:h-[500px]"
+              />
+            </div>
+            <div className="flex flex-col gap-2 w-full sm:w-1/2">
+              <div className="flex flex-col gap-1 sm:h-full">
+                <h2 className="text-xl font-semibold text-tertiary">Manutenções Off-Grid</h2>
+                <h3 className="text-gray-300 text-base leading-5 md:text-lg md:text-justify">
+                  Fornecemos soluções confiáveis para garantir a estabilidade e segurança do seu sistema off-grid, executando serviços de inspeção, limpeza, ajuste e reparo.
+                </h3>
+              </div>
+              <Image
+                src={Manutencao2}
+                alt="Imagem das instalações de inversores"
+                className="object-cover w-full h-[450px] ring-4 ring-backgroundAlt2 md:object-center lg:h-[500px]"
+              />
+            </div>
+          </div>
         </div>
       </section>
 
