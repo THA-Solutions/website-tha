@@ -5,7 +5,7 @@ import { Icon } from '@iconify/react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { company, pages } from 'apps/front/constants'
+import { company } from 'apps/front/constants'
 import Logo from '/public/logo-footer.png'
 
 const Footer = () => {
@@ -31,14 +31,14 @@ const Footer = () => {
   return (
     <footer className="bg-backgroundAlt p-8">
       <section className="mx-auto max-w-7xl grid w-full grid-cols-1 items-start justify-center gap-10 border-b border-backgroundAlt2 pb-4 md:grid-cols-2 lg:grid-cols-4 xl:gap-x-16">
-        <Link href={'/'} className="w-64 lg:mt-6 lg:w-52 xl:w-64">
+        <Link href={'/'} className="w-64 lg:mt-8 lg:w-52 xl:w-64">
           <Image
             src={Logo}
             alt="Logo da empresa"
             className="transition-all hover:scale-105"
           />
         </Link>
-        <div>
+        <div className='flex flex-col gap-1'>
           <h2 className="pb-2 text-2xl font-semibold normal-case text-primary lg:text-lg xl:text-2xl">
             Fale conosco
           </h2>
@@ -72,31 +72,36 @@ const Footer = () => {
       </section>
 
       <section className="mx-auto max-w-7xl flex flex-col items-start gap-6 pt-6 text-gray-300 lg:flex-row lg:justify-between">
-        <div className="flex w-full flex-col items-start gap-4 sm:flex-row lg:w-fit">
-          {pages.map((page) => {
-            return (
-              <Link
-                key={page.name}
-                href={page.path}
-                className="text-lg font-semibold hover:underline sm:text-sm"
-              >
-                {page.name}
-              </Link>
-            )
-          })}
-        </div>
-        <p className="text-sm text-gray-500">
-          {' '}
-          © {new Date().getFullYear()} {company.name}
-        </p>
-        <div className="flex flex-col items-start gap-2 font-semibold sm:flex-row sm:gap-6 sm:text-sm">
-          <Link href="/termos-uso" className="hover:underline">
+        <div className="flex w-full flex-col items-start gap-6 sm:flex-row lg:w-fit">
+          <Link
+            href={'/sobre'}
+            className="text-lg font-semibold hover:underline sm:text-base"
+          >
+            Sobre nós
+          </Link>
+          <Link
+            href={'/contato'}
+            className="text-lg font-semibold hover:underline sm:text-base"
+          >
+            Contato
+          </Link>
+          <Link
+            href={'/termos-uso'}
+            className="text-lg font-semibold hover:underline sm:text-base"
+          >
             Termos de uso
           </Link>
-          <Link href="/politica-privacidade" className="hover:underline">
+          <Link
+            href={'/politica-privacidade'}
+            className="text-lg font-semibold hover:underline sm:text-base"
+          >
             Política de privacidade
           </Link>
         </div>
+        <p className="text-sm text-gray-500 sm:text-base">
+          {' '}
+          © {new Date().getFullYear()} {company.name}. Todos os direitos reservados.
+        </p>
       </section>
     </footer>
   )

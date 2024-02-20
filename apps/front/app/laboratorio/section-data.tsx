@@ -28,11 +28,7 @@ export const SectionData = [
     footerData: [
       {
         number: '+500',
-        label: 'Inversores\nConcertados'
-      },
-      {
-        number: '98%',
-        label: 'Taxa de\nSucesso'
+        label: 'Inversores\nConsertados'
       }
     ]
   },
@@ -62,13 +58,9 @@ export const SectionData = [
     ],
     footerData: [
       {
-        number: '+250',
-        label: 'Módulos Concertados'
+        number: '+50',
+        label: 'Módulos Consertados'
       },
-      {
-        number: '97%',
-        label: 'Taxa de Sucesso'
-      }
     ]
   },
 ];

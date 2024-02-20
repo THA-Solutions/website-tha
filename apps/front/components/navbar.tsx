@@ -84,7 +84,8 @@ const Navbar = () => {
             <MenuRounded className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
-        <Popover.Group className="hidden lg:flex lg:gap-x-6">
+
+        <Popover.Group className="hidden lg:flex lg:gap-x-4 xl:gap-x-6">
           <Popover
             className="relative"
             onMouseEnter={() => setMenuOpen(true)}
@@ -148,7 +149,7 @@ const Navbar = () => {
             <Link
               key={item.name}
               href={item.path}
-              className={`flex items-center justify-center text-base leading-6 font-semibold xl:text-lg ${currentRoute === item.path
+              className={`flex items-center justify-center text-sm leading-6 font-semibold xl:text-base ${currentRoute === item.path
                 ? 'text-white border-b-2 border-white font-bold cursor-default'
                 : 'text-gray-400 transition-all ease-linear hover:text-tertiary hover:scale-90'
                 }`}

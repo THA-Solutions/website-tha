@@ -12,7 +12,7 @@ export const Card = ({ title, description, image, href }: CardProps) => {
   return (
     <Link
       href={href}
-      className="max-w-7xl mx-4 my-12 relative isolate overflow-hidden shadow-2xl bg-background rounded-3xl transition-all hover:scale-95 hover:opacity-70"
+      className="max-w-7xl mx-2 my-6 relative isolate overflow-hidden shadow-2xl bg-background rounded-3xl transition-all hover:scale-95 hover:opacity-70"
     >
       <svg
         viewBox="0 0 1024 1024"
@@ -38,14 +38,14 @@ export const Card = ({ title, description, image, href }: CardProps) => {
           src={image}
           alt="card image"
           quality={100}
-          className="h-full w-full"
+          className="h-full w-full object-cover sm:h-[230px]"
         />
       </div>
       <div className="p-6 flex flex-col justify-center">
-        <h2 className="text-xl font-bold tracking-tight font-alt text-tertiary">
+        <h2 className="text-lg font-bold font-alt text-tertiary xl:text-xl">
           {title}
         </h2>
-        <p className="mt-6 text-base leading-6 text-lightGray">
+        <p className="mt-6 text-sm text-justify leading-5 text-lightGray xl:text-base">
           {description}
         </p>
       </div>

@@ -50,35 +50,42 @@ const features = [
   {
     name: 'Instalações e Manutenções',
     description:
-      'Soluções completas em instalação e manutenção de inversores fotovoltaicos. Nossa equipe qualificada garante instalações eficientes e realiza serviços de manutenção para garantir o desempenho contínuo do seu sistema solar.',
+      'Soluções completas em instalação e manutenção de usinas fotovoltaicas. Garantimos instalações eficientes e manutenções de usinas que não estão gerando, para garantir o desempenho contínuo do seu sistema.',
     imageSrc: Instalacoes,
     href: '/instalacao-manutencao'
   },
   {
+    name: 'Locação de Inversores',
+    description:
+      'Temos em estoque inversores das mais variadas potências para locação em casos de processo de garantia e fora de garantia. Com a THA, sua geração nunca para!',
+    imageSrc: Instalacoes,
+    href: '#'
+  },
+  {
     name: 'Suporte Técnico',
     description:
-      'Nossa equipe altamente qualificada está pronta para resolver desafios técnicos complexos, garantindo a funcionalidade e o desempenho máximo dos produtos.',
+      'Nossa equipe está pronta para resolver desafios técnicos complexos, dando suporte para fabricantes e integradores, tirando suas dúvidas e auxiliando no processo de garantia do seu equipamento.',
     imageSrc: Atendimento,
     href: '/suporte-tecnico'
   },
   {
     name: 'Laboratório',
     description:
-      'Contamos com um laboratório de última geração para diagnóstico e manutenção de inversores fotovoltaicos.',
+      'Contamos com um laboratório de última geração para diagnóstico, testes, troca de placas e reparos a nível de componentes.',
     imageSrc: Laboratorio,
     href: '/laboratorio'
   },
   {
     name: 'Marketing',
     description:
-      'Criação de videos, traduções de materiais, criação de guias de instalações e tropicalização de marcas orientais',
+      'Criação de videos, tradução de materiais, treinamento para distribuidores, integradores e equipe de vendas, criação de guias de instalações e tropicalização de marcas orientais.',
     imageSrc: Marketing,
     href: '/marketing'
   },
   {
     name: 'Supply Chain',
     description:
-      'Simplificamos o gerenciamento da cadeia de suprimentos, ajudando nossos parceiros a garantir que os componentes certos estejam disponíveis no momento certo',
+      'Simplificamos o gerenciamento da cadeia de suprimentos, ajudando nossos parceiros a garantir o estoque seguro e a operação fiscal partindo de nosso endereço.',
     imageSrc: SupplyChain,
     href: '#'
   }
@@ -228,8 +235,11 @@ export default function Home() {
       </section>
 
       {/* Features */}
-      <section className="bg-backgroundAlt2 flex items-center justify-center">
-        <div className="max-w-7xl grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      <section className="bg-backgroundAlt2 py-12 px-4 flex flex-col gap-12 items-center justify-center">
+        <h2 className="text-center text-3xl mt-4 font-semibold leading-8 text-lightGray lg:text-5xl">
+          Veja algumas de nossas soluções
+        </h2>
+        <div className="max-w-7xl grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {features.map((feature, index) => (
             <Card
               key={index}

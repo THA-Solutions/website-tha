@@ -3,14 +3,14 @@ import { use } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { Team, TeamService } from '@tha-solutions';
 import HistoryImage from '../../public/hero-background.png';
-import { TeamService, Team } from '@tha-solutions';
 
-import Flag from '@mui/icons-material/Flag';
 import Diversity3 from '@mui/icons-material/Diversity3';
-import Public from '@mui/icons-material/Public';
-import LinkedIn from '@mui/icons-material/LinkedIn';
+import Flag from '@mui/icons-material/Flag';
 import Instagram from '@mui/icons-material/Instagram';
+import LinkedIn from '@mui/icons-material/LinkedIn';
+import Public from '@mui/icons-material/Public';
 
 export default function Page() {
   const employees: Team[] = use(TeamService.getAllEmployees());
@@ -20,7 +20,7 @@ export default function Page() {
       icon: <Flag className="text-8xl text-tertiary" fontSize="large" />,
       title: 'Propósito',
       description:
-        'Buscamos um propósito maior em tudo o que fazemos, priorizando o impacto positivo em nossas ações e decisões.',
+        'Buscamos um propósito maior em tudo o que fazemos, priorizando o alinhamento ao propósito de nossos clientes.',
       isAlt: false
     },
     {
@@ -63,18 +63,19 @@ export default function Page() {
                   complexos deste setor em constante evolução.
                   <br />
                   <br />
-                  Fundada em 2019 e baseada em Maringá, Paraná, somos líderes na
-                  prestação de serviços de suporte técnico de alta qualidade
+                  Fundada em 2020 e baseada em Maringá, Paraná, somos líderes na
+                  prestação de serviços de marketing e suporte técnico de alta qualidade
                   para empresas que desejam otimizar seus produtos. Nossa
                   trajetória começou como parceiros exclusivos da Growatt New
-                  Energy, consolidando nossa experiência na área.
+                  Energy, consolidando nossa experiência na área e possibilitando a expansão
+                  de serviços a diferentes fabricantes.
                   <br />
                   <br />
                   Nossa missão é clara: levar soluções inovadoras de forma
                   consciente e ágil. Acreditamos que a agilidade é a chave para
                   enfrentar as demandas em constante mudança do mercado
-                  fotovoltaico, enquanto mantemos um olhar atento à
-                  responsabilidade ambiental e social.
+                  fotovoltaico, enquanto mantemos nossa visão atenta à
+                  responsabilidade ambiental, social e um planeta mais verde.
                 </p>
               </div>
             </div>

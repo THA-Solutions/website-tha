@@ -32,21 +32,17 @@ export const pages = [
     path: '/instalacao-manutencao'
   },
   {
-    name: 'Suporte Técnico',
-    path: '/suporte-tecnico'
+    name: 'Locação de Inversores',
+    path: '/locacao-inversores'
   },
   {
-    name: 'Laboratório',
+    name: 'Reparo de Inversores',
     path: '/laboratorio'
   },
   {
-    name: 'Marketing',
-    path: '/marketing'
+    name: 'Suporte ao Instalador',
+    path: '/suporte-tecnico'
   },
-  {
-    name: 'Sobre nós',
-    path: '/sobre'
-  }
 ];
 
 export const pagesAdmin: PageAdminType[] = [
