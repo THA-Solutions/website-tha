@@ -8,9 +8,11 @@ import { company } from '../constants';
 
 import Atendimento from '../public/features/atendimento.jpeg';
 import Instalacoes from '../public/features/casa-placas.jpeg';
-import Laboratorio from '../public/features/laboratorio.jpeg';
+import LocacaoInversores from '../public/features/inversores.jpg';
+import Laboratorio from '../public/features/laboratório.jpg';
 import Marketing from '../public/features/marketing.jpeg';
 import SupplyChain from '../public/features/supply_chain.jpeg';
+import HomeImage from '../public/home.jpeg';
 
 import Logo from '../public/logo-colored.png';
 
@@ -58,7 +60,7 @@ const features = [
     name: 'Locação de Inversores',
     description:
       'Temos em estoque inversores das mais variadas potências para locação em casos de processo de garantia e fora de garantia. Com a THA, sua geração nunca para!',
-    imageSrc: Instalacoes,
+    imageSrc: LocacaoInversores,
     href: '#'
   },
   {
@@ -109,14 +111,14 @@ export default function Home() {
           </div>
           <div className="text-center lg:text-left">
             <div className="gap-4 flex font-alt text-center drop-shadow-md leading-none lg:text-left">
-              <h1 className="text-primary text-3xl font-extrabold font-alt sm:text-6xl lg:text-7xl xl:text-secondary-title">
+              <h1 className="text-primary text-3xl font-extrabold font-alt sm:text-6xl lg:text-7xl xl:text-[80px]">
                 THA
               </h1>
-              <h2 className="text-gray-200 font-extrabold text-3xl font-alt pb-2 sm:text-6xl lg:text-7xl xl:text-secondary-title">
+              <h2 className="text-gray-200 font-extrabold text-3xl font-alt pb-2 sm:text-6xl lg:text-7xl xl:text-[80px]">
                 SOLUTIONS
               </h2>
             </div>
-            <h3 className="text-gray-300 text-md font-normal ml-2 sm:text-xl lg:text-2xl xl:text-slogan-title">
+            <h3 className="text-gray-300 text-md font-normal ml-2 sm:text-xl lg:text-2xl xl:text-[30px]">
               Sabemos o que você precisa!
             </h3>
           </div>
@@ -173,8 +175,8 @@ export default function Home() {
               </div>
             </div>
             <Image
-              src={Atendimento}
-              alt="Product screenshot"
+              src={HomeImage}
+              alt="Campo com de placas solares"
               className="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"
               width={2432}
               height={1442}

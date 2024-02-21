@@ -55,21 +55,6 @@ module.exports = {
         alt: 'var(--font-bai-jamjuree)'
       },
 
-      fontSize: {
-        'primary-title': '180px',
-        'secondary-title': '80px',
-        'slogan-title': '30px'
-      },
-
-      gridTemplateColumns: {
-        '1.5fr': '1.5fr 0.5fr'
-      },
-
-      height: {
-        '80vh': '80vh',
-        120: '30rem'
-      },
-
       keyframes: {
         'move-wave': {
           '0%': {

@@ -4,7 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { Team, TeamService } from '@tha-solutions';
-import HistoryImage from '../../public/hero-background.png';
+
+import Company from '../../public/company.png';
 
 import Diversity3 from '@mui/icons-material/Diversity3';
 import Flag from '@mui/icons-material/Flag';
@@ -80,8 +81,8 @@ export default function Page() {
               </div>
             </div>
             <Image
-              src={HistoryImage}
-              alt="Product screenshot"
+              src={Company}
+              alt="Imagem da empresa"
               className="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"
             />
           </div>

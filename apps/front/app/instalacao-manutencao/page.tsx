@@ -69,7 +69,7 @@ export default function Page() {
                 </h3>
               </div>
               <Image
-                src={Manutencao1}
+                src={Manutencao2}
                 alt="Imagem das instalações de inversores"
                 className="object-cover w-full h-[450px] ring-4 ring-backgroundAlt2 md:object-center lg:h-[500px]"
               />
@@ -82,7 +82,7 @@ export default function Page() {
                 </h3>
               </div>
               <Image
-                src={Manutencao2}
+                src={Manutencao1}
                 alt="Imagem das instalações de inversores"
                 className="object-cover w-full h-[450px] ring-4 ring-backgroundAlt2 md:object-center lg:h-[500px]"
               />

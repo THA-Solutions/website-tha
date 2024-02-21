@@ -5,7 +5,7 @@ import { company } from 'apps/front/constants';
 
 export const metadata = {
   title: `${company.name} - Marketing`,
-  description: 'Conectando técnologia mundial ao mercado brasileiro'
+  description: 'Conectando tecnologia mundial ao mercado brasileiro'
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

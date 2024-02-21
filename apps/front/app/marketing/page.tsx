@@ -29,7 +29,7 @@ export default function Page() {
       icon: <Handshake className="text-6xl" />,
       description:
         'Facilitamos as parcerias entre empresas estrangeiras e distribuidores brasileiros. Nosso gerenciamento garante que ambas as partes se beneficiem, fortalecendo a presença da marca no mercado local.',
-      image: '/features/atendimento.jpeg',
+      image: '/marketing/gerenciamentoParcerias.jpeg',
       bg: 'bg-backgroundAlt2'
     },
     {
@@ -38,7 +38,7 @@ export default function Page() {
       icon: <Translate className="text-6xl" />,
       description:
         'Garantimos que sua tecnologia seja compreendida. Nossos especialistas em tradução transformam manuais, datasheets e whitepapers técnicos em documentos claros e precisos.',
-      image: '/features/laboratorio.jpeg',
+      image: '/marketing/traducoes.JPG',
       bg: 'bg-backgroundAlt'
     },
     {
@@ -56,7 +56,7 @@ export default function Page() {
       icon: <QueryStats className="text-6xl" />,
       description:
         'Entender o mercado é a chave para o sucesso. Realizamos pesquisas de mercado profundas para que você compreenda as necessidades, tendências e oportunidades no setor fotovoltaico brasileiro.',
-      image: '/features/supply_chain.jpeg',
+      image: '/marketing/pesquisasMercado.png',
       bg: 'bg-tertiary',
       buttonAlt: true
     }
@@ -67,13 +67,13 @@ export default function Page() {
   return (
     <>
       <div className="mx-auto max-w-7xl px-6 pb-32 justify-center items-center flex flex-col lg:px-8">
-        <header className="h-80vh flex flex-col items-center justify-center text-center gap-4 -translate-y-10">
+        <header className="h-[80vh] flex flex-col items-center justify-center text-center gap-4 -translate-y-10">
           {/* <ConnectWithoutContact className="text-8xl text-gray-500" /> */}
           <h1 className="text-6xl font-bold font-alt md:text-7xl lg:text-8xl">
             Marketing Técnico
           </h1>
           <h2 className="text-xl text-gray-300 lg:text-2xl">
-            Conectando técnologia{' '}
+            Conectando tecnologia{' '}
             <span className="text-red-500 font-semibold">MUNDIAL</span> ao
             mercado{' '}
             <span className="font-semibold">
@@ -148,7 +148,7 @@ export default function Page() {
                 <div className="w-full flex justify-center md:w-1/2">
                   <Image
                     src={feature.image}
-                    alt="Image Feature"
+                    alt={'Imagem referente a ' + feature.title}
                     width={1024}
                     height={768}
                     className="object-cover md:w-96"

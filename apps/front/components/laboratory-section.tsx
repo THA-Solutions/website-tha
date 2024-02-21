@@ -44,45 +44,45 @@ export const LaboratorySection = ({
       </svg>
     )}
     <h1
-      className={`pt-32 text-4xl text-center font-bold font-alt ${isAlternative
+      className={`pt-24 text-4xl text-center font-bold font-alt ${isAlternative
         ? 'text-white text-shadow-black'
         : 'text-labPrimary text-shadow-white'
-        } sm:text-6xl`}
+        } sm:text-6xl md:pt-40`}
     >
       {title}
     </h1>
-    <div className="flex flex-col items-center p-8 gap-12 sm:p-20 xl:flex-row xl:justify-center">
-      <aside className="h-full xl:w-1/2">
+    <div className="flex flex-col items-center max-w-7xl mx-auto p-8 gap-6 sm:p-20 xl:flex-row xl:items-start">
+      <picture className="h-auto mx-auto max-w-2xl xl:w-1/2">
         <Image
           src={image}
           alt={imageAlt}
-          width={1200}
-          height={1200}
-          className="rounded-xl shadow-2xl h-full xl:w-5/6"
+          width={1024}
+          height={768}
+          className="rounded-xl shadow-2xl object-cover"
         />
-      </aside>
-      <div className="flex flex-col gap-8 lg:max-w-3xl xl:w-1/2">
-        <ul className="flex flex-col gap-8">
+      </picture>
+      <div className="flex flex-col gap-8 p-6 lg:max-w-3xl xl:w-1/2">
+        <div className="flex flex-col gap-8">
           {content.map(({ icon, text }, index) => (
-            <li
+            <div
               key={index}
-              className="flex flex-col items-center gap-4 sm:flex-row"
+              className="flex flex-col justify-center items-center gap-4 sm:flex-row"
             >
               {icon}
               <p
-                className={`text-justify ${isAlternative ? 'text-darkGray' : 'text-lightGray'
+                className={`${isAlternative ? 'text-darkGray' : 'text-lightGray'
                   } md:text-xl md:text-left`}
               >
                 {text}
               </p>
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
         <footer className="flex flex-col items-center gap-8 sm:flex-row sm:justify-around md:mt-16">
           {footerData.map(({ number, label }, index) => (
             <div
               key={index}
-              className="flex flex-col items-center gap-2 sm:items-end"
+              className="flex flex-col items-center gap-2"
             >
               <h2
                 className={`text-6xl font-semibold font-alt ${isAlternative

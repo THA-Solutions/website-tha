@@ -9,8 +9,8 @@ export const SectionData = [
     title: 'INVERSORES',
     isAlternative: false,
     backgroundColor: 'bg-backgroundAlt',
-    image: '/features/inversor-solar-off-grid.webp',
-    imageAlt: 'inversor solar off grid',
+    image: '/features/inversores.jpg',
+    imageAlt: 'Inversores',
     content: [
       {
         icon: (
@@ -37,8 +37,8 @@ export const SectionData = [
     title: 'MÓDULOS VEICULARES',
     backgroundColor: 'bg-labPrimary',
     isAlternative: true,
-    image: '/features/reparos-em-módulos.jpeg',
-    imageAlt: 'reparos em módulos',
+    image: '/features/módulos.JPG',
+    imageAlt: 'Módulo',
     content: [
       {
         icon: (

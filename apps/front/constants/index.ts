@@ -33,7 +33,7 @@ export const pages = [
   },
   {
     name: 'Locação de Inversores',
-    path: '/locacao-inversores'
+    path: '#'
   },
   {
     name: 'Reparo de Inversores',
