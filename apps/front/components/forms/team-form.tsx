@@ -10,7 +10,7 @@ interface TeamFormProps {
   isRequired: boolean;
 }
 
-const TeamForm = ({
+const  TeamForm = ({
   onSubmit,
   buttonText,
   editTeamData,

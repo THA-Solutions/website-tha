@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import PrismaService from '../prisma.service';
-import * as crypto from 'crypto';
 import { ConfigService } from '@nestjs/config';
-import { ResponseUserDto } from './dto/response-user.dto';
-import { ImageService } from '../image/image.service';
+import * as crypto from 'crypto';
 import { CompanyService } from '../company/company.service';
+import { ImageService } from '../image/image.service';
 import { MailService } from '../mail/mail.service';
+import PrismaService from '../prisma.service';
+import { CreateUserDto } from './dto/create-user.dto';
+import { ResponseUserDto } from './dto/response-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 @Injectable()
 export class UserService {
   constructor(
@@ -356,7 +356,7 @@ export class UserService {
     //   'host'
     // )}/api/v1/auth/resetpassword/${resetToken.resetToken}`;
 
-    const resetUrl = `http://localhost:4200/recuperar-senha/${resetToken.resetToken}`;
+    const resetUrl = `http://localhost:4200/recovery-password/${resetToken.resetToken}`;
 
     const message = `
       <div style="text-align: center; color: #ffffff; background-color: #242130;">

@@ -36,7 +36,7 @@ export default function Page() {
           <p className="text-4xl text-center">Nenhum colaborador encontrado</p>
         </div>
       ) : (
-        <article className="mx-auto grid  grid-cols-1 gap-x-8 gap-y-16 pt-10">
+        <article className="mx-auto grid grid-cols-1 gap-x-8 gap-y-16 pt-10">
           {employees.map((employee) => (
             <main
               key={employee.id}

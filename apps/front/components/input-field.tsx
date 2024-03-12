@@ -1,4 +1,4 @@
-import { UseFormRegister, FieldValues, FieldErrors } from 'react-hook-form';
+import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
 
 import InfoOutlined from '@mui/icons-material/InfoOutlined';
 
